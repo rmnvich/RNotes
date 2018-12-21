@@ -1,4 +1,10 @@
 package rmnvich.apps.notes.presentation.base
 
-class BaseView {
+interface BaseView {
+
+    fun showProgress()
+
+    fun hideProgress()
+
+    fun showMessage(text: String)
 }
