@@ -11,7 +11,7 @@ import rmnvich.apps.notes.data.repositories.datasource.Database;
 import rmnvich.apps.notes.di.dashboardnotes.DashboardNotesComponent;
 import rmnvich.apps.notes.di.global.base.BaseComponentBuilder;
 import rmnvich.apps.notes.di.global.scope.PerApplication;
-import rmnvich.apps.notes.presentation.ui.fragment.notesdashboard.DashboardNotesFragment;
+import rmnvich.apps.notes.presentation.ui.fragment.dashboardnotes.DashboardNotesFragment;
 
 import static rmnvich.apps.notes.data.common.Constants.DATABASE_NAME;
 

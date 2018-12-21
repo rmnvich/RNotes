@@ -1,4 +1,4 @@
-package rmnvich.apps.notes.domain.interactors.notesdashboard
+package rmnvich.apps.notes.domain.interactors.dashboardnotes
 
 import io.reactivex.Flowable
 import rmnvich.apps.notes.data.common.Constants
@@ -7,7 +7,7 @@ import rmnvich.apps.notes.domain.entity.Note
 import rmnvich.apps.notes.domain.repositories.NotesRepository
 import java.util.concurrent.TimeUnit
 
-class NotesDashboardInteractor(
+class DashboardNotesInteractor(
     private val notesRepository: NotesRepository,
     private val schedulersProvider: SchedulersProvider
 ) {

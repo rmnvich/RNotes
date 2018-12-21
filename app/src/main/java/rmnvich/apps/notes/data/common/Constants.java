@@ -4,6 +4,8 @@ import rmnvich.apps.notes.R;
 
 public class Constants {
 
+    public static String LOG_TAG = "qwe";
+
     public static String DATABASE_NAME = "test_database1";
 
     public static long DEFAULT_DELAY = 150L;

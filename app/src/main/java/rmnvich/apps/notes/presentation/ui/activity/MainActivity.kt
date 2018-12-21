@@ -3,7 +3,7 @@ package rmnvich.apps.notes.presentation.ui.activity
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import rmnvich.apps.notes.R
-import rmnvich.apps.notes.presentation.ui.fragment.notesdashboard.DashboardNotesFragment
+import rmnvich.apps.notes.presentation.ui.fragment.dashboardnotes.DashboardNotesFragment
 
 class MainActivity : AppCompatActivity() {
 

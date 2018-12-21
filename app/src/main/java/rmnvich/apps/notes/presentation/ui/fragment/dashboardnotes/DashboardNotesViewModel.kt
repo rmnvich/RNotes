@@ -1,4 +1,4 @@
-package rmnvich.apps.notes.presentation.ui.fragment.notesdashboard
+package rmnvich.apps.notes.presentation.ui.fragment.dashboardnotes
 
 import android.arch.lifecycle.ViewModel
 
