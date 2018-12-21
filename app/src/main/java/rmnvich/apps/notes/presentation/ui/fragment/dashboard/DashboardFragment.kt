@@ -1,17 +1,15 @@
 package rmnvich.apps.notes.presentation.ui.fragment.dashboard
 
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
-import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import rmnvich.apps.notes.App
 import rmnvich.apps.notes.R
-import javax.inject.Inject
 
 class DashboardFragment : Fragment() {
 
