@@ -17,7 +17,7 @@ class DashboardFragment : Fragment() {
         fun newInstance() = DashboardFragment()
     }
 
-    lateinit var viewModel: DashboardViewModel
+    private lateinit var dashboardViewModel: DashboardViewModel
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -32,8 +32,8 @@ class DashboardFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
-
+        dashboardViewModel = ViewModelProviders.of(this)
+                .get(DashboardViewModel::class.java)
     }
 
     override fun onDetach() {
