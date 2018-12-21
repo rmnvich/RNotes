@@ -1,6 +1,5 @@
-package rmnvich.apps.notes.presentation.ui.fragment.dashboard
+package rmnvich.apps.notes.presentation.ui.fragment.notesdashboard
 
-import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
@@ -11,13 +10,13 @@ import android.view.ViewGroup
 import rmnvich.apps.notes.App
 import rmnvich.apps.notes.R
 
-class DashboardFragment : Fragment() {
+class DashboardNotesFragment : Fragment() {
 
     companion object {
-        fun newInstance() = DashboardFragment()
+        fun newInstance() = DashboardNotesFragment()
     }
 
-    private lateinit var dashboardViewModel: DashboardViewModel
+    private lateinit var dashboardNotesViewModel: DashboardNotesViewModel
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -27,13 +26,13 @@ class DashboardFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.dashboard_fragment, container, false)
+        return inflater.inflate(R.layout.dashboard_notes_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        dashboardViewModel = ViewModelProviders.of(this)
-                .get(DashboardViewModel::class.java)
+        dashboardNotesViewModel = ViewModelProviders.of(this)
+                .get(DashboardNotesViewModel::class.java)
     }
 
     override fun onDetach() {

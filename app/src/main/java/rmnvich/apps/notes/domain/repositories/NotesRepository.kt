@@ -13,11 +13,11 @@ interface NotesRepository {
 
     fun getAllFilteredByTagNotes(tagName: String): Flowable<List<Note>>
 
-    fun getAllFavoritesNotes(): Flowable<List<Note>>
+    fun getAllFavoriteNotes(): Flowable<List<Note>>
 
     fun getNoteById(noteId: Int): Single<Note>
 
-    fun insertNote(note: Note): Completable
+    fun insertOrUpdateNote(note: Note): Completable
 
     fun deleteNote(note: Note): Completable
 

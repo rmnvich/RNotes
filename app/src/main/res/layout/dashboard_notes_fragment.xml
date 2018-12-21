@@ -6,7 +6,7 @@
         android:id="@+id/dashboard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.ui.fragment.dashboard.DashboardFragment">
+        tools:context=".presentation.ui.fragment.notesdashboard.DashboardNotesFragment">
 
     <TextView
             android:id="@+id/message"

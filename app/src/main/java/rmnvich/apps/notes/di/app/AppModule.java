@@ -8,14 +8,14 @@ import dagger.Provides;
 import dagger.multibindings.ClassKey;
 import dagger.multibindings.IntoMap;
 import rmnvich.apps.notes.data.repositories.datasource.Database;
-import rmnvich.apps.notes.di.dashboard.DashboardComponent;
+import rmnvich.apps.notes.di.dashboardnotes.DashboardNotesComponent;
 import rmnvich.apps.notes.di.global.base.BaseComponentBuilder;
 import rmnvich.apps.notes.di.global.scope.PerApplication;
-import rmnvich.apps.notes.presentation.ui.fragment.dashboard.DashboardFragment;
+import rmnvich.apps.notes.presentation.ui.fragment.notesdashboard.DashboardNotesFragment;
 
 import static rmnvich.apps.notes.data.common.Constants.DATABASE_NAME;
 
-@Module(subcomponents = {DashboardComponent.class})
+@Module(subcomponents = {DashboardNotesComponent.class})
 public class AppModule {
 
     private final Context mContext;
@@ -38,8 +38,8 @@ public class AppModule {
 
     @Provides
     @IntoMap
-    @ClassKey(DashboardFragment.class)
-    BaseComponentBuilder provideDashboardFragment(DashboardComponent.Builder builder) {
+    @ClassKey(DashboardNotesFragment.class)
+    BaseComponentBuilder provideDashboardFragment(DashboardNotesComponent.Builder builder) {
         return builder;
     }
 }

@@ -11,7 +11,7 @@ interface TagsRepository {
 
     fun getTagById(tagId: Int): Single<Tag>
 
-    fun insertTag(tag: Tag): Completable
+    fun insertOrUpdateTag(tag: Tag): Completable
 
     fun deleteTag(tag: Tag): Completable
 }
