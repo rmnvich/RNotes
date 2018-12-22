@@ -15,6 +15,8 @@ import rmnvich.apps.notes.R
 import rmnvich.apps.notes.databinding.DashboardNotesFragmentBinding
 import rmnvich.apps.notes.di.dashboardnotes.DashboardNotesModule
 import rmnvich.apps.notes.domain.entity.Note
+import rmnvich.apps.notes.domain.interactors.Response
+import rmnvich.apps.notes.domain.interactors.Status
 import rmnvich.apps.notes.presentation.utils.DebugLogger
 import rmnvich.apps.notes.presentation.utils.DebugLogger.Companion.log
 import rmnvich.apps.notes.presentation.utils.ViewModelFactory
@@ -44,23 +46,33 @@ class DashboardNotesFragment : Fragment() {
         mDashboardNotesBinding = DataBindingUtil.inflate(inflater,
                 R.layout.dashboard_notes_fragment, container, false)
 
+        mDashboardNotesViewModel = ViewModelProviders.of(this, mViewModelFactory)
+                .get(DashboardNotesViewModel::class.java)
+        mDashboardNotesBinding.viewmodel = mDashboardNotesViewModel
+
         return mDashboardNotesBinding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        mDashboardNotesViewModel = ViewModelProviders.of(this, mViewModelFactory)
-                .get(DashboardNotesViewModel::class.java)
+        mDashboardNotesViewModel.response()?.observe(this,
+                Observer<Response> { handleResponse(it!!) })
+
     }
 
-    override fun onResume() {
-        super.onResume()
-        mDashboardNotesViewModel.getNotes()
-                .observe(this, Observer<List<Note>> {
-                    DebugLogger.log("List size = ${it?.size}")
-                    mDashboardNotesViewModel.bIsShowingProgressBar.set(false)
-                    mDashboardNotesViewModel.bDataIsEmpty.set(it?.isEmpty()!!)
-                })
+    private fun handleResponse(response: Response) {
+        when (response.status) {
+            Status.LOADING -> mDashboardNotesViewModel.bIsShowingProgressBar.set(true)
+            Status.SUCCESS -> {
+                DebugLogger.log("List size = ${response.data?.size}")
+                mDashboardNotesViewModel.bIsShowingProgressBar.set(false)
+                mDashboardNotesViewModel.bDataIsEmpty.set(response.data?.isEmpty()!!)
+            }
+            Status.ERROR -> {
+                mDashboardNotesViewModel.bIsShowingProgressBar.set(false)
+                mDashboardNotesViewModel.bIsError.set(true)
+            }
+        }
     }
 
     override fun onDetach() {

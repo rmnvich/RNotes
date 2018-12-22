@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewmodel"
             type="rmnvich.apps.notes.presentation.ui.fragment.dashboardnotes.DashboardNotesViewModel" />
@@ -16,6 +18,17 @@
         android:layout_height="match_parent"
         tools:context=".presentation.ui.fragment.dashboardnotes.DashboardNotesFragment">
 
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewmodel.bIsShowingProgressBar ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="150dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/message"
             android:layout_width="wrap_content"
@@ -25,6 +38,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:visibility="@{viewmodel.bDataIsEmpty ? View.VISIBLE : View.INVISIBLE}"
+            android:text="isEmpty"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/message" />
 
     </android.support.constraint.ConstraintLayout>
 </layout>

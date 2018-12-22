@@ -3,6 +3,7 @@ package rmnvich.apps.notes.presentation.utils
 import android.app.Application
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
+import io.reactivex.disposables.CompositeDisposable
 import rmnvich.apps.notes.domain.interactors.dashboardnotes.DashboardNotesInteractor
 import rmnvich.apps.notes.domain.interactors.dashboardtags.DashboardTagsInteractor
 import rmnvich.apps.notes.domain.interactors.trash.TrashInteractor
@@ -11,44 +12,45 @@ import rmnvich.apps.notes.presentation.ui.fragment.dashboardnotes.DashboardNotes
 
 class ViewModelFactory : ViewModelProvider.NewInstanceFactory {
 
-    private var application: Application
+    private var mApplication: Application
 
-    private lateinit var dashboardNotesInteractor: DashboardNotesInteractor
+    private lateinit var mDashboardNotesInteractor: DashboardNotesInteractor
 
-    private lateinit var dashboardTagsInteractor: DashboardTagsInteractor
+    private lateinit var mDashboardTagsInteractor: DashboardTagsInteractor
 
-    private lateinit var trashInteractor: TrashInteractor
+    private lateinit var mTrashInteractor: TrashInteractor
 
-    private lateinit var viewNoteInteractor: ViewNoteInteractor
+    private lateinit var mViewNoteInteractor: ViewNoteInteractor
 
     constructor(application: Application,
                 dashboardNotesInteractor: DashboardNotesInteractor) : super() {
-        this.application = application
-        this.dashboardNotesInteractor = dashboardNotesInteractor
+        this.mApplication = application
+        this.mDashboardNotesInteractor = dashboardNotesInteractor
     }
 
     constructor(application: Application,
                 dashboardTagsInteractor: DashboardTagsInteractor) : super() {
-        this.application = application
-        this.dashboardTagsInteractor = dashboardTagsInteractor
+        this.mApplication = application
+        this.mDashboardTagsInteractor = dashboardTagsInteractor
     }
 
     constructor(application: Application,
                 trashInteractor: TrashInteractor) : super() {
-        this.application = application
-        this.trashInteractor = trashInteractor
+        this.mApplication = application
+        this.mTrashInteractor = trashInteractor
     }
 
     constructor(application: Application,
                 viewNoteInteractor: ViewNoteInteractor) : super() {
-        this.application = application
-        this.viewNoteInteractor = viewNoteInteractor
+        this.mApplication = application
+        this.mViewNoteInteractor = viewNoteInteractor
     }
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(DashboardNotesViewModel::class.java) ->
-                DashboardNotesViewModel(application, dashboardNotesInteractor) as T
+                DashboardNotesViewModel(mApplication, CompositeDisposable(),
+                        mDashboardNotesInteractor) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }
