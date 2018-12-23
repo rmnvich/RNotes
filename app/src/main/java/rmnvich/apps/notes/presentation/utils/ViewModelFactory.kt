@@ -7,7 +7,8 @@ import io.reactivex.disposables.CompositeDisposable
 import rmnvich.apps.notes.domain.interactors.dashboardnotes.DashboardNotesInteractor
 import rmnvich.apps.notes.domain.interactors.dashboardtags.DashboardTagsInteractor
 import rmnvich.apps.notes.domain.interactors.trash.TrashInteractor
-import rmnvich.apps.notes.domain.interactors.viewnote.ViewNoteInteractor
+import rmnvich.apps.notes.domain.interactors.addeditnote.AddEditNoteInteractor
+import rmnvich.apps.notes.presentation.ui.fragment.addeditnote.AddEditNoteViewModel
 import rmnvich.apps.notes.presentation.ui.fragment.dashboardnotes.DashboardNotesViewModel
 
 class ViewModelFactory : ViewModelProvider.NewInstanceFactory {
@@ -20,7 +21,7 @@ class ViewModelFactory : ViewModelProvider.NewInstanceFactory {
 
     private lateinit var mTrashInteractor: TrashInteractor
 
-    private lateinit var mViewNoteInteractor: ViewNoteInteractor
+    private lateinit var mAddEditNoteInteractor: AddEditNoteInteractor
 
     constructor(application: Application,
                 dashboardNotesInteractor: DashboardNotesInteractor) : super() {
@@ -41,9 +42,9 @@ class ViewModelFactory : ViewModelProvider.NewInstanceFactory {
     }
 
     constructor(application: Application,
-                viewNoteInteractor: ViewNoteInteractor) : super() {
+                addEditNoteInteractor: AddEditNoteInteractor) : super() {
         this.mApplication = application
-        this.mViewNoteInteractor = viewNoteInteractor
+        this.mAddEditNoteInteractor = addEditNoteInteractor
     }
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
@@ -51,6 +52,9 @@ class ViewModelFactory : ViewModelProvider.NewInstanceFactory {
             modelClass.isAssignableFrom(DashboardNotesViewModel::class.java) ->
                 DashboardNotesViewModel(mApplication, CompositeDisposable(),
                         mDashboardNotesInteractor) as T
+            modelClass.isAssignableFrom(AddEditNoteViewModel::class.java) ->
+                AddEditNoteViewModel(mApplication, CompositeDisposable(),
+                        mAddEditNoteInteractor) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }

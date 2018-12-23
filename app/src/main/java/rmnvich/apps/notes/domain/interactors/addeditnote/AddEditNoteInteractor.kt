@@ -1,4 +1,4 @@
-package rmnvich.apps.notes.domain.interactors.viewnote
+package rmnvich.apps.notes.domain.interactors.addeditnote
 
 import io.reactivex.Completable
 import io.reactivex.Flowable
@@ -11,7 +11,7 @@ import rmnvich.apps.notes.domain.repositories.NotesRepository
 import rmnvich.apps.notes.domain.repositories.TagsRepository
 import java.util.concurrent.TimeUnit
 
-class ViewNoteInteractor(
+class AddEditNoteInteractor(
     private val notesRepository: NotesRepository,
     private val tagsRepository: TagsRepository,
     private val schedulersProvider: SchedulersProvider

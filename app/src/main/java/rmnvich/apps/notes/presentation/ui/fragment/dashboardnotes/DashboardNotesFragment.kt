@@ -5,8 +5,8 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
-import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,13 +14,13 @@ import rmnvich.apps.notes.App
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.databinding.DashboardNotesFragmentBinding
 import rmnvich.apps.notes.di.dashboardnotes.DashboardNotesModule
-import rmnvich.apps.notes.domain.entity.Note
 import rmnvich.apps.notes.domain.interactors.Response
 import rmnvich.apps.notes.domain.interactors.Status
+import rmnvich.apps.notes.presentation.ui.fragment.addeditnote.AddEditNoteFragment
 import rmnvich.apps.notes.presentation.utils.DebugLogger
-import rmnvich.apps.notes.presentation.utils.DebugLogger.Companion.log
 import rmnvich.apps.notes.presentation.utils.ViewModelFactory
 import javax.inject.Inject
+
 
 class DashboardNotesFragment : Fragment() {
 
@@ -50,14 +50,21 @@ class DashboardNotesFragment : Fragment() {
                 .get(DashboardNotesViewModel::class.java)
         mDashboardNotesBinding.viewmodel = mDashboardNotesViewModel
 
+        mDashboardNotesBinding.swipeRefreshLayout.isEnabled = false
+        mDashboardNotesBinding.swipeRefreshLayout.setColorSchemeResources(
+                R.color.colorPrimary, R.color.colorAccent)
+
         return mDashboardNotesBinding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        mDashboardNotesViewModel.response()?.observe(this,
+        mDashboardNotesViewModel.getNotes()?.observe(this,
                 Observer<Response> { handleResponse(it!!) })
+        mDashboardNotesViewModel.mAddEditNoteEvent.observe(this,
+                Observer { handleAddNoteEvent() })
 
+        setupSnackbar()
     }
 
     private fun handleResponse(response: Response) {
@@ -70,9 +77,26 @@ class DashboardNotesFragment : Fragment() {
             }
             Status.ERROR -> {
                 mDashboardNotesViewModel.bIsShowingProgressBar.set(false)
-                mDashboardNotesViewModel.bIsError.set(true)
+                mDashboardNotesViewModel.showSnackbarMessage(R.string.error_message)
             }
         }
+    }
+
+    private fun handleAddNoteEvent() {
+        activity?.supportFragmentManager?.beginTransaction()
+                ?.setCustomAnimations(R.anim.anim_bottom_to_top_in, R.anim.anim_bottom_to_top_out,
+                        R.anim.anim_top_to_bottom_in, R.anim.anim_top_to_bottom_out)
+                ?.replace(R.id.container, AddEditNoteFragment.newInstance())
+                ?.addToBackStack(null)
+                ?.commit()
+    }
+
+    //TODO: Make snackbar with action
+    private fun setupSnackbar() {
+        mDashboardNotesViewModel.mSnackbarMessage.observe(this, Observer {
+            Snackbar.make(mDashboardNotesBinding.root, getString(it!!),
+                    Snackbar.LENGTH_LONG).show()
+        })
     }
 
     override fun onDetach() {
