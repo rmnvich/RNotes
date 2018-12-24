@@ -1,20 +1,18 @@
 package rmnvich.apps.notes.domain.interactors
 
-import rmnvich.apps.notes.domain.entity.Note
-
-class Response(val status: Status, val data: List<Note>?, val error: Throwable?) {
+data class Response<out T>(val status: Status, val data: T?, val error: Throwable?) {
 
     companion object {
 
-        fun onLoading(): Response {
+        fun <T> onLoading(): Response<T> {
             return Response(Status.LOADING, null, null)
         }
 
-        fun onSuccess(data: List<Note>): Response {
+        fun <T> onSuccess(data: T?): Response<T> {
             return Response(Status.SUCCESS, data, null)
         }
 
-        fun onError(error: Throwable): Response {
+        fun <T> onError(error: Throwable): Response<T> {
             return Response(Status.ERROR, null, error)
         }
 

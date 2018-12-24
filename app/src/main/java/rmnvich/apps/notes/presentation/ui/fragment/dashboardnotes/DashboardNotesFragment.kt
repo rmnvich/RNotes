@@ -14,6 +14,7 @@ import rmnvich.apps.notes.App
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.databinding.DashboardNotesFragmentBinding
 import rmnvich.apps.notes.di.dashboardnotes.DashboardNotesModule
+import rmnvich.apps.notes.domain.entity.Note
 import rmnvich.apps.notes.domain.interactors.Response
 import rmnvich.apps.notes.domain.interactors.Status
 import rmnvich.apps.notes.presentation.ui.fragment.addeditnote.AddEditNoteFragment
@@ -60,14 +61,14 @@ class DashboardNotesFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         mDashboardNotesViewModel.getNotes()?.observe(this,
-                Observer<Response> { handleResponse(it!!) })
+                Observer<Response<List<Note>>> { handleResponse(it!!) })
         mDashboardNotesViewModel.mAddEditNoteEvent.observe(this,
                 Observer { handleAddNoteEvent() })
 
         setupSnackbar()
     }
 
-    private fun handleResponse(response: Response) {
+    private fun handleResponse(response: Response<List<Note>>) {
         when (response.status) {
             Status.LOADING -> mDashboardNotesViewModel.bIsShowingProgressBar.set(true)
             Status.SUCCESS -> {
