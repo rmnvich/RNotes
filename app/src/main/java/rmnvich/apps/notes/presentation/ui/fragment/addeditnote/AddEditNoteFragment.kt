@@ -1,10 +1,12 @@
 package rmnvich.apps.notes.presentation.ui.fragment.addeditnote
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.databinding.DataBindingUtil
 import android.graphics.Color
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.view.*
@@ -15,6 +17,7 @@ import rmnvich.apps.notes.databinding.AddEditNoteFragmentBinding
 import rmnvich.apps.notes.di.addeditnote.AddEditNoteModule
 import rmnvich.apps.notes.presentation.ui.activity.MainActivity
 import rmnvich.apps.notes.domain.utils.ViewModelFactory
+import rmnvich.apps.notes.presentation.ui.fragment.dashboardnotes.DashboardNotesViewModel
 import javax.inject.Inject
 
 
@@ -42,7 +45,7 @@ class AddEditNoteFragment : Fragment() {
         mAddEditNoteBinding = DataBindingUtil.inflate(inflater,
                 R.layout.add_edit_note_fragment, container, false)
 
-        mAddEditNoteViewModel = ViewModelProviders.of(this, mViewModelFactory)
+        mAddEditNoteViewModel = ViewModelProviders.of(activity!!, mViewModelFactory)
                 .get(AddEditNoteViewModel::class.java)
         mAddEditNoteBinding.viewmodel = mAddEditNoteViewModel
 
@@ -61,6 +64,13 @@ class AddEditNoteFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        val sharedViewModel = ViewModelProviders.of(activity!!)
+                .get(DashboardNotesViewModel::class.java)
+        sharedViewModel.getSelected().observe(this, Observer {
+            if (it != null) mAddEditNoteViewModel.getNote(it)
+        })
+
+        observeSnackbar()
     }
 
     override fun onResume() {
@@ -71,6 +81,13 @@ class AddEditNoteFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         dismissKeyboard()
+    }
+
+    private fun observeSnackbar() {
+        mAddEditNoteViewModel.getSnackbar().observe(this, Observer {
+            Snackbar.make(mAddEditNoteBinding.root, getString(it!!),
+                    Snackbar.LENGTH_LONG).show()
+        })
     }
 
     private fun setupToolbar() {

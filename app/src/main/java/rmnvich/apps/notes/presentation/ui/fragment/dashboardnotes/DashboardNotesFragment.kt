@@ -18,6 +18,7 @@ import rmnvich.apps.notes.presentation.ui.fragment.addeditnote.AddEditNoteFragme
 import rmnvich.apps.notes.presentation.utils.DebugLogger
 import rmnvich.apps.notes.domain.utils.ViewModelFactory
 import javax.inject.Inject
+import kotlin.random.Random
 
 
 class DashboardNotesFragment : Fragment() {
@@ -44,7 +45,7 @@ class DashboardNotesFragment : Fragment() {
         mDashboardNotesBinding = DataBindingUtil.inflate(inflater,
                 R.layout.dashboard_notes_fragment, container, false)
 
-        mDashboardNotesViewModel = ViewModelProviders.of(this, mViewModelFactory)
+        mDashboardNotesViewModel = ViewModelProviders.of(activity!!, mViewModelFactory)
                 .get(DashboardNotesViewModel::class.java)
         mDashboardNotesBinding.viewmodel = mDashboardNotesViewModel
 
@@ -61,6 +62,14 @@ class DashboardNotesFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater?.inflate(R.menu.dashboard_menu, menu)
+    }
+
+    //TODO: id from adapter
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.menu_filter -> mDashboardNotesViewModel.selectNote(Random.nextInt())
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

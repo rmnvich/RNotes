@@ -21,6 +21,8 @@ class DashboardNotesViewModel(private val applicationContext: Application,
     val bIsShowingProgressBar: ObservableBoolean = ObservableBoolean(false)
     val bDataIsEmpty: ObservableBoolean = ObservableBoolean(false)
 
+    private val mSelectedNoteId: MutableLiveData<Int> = MutableLiveData()
+
     private val mSnackbarMessage: SnackbarMessage = SnackbarMessage()
     private val mAddEditNoteEvent = SingleLiveEvent<Void>()
 
@@ -39,6 +41,15 @@ class DashboardNotesViewModel(private val applicationContext: Application,
     fun getAddEditNoteEvent(): SingleLiveEvent<Void> = mAddEditNoteEvent
 
     fun addNote() = mAddEditNoteEvent.call()
+
+    fun selectNote(noteId: Int) {
+        mSelectedNoteId.value = noteId
+        mAddEditNoteEvent.call()
+    }
+
+    fun getSelected(): MutableLiveData<Int> {
+        return mSelectedNoteId
+    }
 
     private fun loadNotes() {
         disposables.add(dashboardNotesInteractor.getAllNotes()
