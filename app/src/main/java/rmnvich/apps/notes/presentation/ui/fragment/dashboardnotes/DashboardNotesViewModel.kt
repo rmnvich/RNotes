@@ -38,17 +38,18 @@ class DashboardNotesViewModel(private val applicationContext: Application,
 
     fun getSnackbar(): SnackbarMessage = mSnackbarMessage
 
+    fun getSelected(): MutableLiveData<Int> = mSelectedNoteId
+
     fun getAddEditNoteEvent(): SingleLiveEvent<Void> = mAddEditNoteEvent
 
-    fun addNote() = mAddEditNoteEvent.call()
-
-    fun selectNote(noteId: Int) {
-        mSelectedNoteId.value = noteId
+    fun addNote() {
+        mSelectedNoteId.value = -1
         mAddEditNoteEvent.call()
     }
 
-    fun getSelected(): MutableLiveData<Int> {
-        return mSelectedNoteId
+    fun selectNote(noteId: Int?) {
+        mSelectedNoteId.value = noteId
+        mAddEditNoteEvent.call()
     }
 
     private fun loadNotes() {
