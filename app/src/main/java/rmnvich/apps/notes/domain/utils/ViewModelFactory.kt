@@ -1,4 +1,4 @@
-package rmnvich.apps.notes.presentation.utils
+package rmnvich.apps.notes.domain.utils
 
 import android.app.Application
 import android.arch.lifecycle.ViewModel

@@ -3,18 +3,18 @@ package rmnvich.apps.notes.presentation.ui.fragment.addeditnote
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.databinding.DataBindingUtil
+import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.view.*
 import android.view.inputmethod.InputMethodManager
-import com.miguelcatalan.materialsearchview.MaterialSearchView
 import rmnvich.apps.notes.App
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.databinding.AddEditNoteFragmentBinding
 import rmnvich.apps.notes.di.addeditnote.AddEditNoteModule
 import rmnvich.apps.notes.presentation.ui.activity.MainActivity
-import rmnvich.apps.notes.presentation.utils.ViewModelFactory
+import rmnvich.apps.notes.domain.utils.ViewModelFactory
 import javax.inject.Inject
 
 
@@ -50,10 +50,7 @@ class AddEditNoteFragment : Fragment() {
         mAddEditNoteBinding.swipeRefreshLayout.setColorSchemeResources(
                 R.color.colorPrimary, R.color.colorAccent)
 
-        (activity as MainActivity).setSupportActionBar(mAddEditNoteBinding.toolbar)
-        mAddEditNoteBinding.toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
-        setHasOptionsMenu(true)
-
+        setupToolbar()
         return mAddEditNoteBinding.root
     }
 
@@ -76,14 +73,19 @@ class AddEditNoteFragment : Fragment() {
         dismissKeyboard()
     }
 
+    private fun setupToolbar() {
+        (activity as MainActivity).setSupportActionBar(mAddEditNoteBinding.toolbar)
+        mAddEditNoteBinding.toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+
+        setHasOptionsMenu(true)
+    }
+
     private fun showKeyboard() {
-        Handler().postDelayed({
-            mAddEditNoteBinding.etText.requestFocus()
-            val inputMethodManager = activity!!.getSystemService(
-                    Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED,
-                    InputMethodManager.HIDE_IMPLICIT_ONLY)
-        }, 400)
+        mAddEditNoteBinding.etText.requestFocus()
+        val inputMethodManager = activity!!.getSystemService(
+                Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED,
+                InputMethodManager.HIDE_IMPLICIT_ONLY)
     }
 
     private fun dismissKeyboard() {

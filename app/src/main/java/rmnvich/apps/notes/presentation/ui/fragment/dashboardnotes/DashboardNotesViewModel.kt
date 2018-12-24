@@ -9,8 +9,7 @@ import rmnvich.apps.notes.domain.interactors.dashboardnotes.DashboardNotesIntera
 import android.arch.lifecycle.MutableLiveData
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.domain.entity.Note
-import rmnvich.apps.notes.domain.interactors.Response
-import rmnvich.apps.notes.presentation.utils.SingleLiveEvent
+import rmnvich.apps.notes.domain.utils.SingleLiveEvent
 import rmnvich.apps.notes.presentation.utils.SnackbarMessage
 
 

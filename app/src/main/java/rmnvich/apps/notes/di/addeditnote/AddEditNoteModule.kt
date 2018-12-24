@@ -12,7 +12,7 @@ import rmnvich.apps.notes.di.global.scope.PerFragment
 import rmnvich.apps.notes.domain.interactors.addeditnote.AddEditNoteInteractor
 import rmnvich.apps.notes.domain.repositories.NotesRepository
 import rmnvich.apps.notes.domain.repositories.TagsRepository
-import rmnvich.apps.notes.presentation.utils.ViewModelFactory
+import rmnvich.apps.notes.domain.utils.ViewModelFactory
 
 @Module
 class AddEditNoteModule(private val application: Application) : BaseModule {

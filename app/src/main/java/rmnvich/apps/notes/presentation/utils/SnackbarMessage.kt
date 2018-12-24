@@ -3,6 +3,7 @@ package rmnvich.apps.notes.presentation.utils
 import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.Observer
 import android.support.annotation.StringRes
+import rmnvich.apps.notes.domain.utils.SingleLiveEvent
 
 class SnackbarMessage : SingleLiveEvent<Int>() {
 

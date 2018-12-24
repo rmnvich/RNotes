@@ -1,4 +1,4 @@
-package rmnvich.apps.notes.presentation.utils
+package rmnvich.apps.notes.domain.utils
 
 import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.MutableLiveData

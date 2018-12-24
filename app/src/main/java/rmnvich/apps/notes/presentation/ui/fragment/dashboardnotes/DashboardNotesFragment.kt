@@ -16,7 +16,7 @@ import rmnvich.apps.notes.domain.entity.Note
 import rmnvich.apps.notes.presentation.ui.activity.MainActivity
 import rmnvich.apps.notes.presentation.ui.fragment.addeditnote.AddEditNoteFragment
 import rmnvich.apps.notes.presentation.utils.DebugLogger
-import rmnvich.apps.notes.presentation.utils.ViewModelFactory
+import rmnvich.apps.notes.domain.utils.ViewModelFactory
 import javax.inject.Inject
 
 

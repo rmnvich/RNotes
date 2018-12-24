@@ -10,7 +10,7 @@ import rmnvich.apps.notes.di.global.base.BaseModule
 import rmnvich.apps.notes.di.global.scope.PerFragment
 import rmnvich.apps.notes.domain.interactors.dashboardnotes.DashboardNotesInteractor
 import rmnvich.apps.notes.domain.repositories.NotesRepository
-import rmnvich.apps.notes.presentation.utils.ViewModelFactory
+import rmnvich.apps.notes.domain.utils.ViewModelFactory
 
 @Module
 class DashboardNotesModule(private val application: Application) : BaseModule {

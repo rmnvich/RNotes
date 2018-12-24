@@ -74,6 +74,6 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
             android:onClick="@{(view) -> viewmodel.addNote()}"
-            android:src="@drawable/ic_action_add_inverted" />
+            android:src="@drawable/ic_action_create_inverted" />
     </android.support.design.widget.CoordinatorLayout>
 </layout>
