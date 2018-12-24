@@ -2,4 +2,9 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="iv_empty_size">120dp</dimen>
+    <dimen name="edittext_horizontal_padding">10dp</dimen>
+    <dimen name="img_button_margin">5dp</dimen>
+    <dimen name="img_button_padding">10dp</dimen>
+
+    <integer name="animation_duration">400</integer>
 </resources>

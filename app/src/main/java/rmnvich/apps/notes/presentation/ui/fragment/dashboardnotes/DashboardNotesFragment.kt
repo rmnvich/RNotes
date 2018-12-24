@@ -7,16 +7,13 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import rmnvich.apps.notes.App
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.databinding.DashboardNotesFragmentBinding
 import rmnvich.apps.notes.di.dashboardnotes.DashboardNotesModule
 import rmnvich.apps.notes.domain.entity.Note
-import rmnvich.apps.notes.domain.interactors.Response
-import rmnvich.apps.notes.domain.interactors.Status
+import rmnvich.apps.notes.presentation.ui.activity.MainActivity
 import rmnvich.apps.notes.presentation.ui.fragment.addeditnote.AddEditNoteFragment
 import rmnvich.apps.notes.presentation.utils.DebugLogger
 import rmnvich.apps.notes.presentation.utils.ViewModelFactory
@@ -55,46 +52,42 @@ class DashboardNotesFragment : Fragment() {
         mDashboardNotesBinding.swipeRefreshLayout.setColorSchemeResources(
                 R.color.colorPrimary, R.color.colorAccent)
 
+        (activity as MainActivity).setSupportActionBar(mDashboardNotesBinding.toolbar)
+        setHasOptionsMenu(true)
+
         return mDashboardNotesBinding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater?.inflate(R.menu.dashboard_menu, menu)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         mDashboardNotesViewModel.getNotes()?.observe(this,
-                Observer<Response<List<Note>>> { handleResponse(it!!) })
-        mDashboardNotesViewModel.mAddEditNoteEvent.observe(this,
+                Observer<List<Note>> { handleResponse(it!!) })
+        mDashboardNotesViewModel.getAddEditNoteEvent().observe(this,
                 Observer { handleAddNoteEvent() })
-
-        setupSnackbar()
+        observeSnackbar()
     }
 
-    private fun handleResponse(response: Response<List<Note>>) {
-        when (response.status) {
-            Status.LOADING -> mDashboardNotesViewModel.bIsShowingProgressBar.set(true)
-            Status.SUCCESS -> {
-                DebugLogger.log("List size = ${response.data?.size}")
-                mDashboardNotesViewModel.bIsShowingProgressBar.set(false)
-                mDashboardNotesViewModel.bDataIsEmpty.set(response.data?.isEmpty()!!)
-            }
-            Status.ERROR -> {
-                mDashboardNotesViewModel.bIsShowingProgressBar.set(false)
-                mDashboardNotesViewModel.showSnackbarMessage(R.string.error_message)
-            }
-        }
+    private fun handleResponse(response: List<Note>) {
+        DebugLogger.log("List size = ${response.size}")
     }
 
     private fun handleAddNoteEvent() {
         activity?.supportFragmentManager?.beginTransaction()
-                ?.setCustomAnimations(R.anim.anim_bottom_to_top_in, R.anim.anim_bottom_to_top_out,
-                        R.anim.anim_top_to_bottom_in, R.anim.anim_top_to_bottom_out)
+                ?.setCustomAnimations(R.anim.fade_in, android.R.anim.fade_out,
+                        R.anim.fade_in, R.anim.fade_out)
                 ?.replace(R.id.container, AddEditNoteFragment.newInstance())
                 ?.addToBackStack(null)
                 ?.commit()
     }
 
     //TODO: Make snackbar with action
-    private fun setupSnackbar() {
-        mDashboardNotesViewModel.mSnackbarMessage.observe(this, Observer {
+    private fun observeSnackbar() {
+        mDashboardNotesViewModel.getSnackbar().observe(this, Observer {
             Snackbar.make(mDashboardNotesBinding.root, getString(it!!),
                     Snackbar.LENGTH_LONG).show()
         })

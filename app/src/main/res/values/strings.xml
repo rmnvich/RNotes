@@ -1,12 +1,25 @@
 <resources>
     <string name="app_name">Notes</string>
 
+    <!-- NavigationDrawer menu -->
     <string name="title_notes">Notes</string>
     <string name="title_favorites">Favorites</string>
     <string name="title_tags">Tags</string>
     <string name="title_trash">Trash</string>
 
-    <string name="error_message">An error occurred. Try again</string>
-    <string name="empty">Empty</string>
+    <!-- DashboardFragment -->
     <string name="you_have_no_notes">You have no notes</string>
+    <string name="empty">Empty</string>
+    <string name="search">Search</string>
+    <string name="filter">Filter</string>
+
+    <!-- AddEditNoteFragment -->
+    <string name="tag">Tag</string>
+    <string name="color">Color</string>
+    <string name="add_note">Add note</string>
+    <string name="start_writing">Start writing</string>
+
+    <!-- Messages -->
+    <string name="error_message">An error occurred. Try again</string>
+
 </resources>
