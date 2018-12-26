@@ -75,8 +75,8 @@ class AddEditNoteFragment : Fragment() {
 
         sharedViewModel.getSelected().observe(this,
             Observer { noteId ->
-                if (noteId != -1)
-                    mAddEditNoteViewModel.getNote(noteId!!)
+                if (noteId != null)
+                    mAddEditNoteViewModel.getNote(noteId)
             })
         observeSnackbar()
         observeFab()

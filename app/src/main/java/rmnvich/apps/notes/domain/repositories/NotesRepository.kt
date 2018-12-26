@@ -11,7 +11,7 @@ interface NotesRepository {
 
     fun getAllFilteredByColorNotes(color: Int): Flowable<List<Note>>
 
-    fun getAllFilteredByTagNotes(tagName: String): Flowable<List<Note>>
+    fun getAllFilteredByTagNotes(tagId: Int): Flowable<List<Note>>
 
     fun getAllFavoriteNotes(): Flowable<List<Note>>
 

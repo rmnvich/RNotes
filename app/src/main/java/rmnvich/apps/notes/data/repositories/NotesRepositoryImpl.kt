@@ -23,8 +23,8 @@ class NotesRepositoryImpl(database: Database) : NotesRepository {
         return noteDao.getAllFilteredByColorNotes(color)
     }
 
-    override fun getAllFilteredByTagNotes(tagName: String): Flowable<List<Note>> {
-        return noteDao.getAllFilteredByTagNotes(tagName)
+    override fun getAllFilteredByTagNotes(tagId: Int): Flowable<List<Note>> {
+        return noteDao.getAllFilteredByTagNotes(tagId)
     }
 
     override fun getAllFavoriteNotes(): Flowable<List<Note>> {

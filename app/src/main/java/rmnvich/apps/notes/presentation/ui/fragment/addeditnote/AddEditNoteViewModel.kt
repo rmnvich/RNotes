@@ -27,7 +27,7 @@ class AddEditNoteViewModel(
 
     val noteText: ObservableField<String> = ObservableField("")
     val noteColor: ObservableField<Int> = ObservableField(DEFAULT_COLOR)
-    val noteTag: ObservableField<Tag> = ObservableField(Tag())
+    val noteTag: ObservableField<Int> = ObservableField(0)
 
     private val noteInsertedOrUpdated: SingleLiveEvent<Void> = SingleLiveEvent()
     private val mSnackbarMessage: SnackbarMessage = SnackbarMessage()
@@ -51,7 +51,7 @@ class AddEditNoteViewModel(
         }
         existsNote?.text = noteText.get()!!
         existsNote?.color = noteColor.get()!!
-        existsNote?.tag = noteTag.get()!!
+        existsNote?.tagId = noteTag.get()!!
         existsNote?.timestamp = DateHelper.getCurrentTimeInMills()
 
         disposables.add(addEditNoteNotesInteractor.insertOrUpdateNote(existsNote!!)

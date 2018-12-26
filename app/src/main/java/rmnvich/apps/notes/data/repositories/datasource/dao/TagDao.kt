@@ -8,10 +8,10 @@ import rmnvich.apps.notes.domain.entity.Tag
 @Dao
 interface TagDao {
 
-    @Query("SELECT * FROM tag ORDER BY tagId DESC")
+    @Query("SELECT * FROM tag ORDER BY id DESC")
     fun getAllTags(): Flowable<List<Tag>>
 
-    @Query("SELECT * FROM tag WHERE tagId = :tagId")
+    @Query("SELECT * FROM tag WHERE id = :tagId")
     fun getTagById(tagId: Int): Single<Tag>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

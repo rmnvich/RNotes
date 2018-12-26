@@ -14,13 +14,13 @@ interface NoteDao {
     @Query("SELECT * FROM note WHERE color LIKE :color ORDER BY timestamp DESC")
     fun getAllFilteredByColorNotes(color: Int): Flowable<List<Note>>
 
-    @Query("SELECT * FROM note WHERE name LIKE :tagName ORDER BY timestamp DESC")
-    fun getAllFilteredByTagNotes(tagName: String): Flowable<List<Note>>
+    @Query("SELECT * FROM note WHERE tagId LIKE :tagId ORDER BY timestamp DESC")
+    fun getAllFilteredByTagNotes(tagId: Int): Flowable<List<Note>>
 
     @Query("SELECT * FROM note WHERE isFavorite LIKE :isFavorite ORDER BY timestamp DESC")
     fun getAllFavoritesNotes(isFavorite: Boolean): Flowable<List<Note>>
 
-    @Query("SELECT * FROM note WHERE noteId = :noteId")
+    @Query("SELECT * FROM note WHERE id = :noteId")
     fun getNoteById(noteId: Int): Single<Note>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

@@ -13,10 +13,11 @@ import rmnvich.apps.notes.domain.utils.SingleLiveEvent
 import rmnvich.apps.notes.presentation.utils.SnackbarMessage
 
 
-class DashboardNotesViewModel(private val applicationContext: Application,
-                              private val disposables: CompositeDisposable,
-                              private val dashboardNotesInteractor: DashboardNotesInteractor)
-    : AndroidViewModel(applicationContext) {
+class DashboardNotesViewModel(
+    private val applicationContext: Application,
+    private val disposables: CompositeDisposable,
+    private val dashboardNotesInteractor: DashboardNotesInteractor
+) : AndroidViewModel(applicationContext) {
 
     val bIsShowingProgressBar: ObservableBoolean = ObservableBoolean(false)
     val bDataIsEmpty: ObservableBoolean = ObservableBoolean(false)
@@ -43,7 +44,7 @@ class DashboardNotesViewModel(private val applicationContext: Application,
     fun getAddEditNoteEvent(): SingleLiveEvent<Void> = mAddEditNoteEvent
 
     fun addNote() {
-        mSelectedNoteId.value = -1
+        mSelectedNoteId.value = null
         mAddEditNoteEvent.call()
     }
 
@@ -54,15 +55,15 @@ class DashboardNotesViewModel(private val applicationContext: Application,
 
     private fun loadNotes() {
         disposables.add(dashboardNotesInteractor.getAllNotes()
-                .doOnSubscribe { bIsShowingProgressBar.set(true) }
-                .subscribe({
-                    bIsShowingProgressBar.set(false)
-                    bDataIsEmpty.set(it.isEmpty())
-                    mResponse?.value = it
-                }, {
-                    bIsShowingProgressBar.set(false)
-                    showSnackbarMessage(R.string.error_message)
-                })
+            .doOnSubscribe { bIsShowingProgressBar.set(true) }
+            .subscribe({
+                bIsShowingProgressBar.set(false)
+                bDataIsEmpty.set(it.isEmpty())
+                mResponse?.value = it
+            }, {
+                bIsShowingProgressBar.set(false)
+                showSnackbarMessage(R.string.error_message)
+            })
         )
     }
 
