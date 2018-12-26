@@ -5,8 +5,10 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.os.Handler
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import android.view.*
 import rmnvich.apps.notes.App
 import rmnvich.apps.notes.R
@@ -17,14 +19,17 @@ import rmnvich.apps.notes.presentation.ui.activity.MainActivity
 import rmnvich.apps.notes.presentation.ui.fragment.addeditnote.AddEditNoteFragment
 import rmnvich.apps.notes.presentation.utils.DebugLogger
 import rmnvich.apps.notes.domain.utils.ViewModelFactory
+import rmnvich.apps.notes.presentation.ui.adapter.dashboard.NotesAdapter
 import javax.inject.Inject
-import kotlin.random.Random
 
 
 class DashboardNotesFragment : Fragment() {
 
     @Inject
     lateinit var mViewModelFactory: ViewModelFactory
+
+    @Inject
+    lateinit var mAdapter: NotesAdapter
 
     private lateinit var mDashboardNotesViewModel: DashboardNotesViewModel
     private lateinit var mDashboardNotesBinding: DashboardNotesFragmentBinding
@@ -53,6 +58,10 @@ class DashboardNotesFragment : Fragment() {
         mDashboardNotesBinding.swipeRefreshLayout.setColorSchemeResources(
                 R.color.colorPrimary, R.color.colorAccent)
 
+        mDashboardNotesBinding.recyclerNotes.layoutManager = LinearLayoutManager(context,
+                LinearLayoutManager.VERTICAL, false)
+        mDashboardNotesBinding.recyclerNotes.adapter = mAdapter
+
         (activity as MainActivity).setSupportActionBar(mDashboardNotesBinding.toolbar)
         setHasOptionsMenu(true)
 
@@ -65,27 +74,28 @@ class DashboardNotesFragment : Fragment() {
     }
 
     //TODO: id from adapter
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
-            R.id.menu_filter -> mDashboardNotesViewModel.selectNote(Random.nextInt())
-        }
-        return super.onOptionsItemSelected(item)
-    }
+//    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+//        when (item?.itemId) {
+//            R.id.menu_filter -> mDashboardNotesViewModel.selectNote(Random.nextInt())
+//        }
+//        return super.onOptionsItemSelected(item)
+//    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         mDashboardNotesViewModel.getNotes()?.observe(this,
                 Observer<List<Note>> { handleResponse(it!!) })
         mDashboardNotesViewModel.getAddEditNoteEvent().observe(this,
-                Observer { handleAddNoteEvent() })
+                Observer { handleAddEditNoteEvent() })
         observeSnackbar()
     }
 
     private fun handleResponse(response: List<Note>) {
-        DebugLogger.log("List size = ${response.size}")
+        mAdapter.setData(response)
+        mDashboardNotesBinding.recyclerNotes.scrollToPosition(0)
     }
 
-    private fun handleAddNoteEvent() {
+    private fun handleAddEditNoteEvent() {
         activity?.supportFragmentManager?.beginTransaction()
                 ?.setCustomAnimations(R.anim.fade_in, android.R.anim.fade_out,
                         R.anim.fade_in, R.anim.fade_out)

@@ -11,7 +11,7 @@ import rmnvich.apps.notes.domain.repositories.NotesRepository
 import rmnvich.apps.notes.presentation.utils.DebugLogger
 import java.util.concurrent.TimeUnit
 
-class DashboardNotesInteractor(
+open class DashboardNotesInteractor(
     private val notesRepository: NotesRepository,
     private val schedulersProvider: SchedulersProvider
 ) {
@@ -39,8 +39,8 @@ class DashboardNotesInteractor(
             .observeOn(schedulersProvider.ui())
     }
 
-    fun getAllFilteredByTagNotes(tagName: String): Flowable<List<Note>> {
-        return notesRepository.getAllFilteredByTagNotes(tagName)
+    fun getAllFilteredByTagNotes(tagId: Int): Flowable<List<Note>> {
+        return notesRepository.getAllFilteredByTagNotes(tagId)
             .subscribeOn(schedulersProvider.io())
             .delay(Constants.DEFAULT_DELAY, TimeUnit.MILLISECONDS)
             .observeOn(schedulersProvider.ui())

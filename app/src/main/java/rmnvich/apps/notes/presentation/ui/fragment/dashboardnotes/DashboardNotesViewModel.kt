@@ -7,20 +7,23 @@ import android.databinding.ObservableBoolean
 import io.reactivex.disposables.CompositeDisposable
 import rmnvich.apps.notes.domain.interactors.dashboardnotes.DashboardNotesInteractor
 import android.arch.lifecycle.MutableLiveData
+import android.os.Debug
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.domain.entity.Note
 import rmnvich.apps.notes.domain.utils.SingleLiveEvent
+import rmnvich.apps.notes.presentation.utils.DebugLogger
 import rmnvich.apps.notes.presentation.utils.SnackbarMessage
 
 
 class DashboardNotesViewModel(
     private val applicationContext: Application,
-    private val disposables: CompositeDisposable,
     private val dashboardNotesInteractor: DashboardNotesInteractor
 ) : AndroidViewModel(applicationContext) {
 
     val bIsShowingProgressBar: ObservableBoolean = ObservableBoolean(false)
     val bDataIsEmpty: ObservableBoolean = ObservableBoolean(false)
+
+    private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
 
     private val mSelectedNoteId: MutableLiveData<Int> = MutableLiveData()
 
@@ -54,7 +57,7 @@ class DashboardNotesViewModel(
     }
 
     private fun loadNotes() {
-        disposables.add(dashboardNotesInteractor.getAllNotes()
+        mCompositeDisposable.add(dashboardNotesInteractor.getAllNotes()
             .doOnSubscribe { bIsShowingProgressBar.set(true) }
             .subscribe({
                 bIsShowingProgressBar.set(false)
@@ -73,6 +76,7 @@ class DashboardNotesViewModel(
 
     override fun onCleared() {
         super.onCleared()
-        disposables.clear()
+        mCompositeDisposable.dispose()
+        mCompositeDisposable.clear()
     }
 }

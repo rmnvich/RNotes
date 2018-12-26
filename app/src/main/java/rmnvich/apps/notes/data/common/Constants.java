@@ -6,9 +6,9 @@ public class Constants {
 
     public static String LOG_TAG = "qwe";
 
-    public static String DATABASE_NAME = "test_database1";
+    public static String DATABASE_NAME = "test_database2";
 
-    public static long DEFAULT_DELAY = 1000;
+    public static long DEFAULT_DELAY = 150;
 
     public static int DEFAULT_COLOR = R.color.colorPrimary;
 }

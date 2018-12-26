@@ -20,7 +20,7 @@ interface NoteDao {
     @Query("SELECT * FROM note WHERE isFavorite LIKE :isFavorite ORDER BY timestamp DESC")
     fun getAllFavoritesNotes(isFavorite: Boolean): Flowable<List<Note>>
 
-    @Query("SELECT * FROM note WHERE id = :noteId")
+    @Query("SELECT * FROM note WHERE noteId = :noteId")
     fun getNoteById(noteId: Int): Single<Note>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

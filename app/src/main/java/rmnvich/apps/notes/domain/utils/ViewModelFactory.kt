@@ -50,8 +50,7 @@ class ViewModelFactory : ViewModelProvider.NewInstanceFactory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(DashboardNotesViewModel::class.java) ->
-                DashboardNotesViewModel(mApplication, CompositeDisposable(),
-                        mDashboardNotesInteractor) as T
+                DashboardNotesViewModel(mApplication, mDashboardNotesInteractor) as T
             modelClass.isAssignableFrom(AddEditNoteViewModel::class.java) ->
                 AddEditNoteViewModel(mApplication, CompositeDisposable(),
                         mAddEditNoteInteractor) as T

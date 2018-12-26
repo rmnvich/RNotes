@@ -94,9 +94,7 @@ class AddEditNoteFragment : Fragment() {
 
     private fun observeFab() {
         mAddEditNoteViewModel.getInsertNoteEvent().observe(this,
-            Observer {
-                activity?.onBackPressed()
-            })
+            Observer { activity?.onBackPressed() })
     }
 
     private fun observeSnackbar() {
