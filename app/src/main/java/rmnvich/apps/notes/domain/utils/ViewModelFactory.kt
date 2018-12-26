@@ -52,8 +52,7 @@ class ViewModelFactory : ViewModelProvider.NewInstanceFactory {
             modelClass.isAssignableFrom(DashboardNotesViewModel::class.java) ->
                 DashboardNotesViewModel(mApplication, mDashboardNotesInteractor) as T
             modelClass.isAssignableFrom(AddEditNoteViewModel::class.java) ->
-                AddEditNoteViewModel(mApplication, CompositeDisposable(),
-                        mAddEditNoteInteractor) as T
+                AddEditNoteViewModel(mApplication, mAddEditNoteInteractor) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }

@@ -14,6 +14,7 @@ import java.util.*
 
 class NotesAdapter : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
 
+    private lateinit var mClickListener: OnClickNoteListener
     private var mNoteList: List<Note> = LinkedList()
 
     fun setData(data: List<Note>) {
@@ -26,7 +27,7 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding: ItemNoteBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context),
-            R.layout.item_note, parent, false)
+                R.layout.item_note, parent, false)
         return ViewHolder(binding)
     }
 
@@ -45,12 +46,31 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
         view.startAnimation(anim)
     }
 
+    interface OnClickNoteListener {
+        fun onClickNote(noteId: Int)
+    }
+
+    fun setClickListener(listener: OnClickNoteListener) {
+        mClickListener = listener
+    }
+
+    inline fun setOnItemClickLIstener(crossinline onClickNote: (Int) -> Unit) {
+        setClickListener(object : OnClickNoteListener {
+            override fun onClickNote(noteId: Int) {
+                onClickNote(noteId)
+            }
+        })
+    }
+
     inner class ViewHolder(
-        private val binding: ItemNoteBinding
+            private val binding: ItemNoteBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.root.setOnClickListener {}
+            binding.root.setOnClickListener {
+                mClickListener.onClickNote(
+                        mNoteList[adapterPosition].noteId)
+            }
         }
 
         fun bind(note: Note) {

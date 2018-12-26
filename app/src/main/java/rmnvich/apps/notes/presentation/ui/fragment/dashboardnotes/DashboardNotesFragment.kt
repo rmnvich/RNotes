@@ -61,6 +61,7 @@ class DashboardNotesFragment : Fragment() {
         mDashboardNotesBinding.recyclerNotes.layoutManager = LinearLayoutManager(context,
                 LinearLayoutManager.VERTICAL, false)
         mDashboardNotesBinding.recyclerNotes.adapter = mAdapter
+        mAdapter.setOnItemClickLIstener { mDashboardNotesViewModel.selectNote(it) }
 
         (activity as MainActivity).setSupportActionBar(mDashboardNotesBinding.toolbar)
         setHasOptionsMenu(true)
@@ -72,14 +73,6 @@ class DashboardNotesFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
         inflater?.inflate(R.menu.dashboard_menu, menu)
     }
-
-    //TODO: id from adapter
-//    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-//        when (item?.itemId) {
-//            R.id.menu_filter -> mDashboardNotesViewModel.selectNote(Random.nextInt())
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

@@ -6,7 +6,6 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
-import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.data.common.Constants.DEFAULT_COLOR
@@ -19,7 +18,6 @@ import rmnvich.apps.notes.presentation.utils.SnackbarMessage
 
 class AddEditNoteViewModel(
         private val applicationContext: Application,
-        private val disposables: CompositeDisposable,
         private val addEditNoteNotesInteractor: AddEditNoteInteractor
 ) : AndroidViewModel(applicationContext) {
 
@@ -28,6 +26,8 @@ class AddEditNoteViewModel(
     val noteText: ObservableField<String> = ObservableField("")
     val noteColor: ObservableField<Int> = ObservableField(DEFAULT_COLOR)
     val noteTag: ObservableField<Tag> = ObservableField()
+
+    private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
 
     private val noteInsertedOrUpdated: SingleLiveEvent<Void> = SingleLiveEvent()
     private val mSnackbarMessage: SnackbarMessage = SnackbarMessage()
@@ -46,42 +46,50 @@ class AddEditNoteViewModel(
     }
 
     fun insertOrUpdateNote() {
-        if (existsNote == null)
+        if (existsNote == null) {
             existsNote = Note()
+            existsNote?.timestamp =
+                    DateHelper.getCurrentTimeInMills()
+        }
 
         existsNote?.text = noteText.get()!!
         existsNote?.color = noteColor.get()!!
-        existsNote?.timestamp = DateHelper.getCurrentTimeInMills()
+
         if (noteTag.get() != null)
             existsNote?.tag = noteTag.get()!!
 
         if (existsNote?.text?.isEmpty()!!) {
             showSnackbarMessage(R.string.empty_note_error)
         } else {
-            disposables.add(addEditNoteNotesInteractor
+            mCompositeDisposable.add(addEditNoteNotesInteractor
                     .insertOrUpdateNote(existsNote!!)
                     .subscribe {
                         noteInsertedOrUpdated.call()
                     }
             )
-            noteText.set("")
-            noteColor.set(DEFAULT_COLOR)
-            noteTag.set(null)
+            setObservableFields("", DEFAULT_COLOR, null)
         }
     }
 
     private fun loadNote(noteId: Int) {
-        disposables.add(addEditNoteNotesInteractor.getNoteById(noteId)
+        mCompositeDisposable.add(addEditNoteNotesInteractor.getNoteById(noteId)
                 .doOnSubscribe { bIsShowingProgressBar.set(true) }
                 .subscribe({
                     bIsShowingProgressBar.set(false)
                     mResponse.value = it
                     existsNote = it
+                    setObservableFields(it.text, it.color, it.tag)
                 }, {
                     bIsShowingProgressBar.set(false)
                     showSnackbarMessage(R.string.error_message)
                 })
         )
+    }
+
+    private fun setObservableFields(noteText: String, noteColor: Int, noteTag: Tag?) {
+        this.noteText.set(noteText)
+        this.noteColor.set(noteColor)
+        this.noteTag.set(noteTag)
     }
 
     private fun showSnackbarMessage(message: Int?) {
@@ -90,6 +98,6 @@ class AddEditNoteViewModel(
 
     override fun onCleared() {
         super.onCleared()
-        disposables.clear()
+        mCompositeDisposable.clear()
     }
 }
