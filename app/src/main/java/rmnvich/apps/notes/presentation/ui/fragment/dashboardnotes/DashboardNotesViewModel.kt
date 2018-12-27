@@ -25,7 +25,7 @@ class DashboardNotesViewModel(
 
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
 
-    private val mSelectedNoteId: MutableLiveData<Int> = MutableLiveData()
+    private val mSelectedNoteId: SingleLiveEvent<Int> = SingleLiveEvent()
 
     private val mSnackbarMessage: SnackbarMessage = SnackbarMessage()
     private val mAddEditNoteEvent = SingleLiveEvent<Void>()
@@ -42,9 +42,9 @@ class DashboardNotesViewModel(
 
     fun getSnackbar(): SnackbarMessage = mSnackbarMessage
 
-    fun getSelected(): MutableLiveData<Int> = mSelectedNoteId
+    fun getEditNoteEvent(): SingleLiveEvent<Int> = mSelectedNoteId
 
-    fun getAddEditNoteEvent(): SingleLiveEvent<Void> = mAddEditNoteEvent
+    fun getAddNoteEvent(): SingleLiveEvent<Void> = mAddEditNoteEvent
 
     fun addNote() = mAddEditNoteEvent.call()
 

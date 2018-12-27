@@ -15,13 +15,13 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginVertical="5dp"
+        android:layout_marginHorizontal="@dimen/item_note_horizontal_margin"
+        android:layout_marginVertical="@dimen/item_note_vertical_margin"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?attr/selectableItemBackground"
-        app:cardCornerRadius="10dp"
-        app:contentPadding="10dp"
+        app:cardCornerRadius="@dimen/item_note_card_corner_radius"
+        app:contentPadding="@dimen/item_note_card_padding"
         tools:targetApi="o">
 
         <android.support.constraint.ConstraintLayout
@@ -43,7 +43,7 @@
                 style="@style/TextAppearance.Compat.Notification.Time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/item_note_timestamp_margin_top"
                 android:alpha="0.9"
                 android:text="@{DateHelper.convertLongTimeToString(note.timestamp)}"
                 app:layout_constraintTop_toBottomOf="@id/note_text" />

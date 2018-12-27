@@ -5,6 +5,11 @@
     <dimen name="edittext_horizontal_padding">10dp</dimen>
     <dimen name="img_button_margin">5dp</dimen>
     <dimen name="img_button_padding">10dp</dimen>
+    <dimen name="item_note_horizontal_margin">10dp</dimen>
+    <dimen name="item_note_vertical_margin">5dp</dimen>
+    <dimen name="item_note_card_corner_radius">10dp</dimen>
+    <dimen name="item_note_card_padding">10dp</dimen>
+    <dimen name="item_note_timestamp_margin_top">5dp</dimen>
 
     <integer name="animation_duration">400</integer>
 </resources>

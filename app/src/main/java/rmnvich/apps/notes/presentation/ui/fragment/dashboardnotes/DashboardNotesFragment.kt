@@ -85,9 +85,9 @@ class DashboardNotesFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         mDashboardNotesViewModel.getNotes()?.observe(this,
             Observer<List<Note>> { handleResponse(it!!) })
-        mDashboardNotesViewModel.getAddEditNoteEvent().observe(this,
+        mDashboardNotesViewModel.getAddNoteEvent().observe(this,
             Observer { handleAddEditNoteEvent(-1) })
-        mDashboardNotesViewModel.getSelected().observe(this,
+        mDashboardNotesViewModel.getEditNoteEvent().observe(this,
             Observer { handleAddEditNoteEvent(it!!) })
         observeSnackbar()
     }
