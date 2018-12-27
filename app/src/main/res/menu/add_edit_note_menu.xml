@@ -4,13 +4,13 @@
 
     <item
         android:id="@+id/menu_color"
-        android:icon="@drawable/ic_action_color_inverted"
+        android:icon="@drawable/ic_action_color"
         android:title="@string/color"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/menu_tag"
-        android:icon="@drawable/ic_action_label_inverted"
+        android:icon="@drawable/ic_action_label_gray"
         android:title="@string/tag"
         app:showAsAction="always" />
 </menu>

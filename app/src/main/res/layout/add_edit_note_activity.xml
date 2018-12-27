@@ -9,7 +9,7 @@
 
         <variable
                 name="viewmodel"
-                type="rmnvich.apps.notes.presentation.ui.fragment.addeditnote.AddEditNoteViewModel"/>
+                type="rmnvich.apps.notes.presentation.ui.activity.addeditnote.AddEditNoteViewModel"/>
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -25,9 +25,9 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/colorPrimary"
-                    app:navigationIcon="@drawable/ic_action_arrow_back_inverted"
-                    app:titleTextColor="@color/colorPrimary"/>
+                    android:background="@color/colorWhite"
+                    app:navigationIcon="@drawable/ic_action_arrow_back"
+                    app:titleTextColor="@color/colorWhite"/>
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v4.widget.SwipeRefreshLayout

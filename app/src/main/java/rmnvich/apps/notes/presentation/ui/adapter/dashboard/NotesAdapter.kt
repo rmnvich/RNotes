@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import rmnvich.apps.notes.R
+import rmnvich.apps.notes.data.common.Constants.DEFAULT_ANIM_DURATION
 import rmnvich.apps.notes.databinding.ItemNoteBinding
 import rmnvich.apps.notes.domain.entity.Note
 import java.util.*
@@ -41,8 +42,8 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
     }
 
     private fun setFadeAnimation(view: View) {
-        val anim = AlphaAnimation(0.0f, 1.0f)
-        anim.duration = 450
+        val anim = AlphaAnimation(0.5f, 1.0f)
+        anim.duration = DEFAULT_ANIM_DURATION
         view.startAnimation(anim)
     }
 

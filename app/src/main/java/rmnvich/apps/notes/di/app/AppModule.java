@@ -2,7 +2,6 @@ package rmnvich.apps.notes.di.app;
 
 import android.arch.persistence.room.Room;
 import android.content.Context;
-
 import dagger.Module;
 import dagger.Provides;
 import dagger.multibindings.ClassKey;
@@ -12,7 +11,7 @@ import rmnvich.apps.notes.di.addeditnote.AddEditNoteComponent;
 import rmnvich.apps.notes.di.dashboardnotes.DashboardNotesComponent;
 import rmnvich.apps.notes.di.global.base.BaseComponentBuilder;
 import rmnvich.apps.notes.di.global.scope.PerApplication;
-import rmnvich.apps.notes.presentation.ui.fragment.addeditnote.AddEditNoteFragment;
+import rmnvich.apps.notes.presentation.ui.activity.addeditnote.AddEditNoteActivity;
 import rmnvich.apps.notes.presentation.ui.fragment.dashboardnotes.DashboardNotesFragment;
 
 import static rmnvich.apps.notes.data.common.Constants.DATABASE_NAME;
@@ -47,7 +46,7 @@ public class AppModule {
 
     @Provides
     @IntoMap
-    @ClassKey(AddEditNoteFragment.class)
+    @ClassKey(AddEditNoteActivity.class)
     BaseComponentBuilder provideAddEditNoteFragment(AddEditNoteComponent.Builder builder) {
         return builder;
     }

@@ -1,4 +1,4 @@
-package rmnvich.apps.notes.presentation.ui.activity
+package rmnvich.apps.notes.presentation.ui.activity.main
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -15,6 +15,10 @@ class MainActivity : AppCompatActivity() {
                     .replace(R.id.container, DashboardNotesFragment.newInstance())
                     .commitNow()
         }
+    }
+
+    override fun onBackPressed() {
+        supportFragmentManager.popBackStackImmediate()
     }
 
 }

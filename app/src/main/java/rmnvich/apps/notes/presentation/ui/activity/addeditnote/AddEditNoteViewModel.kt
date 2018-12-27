@@ -1,4 +1,4 @@
-package rmnvich.apps.notes.presentation.ui.fragment.addeditnote
+package rmnvich.apps.notes.presentation.ui.activity.addeditnote
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
@@ -40,11 +40,6 @@ class AddEditNoteViewModel(
 
     fun getInsertNoteEvent(): SingleLiveEvent<Void> = noteInsertedOrUpdated
 
-    fun getNote(noteId: Int): LiveData<Note> {
-        loadNote(noteId)
-        return mResponse
-    }
-
     fun insertOrUpdateNote() {
         if (existsNote == null) {
             existsNote = Note()
@@ -63,21 +58,19 @@ class AddEditNoteViewModel(
         } else {
             mCompositeDisposable.add(addEditNoteNotesInteractor
                     .insertOrUpdateNote(existsNote!!)
-                    .subscribe {
-                        noteInsertedOrUpdated.call()
-                    }
+                    .subscribe { noteInsertedOrUpdated.call() }
             )
-            setObservableFields("", DEFAULT_COLOR, null)
         }
     }
 
-    private fun loadNote(noteId: Int) {
+    fun loadNote(noteId: Int) {
         mCompositeDisposable.add(addEditNoteNotesInteractor.getNoteById(noteId)
                 .doOnSubscribe { bIsShowingProgressBar.set(true) }
                 .subscribe({
                     bIsShowingProgressBar.set(false)
                     mResponse.value = it
                     existsNote = it
+
                     setObservableFields(it.text, it.color, it.tag)
                 }, {
                     bIsShowingProgressBar.set(false)

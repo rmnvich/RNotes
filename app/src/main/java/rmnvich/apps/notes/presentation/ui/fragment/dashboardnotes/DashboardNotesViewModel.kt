@@ -46,14 +46,10 @@ class DashboardNotesViewModel(
 
     fun getAddEditNoteEvent(): SingleLiveEvent<Void> = mAddEditNoteEvent
 
-    fun addNote() {
-        mSelectedNoteId.value = null
-        mAddEditNoteEvent.call()
-    }
+    fun addNote() = mAddEditNoteEvent.call()
 
-    fun selectNote(noteId: Int?) {
+    fun editNote(noteId: Int?) {
         mSelectedNoteId.value = noteId
-        mAddEditNoteEvent.call()
     }
 
     private fun loadNotes() {
