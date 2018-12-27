@@ -13,4 +13,7 @@ public class Constants {
     public static int DEFAULT_COLOR = R.color.colorPrimary;
 
     public static String EXTRA_NOTE_ID = "note_id";
+
+    public static int REQUEST_CODE_ADD_NOTE = 1;
+    public static int REQUEST_CODE_EDIT_NOTE = 2;
 }

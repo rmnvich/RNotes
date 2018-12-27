@@ -67,8 +67,8 @@ class AddEditNoteViewModel(
                 .subscribe({
                     bIsShowingProgressBar.set(false)
                     mResponse.value = it
-                    existsNote = it
 
+                    existsNote = it
                     setObservableFields(it.text, it.color, it.tag)
                 }, {
                     bIsShowingProgressBar.set(false)
@@ -89,6 +89,7 @@ class AddEditNoteViewModel(
 
     override fun onCleared() {
         super.onCleared()
+        mCompositeDisposable.dispose()
         mCompositeDisposable.clear()
     }
 }

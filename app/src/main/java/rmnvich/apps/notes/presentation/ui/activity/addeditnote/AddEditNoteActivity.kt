@@ -1,5 +1,6 @@
 package rmnvich.apps.notes.presentation.ui.activity.addeditnote
 
+import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
@@ -27,19 +28,19 @@ class AddEditNoteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mAddEditNoteBinding = DataBindingUtil.setContentView(this, R.layout.add_edit_note_activity)
         App.getApp(applicationContext).componentsHolder
-            .getComponent(javaClass, AddEditNoteModule(application))
-            ?.inject(this)
+                .getComponent(javaClass, AddEditNoteModule(application))
+                ?.inject(this)
     }
 
     @Inject
     fun init() {
         mAddEditNoteViewModel = ViewModelProviders.of(this, mViewModelFactory)
-            .get(AddEditNoteViewModel::class.java)
+                .get(AddEditNoteViewModel::class.java)
         mAddEditNoteBinding.viewmodel = mAddEditNoteViewModel
 
         mAddEditNoteBinding.swipeRefreshLayout.isEnabled = false
         mAddEditNoteBinding.swipeRefreshLayout.setColorSchemeResources(
-            R.color.colorPrimary, R.color.colorAccent
+                R.color.colorPrimary, R.color.colorAccent
         )
 
         setSupportActionBar(mAddEditNoteBinding.toolbar)
@@ -62,17 +63,17 @@ class AddEditNoteActivity : AppCompatActivity() {
 
     private fun observeFab() {
         mAddEditNoteViewModel.getInsertNoteEvent().observe(this,
-            Observer { onBackPressed() })
+                Observer { onBackPressed() })
     }
 
     private fun observeSnackbar() {
         mAddEditNoteViewModel.getSnackbar().observe(this,
-            Observer {
-                Snackbar.make(
-                    mAddEditNoteBinding.root, getString(it!!),
-                    Snackbar.LENGTH_LONG
-                ).show()
-            })
+                Observer {
+                    Snackbar.make(
+                            mAddEditNoteBinding.root, getString(it!!),
+                            Snackbar.LENGTH_LONG
+                    ).show()
+                })
     }
 
     override fun onBackPressed() {
@@ -83,7 +84,7 @@ class AddEditNoteActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         App.getApp(applicationContext).componentsHolder
-            .releaseComponent(javaClass)
+                .releaseComponent(javaClass)
     }
 
 }

@@ -1,5 +1,6 @@
 package rmnvich.apps.notes.presentation.ui.fragment.dashboardnotes
 
+import android.app.Activity.RESULT_OK
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
@@ -9,6 +10,7 @@ import rmnvich.apps.notes.domain.interactors.dashboardnotes.DashboardNotesIntera
 import android.arch.lifecycle.MutableLiveData
 import android.os.Debug
 import rmnvich.apps.notes.R
+import rmnvich.apps.notes.data.common.Constants.REQUEST_CODE_ADD_NOTE
 import rmnvich.apps.notes.domain.entity.Note
 import rmnvich.apps.notes.domain.utils.SingleLiveEvent
 import rmnvich.apps.notes.presentation.utils.DebugLogger
@@ -23,12 +25,15 @@ class DashboardNotesViewModel(
     val bIsShowingProgressBar: ObservableBoolean = ObservableBoolean(false)
     val bDataIsEmpty: ObservableBoolean = ObservableBoolean(false)
 
+    var bRecyclerIsScroll: Boolean = false
+
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
 
     private val mSelectedNoteId: SingleLiveEvent<Int> = SingleLiveEvent()
 
-    private val mSnackbarMessage: SnackbarMessage = SnackbarMessage()
     private val mAddEditNoteEvent = SingleLiveEvent<Void>()
+
+    private val mSnackbarMessage: SnackbarMessage = SnackbarMessage()
 
     private var mResponse: MutableLiveData<List<Note>>? = null
 
@@ -46,10 +51,14 @@ class DashboardNotesViewModel(
 
     fun getAddNoteEvent(): SingleLiveEvent<Void> = mAddEditNoteEvent
 
-    fun addNote() = mAddEditNoteEvent.call()
+    fun addNote() {
+        mAddEditNoteEvent.call()
+        bRecyclerIsScroll = true
+    }
 
     fun editNote(noteId: Int?) {
         mSelectedNoteId.value = noteId
+        bRecyclerIsScroll = false
     }
 
     private fun loadNotes() {
