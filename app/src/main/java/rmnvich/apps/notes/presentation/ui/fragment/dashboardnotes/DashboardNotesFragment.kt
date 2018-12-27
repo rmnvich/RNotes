@@ -1,6 +1,5 @@
 package rmnvich.apps.notes.presentation.ui.fragment.dashboardnotes
 
-import android.app.ActivityOptions
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
@@ -8,11 +7,9 @@ import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
-import kotlinx.android.synthetic.main.item_note.view.*
 import rmnvich.apps.notes.App
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.data.common.Constants.EXTRA_NOTE_ID
@@ -20,9 +17,9 @@ import rmnvich.apps.notes.databinding.DashboardNotesFragmentBinding
 import rmnvich.apps.notes.di.dashboardnotes.DashboardNotesModule
 import rmnvich.apps.notes.domain.entity.Note
 import rmnvich.apps.notes.domain.utils.ViewModelFactory
+import rmnvich.apps.notes.presentation.ui.activity.addeditnote.AddEditNoteActivity
 import rmnvich.apps.notes.presentation.ui.activity.main.MainActivity
 import rmnvich.apps.notes.presentation.ui.adapter.dashboard.NotesAdapter
-import rmnvich.apps.notes.presentation.ui.activity.addeditnote.AddEditNoteActivity
 import javax.inject.Inject
 
 
@@ -95,10 +92,7 @@ class DashboardNotesFragment : Fragment() {
         observeSnackbar()
     }
 
-    private fun handleResponse(response: List<Note>) {
-        mAdapter.setData(response)
-        mDashboardNotesBinding.recyclerNotes.scrollToPosition(0)
-    }
+    private fun handleResponse(response: List<Note>) = mAdapter.setData(response)
 
     private fun handleAddEditNoteEvent(noteId: Int) {
         val intent = Intent(activity, AddEditNoteActivity::class.java)

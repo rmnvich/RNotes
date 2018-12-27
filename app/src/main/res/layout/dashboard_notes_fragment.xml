@@ -25,7 +25,8 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:title="@string/app_name"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:title="@string/dashboard_title"
                 app:titleTextColor="@android:color/white" />
         </android.support.design.widget.AppBarLayout>
 

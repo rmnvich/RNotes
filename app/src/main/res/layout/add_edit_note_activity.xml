@@ -1,72 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
-        <import type="android.view.View"/>
+        <import type="android.view.View" />
 
         <variable
-                name="viewmodel"
-                type="rmnvich.apps.notes.presentation.ui.activity.addeditnote.AddEditNoteViewModel"/>
+            name="viewmodel"
+            type="rmnvich.apps.notes.presentation.ui.activity.addeditnote.AddEditNoteViewModel" />
     </data>
 
     <android.support.design.widget.CoordinatorLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/white">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white">
 
         <android.support.design.widget.AppBarLayout
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize">
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:elevation="0dp">
 
             <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/colorWhite"
-                    app:navigationIcon="@drawable/ic_action_arrow_back"
-                    app:titleTextColor="@color/colorWhite"/>
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorWhite"
+                app:navigationIcon="@drawable/ic_action_arrow_back"
+                app:titleTextColor="@color/colorWhite" />
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v4.widget.SwipeRefreshLayout
-                android:id="@+id/swipe_refresh_layout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                app:refreshing="@{viewmodel.bIsShowingProgressBar}">
+            android:id="@+id/swipe_refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:refreshing="@{viewmodel.bIsShowingProgressBar}">
 
             <android.support.constraint.ConstraintLayout
-                    android:id="@+id/dashboard"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                android:id="@+id/dashboard"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <com.rengwuxian.materialedittext.MaterialEditText
-                        android:id="@+id/et_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="top"
-                        android:text="@={viewmodel.noteText}"
-                        android:hint="@string/start_writing"
-                        android:inputType="textCapSentences|textMultiLine"
-                        android:paddingLeft="@dimen/edittext_horizontal_padding"
-                        android:paddingRight="@dimen/edittext_horizontal_padding"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:met_hideUnderline="true"
-                        tools:targetApi="o"/>
+                    android:id="@+id/et_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="top"
+                    android:hint="@string/start_writing"
+                    android:inputType="textCapSentences|textMultiLine"
+                    android:paddingLeft="@dimen/edittext_horizontal_padding"
+                    android:paddingRight="@dimen/edittext_horizontal_padding"
+                    android:text="@={viewmodel.noteText}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:met_hideUnderline="true"
+                    tools:targetApi="o" />
             </android.support.constraint.ConstraintLayout>
         </android.support.v4.widget.SwipeRefreshLayout>
 
         <android.support.design.widget.FloatingActionButton
-                android:id="@+id/fab_apply"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="@{(view) -> viewmodel.insertOrUpdateNote()}"
-                android:layout_gravity="bottom|end"
-                android:layout_margin="@dimen/fab_margin"
-                android:src="@drawable/ic_action_check_inverted"/>
+            android:id="@+id/fab_apply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:onClick="@{(view) -> viewmodel.insertOrUpdateNote()}"
+            android:src="@drawable/ic_action_check_inverted" />
     </android.support.design.widget.CoordinatorLayout>
 </layout>

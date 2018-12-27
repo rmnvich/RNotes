@@ -9,6 +9,7 @@
 
     <!-- DashboardFragment -->
     <string name="you_have_no_notes">You have no notes</string>
+    <string name="dashboard_title">Dashboard</string>
     <string name="empty">Empty</string>
     <string name="search">Search</string>
     <string name="filter">Filter</string>
