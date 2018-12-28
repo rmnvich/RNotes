@@ -26,6 +26,7 @@ class AddEditNoteViewModel(
     val noteText: ObservableField<String> = ObservableField("")
     val noteColor: ObservableField<Int> = ObservableField(DEFAULT_COLOR)
     val noteTag: ObservableField<Tag> = ObservableField()
+    val noteFavorite: ObservableBoolean = ObservableBoolean()
 
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
 
@@ -48,6 +49,7 @@ class AddEditNoteViewModel(
         }
         existsNote?.text = noteText.get()?.trim()!!
         existsNote?.color = noteColor.get()!!
+        existsNote?.isFavorite = noteFavorite.get()
         if (noteTag.get() != null)
             existsNote?.tag = noteTag.get()!!
 
@@ -69,7 +71,7 @@ class AddEditNoteViewModel(
                     mResponse.value = it
 
                     existsNote = it
-                    setObservableFields(it.text, it.color, it.tag)
+                    setObservableFields(it.text, it.color, it.tag, it.isFavorite)
                 }, {
                     bIsShowingProgressBar.set(false)
                     showSnackbarMessage(R.string.error_message)
@@ -77,10 +79,12 @@ class AddEditNoteViewModel(
         )
     }
 
-    private fun setObservableFields(noteText: String, noteColor: Int, noteTag: Tag?) {
+    private fun setObservableFields(noteText: String, noteColor: Int,
+                                    noteTag: Tag?, noteFavorite: Boolean) {
         this.noteText.set(noteText)
         this.noteColor.set(noteColor)
         this.noteTag.set(noteTag)
+        this.noteFavorite.set(noteFavorite)
     }
 
     private fun showSnackbarMessage(message: Int?) {

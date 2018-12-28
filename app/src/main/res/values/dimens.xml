@@ -15,7 +15,8 @@
     <dimen name="item_note_card_corner_radius">10dp</dimen>
     <dimen name="item_note_card_padding">10dp</dimen>
     <dimen name="item_note_timestamp_margin_top">3dp</dimen>
-    <dimen name="item_note_circle_color_size">15dp</dimen>
+    <dimen name="item_note_circle_color_size">16dp</dimen>
+    <dimen name="item_note_circle_margin_top">5dp</dimen>
 
     <dimen name="item_tag_corner_radius">50dp</dimen>
     <dimen name="item_tag_horizontal_padding">10dp</dimen>
@@ -24,7 +25,12 @@
     <dimen name="card_view_tools_padding">10dp</dimen>
     <dimen name="card_view_tools_elevation">10dp</dimen>
     <dimen name="card_view_tools_circle_view_size">25dp</dimen>
-    <dimen name="item_note_circle_margin_top">5dp</dimen>
+    <dimen name="card_view_tools_tag_margin_start">10dp</dimen>
+
+    <dimen name="star_button_smart_size">20dp</dimen>
+    <dimen name="star_button_smart_margin_top">5dp</dimen>
+    <dimen name="star_button_tools_size">25dp</dimen>
+    <dimen name="star_button_tools_margin_start">10dp</dimen>
 
     <integer name="animation_duration">400</integer>
 </resources>

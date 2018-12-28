@@ -10,6 +10,8 @@ import android.view.Menu
 import android.view.MenuItem
 import com.jaredrummler.android.colorpicker.ColorPickerDialog
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
+import com.like.LikeButton
+import com.like.OnLikeListener
 import rmnvich.apps.notes.App
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.data.common.Constants.EXTRA_NOTE_ID
@@ -18,7 +20,7 @@ import rmnvich.apps.notes.di.addeditnote.AddEditNoteModule
 import rmnvich.apps.notes.domain.utils.ViewModelFactory
 import javax.inject.Inject
 
-class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
+class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener, OnLikeListener {
 
     @Inject
     lateinit var mViewModelFactory: ViewModelFactory
@@ -30,19 +32,21 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
         super.onCreate(savedInstanceState)
         mAddEditNoteBinding = DataBindingUtil.setContentView(this, R.layout.add_edit_note_activity)
         App.getApp(applicationContext).componentsHolder
-            .getComponent(javaClass, AddEditNoteModule(application))
-            ?.inject(this)
+                .getComponent(javaClass, AddEditNoteModule(application))
+                ?.inject(this)
     }
 
     @Inject
     fun init() {
         mAddEditNoteViewModel = ViewModelProviders.of(this, mViewModelFactory)
-            .get(AddEditNoteViewModel::class.java)
+                .get(AddEditNoteViewModel::class.java)
         mAddEditNoteBinding.viewmodel = mAddEditNoteViewModel
+
+        mAddEditNoteBinding.starButton.setOnLikeListener(this)
 
         mAddEditNoteBinding.swipeRefreshLayout.isEnabled = false
         mAddEditNoteBinding.swipeRefreshLayout.setColorSchemeResources(
-            R.color.colorPrimary, R.color.colorAccent
+                R.color.colorPrimary, R.color.colorAccent
         )
 
         setSupportActionBar(mAddEditNoteBinding.toolbar)
@@ -70,7 +74,6 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
                 true
             }
             R.id.menu_tag -> {
-
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -79,31 +82,36 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
 
     private fun showColorPickerDialog() {
         ColorPickerDialog.newBuilder()
-            .setAllowCustom(false)
-            .setShowAlphaSlider(false)
-            .setAllowPresets(false)
-            .setShowColorShades(false)
-            .show(this)
+                .setAllowCustom(false)
+                .setShowAlphaSlider(false)
+                .setAllowPresets(false)
+                .setShowColorShades(false)
+                .show(this)
     }
 
     private fun observeFab() {
         mAddEditNoteViewModel.getInsertNoteEvent().observe(this,
-            Observer { onBackPressed() })
+                Observer { onBackPressed() })
     }
 
     private fun observeSnackbar() {
         mAddEditNoteViewModel.getSnackbar().observe(this,
-            Observer {
-                Snackbar.make(
-                    mAddEditNoteBinding.root, getString(it!!),
-                    Snackbar.LENGTH_SHORT
-                ).show()
-            })
+                Observer {
+                    Snackbar.make(
+                            mAddEditNoteBinding.root, getString(it!!),
+                            Snackbar.LENGTH_SHORT
+                    ).show()
+                })
     }
 
-    override fun onColorSelected(dialogId: Int, color: Int) {
-        mAddEditNoteViewModel.noteColor.set(color)
-    }
+    override fun liked(button: LikeButton?) =
+            mAddEditNoteViewModel.noteFavorite.set(true)
+
+    override fun unLiked(button: LikeButton?) =
+            mAddEditNoteViewModel.noteFavorite.set(false)
+
+    override fun onColorSelected(dialogId: Int, color: Int) =
+            mAddEditNoteViewModel.noteColor.set(color)
 
     override fun onDialogDismissed(dialogId: Int) = Unit
 
@@ -115,7 +123,7 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
     override fun onDestroy() {
         super.onDestroy()
         App.getApp(applicationContext).componentsHolder
-            .releaseComponent(javaClass)
+                .releaseComponent(javaClass)
     }
 
 }
