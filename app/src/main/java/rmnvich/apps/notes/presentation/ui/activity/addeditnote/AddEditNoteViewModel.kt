@@ -46,7 +46,7 @@ class AddEditNoteViewModel(
             existsNote?.timestamp =
                     DateHelper.getCurrentTimeInMills()
         }
-        existsNote?.text = noteText.get()!!
+        existsNote?.text = noteText.get()?.trim()!!
         existsNote?.color = noteColor.get()!!
         if (noteTag.get() != null)
             existsNote?.tag = noteTag.get()!!

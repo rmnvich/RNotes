@@ -25,7 +25,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_scrollFlags="scroll"
+                app:layout_scrollFlags="enterAlways"
                 app:title="@string/dashboard_title"
                 app:titleTextColor="@android:color/white" />
         </android.support.design.widget.AppBarLayout>
@@ -49,7 +49,6 @@
                     android:clipToPadding="false"
                     android:paddingTop="@dimen/item_note_vertical_margin"
                     android:paddingBottom="@dimen/item_note_vertical_margin"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -90,6 +89,7 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
             android:onClick="@{(view) -> viewmodel.addNote()}"
-            android:src="@drawable/ic_action_create_inverted" />
+            android:src="@drawable/ic_action_create_inverted"
+            app:layout_behavior="rmnvich.apps.notes.presentation.ui.custom.FabBehavior" />
     </android.support.design.widget.CoordinatorLayout>
 </layout>

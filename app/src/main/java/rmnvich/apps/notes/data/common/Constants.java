@@ -10,7 +10,7 @@ public class Constants {
 
     public static long DEFAULT_DELAY = 150;
     public static long DEFAULT_ANIM_DURATION = 250;
-    public static int DEFAULT_COLOR = R.color.colorPrimary;
+    public static int DEFAULT_COLOR = R.color.colorPrimaryDark;
 
     public static String EXTRA_NOTE_ID = "note_id";
 
