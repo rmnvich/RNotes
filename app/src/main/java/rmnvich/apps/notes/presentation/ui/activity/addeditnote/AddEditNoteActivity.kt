@@ -17,6 +17,7 @@ import rmnvich.apps.notes.R
 import rmnvich.apps.notes.data.common.Constants.EXTRA_NOTE_ID
 import rmnvich.apps.notes.databinding.AddEditNoteActivityBinding
 import rmnvich.apps.notes.di.addeditnote.AddEditNoteModule
+import rmnvich.apps.notes.domain.entity.Tag
 import rmnvich.apps.notes.domain.utils.ViewModelFactory
 import javax.inject.Inject
 
@@ -58,6 +59,9 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener, OnLi
         if (noteId != -1)
             mAddEditNoteViewModel.loadNote(noteId)
 
+        mAddEditNoteViewModel.getDeleteTagEvent().observe(this,
+                Observer { mAddEditNoteViewModel.noteTag.set(null) })
+
         observeFab()
         observeSnackbar()
     }
@@ -74,6 +78,9 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener, OnLi
                 true
             }
             R.id.menu_tag -> {
+                val tag = Tag()
+                tag.name = "Test tag"
+                mAddEditNoteViewModel.noteTag.set(tag)
                 true
             }
             else -> super.onOptionsItemSelected(item)

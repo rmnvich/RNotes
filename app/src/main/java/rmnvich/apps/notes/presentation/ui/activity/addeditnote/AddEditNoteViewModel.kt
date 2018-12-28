@@ -2,7 +2,6 @@ package rmnvich.apps.notes.presentation.ui.activity.addeditnote
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
-import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
@@ -30,7 +29,9 @@ class AddEditNoteViewModel(
 
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
 
-    private val noteInsertedOrUpdated: SingleLiveEvent<Void> = SingleLiveEvent()
+    private val insertNoteEvent: SingleLiveEvent<Void> = SingleLiveEvent()
+    private val deleteTagEvent: SingleLiveEvent<Void> = SingleLiveEvent()
+
     private val mSnackbarMessage: SnackbarMessage = SnackbarMessage()
 
     private var mResponse: MutableLiveData<Note> = MutableLiveData()
@@ -39,7 +40,9 @@ class AddEditNoteViewModel(
 
     fun getSnackbar(): SnackbarMessage = mSnackbarMessage
 
-    fun getInsertNoteEvent(): SingleLiveEvent<Void> = noteInsertedOrUpdated
+    fun getInsertNoteEvent(): SingleLiveEvent<Void> = insertNoteEvent
+
+    fun getDeleteTagEvent(): SingleLiveEvent<Void> = deleteTagEvent
 
     fun insertOrUpdateNote() {
         if (existsNote == null) {
@@ -50,15 +53,17 @@ class AddEditNoteViewModel(
         existsNote?.text = noteText.get()?.trim()!!
         existsNote?.color = noteColor.get()!!
         existsNote?.isFavorite = noteFavorite.get()
-        if (noteTag.get() != null)
-            existsNote?.tag = noteTag.get()!!
+
+        if (noteTag.get() == null)
+            existsNote?.tag = null
+        else existsNote?.tag = noteTag.get()!!
 
         if (existsNote?.text?.isEmpty()!!) {
             showSnackbarMessage(R.string.empty_note_error)
         } else {
             mCompositeDisposable.add(addEditNoteNotesInteractor
                     .insertOrUpdateNote(existsNote!!)
-                    .subscribe { noteInsertedOrUpdated.call() }
+                    .subscribe { insertNoteEvent.call() }
             )
         }
     }
@@ -77,6 +82,10 @@ class AddEditNoteViewModel(
                     showSnackbarMessage(R.string.error_message)
                 })
         )
+    }
+
+    fun deleteTag() {
+        deleteTagEvent.call()
     }
 
     private fun setObservableFields(noteText: String, noteColor: Int,

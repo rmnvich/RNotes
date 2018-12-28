@@ -67,10 +67,10 @@
 
             <include
                 android:id="@+id/note_tag"
-                layout="@layout/item_tag"
+                layout="@layout/item_note_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="@dimen/item_note_tag_margn_start"
                 android:layout_marginTop="@dimen/item_note_circle_margin_top"
                 android:visibility="@{note.tag == null ? View.GONE : View.VISIBLE}"
                 app:layout_constraintBottom_toBottomOf="parent"

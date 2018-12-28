@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/item_tag_background"
         android:paddingStart="@dimen/item_tag_horizontal_padding"
+        android:textSize="12sp"
         android:paddingTop="@dimen/item_tag_vertical_padding"
         android:paddingEnd="@dimen/item_tag_horizontal_padding"
         android:paddingBottom="@dimen/item_tag_vertical_padding"

@@ -23,5 +23,6 @@
 
     <!-- Messages -->
     <string name="error_message">An error occurred. Try again</string>
+    <string name="delete">Delete</string>
 
 </resources>
