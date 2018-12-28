@@ -1,6 +1,5 @@
 package rmnvich.apps.notes.di.dashboardnotes
 
-import android.app.Application
 import dagger.Module
 import dagger.Provides
 import rmnvich.apps.notes.data.common.SchedulersProvider
@@ -14,12 +13,12 @@ import rmnvich.apps.notes.domain.utils.ViewModelFactory
 import rmnvich.apps.notes.presentation.ui.adapter.dashboard.NotesAdapter
 
 @Module
-class DashboardNotesModule(private val application: Application) : BaseModule {
+class DashboardNotesModule : BaseModule {
 
     @PerFragment
     @Provides
     fun provideViewModelFactory(interactor: DashboardNotesInteractor): ViewModelFactory {
-        return ViewModelFactory(application, interactor)
+        return ViewModelFactory(interactor)
     }
 
     @PerFragment

@@ -1,8 +1,7 @@
 package rmnvich.apps.notes.presentation.ui.activity.addeditnote
 
-import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import io.reactivex.disposables.CompositeDisposable
@@ -15,10 +14,7 @@ import rmnvich.apps.notes.domain.utils.SingleLiveEvent
 import rmnvich.apps.notes.presentation.utils.DateHelper
 import rmnvich.apps.notes.presentation.utils.SnackbarMessage
 
-class AddEditNoteViewModel(
-        private val applicationContext: Application,
-        private val addEditNoteNotesInteractor: AddEditNoteInteractor
-) : AndroidViewModel(applicationContext) {
+class AddEditNoteViewModel(private val addEditNoteNotesInteractor: AddEditNoteInteractor) : ViewModel() {
 
     val bIsShowingProgressBar: ObservableBoolean = ObservableBoolean(false)
 
@@ -47,8 +43,7 @@ class AddEditNoteViewModel(
     fun insertOrUpdateNote() {
         if (existsNote == null) {
             existsNote = Note()
-            existsNote?.timestamp =
-                    DateHelper.getCurrentTimeInMills()
+            existsNote?.timestamp = DateHelper.getCurrentTimeInMills()
         }
         existsNote?.text = noteText.get()?.trim()!!
         existsNote?.color = noteColor.get()!!
@@ -61,9 +56,13 @@ class AddEditNoteViewModel(
         if (existsNote?.text?.isEmpty()!!) {
             showSnackbarMessage(R.string.empty_note_error)
         } else {
+            bIsShowingProgressBar.set(true)
             mCompositeDisposable.add(addEditNoteNotesInteractor
                     .insertOrUpdateNote(existsNote!!)
-                    .subscribe { insertNoteEvent.call() }
+                    .subscribe {
+                        insertNoteEvent.call()
+                        bIsShowingProgressBar.set(false)
+                    }
             )
         }
     }

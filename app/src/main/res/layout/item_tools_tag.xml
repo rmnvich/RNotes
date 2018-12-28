@@ -11,18 +11,18 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_tag_background">
 
         <TextView
             android:id="@+id/tv_tag_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/item_tag_background"
             android:paddingStart="@dimen/item_tag_horizontal_padding"
             android:paddingTop="@dimen/item_tag_vertical_padding"
-            android:paddingEnd="@dimen/item_tag_horizontal_padding"
             android:paddingBottom="@dimen/item_tag_vertical_padding"
             android:text="@{viewmodel.noteTag.get().name}"
+            android:textSize="16sp"
             android:textStyle="italic"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -31,13 +31,15 @@
             android:id="@+id/tag_delete_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/item_tag_delete_button_margin_start"
-            android:alpha="0.7"
+            android:layout_marginStart="@dimen/item_tag_delete_button_horizontal_margin"
+            android:layout_marginEnd="@dimen/item_tag_delete_button_horizontal_margin"
+            android:alpha="0.8"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/delete"
             android:onClick="@{(view) -> viewmodel.deleteTag()}"
             android:src="@drawable/ic_action_close"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_tag_name"
             app:layout_constraintTop_toTopOf="parent" />
 

@@ -1,6 +1,5 @@
 package rmnvich.apps.notes.di.addeditnote
 
-import android.app.Application
 import dagger.Module
 import dagger.Provides
 import rmnvich.apps.notes.data.common.SchedulersProvider
@@ -15,12 +14,12 @@ import rmnvich.apps.notes.domain.repositories.TagsRepository
 import rmnvich.apps.notes.domain.utils.ViewModelFactory
 
 @Module
-class AddEditNoteModule(private val application: Application) : BaseModule {
+class AddEditNoteModule : BaseModule {
 
     @PerFragment
     @Provides
     fun provideViewModelFactory(interactor: AddEditNoteInteractor): ViewModelFactory {
-        return ViewModelFactory(application, interactor)
+        return ViewModelFactory(interactor)
     }
 
     @PerFragment

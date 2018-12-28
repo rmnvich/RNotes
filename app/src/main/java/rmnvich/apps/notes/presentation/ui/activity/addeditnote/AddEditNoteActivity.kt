@@ -31,10 +31,10 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener, OnLi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mAddEditNoteBinding = DataBindingUtil.setContentView(this, R.layout.add_edit_note_activity)
+        mAddEditNoteBinding = DataBindingUtil.setContentView(this,
+                R.layout.add_edit_note_activity)
         App.getApp(applicationContext).componentsHolder
-                .getComponent(javaClass, AddEditNoteModule(application))
-                ?.inject(this)
+                .getComponent(javaClass)?.inject(this)
     }
 
     @Inject

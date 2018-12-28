@@ -42,8 +42,7 @@ class DashboardNotesFragment : Fragment() {
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         App.getApp(activity?.applicationContext).componentsHolder
-                .getComponent(javaClass, DashboardNotesModule(activity?.application!!))
-                ?.inject(this)
+                .getComponent(javaClass)?.inject(this)
     }
 
     override fun onCreateView(

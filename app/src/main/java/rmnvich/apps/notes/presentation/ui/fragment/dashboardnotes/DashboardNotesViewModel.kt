@@ -1,26 +1,17 @@
 package rmnvich.apps.notes.presentation.ui.fragment.dashboardnotes
 
-import android.app.Activity.RESULT_OK
-import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableBoolean
 import io.reactivex.disposables.CompositeDisposable
-import rmnvich.apps.notes.domain.interactors.dashboardnotes.DashboardNotesInteractor
-import android.arch.lifecycle.MutableLiveData
-import android.os.Debug
 import rmnvich.apps.notes.R
-import rmnvich.apps.notes.data.common.Constants.REQUEST_CODE_ADD_NOTE
 import rmnvich.apps.notes.domain.entity.Note
+import rmnvich.apps.notes.domain.interactors.dashboardnotes.DashboardNotesInteractor
 import rmnvich.apps.notes.domain.utils.SingleLiveEvent
-import rmnvich.apps.notes.presentation.utils.DebugLogger
 import rmnvich.apps.notes.presentation.utils.SnackbarMessage
 
-
-class DashboardNotesViewModel(
-    private val applicationContext: Application,
-    private val dashboardNotesInteractor: DashboardNotesInteractor
-) : AndroidViewModel(applicationContext) {
+class DashboardNotesViewModel(private val dashboardNotesInteractor: DashboardNotesInteractor) : ViewModel() {
 
     val bIsShowingProgressBar: ObservableBoolean = ObservableBoolean(false)
     val bDataIsEmpty: ObservableBoolean = ObservableBoolean(false)
@@ -63,15 +54,15 @@ class DashboardNotesViewModel(
 
     private fun loadNotes() {
         mCompositeDisposable.add(dashboardNotesInteractor.getAllNotes()
-            .doOnSubscribe { bIsShowingProgressBar.set(true) }
-            .subscribe({
-                bIsShowingProgressBar.set(false)
-                bDataIsEmpty.set(it.isEmpty())
-                mResponse?.value = it
-            }, {
-                bIsShowingProgressBar.set(false)
-                showSnackbarMessage(R.string.error_message)
-            })
+                .doOnSubscribe { bIsShowingProgressBar.set(true) }
+                .subscribe({
+                    bIsShowingProgressBar.set(false)
+                    bDataIsEmpty.set(it.isEmpty())
+                    mResponse?.value = it
+                }, {
+                    bIsShowingProgressBar.set(false)
+                    showSnackbarMessage(R.string.error_message)
+                })
         )
     }
 
