@@ -23,6 +23,9 @@ import rmnvich.apps.notes.presentation.ui.activity.addeditnote.AddEditNoteActivi
 import rmnvich.apps.notes.presentation.ui.activity.main.MainActivity
 import rmnvich.apps.notes.presentation.ui.adapter.dashboard.NotesAdapter
 import javax.inject.Inject
+import android.support.v7.widget.StaggeredGridLayoutManager
+
+
 
 
 class DashboardNotesFragment : Fragment() {
@@ -84,10 +87,9 @@ class DashboardNotesFragment : Fragment() {
         mDashboardNotesBinding.swipeRefreshLayout.isEnabled = false
         mDashboardNotesBinding.swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent)
 
-        mDashboardNotesBinding.recyclerNotes.layoutManager = LinearLayoutManager(
-            context,
-            LinearLayoutManager.VERTICAL, false
-        )
+        val gridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        gridLayoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
+        mDashboardNotesBinding.recyclerNotes.layoutManager = gridLayoutManager
         mDashboardNotesBinding.recyclerNotes.adapter = mAdapter
         mAdapter.setOnItemClickLIstener { mDashboardNotesViewModel.editNote(it) }
 
