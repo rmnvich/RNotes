@@ -5,8 +5,10 @@
     <color name="colorAccent">#D8961B</color>
 
     <color name="colorToolbarTitle">#c82e2e2e</color>
+    <color name="colorNavHeaderBackground">#232323</color>
 
     <color name="colorWhite">#FFFFFF</color>
+
 
     <color name="colorDivider">#37919191</color>
     <color name="colorTagBackground">#1e808080</color>

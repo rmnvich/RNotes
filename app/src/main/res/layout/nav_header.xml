@@ -3,5 +3,15 @@
     android:id="@+id/nav_header"
     android:layout_width="match_parent"
     android:layout_height="@dimen/navigation_header_height"
-    android:background="@drawable/nav_background"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark" />
+    android:background="@color/colorWhite"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/navigation_header_margin_top"
+        android:contentDescription="@string/background"
+        android:scaleType="centerCrop"
+        android:src="@drawable/nav_background" />
+
+</android.support.constraint.ConstraintLayout>
