@@ -87,9 +87,12 @@ class DashboardNotesFragment : Fragment() {
         mDashboardNotesBinding.swipeRefreshLayout.isEnabled = false
         mDashboardNotesBinding.swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent)
 
-        val gridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        gridLayoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
+        val gridLayoutManager = StaggeredGridLayoutManager(2,
+                StaggeredGridLayoutManager.VERTICAL)
+        gridLayoutManager.gapStrategy = StaggeredGridLayoutManager
+                .GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
         mDashboardNotesBinding.recyclerNotes.layoutManager = gridLayoutManager
+
         mDashboardNotesBinding.recyclerNotes.adapter = mAdapter
         mAdapter.setOnItemClickLIstener { mDashboardNotesViewModel.editNote(it) }
 
