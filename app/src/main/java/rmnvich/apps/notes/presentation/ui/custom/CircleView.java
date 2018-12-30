@@ -2,30 +2,26 @@ package rmnvich.apps.notes.presentation.ui.custom;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
 public class CircleView extends View {
 
-    private static final int DEFAULT_CIRCLE_COLOR =
-            Color.parseColor("#252525");
-
-    private int circleColor = DEFAULT_CIRCLE_COLOR;
+    private int circleColor;
     private Paint paint;
 
     public CircleView(Context context) {
         super(context);
-        init(context, null);
+        init();
     }
 
     public CircleView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context, attrs);
+        init();
     }
 
-    private void init(Context context, AttributeSet attrs) {
+    private void init() {
         paint = new Paint();
         paint.setAntiAlias(true);
     }

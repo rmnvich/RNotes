@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -77,6 +76,7 @@
                         android:id="@+id/circle_view_color"
                         android:layout_width="@dimen/card_view_tools_circle_view_size"
                         android:layout_height="@dimen/card_view_tools_circle_view_size"
+                        android:onClick="@{(view) -> viewmodel.pickColor()}"
                         app:circleColor="@{viewmodel.noteColor.get()}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -110,17 +110,6 @@
                         app:liked="@{viewmodel.noteFavorite}" />
                 </android.support.constraint.ConstraintLayout>
             </android.support.v7.widget.CardView>
-
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/fab_apply"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_margin="@dimen/fab_margin"
-                android:onClick="@{(view) -> viewmodel.insertOrUpdateNote()}"
-                android:src="@drawable/ic_action_check_inverted"
-                app:layout_constraintBottom_toTopOf="@id/card_view_tools"
-                app:layout_constraintEnd_toEndOf="parent" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 </layout>

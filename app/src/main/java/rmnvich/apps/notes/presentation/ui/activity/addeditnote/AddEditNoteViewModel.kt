@@ -4,6 +4,8 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
+import android.graphics.Color
+import android.support.v4.content.ContextCompat
 import io.reactivex.disposables.CompositeDisposable
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.data.common.Constants.DEFAULT_COLOR
@@ -19,14 +21,15 @@ class AddEditNoteViewModel(private val addEditNoteNotesInteractor: AddEditNoteIn
     val bIsShowingProgressBar: ObservableBoolean = ObservableBoolean(false)
 
     val noteText: ObservableField<String> = ObservableField("")
-    val noteColor: ObservableField<Int> = ObservableField(DEFAULT_COLOR)
+    val noteColor: ObservableField<Int> = ObservableField(Color.DKGRAY)
     val noteTag: ObservableField<Tag> = ObservableField()
     val noteFavorite: ObservableBoolean = ObservableBoolean()
 
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
 
-    private val insertNoteEvent: SingleLiveEvent<Void> = SingleLiveEvent()
-    private val deleteTagEvent: SingleLiveEvent<Void> = SingleLiveEvent()
+    private val onBackPressedEvent: SingleLiveEvent<Void> = SingleLiveEvent()
+    private val onDeleteTagEvent: SingleLiveEvent<Void> = SingleLiveEvent()
+    private val onPickColorEvent: SingleLiveEvent<Void> = SingleLiveEvent()
 
     private val mSnackbarMessage: SnackbarMessage = SnackbarMessage()
 
@@ -36,36 +39,15 @@ class AddEditNoteViewModel(private val addEditNoteNotesInteractor: AddEditNoteIn
 
     fun getSnackbar(): SnackbarMessage = mSnackbarMessage
 
-    fun getInsertNoteEvent(): SingleLiveEvent<Void> = insertNoteEvent
+    fun getBackPressedEvent(): SingleLiveEvent<Void> = onBackPressedEvent
 
-    fun getDeleteTagEvent(): SingleLiveEvent<Void> = deleteTagEvent
+    fun getDeleteTagEvent(): SingleLiveEvent<Void> = onDeleteTagEvent
 
-    fun insertOrUpdateNote() {
-        if (existsNote == null) {
-            existsNote = Note()
-            existsNote?.timestamp = DateHelper.getCurrentTimeInMills()
-        }
-        existsNote?.text = noteText.get()?.trim()!!
-        existsNote?.color = noteColor.get()!!
-        existsNote?.isFavorite = noteFavorite.get()
+    fun getPickColorEvent(): SingleLiveEvent<Void> = onPickColorEvent
 
-        if (noteTag.get() == null)
-            existsNote?.tag = null
-        else existsNote?.tag = noteTag.get()!!
+    fun deleteTag() = onDeleteTagEvent.call()
 
-        if (existsNote?.text?.isEmpty()!!) {
-            showSnackbarMessage(R.string.empty_note_error)
-        } else {
-            bIsShowingProgressBar.set(true)
-            mCompositeDisposable.add(addEditNoteNotesInteractor
-                    .insertOrUpdateNote(existsNote!!)
-                    .subscribe {
-                        insertNoteEvent.call()
-                        bIsShowingProgressBar.set(false)
-                    }
-            )
-        }
-    }
+    fun pickColor() = onPickColorEvent.call()
 
     fun loadNote(noteId: Int) {
         mCompositeDisposable.add(addEditNoteNotesInteractor.getNoteById(noteId)
@@ -83,8 +65,29 @@ class AddEditNoteViewModel(private val addEditNoteNotesInteractor: AddEditNoteIn
         )
     }
 
-    fun deleteTag() {
-        deleteTagEvent.call()
+    fun insertOrUpdateNote() {
+        if (existsNote == null) {
+            existsNote = Note()
+            existsNote?.timestamp = DateHelper.getCurrentTimeInMills()
+        }
+        existsNote?.text = noteText.get()?.trim()!!
+        existsNote?.color = noteColor.get()!!
+        existsNote?.isFavorite = noteFavorite.get()
+
+        if (noteTag.get() == null)
+            existsNote?.tag = null
+        else existsNote?.tag = noteTag.get()!!
+
+        if (!existsNote?.text?.isEmpty()!!) {
+            bIsShowingProgressBar.set(true)
+            mCompositeDisposable.add(addEditNoteNotesInteractor
+                    .insertOrUpdateNote(existsNote!!)
+                    .subscribe {
+                        onBackPressedEvent.call()
+                        bIsShowingProgressBar.set(false)
+                    }
+            )
+        } else onBackPressedEvent.call()
     }
 
     private fun setObservableFields(noteText: String, noteColor: Int,

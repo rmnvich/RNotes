@@ -1,5 +1,6 @@
 package rmnvich.apps.notes.di.addeditnote
 
+import com.jaredrummler.android.colorpicker.ColorPickerDialog
 import dagger.Module
 import dagger.Provides
 import rmnvich.apps.notes.data.common.SchedulersProvider
@@ -46,5 +47,14 @@ class AddEditNoteModule : BaseModule {
     @Provides
     fun provideTagsRepository(database: Database): TagsRepository {
         return TagsRepositoryImpl(database)
+    }
+
+    @Provides
+    fun provideColorPickerDialog(): ColorPickerDialog.Builder {
+        return ColorPickerDialog.newBuilder()
+                .setAllowCustom(false)
+                .setShowAlphaSlider(false)
+                .setAllowPresets(false)
+                .setShowColorShades(false)
     }
 }

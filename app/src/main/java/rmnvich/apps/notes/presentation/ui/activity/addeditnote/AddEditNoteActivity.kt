@@ -16,15 +16,18 @@ import rmnvich.apps.notes.App
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.data.common.Constants.EXTRA_NOTE_ID
 import rmnvich.apps.notes.databinding.AddEditNoteActivityBinding
-import rmnvich.apps.notes.di.addeditnote.AddEditNoteModule
 import rmnvich.apps.notes.domain.entity.Tag
 import rmnvich.apps.notes.domain.utils.ViewModelFactory
 import javax.inject.Inject
+import javax.inject.Provider
 
 class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener, OnLikeListener {
 
     @Inject
     lateinit var mViewModelFactory: ViewModelFactory
+
+    @Inject
+    lateinit var mColorPickerDialog: Provider<ColorPickerDialog.Builder>
 
     private lateinit var mAddEditNoteViewModel: AddEditNoteViewModel
     private lateinit var mAddEditNoteBinding: AddEditNoteActivityBinding
@@ -52,7 +55,8 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener, OnLi
 
         setSupportActionBar(mAddEditNoteBinding.toolbar)
         mAddEditNoteBinding.toolbar.setNavigationOnClickListener {
-            onBackPressed()
+            finish()
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         }
 
         val noteId = intent.getIntExtra(EXTRA_NOTE_ID, -1)
@@ -62,7 +66,8 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener, OnLi
         mAddEditNoteViewModel.getDeleteTagEvent().observe(this,
                 Observer { mAddEditNoteViewModel.noteTag.set(null) })
 
-        observeFab()
+        observeOnPickColor()
+        observeOnBackPressed()
         observeSnackbar()
     }
 
@@ -73,10 +78,6 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener, OnLi
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when (item?.itemId) {
-            R.id.menu_color -> {
-                showColorPickerDialog()
-                true
-            }
             R.id.menu_tag -> {
                 val tag = Tag()
                 tag.name = "Test tag"
@@ -87,18 +88,17 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener, OnLi
         }
     }
 
-    private fun showColorPickerDialog() {
-        ColorPickerDialog.newBuilder()
-                .setAllowCustom(false)
-                .setShowAlphaSlider(false)
-                .setAllowPresets(false)
-                .setShowColorShades(false)
-                .show(this)
+    private fun observeOnPickColor() {
+        mAddEditNoteViewModel.getPickColorEvent().observe(this,
+                Observer { mColorPickerDialog.get().show(this) })
     }
 
-    private fun observeFab() {
-        mAddEditNoteViewModel.getInsertNoteEvent().observe(this,
-                Observer { onBackPressed() })
+    private fun observeOnBackPressed() {
+        mAddEditNoteViewModel.getBackPressedEvent().observe(this,
+                Observer {
+                    finish()
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+                })
     }
 
     private fun observeSnackbar() {
@@ -123,8 +123,7 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener, OnLi
     override fun onDialogDismissed(dialogId: Int) = Unit
 
     override fun onBackPressed() {
-        finish()
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+        mAddEditNoteViewModel.insertOrUpdateNote()
     }
 
     override fun onDestroy() {
