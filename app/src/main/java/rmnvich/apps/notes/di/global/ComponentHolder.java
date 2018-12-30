@@ -54,4 +54,7 @@ public class ComponentHolder {
         mComponents.put(cls, null);
     }
 
+    public boolean isComponentReleased(Class<?> cls) {
+        return mComponents.get(cls) == null;
+    }
 }

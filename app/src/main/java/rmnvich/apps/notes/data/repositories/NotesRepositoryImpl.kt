@@ -15,16 +15,18 @@ class NotesRepositoryImpl(database: Database) : NotesRepository {
 
     private val noteDao = database.noteDao()
 
-    override fun getAllNotes(): Flowable<List<Note>> {
-        return noteDao.getAllNotes()
+    override fun getAllNotes(isFavorite: Boolean): Flowable<List<Note>> {
+        return if (isFavorite) {
+            getAllFavoriteNotes()
+        } else noteDao.getAllNotes()
     }
 
-    override fun getAllFilteredByColorNotes(color: Int): Flowable<List<Note>> {
-        return noteDao.getAllFilteredByColorNotes(color)
+    override fun getAllFilteredByColorNotes(color: Int, isFavorite: Boolean): Flowable<List<Note>> {
+        return noteDao.getAllFilteredByColorNotes(color, isFavorite)
     }
 
-    override fun getAllFilteredByTagNotes(tagId: Int): Flowable<List<Note>> {
-        return noteDao.getAllFilteredByTagNotes(tagId)
+    override fun getAllFilteredByTagNotes(tagId: Int, isFavorite: Boolean): Flowable<List<Note>> {
+        return noteDao.getAllFilteredByTagNotes(tagId, isFavorite)
     }
 
     override fun getAllFavoriteNotes(): Flowable<List<Note>> {

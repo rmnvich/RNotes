@@ -7,11 +7,11 @@ import rmnvich.apps.notes.domain.entity.Note
 
 interface NotesRepository {
 
-    fun getAllNotes(): Flowable<List<Note>>
+    fun getAllNotes(isFavorite: Boolean): Flowable<List<Note>>
 
-    fun getAllFilteredByColorNotes(color: Int): Flowable<List<Note>>
+    fun getAllFilteredByColorNotes(color: Int, isFavorite: Boolean): Flowable<List<Note>>
 
-    fun getAllFilteredByTagNotes(tagId: Int): Flowable<List<Note>>
+    fun getAllFilteredByTagNotes(tagId: Int, isFavorite: Boolean): Flowable<List<Note>>
 
     fun getAllFavoriteNotes(): Flowable<List<Note>>
 

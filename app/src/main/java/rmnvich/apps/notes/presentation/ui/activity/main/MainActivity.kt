@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
-        showFragment(DashboardNotesFragment.newInstance())
+        showFragment(DashboardNotesFragment.newInstance(false))
 
         nav_view.setNavigationItemSelectedListener(this)
         nav_view.setCheckedItem(R.id.nav_notes)
@@ -46,10 +46,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             override fun onDrawerOpened(drawerView: View) {}
             override fun onDrawerClosed(drawerView: View) {
                 when (item.itemId) {
-                    R.id.nav_notes -> showFragment(DashboardNotesFragment.newInstance())
-                    R.id.nav_favorites -> showFragment(DashboardNotesFragment.newInstance())
-                    R.id.nav_tags -> showFragment(DashboardNotesFragment.newInstance())
-                    R.id.nav_trash -> showFragment(DashboardNotesFragment.newInstance())
+                    R.id.nav_notes -> showFragment(DashboardNotesFragment.newInstance(false))
+                    R.id.nav_favorites -> showFragment(DashboardNotesFragment.newInstance(true))
+                    R.id.nav_tags -> showFragment(DashboardNotesFragment.newInstance(false))
+                    R.id.nav_trash -> showFragment(DashboardNotesFragment.newInstance(true))
                 }
                 drawer_layout?.removeDrawerListener(this)
             }

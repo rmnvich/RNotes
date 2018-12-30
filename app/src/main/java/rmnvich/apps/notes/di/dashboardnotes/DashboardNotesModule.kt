@@ -13,12 +13,11 @@ import rmnvich.apps.notes.domain.utils.ViewModelFactory
 import rmnvich.apps.notes.presentation.ui.adapter.dashboard.NotesAdapter
 
 @Module
-class DashboardNotesModule : BaseModule {
+class DashboardNotesModule(private val isFavoriteNotes: Boolean) : BaseModule {
 
-    @PerFragment
     @Provides
     fun provideViewModelFactory(interactor: DashboardNotesInteractor): ViewModelFactory {
-        return ViewModelFactory(interactor)
+        return ViewModelFactory(interactor, isFavoriteNotes)
     }
 
     @PerFragment

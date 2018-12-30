@@ -11,6 +11,8 @@ import rmnvich.apps.notes.presentation.ui.fragment.dashboardnotes.DashboardNotes
 
 class ViewModelFactory : ViewModelProvider.NewInstanceFactory {
 
+    private var isFavoriteNotes = false
+
     private lateinit var mDashboardNotesInteractor: DashboardNotesInteractor
 
     private lateinit var mDashboardTagsInteractor: DashboardTagsInteractor
@@ -19,7 +21,8 @@ class ViewModelFactory : ViewModelProvider.NewInstanceFactory {
 
     private lateinit var mAddEditNoteInteractor: AddEditNoteInteractor
 
-    constructor(dashboardNotesInteractor: DashboardNotesInteractor) : super() {
+    constructor(dashboardNotesInteractor: DashboardNotesInteractor, isFavoriteNotes: Boolean) : super() {
+        this.isFavoriteNotes = isFavoriteNotes
         this.mDashboardNotesInteractor = dashboardNotesInteractor
     }
 
@@ -38,7 +41,7 @@ class ViewModelFactory : ViewModelProvider.NewInstanceFactory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(DashboardNotesViewModel::class.java) ->
-                DashboardNotesViewModel(mDashboardNotesInteractor) as T
+                DashboardNotesViewModel(mDashboardNotesInteractor, isFavoriteNotes) as T
             modelClass.isAssignableFrom(AddEditNoteViewModel::class.java) ->
                 AddEditNoteViewModel(mAddEditNoteInteractor) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
