@@ -2,10 +2,12 @@ package rmnvich.apps.notes.presentation.ui.activity.addeditnote
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.util.Log.d
 import android.view.Menu
 import android.view.MenuItem
 import com.jaredrummler.android.colorpicker.ColorPickerDialog
@@ -20,6 +22,9 @@ import rmnvich.apps.notes.domain.entity.Tag
 import rmnvich.apps.notes.domain.utils.ViewModelFactory
 import javax.inject.Inject
 import javax.inject.Provider
+import android.view.inputmethod.InputMethodManager
+import kotlinx.android.synthetic.main.add_edit_note_activity.*
+
 
 class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener, OnLikeListener {
 
@@ -49,14 +54,11 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener, OnLi
         mAddEditNoteBinding.starButton.setOnLikeListener(this)
 
         mAddEditNoteBinding.swipeRefreshLayout.isEnabled = false
-        mAddEditNoteBinding.swipeRefreshLayout.setColorSchemeResources(
-                R.color.colorPrimary, R.color.colorAccent
-        )
+        mAddEditNoteBinding.swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent)
 
         setSupportActionBar(mAddEditNoteBinding.toolbar)
         mAddEditNoteBinding.toolbar.setNavigationOnClickListener {
-            finish()
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+            mAddEditNoteViewModel.insertOrUpdateNote()
         }
 
         val noteId = intent.getIntExtra(EXTRA_NOTE_ID, -1)
@@ -90,7 +92,10 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener, OnLi
 
     private fun observeOnPickColor() {
         mAddEditNoteViewModel.getPickColorEvent().observe(this,
-                Observer { mColorPickerDialog.get().show(this) })
+                Observer {
+                    dismissKeyboard()
+                    mColorPickerDialog.get().show(this)
+                })
     }
 
     private fun observeOnBackPressed() {
@@ -109,6 +114,13 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener, OnLi
                             Snackbar.LENGTH_SHORT
                     ).show()
                 })
+    }
+
+    private fun dismissKeyboard() {
+        val inputMethodManager = getSystemService(
+                Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(
+                mAddEditNoteBinding.etText.windowToken, 0)
     }
 
     override fun liked(button: LikeButton?) =

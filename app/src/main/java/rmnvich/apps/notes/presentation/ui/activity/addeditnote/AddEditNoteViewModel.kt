@@ -1,14 +1,11 @@
 package rmnvich.apps.notes.presentation.ui.activity.addeditnote
 
-import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.graphics.Color
-import android.support.v4.content.ContextCompat
 import io.reactivex.disposables.CompositeDisposable
 import rmnvich.apps.notes.R
-import rmnvich.apps.notes.data.common.Constants.DEFAULT_COLOR
 import rmnvich.apps.notes.domain.entity.Note
 import rmnvich.apps.notes.domain.entity.Tag
 import rmnvich.apps.notes.domain.interactors.addeditnote.AddEditNoteInteractor
@@ -33,8 +30,6 @@ class AddEditNoteViewModel(private val addEditNoteNotesInteractor: AddEditNoteIn
 
     private val mSnackbarMessage: SnackbarMessage = SnackbarMessage()
 
-    private var mResponse: MutableLiveData<Note> = MutableLiveData()
-
     private var existsNote: Note? = null
 
     fun getSnackbar(): SnackbarMessage = mSnackbarMessage
@@ -54,9 +49,8 @@ class AddEditNoteViewModel(private val addEditNoteNotesInteractor: AddEditNoteIn
                 .doOnSubscribe { bIsShowingProgressBar.set(true) }
                 .subscribe({
                     bIsShowingProgressBar.set(false)
-                    mResponse.value = it
-
                     existsNote = it
+
                     setObservableFields(it.text, it.color, it.tag, it.isFavorite)
                 }, {
                     bIsShowingProgressBar.set(false)
