@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Notes</string>
 
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
     <!-- NavigationDrawer menu -->
     <string name="title_notes">Notes</string>
     <string name="title_favorites">Favorites</string>

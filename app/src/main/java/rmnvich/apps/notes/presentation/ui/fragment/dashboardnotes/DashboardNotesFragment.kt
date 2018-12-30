@@ -11,6 +11,7 @@ import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
+import kotlinx.android.synthetic.main.app_bar_main.*
 import rmnvich.apps.notes.App
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.data.common.Constants.*
@@ -59,9 +60,7 @@ class DashboardNotesFragment : Fragment() {
         mDashboardNotesBinding.viewmodel = mDashboardNotesViewModel
 
         mDashboardNotesBinding.swipeRefreshLayout.isEnabled = false
-        mDashboardNotesBinding.swipeRefreshLayout.setColorSchemeResources(
-                R.color.colorPrimary, R.color.colorAccent
-        )
+        mDashboardNotesBinding.swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent)
 
         mDashboardNotesBinding.recyclerNotes.layoutManager = LinearLayoutManager(
                 context,
@@ -70,7 +69,7 @@ class DashboardNotesFragment : Fragment() {
         mDashboardNotesBinding.recyclerNotes.adapter = mAdapter
         mAdapter.setOnItemClickLIstener { mDashboardNotesViewModel.editNote(it) }
 
-        (activity as MainActivity).setSupportActionBar(mDashboardNotesBinding.toolbar)
+        (activity as MainActivity).toolbar.setTitle(R.string.title_notes)
         setHasOptionsMenu(true)
 
         return mDashboardNotesBinding.root
