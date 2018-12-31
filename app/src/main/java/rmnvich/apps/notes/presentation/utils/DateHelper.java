@@ -14,7 +14,7 @@ public class DateHelper {
 
     @SuppressLint("SimpleDateFormat")
     public static String convertLongTimeToString(long time) {
-        DateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy, HH:mm");
+        DateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
         return dateFormat.format(time);
     }
 

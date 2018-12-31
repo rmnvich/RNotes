@@ -20,10 +20,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:alpha="0.8"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:paddingStart="@dimen/item_tag_horizontal_padding"
             android:paddingTop="@dimen/item_tag_vertical_padding"
             android:paddingBottom="@dimen/item_tag_vertical_padding"
-            android:text="@{viewmodel.noteTag.get().name}"
+            android:text="@{viewmodel.noteTag.name}"
             android:textColor="@android:color/black"
             android:textSize="14sp"
             android:textStyle="italic"
@@ -46,6 +48,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_tag_name"
             app:layout_constraintTop_toTopOf="parent" />
-
     </android.support.constraint.ConstraintLayout>
 </layout>

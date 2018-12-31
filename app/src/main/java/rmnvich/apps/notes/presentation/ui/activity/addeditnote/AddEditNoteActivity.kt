@@ -80,7 +80,7 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener, OnLi
         return when (item?.itemId) {
             R.id.menu_tag -> {
                 val tag = Tag()
-                tag.name = "Test tag"
+                tag.name = "Test tag 123"
                 mAddEditNoteViewModel.noteTag.set(tag)
                 true
             }

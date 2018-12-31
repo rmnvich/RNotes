@@ -9,8 +9,6 @@
 
         <import type="android.view.View" />
 
-        <import type="rmnvich.apps.notes.presentation.utils.DateHelper" />
-
         <variable
             name="note"
             type="rmnvich.apps.notes.domain.entity.Note" />
@@ -37,22 +35,11 @@
                 style="@style/Base.TextAppearance.AppCompat.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/item_note_text_margin_top"
                 android:alpha="0.9"
                 android:ellipsize="end"
                 android:maxLines="5"
                 android:text="@{note.text}"
                 android:textSize="15sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/note_timestamp" />
-
-            <TextView
-                android:id="@+id/note_timestamp"
-                style="@style/TextAppearance.Compat.Notification.Time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:alpha="0.9"
-                android:text="@{DateHelper.convertLongTimeToString(note.timestamp)}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -88,6 +75,8 @@
                 android:layout_marginEnd="@dimen/item_note_divider_horizontal_margin"
                 android:alpha="0.8"
                 android:background="@drawable/item_tag_background"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:paddingStart="@dimen/item_note_tag_horizontal_padding"
                 android:paddingTop="@dimen/item_note_tag_vertical_padding"
                 android:paddingEnd="@dimen/item_note_tag_horizontal_padding"

@@ -3,6 +3,8 @@ package rmnvich.apps.notes.presentation.ui.activity.addeditnote
 import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
+import android.databinding.ObservableInt
+import android.databinding.ObservableLong
 import android.graphics.Color
 import io.reactivex.disposables.CompositeDisposable
 import rmnvich.apps.notes.R
@@ -20,6 +22,7 @@ class AddEditNoteViewModel(private val addEditNoteNotesInteractor: AddEditNoteIn
     val noteText: ObservableField<String> = ObservableField("")
     val noteColor: ObservableField<Int> = ObservableField(Color.DKGRAY)
     val noteTag: ObservableField<Tag> = ObservableField()
+    val noteTimestamp: ObservableField<Long> = ObservableField()
     val noteFavorite: ObservableBoolean = ObservableBoolean()
 
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
@@ -51,7 +54,8 @@ class AddEditNoteViewModel(private val addEditNoteNotesInteractor: AddEditNoteIn
                     bIsShowingProgressBar.set(false)
                     existsNote = it
 
-                    setObservableFields(it.text, it.color, it.tag, it.isFavorite)
+                    setObservableFields(it.text, it.color, it.tag,
+                            it.isFavorite, it.timestamp)
                 }, {
                     bIsShowingProgressBar.set(false)
                     showSnackbarMessage(R.string.error_message)
@@ -85,11 +89,13 @@ class AddEditNoteViewModel(private val addEditNoteNotesInteractor: AddEditNoteIn
     }
 
     private fun setObservableFields(noteText: String, noteColor: Int,
-                                    noteTag: Tag?, noteFavorite: Boolean) {
+                                    noteTag: Tag?, noteFavorite: Boolean,
+                                    noteTimestamp: Long) {
         this.noteText.set(noteText)
         this.noteColor.set(noteColor)
         this.noteTag.set(noteTag)
         this.noteFavorite.set(noteFavorite)
+        this.noteTimestamp.set(noteTimestamp)
     }
 
     private fun showSnackbarMessage(message: Int?) {

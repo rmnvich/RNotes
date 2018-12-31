@@ -8,6 +8,8 @@
 
         <import type="android.text.TextUtils" />
 
+        <import type="rmnvich.apps.notes.presentation.utils.DateHelper" />
+
         <variable
             name="viewmodel"
             type="rmnvich.apps.notes.presentation.ui.activity.addeditnote.AddEditNoteViewModel" />
@@ -77,21 +79,41 @@
                         android:layout_width="@dimen/card_view_tools_circle_view_size"
                         android:layout_height="@dimen/card_view_tools_circle_view_size"
                         android:onClick="@{(view) -> viewmodel.pickColor()}"
-                        app:circleColor="@{viewmodel.noteColor.get()}"
+                        app:circleColor="@{viewmodel.noteColor}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <include
+                        android:id="@+id/tools_tag"
                         layout="@layout/item_tools_tag"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/card_view_tools_tag_margin_start"
+                        android:visibility="@{viewmodel.noteTag == null ? View.GONE : View.VISIBLE}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tools_timestamp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:viewmodel="@{viewmodel}" />
+
+                    <TextView
+                        android:id="@+id/tools_timestamp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/card_view_tools_tag_margin_start"
-                        android:visibility="@{viewmodel.noteTag.get() == null ? View.INVISIBLE : View.VISIBLE}"
+                        android:alpha="0.8"
+                        android:background="@drawable/item_tag_background"
+                        android:paddingStart="@dimen/item_note_tag_horizontal_padding"
+                        android:paddingTop="@dimen/item_note_tag_vertical_padding"
+                        android:paddingEnd="@dimen/item_note_tag_horizontal_padding"
+                        android:paddingBottom="@dimen/item_note_tag_vertical_padding"
+                        android:text="@{DateHelper.convertLongTimeToString(viewmodel.noteTimestamp)}"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"
+                        android:textStyle="italic"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@id/circle_view_color"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:viewmodel="@{viewmodel}" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <com.like.LikeButton
                         android:id="@+id/star_button"
