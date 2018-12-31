@@ -38,13 +38,6 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(mNoteList[position])
-        setFadeAnimation(holder.itemView)
-    }
-
-    private fun setFadeAnimation(view: View) {
-        val anim = AlphaAnimation(0.5f, 1.0f)
-        anim.duration = DEFAULT_ANIM_DURATION
-        view.startAnimation(anim)
     }
 
     interface OnClickNoteListener {
@@ -55,7 +48,7 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
         mClickListener = listener
     }
 
-    inline fun setOnItemClickLIstener(crossinline onClickNote: (Int) -> Unit) {
+    inline fun setOnItemClickListener(crossinline onClickNote: (Int) -> Unit) {
         setClickListener(object : OnClickNoteListener {
             override fun onClickNote(noteId: Int) {
                 onClickNote(noteId)
