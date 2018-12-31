@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableBoolean
+import android.util.Log.d
 import io.reactivex.disposables.CompositeDisposable
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.domain.entity.Note
@@ -58,7 +59,8 @@ class DashboardNotesViewModel(
     fun updateIsFavoriteNote(noteId: Int, isFavorite: Boolean) {
         mCompositeDisposable.add(dashboardNotesInteractor
                 .updateIsFavoriteNote(noteId, isFavorite)
-                .subscribe()
+                .doOnSubscribe { bIsShowingProgressBar.set(true) }
+                .subscribe { bIsShowingProgressBar.set(false) }
         )
     }
 

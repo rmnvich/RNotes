@@ -4,13 +4,11 @@ import android.databinding.DataBindingUtil
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AlphaAnimation
+import android.widget.CompoundButton
 import com.like.LikeButton
 import com.like.OnLikeListener
 import rmnvich.apps.notes.R
-import rmnvich.apps.notes.data.common.Constants.DEFAULT_ANIM_DURATION
 import rmnvich.apps.notes.databinding.ItemNoteBinding
 import rmnvich.apps.notes.domain.entity.Note
 import java.util.*
@@ -21,7 +19,7 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
     private var mNoteList: List<Note> = LinkedList()
 
     fun setData(data: List<Note>) {
-        val diffUtilCallback = NotesDiffutil(mNoteList, data)
+        val diffUtilCallback = NotesDiffUtil(mNoteList, data)
         val diffResult = DiffUtil.calculateDiff(diffUtilCallback)
 
         mNoteList = data
@@ -66,27 +64,21 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
     }
 
     inner class ViewHolder(private val binding: ItemNoteBinding) :
-            RecyclerView.ViewHolder(binding.root), OnLikeListener {
+            RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.root.setOnClickListener {
                 mClickListener.onClickNote(mNoteList[adapterPosition].noteId)
             }
-            binding.starButton.setOnLikeListener(this)
+            binding.noteButtonStar.setOnClickListener {
+                mClickListener.onClickFavorite(mNoteList[adapterPosition].noteId,
+                        binding.noteButtonStar.isChecked)
+            }
         }
 
         fun bind(note: Note) {
             binding.note = note
             binding.executePendingBindings()
         }
-
-        override fun liked(p0: LikeButton?) {
-            mClickListener.onClickFavorite(mNoteList[adapterPosition].noteId, true)
-        }
-
-        override fun unLiked(p0: LikeButton?) {
-            mClickListener.onClickFavorite(mNoteList[adapterPosition].noteId, false)
-        }
-
     }
 }

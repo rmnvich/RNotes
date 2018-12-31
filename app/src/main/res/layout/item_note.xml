@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.text.TextUtils" />
+
         <import type="android.view.View" />
 
         <import type="rmnvich.apps.notes.presentation.utils.DateHelper" />
@@ -54,6 +56,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <rmnvich.apps.notes.presentation.ui.custom.CircleView
+                android:id="@+id/note_circle_color"
+                android:layout_width="@dimen/item_note_circle_color_size"
+                android:layout_height="@dimen/item_note_circle_color_size"
+                android:layout_marginTop="@dimen/item_note_circle_margin_top"
+                app:circleColor="@{note.color}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/note_divider_left"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/note_text" />
+
             <View
                 android:id="@+id/note_divider_left"
                 android:layout_width="0dp"
@@ -83,7 +96,7 @@
                 android:textColor="@android:color/black"
                 android:textSize="12sp"
                 android:textStyle="italic"
-                android:visibility="@{note.tag == null ? View.GONE : View.VISIBLE}"
+                android:visibility="@{TextUtils.isEmpty(note.tag.name) ? View.GONE : View.VISIBLE}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/note_divider_right"
                 app:layout_constraintStart_toEndOf="@id/note_divider_left"
@@ -97,36 +110,23 @@
                 android:layout_marginEnd="@dimen/item_note_divider_horizontal_margin"
                 android:background="@drawable/divider"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/star_button"
+                app:layout_constraintEnd_toStartOf="@id/note_button_star"
                 app:layout_constraintStart_toEndOf="@id/note_tag"
                 app:layout_constraintTop_toBottomOf="@id/note_text" />
 
-            <rmnvich.apps.notes.presentation.ui.custom.CircleView
-                android:id="@+id/note_circle_color"
-                android:layout_width="@dimen/item_note_circle_color_size"
-                android:layout_height="@dimen/item_note_circle_color_size"
-                android:layout_marginTop="@dimen/item_note_circle_margin_top"
-                app:circleColor="@{note.color}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/note_text" />
-
-            <com.like.LikeButton
-                android:id="@+id/star_button"
+            <ToggleButton
+                android:id="@+id/note_button_star"
                 android:layout_width="@dimen/star_button_smart_size"
                 android:layout_height="@dimen/star_button_smart_size"
                 android:layout_marginTop="@dimen/item_note_circle_margin_top"
-                app:anim_scale_factor="2"
-                app:circle_end_color="@color/colorAccent"
-                app:circle_start_color="@color/colorPrimary"
-                app:dots_primary_color="@color/colorAccent"
-                app:dots_secondary_color="@color/colorPrimary"
-                app:icon_size="@dimen/star_button_smart_size"
-                app:icon_type="Star"
+                android:background="@drawable/button_favorite"
+                android:checked="@{note.favorite}"
+                android:textOff=""
+                android:textOn=""
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/note_text"
-                app:liked="@{note.favorite}" />
+                app:layout_constraintStart_toEndOf="@id/note_divider_right"
+                app:layout_constraintTop_toBottomOf="@id/note_text" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 </layout>

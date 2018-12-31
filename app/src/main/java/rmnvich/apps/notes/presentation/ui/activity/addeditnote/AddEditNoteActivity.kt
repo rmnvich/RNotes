@@ -7,9 +7,9 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
-import android.util.Log.d
 import android.view.Menu
 import android.view.MenuItem
+import android.view.inputmethod.InputMethodManager
 import com.jaredrummler.android.colorpicker.ColorPickerDialog
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
 import com.like.LikeButton
@@ -22,8 +22,6 @@ import rmnvich.apps.notes.domain.entity.Tag
 import rmnvich.apps.notes.domain.utils.ViewModelFactory
 import javax.inject.Inject
 import javax.inject.Provider
-import android.view.inputmethod.InputMethodManager
-import kotlinx.android.synthetic.main.add_edit_note_activity.*
 
 
 class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener, OnLikeListener {

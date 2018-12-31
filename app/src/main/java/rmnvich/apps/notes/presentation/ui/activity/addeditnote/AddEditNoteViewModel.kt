@@ -77,8 +77,8 @@ class AddEditNoteViewModel(private val addEditNoteNotesInteractor: AddEditNoteIn
             mCompositeDisposable.add(addEditNoteNotesInteractor
                     .insertOrUpdateNote(existsNote!!)
                     .subscribe {
-                        onBackPressedEvent.call()
                         bIsShowingProgressBar.set(false)
+                        onBackPressedEvent.call()
                     }
             )
         } else onBackPressedEvent.call()

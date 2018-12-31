@@ -3,13 +3,9 @@ package rmnvich.apps.notes.data.repositories
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import rmnvich.apps.notes.data.common.Constants.DEFAULT_DELAY
 import rmnvich.apps.notes.data.repositories.datasource.Database
 import rmnvich.apps.notes.domain.entity.Note
 import rmnvich.apps.notes.domain.repositories.NotesRepository
-import java.util.concurrent.TimeUnit
 
 class NotesRepositoryImpl(database: Database) : NotesRepository {
 

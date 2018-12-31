@@ -23,6 +23,7 @@ import rmnvich.apps.notes.presentation.ui.activity.main.MainActivity
 import rmnvich.apps.notes.presentation.ui.adapter.dashboard.NotesAdapter
 import javax.inject.Inject
 import android.support.v7.widget.StaggeredGridLayoutManager
+import android.util.Log.d
 
 
 class DashboardNotesFragment : Fragment() {
@@ -94,6 +95,7 @@ class DashboardNotesFragment : Fragment() {
         mAdapter.setOnItemClickListener(
                 onClickNote = { mDashboardNotesViewModel.editNote(it) },
                 onClickFavoriteButton = { noteId, isFavorite ->
+                    d("qwe", "onClickFavoriteButton, noteId = $noteId, isFavorite = $isFavorite")
                     mDashboardNotesViewModel.updateIsFavoriteNote(noteId, isFavorite)
                 })
 

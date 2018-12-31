@@ -3,9 +3,9 @@ package rmnvich.apps.notes.presentation.ui.adapter.dashboard
 import android.support.v7.util.DiffUtil
 import rmnvich.apps.notes.domain.entity.Note
 
-class NotesDiffutil(
-    private val oldList: List<Note>,
-    private val newList: List<Note>
+class NotesDiffUtil(
+        private val oldList: List<Note>,
+        private val newList: List<Note>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {
@@ -28,8 +28,9 @@ class NotesDiffutil(
         return oldNote.text == newNote.text &&
                 oldNote.timestamp == newNote.timestamp &&
                 oldNote.color == newNote.color &&
-                oldNote.tag == newNote.tag &&
                 oldNote.isFavorite == newNote.isFavorite &&
+                oldNote.tag?.name == newNote.tag?.name &&
+                oldNote.tag?.tagId == newNote.tag?.tagId &&
                 oldNote.isDeleted == newNote.isDeleted
     }
 
