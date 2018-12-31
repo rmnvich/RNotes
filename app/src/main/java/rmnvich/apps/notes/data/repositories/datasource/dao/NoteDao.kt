@@ -23,6 +23,9 @@ interface NoteDao {
     @Query("SELECT * FROM note WHERE noteId = :noteId")
     fun getNoteById(noteId: Int): Single<Note>
 
+    @Query("UPDATE note SET isFavorite = :isFavorite WHERE noteId = :noteId")
+    fun updateIsFavoriteNote(noteId: Int, isFavorite: Boolean)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertNote(note: Note)
 

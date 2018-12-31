@@ -41,6 +41,10 @@ class NotesRepositoryImpl(database: Database) : NotesRepository {
         return Completable.fromAction { noteDao.insertNote(note) }
     }
 
+    override fun updateIsFavoriteNote(noteId: Int, isFavorite: Boolean): Completable {
+        return Completable.fromAction { noteDao.updateIsFavoriteNote(noteId, isFavorite) }
+    }
+
     override fun deleteNote(note: Note): Completable {
         return Completable.fromAction { noteDao.deleteNote(note) }
     }

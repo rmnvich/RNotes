@@ -19,6 +19,8 @@ interface NotesRepository {
 
     fun insertOrUpdateNote(note: Note): Completable
 
+    fun updateIsFavoriteNote(noteId: Int, isFavorite: Boolean): Completable
+
     fun deleteNote(note: Note): Completable
 
     fun deleteNotes(notes: List<Note>): Completable
