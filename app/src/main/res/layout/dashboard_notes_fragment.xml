@@ -21,7 +21,6 @@
             android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:refreshing="@{viewmodel.bIsShowingProgressBar}">
 
             <android.support.constraint.ConstraintLayout

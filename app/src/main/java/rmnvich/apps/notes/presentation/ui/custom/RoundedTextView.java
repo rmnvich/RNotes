@@ -143,7 +143,7 @@ public class RoundedTextView extends View {
     private int getTextWidth() {
         Rect bounds = new Rect();
         labelPaint.getTextBounds(labelText, 0, labelText.length(), bounds);
-        return (int) (bounds.width() * 3.5f);
+        return bounds.width();
     }
 
     public void setCircleColor(int color) {

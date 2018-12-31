@@ -8,6 +8,7 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import android.view.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import rmnvich.apps.notes.App
@@ -89,7 +90,8 @@ class DashboardNotesFragment : Fragment() {
                 StaggeredGridLayoutManager.VERTICAL)
         gridLayoutManager.gapStrategy = StaggeredGridLayoutManager
                 .GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
-        mDashboardNotesBinding.recyclerNotes.layoutManager = gridLayoutManager
+        mDashboardNotesBinding.recyclerNotes.layoutManager = LinearLayoutManager(context,
+                LinearLayoutManager.VERTICAL, false)
 
         mDashboardNotesBinding.recyclerNotes.adapter = mAdapter
         mAdapter.setOnItemClickListener { mDashboardNotesViewModel.editNote(it) }
