@@ -55,30 +55,60 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <View
-                android:id="@+id/note_divider"
+                android:id="@+id/note_divider_left"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/item_note_divider_height"
                 android:layout_marginStart="@dimen/item_note_divider_horizontal_margin"
+                android:layout_marginTop="@dimen/item_note_circle_margin_top"
+                android:background="@drawable/divider"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/note_tag"
+                app:layout_constraintStart_toEndOf="@id/note_circle_color"
+                app:layout_constraintTop_toBottomOf="@id/note_text" />
+
+            <TextView
+                android:id="@+id/note_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/item_note_divider_horizontal_margin"
+                android:layout_marginTop="@dimen/item_note_circle_margin_top"
+                android:layout_marginEnd="@dimen/item_note_divider_horizontal_margin"
+                android:alpha="0.8"
+                android:background="@drawable/item_tag_background"
+                android:paddingStart="@dimen/item_note_tag_horizontal_padding"
+                android:paddingTop="@dimen/item_note_tag_vertical_padding"
+                android:paddingEnd="@dimen/item_note_tag_horizontal_padding"
+                android:paddingBottom="@dimen/item_note_tag_vertical_padding"
+                android:text="@{note.tag.name}"
+                android:textColor="@android:color/black"
+                android:textSize="12sp"
+                android:textStyle="italic"
+                android:visibility="@{note.tag == null ? View.GONE : View.VISIBLE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/note_divider_right"
+                app:layout_constraintStart_toEndOf="@id/note_divider_left"
+                app:layout_constraintTop_toBottomOf="@id/note_text" />
+
+            <View
+                android:id="@+id/note_divider_right"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/item_note_divider_height"
                 android:layout_marginTop="@dimen/item_note_circle_margin_top"
                 android:layout_marginEnd="@dimen/item_note_divider_horizontal_margin"
                 android:background="@drawable/divider"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/star_button"
-                app:layout_constraintStart_toEndOf="@id/note_color_tag"
+                app:layout_constraintStart_toEndOf="@id/note_tag"
                 app:layout_constraintTop_toBottomOf="@id/note_text" />
 
-            <rmnvich.apps.notes.presentation.ui.custom.RoundedTextView
-                android:id="@+id/note_color_tag"
-                android:layout_width="wrap_content"
+            <rmnvich.apps.notes.presentation.ui.custom.CircleView
+                android:id="@+id/note_circle_color"
+                android:layout_width="@dimen/item_note_circle_color_size"
                 android:layout_height="@dimen/item_note_circle_color_size"
                 android:layout_marginTop="@dimen/item_note_circle_margin_top"
                 app:circleColor="@{note.color}"
-                app:circleSize="@dimen/item_note_circle_color_size"
-                app:cornerRadius="@dimen/item_note_rounded_tv_radius"
-                app:labelColor="@color/colorWhite"
-                app:labelSize="12sp"
-                app:labelText='@{note.tag == null ? "" : "#" + note.tag.name}'
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/note_text" />
 
             <com.like.LikeButton

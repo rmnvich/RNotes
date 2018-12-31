@@ -3,7 +3,8 @@
     <item>
         <shape android:shape="rectangle">
             <corners android:radius="@dimen/item_tag_corner_radius" />
-            <solid android:color="@color/colorTagBackground" />
+            <stroke android:width="@dimen/item_note_divider_height" android:color="@color/colorTagBackground" />
+            <solid android:color="@android:color/transparent" />
         </shape>
     </item>
 </selector>

@@ -9,7 +9,6 @@
 
     <color name="colorWhite">#FFFFFF</color>
 
-
     <color name="colorDivider">#37919191</color>
-    <color name="colorTagBackground">#1e808080</color>
+    <color name="colorTagBackground">#96868686</color>
 </resources>

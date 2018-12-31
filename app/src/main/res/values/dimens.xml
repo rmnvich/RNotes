@@ -16,13 +16,14 @@
     <dimen name="item_note_card_padding">10dp</dimen>
     <dimen name="item_note_text_margin_top">3dp</dimen>
     <dimen name="item_note_circle_color_size">16dp</dimen>
-    <dimen name="item_note_circle_margin_top">3dp</dimen>
-    <dimen name="item_note_tag_margn_start">5dp</dimen>
+    <dimen name="item_note_circle_margin_top">5dp</dimen>
+    <dimen name="item_note_tag_horizontal_padding">10dp</dimen>
+    <dimen name="item_note_tag_vertical_padding">4dp</dimen>
     <dimen name="item_note_rounded_tv_radius">20dp</dimen>
-    <dimen name="item_note_divider_horizontal_margin">12dp</dimen>
+    <dimen name="item_note_divider_horizontal_margin">5dp</dimen>
     <dimen name="item_note_divider_height">1dp</dimen>
 
-    <dimen name="item_tag_corner_radius">50dp</dimen>
+    <dimen name="item_tag_corner_radius">20dp</dimen>
     <dimen name="item_tag_horizontal_padding">10dp</dimen>
     <dimen name="item_tag_vertical_padding">4dp</dimen>
     <dimen name="item_tag_delete_button_horizontal_margin">3dp</dimen>

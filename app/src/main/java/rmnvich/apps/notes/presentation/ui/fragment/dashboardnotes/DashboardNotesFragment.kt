@@ -88,8 +88,7 @@ class DashboardNotesFragment : Fragment() {
                 StaggeredGridLayoutManager.VERTICAL)
         gridLayoutManager.gapStrategy = StaggeredGridLayoutManager
                 .GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
-        mDashboardNotesBinding.recyclerNotes.layoutManager = LinearLayoutManager(context,
-                LinearLayoutManager.VERTICAL, false)
+        mDashboardNotesBinding.recyclerNotes.layoutManager = gridLayoutManager
 
         mDashboardNotesBinding.recyclerNotes.adapter = mAdapter
         mAdapter.setOnItemClickListener(
