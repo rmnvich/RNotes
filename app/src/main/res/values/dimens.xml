@@ -18,6 +18,9 @@
     <dimen name="item_note_circle_color_size">16dp</dimen>
     <dimen name="item_note_circle_margin_top">3dp</dimen>
     <dimen name="item_note_tag_margn_start">5dp</dimen>
+    <dimen name="item_note_rounded_tv_radius">20dp</dimen>
+    <dimen name="item_note_divider_horizontal_margin">12dp</dimen>
+    <dimen name="item_note_divider_height">1dp</dimen>
 
     <dimen name="item_tag_corner_radius">50dp</dimen>
     <dimen name="item_tag_horizontal_padding">10dp</dimen>
@@ -37,8 +40,6 @@
     <dimen name="navigation_view_width">265dp</dimen>
     <dimen name="navigation_header_margin_top">30dp</dimen>
     <dimen name="navigation_header_margin_end">10dp</dimen>
-    <dimen name="note_divider_horizontal_margin">15dp</dimen>
-    <dimen name="note_divider_height">1dp</dimen>
 
     <integer name="animation_duration">400</integer>
 </resources>

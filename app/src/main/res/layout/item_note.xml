@@ -57,38 +57,29 @@
             <View
                 android:id="@+id/note_divider"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/note_divider_height"
-                android:layout_marginStart="@dimen/note_divider_horizontal_margin"
+                android:layout_height="@dimen/item_note_divider_height"
+                android:layout_marginStart="@dimen/item_note_divider_horizontal_margin"
                 android:layout_marginTop="@dimen/item_note_circle_margin_top"
-                android:layout_marginEnd="@dimen/note_divider_horizontal_margin"
+                android:layout_marginEnd="@dimen/item_note_divider_horizontal_margin"
                 android:background="@drawable/divider"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/star_button"
-                app:layout_constraintStart_toEndOf="@id/note_circle_view_color"
+                app:layout_constraintStart_toEndOf="@id/note_color_tag"
                 app:layout_constraintTop_toBottomOf="@id/note_text" />
 
-            <rmnvich.apps.notes.presentation.ui.custom.CircleView
-                android:id="@+id/note_circle_view_color"
-                android:layout_width="@dimen/item_note_circle_color_size"
+            <rmnvich.apps.notes.presentation.ui.custom.RoundedTextView
+                android:id="@+id/note_color_tag"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/item_note_circle_color_size"
                 android:layout_marginTop="@dimen/item_note_circle_margin_top"
-                android:visibility="@{note.tag == null ? View.VISIBLE : View.INVISIBLE}"
                 app:circleColor="@{note.color}"
+                app:circleSize="@dimen/item_note_circle_color_size"
+                app:cornerRadius="@dimen/item_note_rounded_tv_radius"
+                app:labelColor="@color/colorWhite"
+                app:labelSize="12sp"
+                app:labelText='@{note.tag == null ? "" : "#" + note.tag.name}'
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/note_text" />
-
-            <include
-                android:id="@+id/note_tag"
-                layout="@layout/item_note_tag"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/item_note_circle_margin_top"
-                android:visibility="@{note.tag == null ? View.INVISIBLE : View.VISIBLE}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/note_text"
-                app:tag="@{note.tag}" />
 
             <com.like.LikeButton
                 android:id="@+id/star_button"
