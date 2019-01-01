@@ -32,6 +32,7 @@
 
     <dimen name="navigation_view_width">265dp</dimen>
     <dimen name="navigation_header_height">210dp</dimen>
+    <dimen name="navigation_header_margin_top">30dp</dimen>
 
     <integer name="animation_duration">400</integer>
 </resources>
