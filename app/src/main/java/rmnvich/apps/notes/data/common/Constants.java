@@ -15,6 +15,5 @@ public class Constants {
     public static String KEY_IS_FAVORITE_NOTES = "favorite_notes";
 
     //TODO: bug when toolbar scrolling (scrollFlags="scroll")
-    //TODO: bug when starButton clicked (empty place where must be tag)
     //TODO: but with long tag (ellipsize in dashboard note and bottom toolbar)
 }

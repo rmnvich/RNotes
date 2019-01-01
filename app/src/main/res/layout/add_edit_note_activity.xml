@@ -52,8 +52,8 @@
                 android:gravity="top"
                 android:hint="@string/start_writing"
                 android:inputType="textCapSentences|textMultiLine"
-                android:paddingLeft="@dimen/edittext_horizontal_padding"
-                android:paddingRight="@dimen/edittext_horizontal_padding"
+                android:paddingLeft="@dimen/note_edittext_horizontal_padding"
+                android:paddingRight="@dimen/note_edittext_horizontal_padding"
                 android:text="@={viewmodel.noteText}"
                 app:layout_constraintBottom_toTopOf="@id/card_view_tools"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -101,37 +101,21 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/card_view_tools_tag_margin_start"
-                        android:alpha="0.8"
                         android:background="@drawable/item_tag_background"
                         android:paddingStart="@dimen/item_note_tag_horizontal_padding"
                         android:paddingTop="@dimen/item_note_tag_vertical_padding"
                         android:paddingEnd="@dimen/item_note_tag_horizontal_padding"
                         android:paddingBottom="@dimen/item_note_tag_vertical_padding"
                         android:text="@{DateHelper.convertLongTimeToString(viewmodel.noteTimestamp)}"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/colorTagText"
                         android:textSize="14sp"
                         android:textStyle="italic"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@id/circle_view_color"
                         app:layout_constraintTop_toTopOf="parent" />
-
-                    <com.like.LikeButton
-                        android:id="@+id/star_button"
-                        android:layout_width="@dimen/star_button_tools_size"
-                        android:layout_height="@dimen/star_button_tools_size"
-                        app:anim_scale_factor="2"
-                        app:circle_end_color="@color/colorAccent"
-                        app:circle_start_color="@color/colorPrimary"
-                        app:dots_primary_color="@color/colorAccent"
-                        app:dots_secondary_color="@color/colorPrimary"
-                        app:icon_size="@dimen/star_button_tools_size"
-                        app:icon_type="Star"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:liked="@{viewmodel.noteFavorite}" />
                 </android.support.constraint.ConstraintLayout>
             </android.support.v7.widget.CardView>
+
         </android.support.constraint.ConstraintLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 </layout>

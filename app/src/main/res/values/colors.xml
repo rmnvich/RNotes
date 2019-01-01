@@ -10,5 +10,6 @@
     <color name="colorWhite">#FFFFFF</color>
 
     <color name="colorDivider">#37919191</color>
-    <color name="colorTagBackground">#96868686</color>
+    <color name="colorTagText">#c8000000</color>
+    <color name="colorTagBackground">#50868686</color>
 </resources>

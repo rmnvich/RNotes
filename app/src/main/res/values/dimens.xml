@@ -3,12 +3,7 @@
 
     <dimen name="fab_margin">16dp</dimen>
 
-    <dimen name="iv_empty_size">120dp</dimen>
-
-    <dimen name="edittext_horizontal_padding">10dp</dimen>
-
-    <dimen name="img_button_margin">5dp</dimen>
-    <dimen name="img_button_padding">10dp</dimen>
+    <dimen name="dashboard_iv_empty_size">120dp</dimen>
 
     <dimen name="item_note_horizontal_margin">10dp</dimen>
     <dimen name="item_note_vertical_margin">5dp</dimen>
@@ -17,9 +12,9 @@
     <dimen name="item_note_text_margin_top">3dp</dimen>
     <dimen name="item_note_circle_color_size">16dp</dimen>
     <dimen name="item_note_circle_margin_top">5dp</dimen>
+    <dimen name="item_note_star_button_smart_size">20dp</dimen>
     <dimen name="item_note_tag_horizontal_padding">10dp</dimen>
     <dimen name="item_note_tag_vertical_padding">4dp</dimen>
-    <dimen name="item_note_rounded_tv_radius">20dp</dimen>
     <dimen name="item_note_divider_horizontal_margin">5dp</dimen>
     <dimen name="item_note_divider_height">1dp</dimen>
 
@@ -33,12 +28,10 @@
     <dimen name="card_view_tools_circle_view_size">25dp</dimen>
     <dimen name="card_view_tools_tag_margin_start">10dp</dimen>
 
-    <dimen name="star_button_smart_size">20dp</dimen>
-    <dimen name="star_button_tools_size">25dp</dimen>
-    <dimen name="star_button_tools_margin_start">10dp</dimen>
+    <dimen name="note_edittext_horizontal_padding">10dp</dimen>
 
-    <dimen name="navigation_header_height">210dp</dimen>
     <dimen name="navigation_view_width">265dp</dimen>
+    <dimen name="navigation_header_height">210dp</dimen>
     <dimen name="navigation_header_margin_top">30dp</dimen>
     <dimen name="navigation_header_margin_end">10dp</dimen>
 

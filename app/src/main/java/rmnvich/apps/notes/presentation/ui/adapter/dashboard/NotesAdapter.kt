@@ -51,29 +51,33 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
     }
 
     inline fun setOnItemClickListener(crossinline onClickNote: (Int) -> Unit,
-                                      crossinline onClickFavoriteButton: (Int, Boolean) -> Unit) {
+                                      crossinline onClickFavorite: (Int, Boolean) -> Unit) {
         setClickListener(object : OnClickNoteListener {
-            override fun onClickFavorite(noteId: Int, isFavorite: Boolean) {
-                onClickFavoriteButton(noteId, isFavorite)
-            }
-
             override fun onClickNote(noteId: Int) {
                 onClickNote(noteId)
+            }
+
+            override fun onClickFavorite(noteId: Int, isFavorite: Boolean) {
+                onClickFavorite(noteId, isFavorite)
             }
         })
     }
 
-    inner class ViewHolder(private val binding: ItemNoteBinding) :
-            RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: ItemNoteBinding)
+        : RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.root.setOnClickListener {
                 mClickListener.onClickNote(mNoteList[adapterPosition].noteId)
             }
-            binding.noteButtonStar.setOnClickListener {
-                mClickListener.onClickFavorite(mNoteList[adapterPosition].noteId,
-                        binding.noteButtonStar.isChecked)
-            }
+
+            binding.noteButtonStar.setOnLikeListener(object : OnLikeListener {
+                override fun liked(p0: LikeButton?) =
+                        mClickListener.onClickFavorite(mNoteList[adapterPosition].noteId, true)
+
+                override fun unLiked(p0: LikeButton?) =
+                        mClickListener.onClickFavorite(mNoteList[adapterPosition].noteId, false)
+            })
         }
 
         fun bind(note: Note) {

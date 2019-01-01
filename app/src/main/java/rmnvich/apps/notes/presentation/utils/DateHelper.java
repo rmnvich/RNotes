@@ -1,10 +1,8 @@
 package rmnvich.apps.notes.presentation.utils;
 
-import android.annotation.SuppressLint;
-
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class DateHelper {
 
@@ -12,10 +10,8 @@ public class DateHelper {
         return Calendar.getInstance().getTimeInMillis();
     }
 
-    @SuppressLint("SimpleDateFormat")
     public static String convertLongTimeToString(long time) {
-        DateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
-        return dateFormat.format(time);
+        return new SimpleDateFormat("dd MMMM yyyy",
+                Locale.getDefault()).format(time);
     }
-
 }

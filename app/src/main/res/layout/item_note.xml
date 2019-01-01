@@ -73,7 +73,6 @@
                 android:layout_marginStart="@dimen/item_note_divider_horizontal_margin"
                 android:layout_marginTop="@dimen/item_note_circle_margin_top"
                 android:layout_marginEnd="@dimen/item_note_divider_horizontal_margin"
-                android:alpha="0.8"
                 android:background="@drawable/item_tag_background"
                 android:ellipsize="end"
                 android:maxLines="1"
@@ -82,7 +81,7 @@
                 android:paddingEnd="@dimen/item_note_tag_horizontal_padding"
                 android:paddingBottom="@dimen/item_note_tag_vertical_padding"
                 android:text="@{note.tag.name}"
-                android:textColor="@android:color/black"
+                android:textColor="@color/colorTagText"
                 android:textSize="12sp"
                 android:textStyle="italic"
                 android:visibility="@{TextUtils.isEmpty(note.tag.name) ? View.GONE : View.VISIBLE}"
@@ -103,19 +102,23 @@
                 app:layout_constraintStart_toEndOf="@id/note_tag"
                 app:layout_constraintTop_toBottomOf="@id/note_text" />
 
-            <ToggleButton
+            <com.like.LikeButton
                 android:id="@+id/note_button_star"
-                android:layout_width="@dimen/star_button_smart_size"
-                android:layout_height="@dimen/star_button_smart_size"
+                android:layout_width="@dimen/item_note_star_button_smart_size"
+                android:layout_height="@dimen/item_note_star_button_smart_size"
                 android:layout_marginTop="@dimen/item_note_circle_margin_top"
-                android:background="@drawable/button_favorite"
-                android:checked="@{note.favorite}"
-                android:textOff=""
-                android:textOn=""
+                app:anim_scale_factor="2"
+                app:circle_end_color="@color/colorAccent"
+                app:circle_start_color="@color/colorPrimary"
+                app:dots_primary_color="@color/colorAccent"
+                app:dots_secondary_color="@color/colorPrimary"
+                app:icon_size="@dimen/item_note_star_button_smart_size"
+                app:icon_type="Star"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/note_divider_right"
-                app:layout_constraintTop_toBottomOf="@id/note_text" />
+                app:layout_constraintTop_toBottomOf="@id/note_text"
+                app:liked="@{note.favorite}" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 </layout>

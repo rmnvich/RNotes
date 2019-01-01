@@ -12,8 +12,6 @@ import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
 import com.jaredrummler.android.colorpicker.ColorPickerDialog
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
-import com.like.LikeButton
-import com.like.OnLikeListener
 import rmnvich.apps.notes.App
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.data.common.Constants.EXTRA_NOTE_ID
@@ -24,7 +22,7 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 
-class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener, OnLikeListener {
+class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
 
     @Inject
     lateinit var mViewModelFactory: ViewModelFactory
@@ -48,8 +46,6 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener, OnLi
         mAddEditNoteViewModel = ViewModelProviders.of(this, mViewModelFactory)
                 .get(AddEditNoteViewModel::class.java)
         mAddEditNoteBinding.viewmodel = mAddEditNoteViewModel
-
-        mAddEditNoteBinding.starButton.setOnLikeListener(this)
 
         mAddEditNoteBinding.swipeRefreshLayout.isEnabled = false
         mAddEditNoteBinding.swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent)
@@ -120,12 +116,6 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener, OnLi
         inputMethodManager.hideSoftInputFromWindow(
                 mAddEditNoteBinding.etText.windowToken, 0)
     }
-
-    override fun liked(button: LikeButton?) =
-            mAddEditNoteViewModel.noteFavorite.set(true)
-
-    override fun unLiked(button: LikeButton?) =
-            mAddEditNoteViewModel.noteFavorite.set(false)
 
     override fun onColorSelected(dialogId: Int, color: Int) =
             mAddEditNoteViewModel.noteColor.set(color)

@@ -94,8 +94,7 @@ class DashboardNotesFragment : Fragment() {
         mDashboardNotesBinding.recyclerNotes.adapter = mAdapter
         mAdapter.setOnItemClickListener(
                 onClickNote = { mDashboardNotesViewModel.editNote(it) },
-                onClickFavoriteButton = { noteId, isFavorite ->
-                    d("qwe", "onClickFavoriteButton, noteId = $noteId, isFavorite = $isFavorite")
+                onClickFavorite = { noteId, isFavorite ->
                     mDashboardNotesViewModel.updateIsFavoriteNote(noteId, isFavorite)
                 })
 

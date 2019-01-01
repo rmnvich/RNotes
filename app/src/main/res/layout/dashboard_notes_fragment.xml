@@ -43,8 +43,8 @@
 
                 <ImageView
                     android:id="@+id/iv_empty"
-                    android:layout_width="@dimen/iv_empty_size"
-                    android:layout_height="@dimen/iv_empty_size"
+                    android:layout_width="@dimen/dashboard_iv_empty_size"
+                    android:layout_height="@dimen/dashboard_iv_empty_size"
                     android:contentDescription="@string/empty"
                     android:src="@drawable/notes_empty"
                     android:visibility="@{viewmodel.bDataIsEmpty ? View.VISIBLE : View.INVISIBLE}"
