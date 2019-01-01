@@ -9,7 +9,6 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
-import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.main_activity.*
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.presentation.ui.fragment.dashboardnotes.DashboardNotesFragment
@@ -23,10 +22,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun init() {
-        val view = layoutInflater.inflate(R.layout.nav_header,
-                nav_view, false)
-        nav_view.addHeaderView(view.rootView)
-
         setSupportActionBar(toolbar)
         val toggle = ActionBarDrawerToggle(this, drawer_layout, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close)

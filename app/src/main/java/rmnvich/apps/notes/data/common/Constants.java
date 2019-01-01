@@ -14,6 +14,6 @@ public class Constants {
     public static String KEY_ALL_NOTES = "all_notes";
     public static String KEY_IS_FAVORITE_NOTES = "favorite_notes";
 
-    //TODO: bug when toolbar scrolling (scrollFlags="scroll")
-    //TODO: but with long tag (ellipsize in dashboard note and bottom toolbar)
+    //TODO: Fixed bug when toolbar scrolling (scrollFlags="scroll")
+    //TODO: Fixed bug with long tag (ellipsize in dashboard note and bottom toolbar)
 }

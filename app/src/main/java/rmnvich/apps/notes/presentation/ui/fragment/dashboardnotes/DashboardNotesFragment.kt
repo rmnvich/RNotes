@@ -8,9 +8,9 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.*
-import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.main_activity.*
 import rmnvich.apps.notes.App
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.data.common.Constants.*
@@ -22,8 +22,6 @@ import rmnvich.apps.notes.presentation.ui.activity.addeditnote.AddEditNoteActivi
 import rmnvich.apps.notes.presentation.ui.activity.main.MainActivity
 import rmnvich.apps.notes.presentation.ui.adapter.dashboard.NotesAdapter
 import javax.inject.Inject
-import android.support.v7.widget.StaggeredGridLayoutManager
-import android.util.Log.d
 
 
 class DashboardNotesFragment : Fragment() {
