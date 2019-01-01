@@ -87,7 +87,7 @@
                     <include
                         android:id="@+id/tools_tag"
                         layout="@layout/item_tools_tag"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/card_view_tools_tag_margin_start"
                         android:visibility="@{viewmodel.noteTag == null ? View.GONE : View.VISIBLE}"

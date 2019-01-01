@@ -75,6 +75,7 @@
                 android:layout_marginEnd="@dimen/item_note_divider_horizontal_margin"
                 android:background="@drawable/item_tag_background"
                 android:ellipsize="end"
+                android:maxEms="6"
                 android:maxLines="1"
                 android:paddingStart="@dimen/item_note_tag_horizontal_padding"
                 android:paddingTop="@dimen/item_note_tag_vertical_padding"
