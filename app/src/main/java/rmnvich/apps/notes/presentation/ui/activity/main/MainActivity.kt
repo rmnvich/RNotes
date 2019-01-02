@@ -41,10 +41,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             override fun onDrawerOpened(drawerView: View) {}
             override fun onDrawerClosed(drawerView: View) {
                 when (item.itemId) {
-                    R.id.nav_notes -> showFragment(DashboardNotesFragment.newInstance(false))
-                    R.id.nav_favorites -> showFragment(DashboardNotesFragment.newInstance(true))
-                    R.id.nav_tags -> showFragment(DashboardNotesFragment.newInstance(false))
-                    R.id.nav_trash -> showFragment(DashboardNotesFragment.newInstance(true))
+                    R.id.nav_notes -> {
+                        fab_add.show()
+                        showFragment(DashboardNotesFragment.newInstance(false))
+                    }
+                    R.id.nav_favorites -> {
+                        fab_add.show()
+                        showFragment(DashboardNotesFragment.newInstance(true))
+                    }
+                    R.id.nav_tags -> {
+                        fab_add.hide()
+                        showFragment(DashboardNotesFragment.newInstance(false))
+                    }
+                    R.id.nav_trash -> {
+                        fab_add.hide()
+                        showFragment(DashboardNotesFragment.newInstance(true))
+                    }
                 }
                 drawer_layout?.removeDrawerListener(this)
             }

@@ -116,6 +116,7 @@ class DashboardNotesFragment : Fragment() {
         mDashboardNotesViewModel.getEditNoteEvent().observe(this,
                 Observer { handleAddEditNoteEvent(it!!) })
         observeSnackbar()
+        observeFab()
     }
 
     private fun handleResponse(response: List<Note>) {
@@ -142,6 +143,12 @@ class DashboardNotesFragment : Fragment() {
                     Snackbar.LENGTH_LONG
             ).show()
         })
+    }
+
+    private fun observeFab() {
+        (activity as MainActivity).fab_add.setOnClickListener {
+            mDashboardNotesViewModel.addNote()
+        }
     }
 
     override fun onDetach() {

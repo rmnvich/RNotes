@@ -13,69 +13,54 @@
     </data>
 
 
-    <android.support.design.widget.CoordinatorLayout
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:refreshing="@{viewmodel.bIsShowingProgressBar}">
 
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swipe_refresh_layout"
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/dashboard"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:refreshing="@{viewmodel.bIsShowingProgressBar}">
+            android:layout_height="match_parent">
 
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/dashboard"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_notes"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingTop="@dimen/item_note_vertical_margin"
+                android:paddingBottom="@dimen/item_note_vertical_margin"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:listitem="@layout/item_note" />
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycler_notes"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clipToPadding="false"
-                    android:paddingTop="@dimen/item_note_vertical_margin"
-                    android:paddingBottom="@dimen/item_note_vertical_margin"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:listitem="@layout/item_note" />
+            <ImageView
+                android:id="@+id/iv_empty"
+                android:layout_width="@dimen/dashboard_iv_empty_size"
+                android:layout_height="@dimen/dashboard_iv_empty_size"
+                android:contentDescription="@string/empty"
+                android:src="@drawable/notes_empty"
+                android:visibility="@{viewmodel.bDataIsEmpty ? View.VISIBLE : View.INVISIBLE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/iv_empty"
-                    android:layout_width="@dimen/dashboard_iv_empty_size"
-                    android:layout_height="@dimen/dashboard_iv_empty_size"
-                    android:contentDescription="@string/empty"
-                    android:src="@drawable/notes_empty"
-                    android:visibility="@{viewmodel.bDataIsEmpty ? View.VISIBLE : View.INVISIBLE}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tv_empty"
-                    style="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/you_have_no_notes"
-                    android:textSize="16sp"
-                    android:visibility="@{viewmodel.bDataIsEmpty ? View.VISIBLE : View.INVISIBLE}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/iv_empty" />
-            </android.support.constraint.ConstraintLayout>
-        </android.support.v4.widget.SwipeRefreshLayout>
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
-            android:onClick="@{(view) -> viewmodel.addNote()}"
-            android:src="@drawable/ic_action_create_inverted"
-            app:layout_behavior="rmnvich.apps.notes.presentation.ui.custom.FabBehavior" />
-    </android.support.design.widget.CoordinatorLayout>
+            <TextView
+                android:id="@+id/tv_empty"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/you_have_no_notes"
+                android:textSize="16sp"
+                android:visibility="@{viewmodel.bDataIsEmpty ? View.VISIBLE : View.INVISIBLE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_empty" />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </layout>
