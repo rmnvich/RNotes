@@ -32,6 +32,11 @@ class DashboardNotesViewModel(
 
     private var mResponse: MutableLiveData<List<Note>>? = null
 
+    fun forceUpdate() {
+        mResponse = null
+        getNotes()
+    }
+
     fun getNotes(): LiveData<List<Note>>? {
         if (mResponse == null) {
             mResponse = MutableLiveData()

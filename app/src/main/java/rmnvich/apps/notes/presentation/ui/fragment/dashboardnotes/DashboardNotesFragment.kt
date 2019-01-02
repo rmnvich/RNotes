@@ -80,7 +80,6 @@ class DashboardNotesFragment : Fragment() {
                 .get(viewModelKey, DashboardNotesViewModel::class.java)
         mDashboardNotesBinding.viewmodel = mDashboardNotesViewModel
 
-        mDashboardNotesBinding.swipeRefreshLayout.isEnabled = false
         mDashboardNotesBinding.swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent)
 
         val gridLayoutManager = StaggeredGridLayoutManager(2,
