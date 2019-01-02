@@ -11,7 +11,6 @@ import rmnvich.apps.notes.domain.entity.Tag
 import rmnvich.apps.notes.domain.interactors.addeditnote.AddEditNoteInteractor
 import rmnvich.apps.notes.domain.utils.SingleLiveEvent
 import rmnvich.apps.notes.presentation.utils.DateHelper
-import rmnvich.apps.notes.presentation.utils.SnackbarMessage
 
 class AddEditNoteViewModel(private val addEditNoteNotesInteractor: AddEditNoteInteractor) : ViewModel() {
 
@@ -28,11 +27,11 @@ class AddEditNoteViewModel(private val addEditNoteNotesInteractor: AddEditNoteIn
     private val onDeleteTagEvent: SingleLiveEvent<Void> = SingleLiveEvent()
     private val onPickColorEvent: SingleLiveEvent<Void> = SingleLiveEvent()
 
-    private val mSnackbarMessage: SnackbarMessage = SnackbarMessage()
+    private val mSnackbarMessage: SingleLiveEvent<Int> = SingleLiveEvent()
 
     private var existsNote: Note? = null
 
-    fun getSnackbar(): SnackbarMessage = mSnackbarMessage
+    fun getSnackbar(): SingleLiveEvent<Int> = mSnackbarMessage
 
     fun getBackPressedEvent(): SingleLiveEvent<Void> = onBackPressedEvent
 
@@ -46,16 +45,16 @@ class AddEditNoteViewModel(private val addEditNoteNotesInteractor: AddEditNoteIn
 
     fun loadNote(noteId: Int) {
         mCompositeDisposable.add(addEditNoteNotesInteractor.getNoteById(noteId)
-                .doOnSubscribe { bIsShowingProgressBar.set(true) }
-                .subscribe({
-                    bIsShowingProgressBar.set(false)
-                    existsNote = it
+            .doOnSubscribe { bIsShowingProgressBar.set(true) }
+            .subscribe({
+                bIsShowingProgressBar.set(false)
+                existsNote = it
 
-                    setObservableFields(it.text, it.color, it.tag, it.timestamp)
-                }, {
-                    bIsShowingProgressBar.set(false)
-                    showSnackbarMessage(R.string.error_message)
-                })
+                setObservableFields(it.text, it.color, it.tag, it.timestamp)
+            }, {
+                bIsShowingProgressBar.set(false)
+                showSnackbarMessage(R.string.error_message)
+            })
         )
     }
 
@@ -74,17 +73,19 @@ class AddEditNoteViewModel(private val addEditNoteNotesInteractor: AddEditNoteIn
         if (!existsNote?.text?.isEmpty()!!) {
             bIsShowingProgressBar.set(true)
             mCompositeDisposable.add(addEditNoteNotesInteractor
-                    .insertOrUpdateNote(existsNote!!)
-                    .subscribe {
-                        bIsShowingProgressBar.set(false)
-                        onBackPressedEvent.call()
-                    }
+                .insertOrUpdateNote(existsNote!!)
+                .subscribe {
+                    bIsShowingProgressBar.set(false)
+                    onBackPressedEvent.call()
+                }
             )
         } else onBackPressedEvent.call()
     }
 
-    private fun setObservableFields(noteText: String, noteColor: Int,
-                                    noteTag: Tag?, noteTimestamp: Long) {
+    private fun setObservableFields(
+        noteText: String, noteColor: Int,
+        noteTag: Tag?, noteTimestamp: Long
+    ) {
         this.noteText.set(noteText)
         this.noteColor.set(noteColor)
         this.noteTag.set(noteTag)

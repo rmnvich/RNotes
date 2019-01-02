@@ -4,13 +4,11 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableBoolean
-import android.util.Log.d
 import io.reactivex.disposables.CompositeDisposable
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.domain.entity.Note
 import rmnvich.apps.notes.domain.interactors.dashboardnotes.DashboardNotesInteractor
 import rmnvich.apps.notes.domain.utils.SingleLiveEvent
-import rmnvich.apps.notes.presentation.utils.SnackbarMessage
 
 class DashboardNotesViewModel(
         private val dashboardNotesInteractor: DashboardNotesInteractor,
@@ -28,7 +26,7 @@ class DashboardNotesViewModel(
 
     private val mAddEditNoteEvent = SingleLiveEvent<Void>()
 
-    private val mSnackbarMessage: SnackbarMessage = SnackbarMessage()
+    private val mSnackbarMessage: SingleLiveEvent<Int> = SingleLiveEvent()
 
     private var mResponse: MutableLiveData<List<Note>>? = null
 
@@ -45,7 +43,7 @@ class DashboardNotesViewModel(
         return mResponse
     }
 
-    fun getSnackbar(): SnackbarMessage = mSnackbarMessage
+    fun getSnackbar(): SingleLiveEvent<Int> = mSnackbarMessage
 
     fun getEditNoteEvent(): SingleLiveEvent<Int> = mSelectedNoteId
 
