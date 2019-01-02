@@ -5,9 +5,7 @@
     <color name="colorAccent">#D8961B</color>
 
     <color name="colorRipple">#91ffce71</color>
-
-    <color name="colorDefaultItem">#414141</color>
-    <color name="colorSelectedItem">#d8af24</color>
+    <color name="colorSelectedItem">#78ffe2ab</color>
 
     <color name="colorToolbarTitle">#c82e2e2e</color>
     <color name="colorNavHeaderBackground">#232323</color>

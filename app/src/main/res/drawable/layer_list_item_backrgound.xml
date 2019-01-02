@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:right="@dimen/navigation_item_padding_right">
+        <shape android:shape="rectangle">
+            <corners
+                android:bottomRightRadius="@dimen/navigation_item_corner_radius"
+                android:topRightRadius="@dimen/navigation_item_corner_radius" />
+            <solid android:color="@color/colorSelectedItem" />
+        </shape>
+    </item>
+</layer-list>
