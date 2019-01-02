@@ -57,5 +57,7 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header"
         app:itemBackground="@drawable/navigation_item_background"
+        app:itemIconTint="@color/colorToolbarTitle"
+        app:itemTextColor="@color/colorToolbarTitle"
         app:menu="@menu/drawer_menu" />
 </android.support.v4.widget.DrawerLayout>
