@@ -14,16 +14,16 @@
             type="rmnvich.apps.notes.domain.entity.Note" />
     </data>
 
-    <android.support.v7.widget.CardView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/item_note_vertical_margin"
         android:layout_marginVertical="@dimen/item_note_vertical_margin"
+        android:background="@drawable/item_note_background"
         android:clickable="true"
         android:focusable="true"
-        android:foreground="?attr/selectableItemBackground"
-        app:cardCornerRadius="@dimen/item_note_card_corner_radius"
-        app:contentPadding="@dimen/item_note_card_padding"
+        android:foreground="@drawable/item_note_foreground"
+        android:padding="@dimen/item_note_card_padding"
         tools:targetApi="o">
 
         <android.support.constraint.ConstraintLayout
@@ -121,5 +121,5 @@
                 app:layout_constraintTop_toBottomOf="@id/note_text"
                 app:liked="@{note.favorite}" />
         </android.support.constraint.ConstraintLayout>
-    </android.support.v7.widget.CardView>
+    </FrameLayout>
 </layout>
