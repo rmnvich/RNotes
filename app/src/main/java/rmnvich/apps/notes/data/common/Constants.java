@@ -14,7 +14,5 @@ public class Constants {
     public static String KEY_ALL_NOTES = "all_notes";
     public static String KEY_IS_FAVORITE_NOTES = "favorite_notes";
 
-    //TODO: Drawer layout over status bar
-    //TODO: Transparent appbar
     //TODO: Fixed bug with long tag (ellipsize in dashboard note and bottom toolbar)
 }
