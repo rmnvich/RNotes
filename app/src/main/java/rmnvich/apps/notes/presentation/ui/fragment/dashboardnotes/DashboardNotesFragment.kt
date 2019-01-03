@@ -55,18 +55,19 @@ class DashboardNotesFragment : Fragment() {
         if (!componentHolder.isComponentReleased(javaClass))
             componentHolder.releaseComponent(javaClass)
 
-        componentHolder.getComponent(javaClass,
-                DashboardNotesModule(isFavoriteNotes!!))
-                ?.inject(this)
+        componentHolder.getComponent(
+            javaClass,
+            DashboardNotesModule(isFavoriteNotes!!)
+        )?.inject(this)
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         mDashboardNotesBinding = DataBindingUtil.inflate(
-                inflater,
-                R.layout.dashboard_notes_fragment, container, false
+            inflater,
+            R.layout.dashboard_notes_fragment, container, false
         )
         var toolbarTitle = R.string.title_notes
         var viewModelKey = KEY_ALL_NOTES
@@ -77,23 +78,25 @@ class DashboardNotesFragment : Fragment() {
         }
 
         mDashboardNotesViewModel = ViewModelProviders.of(activity!!, mViewModelFactory)
-                .get(viewModelKey, DashboardNotesViewModel::class.java)
+            .get(viewModelKey, DashboardNotesViewModel::class.java)
         mDashboardNotesBinding.viewmodel = mDashboardNotesViewModel
 
         mDashboardNotesBinding.swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent)
 
-        val gridLayoutManager = StaggeredGridLayoutManager(2,
-                StaggeredGridLayoutManager.VERTICAL)
+        val gridLayoutManager = StaggeredGridLayoutManager(
+            2,
+            StaggeredGridLayoutManager.VERTICAL
+        )
         gridLayoutManager.gapStrategy = StaggeredGridLayoutManager
-                .GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
+            .GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
         mDashboardNotesBinding.recyclerNotes.layoutManager = gridLayoutManager
 
         mDashboardNotesBinding.recyclerNotes.adapter = mAdapter
         mAdapter.setOnItemClickListener(
-                onClickNote = { mDashboardNotesViewModel.editNote(it) },
-                onClickFavorite = { noteId, isFavorite ->
-                    mDashboardNotesViewModel.updateIsFavoriteNote(noteId, isFavorite)
-                })
+            onClickNote = { mDashboardNotesViewModel.editNote(it) },
+            onClickFavorite = { noteId, isFavorite ->
+                mDashboardNotesViewModel.updateIsFavoriteNote(noteId, isFavorite)
+            })
 
         (activity as MainActivity).toolbar.setTitle(toolbarTitle)
         setHasOptionsMenu(true)
@@ -108,12 +111,12 @@ class DashboardNotesFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        mDashboardNotesViewModel.getNotes()?.observe(this,
-                Observer<List<Note>> { handleResponse(it!!) })
+        mDashboardNotesViewModel.getNotes(false)?.observe(this,
+            Observer<List<Note>> { handleResponse(it!!) })
         mDashboardNotesViewModel.getAddNoteEvent().observe(this,
-                Observer { handleAddEditNoteEvent(-1) })
+            Observer { handleAddEditNoteEvent(-1) })
         mDashboardNotesViewModel.getEditNoteEvent().observe(this,
-                Observer { handleAddEditNoteEvent(it!!) })
+            Observer { handleAddEditNoteEvent(it!!) })
         observeSnackbar()
         observeFab()
     }
@@ -138,8 +141,8 @@ class DashboardNotesFragment : Fragment() {
     private fun observeSnackbar() {
         mDashboardNotesViewModel.getSnackbar().observe(this, Observer {
             Snackbar.make(
-                    mDashboardNotesBinding.root, getString(it!!),
-                    Snackbar.LENGTH_LONG
+                mDashboardNotesBinding.root, getString(it!!),
+                Snackbar.LENGTH_LONG
             ).show()
         })
     }
@@ -153,6 +156,6 @@ class DashboardNotesFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         App.getApp(activity?.applicationContext).componentsHolder
-                .releaseComponent(javaClass)
+            .releaseComponent(javaClass)
     }
 }

@@ -98,7 +98,6 @@ class AddEditNoteViewModel(private val addEditNoteNotesInteractor: AddEditNoteIn
 
     override fun onCleared() {
         super.onCleared()
-        mCompositeDisposable.dispose()
         mCompositeDisposable.clear()
     }
 }
