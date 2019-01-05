@@ -23,13 +23,9 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginHorizontal="15dp"
-                android:layout_marginVertical="3dp"
-                android:background="@drawable/toolbar_background"
-                android:elevation="3dp"
-                app:layout_scrollFlags="scroll"
-                app:titleTextColor="@color/colorToolbarTitle"
-                tools:targetApi="o" />
+                android:elevation="0dp"
+                app:layout_scrollFlags="scroll|snap"
+                app:titleTextColor="@color/colorToolbarTitle" />
         </android.support.design.widget.AppBarLayout>
 
         <FrameLayout
@@ -50,9 +46,10 @@
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
-        android:layout_width="@dimen/navigation_view_width"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:layout_marginStart="@dimen/navigation_view_full_screen"
         android:background="@color/colorWhite"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header"

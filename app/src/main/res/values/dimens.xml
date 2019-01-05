@@ -30,7 +30,7 @@
 
     <dimen name="note_edittext_horizontal_padding">10dp</dimen>
 
-    <dimen name="navigation_view_width">280dp</dimen>
+    <dimen name="navigation_view_full_screen">-64dp</dimen>
     <dimen name="navigation_header_height">210dp</dimen>
     <dimen name="navigation_header_margin_top">30dp</dimen>
 
