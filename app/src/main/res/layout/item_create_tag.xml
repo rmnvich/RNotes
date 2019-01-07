@@ -6,14 +6,16 @@
     android:background="@color/colorWhite"
     android:padding="@dimen/item_tag_layout_padding">
 
-    <ImageView
+    <ImageButton
         android:id="@+id/iv_create_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/item_note_foreground"
         android:contentDescription="@string/create"
         android:padding="@dimen/item_tag_image_padding"
-        android:src="@drawable/ic_action_add" />
+        android:src="@drawable/ic_action_add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/et_new_tag_text"
@@ -31,6 +33,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/iv_create_tag"
         app:layout_constraintTop_toTopOf="parent"
+        app:met_clearButton="true"
         app:met_hideUnderline="true" />
 
 </android.support.constraint.ConstraintLayout>
