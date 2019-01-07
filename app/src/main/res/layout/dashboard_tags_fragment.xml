@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorWhite"
-        android:onRefresh="@{viewmodel}"
+        android:onRefreshTags="@{viewmodel}"
         app:refreshing="@{viewmodel.bIsShowingProgressBar}"
         tools:context=".presentation.ui.fragment.dashboardtags.DashboardTagsFragment">
 
@@ -41,7 +41,7 @@
                 app:layout_constraintTop_toBottomOf="@id/layout_create_tag" />
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_notes"
+                android:id="@+id/recycler_tags"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:clipToPadding="false"

@@ -43,7 +43,7 @@ class DashboardNotesModule(private val isFavoriteNotes: Boolean) : BaseModule {
 
     @PerFragment
     @Provides
-    fun provideApadter(): NotesAdapter {
+    fun provideAdapter(): NotesAdapter {
         return NotesAdapter()
     }
 }

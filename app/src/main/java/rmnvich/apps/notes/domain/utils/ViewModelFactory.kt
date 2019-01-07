@@ -8,6 +8,7 @@ import rmnvich.apps.notes.domain.interactors.dashboardtags.DashboardTagsInteract
 import rmnvich.apps.notes.domain.interactors.trash.TrashInteractor
 import rmnvich.apps.notes.presentation.ui.activity.addeditnote.AddEditNoteViewModel
 import rmnvich.apps.notes.presentation.ui.fragment.dashboardnotes.DashboardNotesViewModel
+import rmnvich.apps.notes.presentation.ui.fragment.dashboardtags.DashboardTagsViewModel
 
 class ViewModelFactory : ViewModelProvider.NewInstanceFactory {
 
@@ -38,12 +39,14 @@ class ViewModelFactory : ViewModelProvider.NewInstanceFactory {
         this.mAddEditNoteInteractor = addEditNoteInteractor
     }
 
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <VM : ViewModel?> create(modelClass: Class<VM>): VM {
         return when {
             modelClass.isAssignableFrom(DashboardNotesViewModel::class.java) ->
-                DashboardNotesViewModel(mDashboardNotesInteractor, isFavoriteNotes) as T
+                DashboardNotesViewModel(mDashboardNotesInteractor, isFavoriteNotes) as VM
             modelClass.isAssignableFrom(AddEditNoteViewModel::class.java) ->
-                AddEditNoteViewModel(mAddEditNoteInteractor) as T
+                AddEditNoteViewModel(mAddEditNoteInteractor) as VM
+            modelClass.isAssignableFrom(DashboardTagsViewModel::class.java) ->
+                DashboardTagsViewModel(mDashboardTagsInteractor) as VM
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }

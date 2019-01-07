@@ -12,6 +12,7 @@ import android.view.View
 import kotlinx.android.synthetic.main.main_activity.*
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.presentation.ui.fragment.dashboardnotes.DashboardNotesFragment
+import rmnvich.apps.notes.presentation.ui.fragment.dashboardtags.DashboardTagsFragment
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -51,7 +52,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     }
                     R.id.nav_tags -> {
                         fab_add.hide()
-                        showFragment(DashboardNotesFragment.newInstance(false))
+                        showFragment(DashboardTagsFragment.newInstance())
                     }
                     R.id.nav_trash -> {
                         fab_add.hide()

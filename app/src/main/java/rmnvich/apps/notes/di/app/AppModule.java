@@ -2,6 +2,7 @@ package rmnvich.apps.notes.di.app;
 
 import android.arch.persistence.room.Room;
 import android.content.Context;
+
 import dagger.Module;
 import dagger.Provides;
 import dagger.multibindings.ClassKey;
@@ -9,14 +10,17 @@ import dagger.multibindings.IntoMap;
 import rmnvich.apps.notes.data.repositories.datasource.Database;
 import rmnvich.apps.notes.di.addeditnote.AddEditNoteComponent;
 import rmnvich.apps.notes.di.dashboardnotes.DashboardNotesComponent;
+import rmnvich.apps.notes.di.dashboardtags.DashboardTagsComponent;
 import rmnvich.apps.notes.di.global.base.BaseComponentBuilder;
 import rmnvich.apps.notes.di.global.scope.PerApplication;
 import rmnvich.apps.notes.presentation.ui.activity.addeditnote.AddEditNoteActivity;
 import rmnvich.apps.notes.presentation.ui.fragment.dashboardnotes.DashboardNotesFragment;
+import rmnvich.apps.notes.presentation.ui.fragment.dashboardtags.DashboardTagsFragment;
 
 import static rmnvich.apps.notes.data.common.Constants.DATABASE_NAME;
 
-@Module(subcomponents = {DashboardNotesComponent.class, AddEditNoteComponent.class})
+@Module(subcomponents = {DashboardNotesComponent.class, AddEditNoteComponent.class,
+        DashboardTagsComponent.class})
 public class AppModule {
 
     private final Context mContext;
@@ -40,7 +44,7 @@ public class AppModule {
     @Provides
     @IntoMap
     @ClassKey(DashboardNotesFragment.class)
-    BaseComponentBuilder provideDashboardFragment(DashboardNotesComponent.Builder builder) {
+    BaseComponentBuilder provideDashboardNotesFragment(DashboardNotesComponent.Builder builder) {
         return builder;
     }
 
@@ -48,6 +52,13 @@ public class AppModule {
     @IntoMap
     @ClassKey(AddEditNoteActivity.class)
     BaseComponentBuilder provideAddEditNoteFragment(AddEditNoteComponent.Builder builder) {
+        return builder;
+    }
+
+    @Provides
+    @IntoMap
+    @ClassKey(DashboardTagsFragment.class)
+    BaseComponentBuilder provideDashboardTagsFragment(DashboardTagsComponent.Builder builder) {
         return builder;
     }
 }

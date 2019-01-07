@@ -77,7 +77,6 @@ class DashboardNotesViewModel(
         mCompositeDisposable.add(dashboardNotesInteractor.getNotes(isFavoriteNotes)
             .doOnSubscribe { bIsShowingProgressBar.set(true) }
             .subscribe({
-                DebugLogger.log("loadNotes")
                 bIsShowingProgressBar.set(false)
                 bDataIsEmpty.set(it.isEmpty())
                 mResponse?.value = it
