@@ -20,6 +20,7 @@
 
     <!-- DashboardTagsFragment -->
     <string name="you_have_no_tags">You have no tags</string>
+    <string name="empty_tag_error">Tag is empty</string>
     <string name="edit">Edit</string>
     <string name="create">Create</string>
     <string name="delete">Delete</string>

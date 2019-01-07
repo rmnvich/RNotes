@@ -10,10 +10,12 @@ import rmnvich.apps.notes.di.global.scope.PerFragment
 import rmnvich.apps.notes.domain.interactors.dashboardtags.DashboardTagsInteractor
 import rmnvich.apps.notes.domain.repositories.TagsRepository
 import rmnvich.apps.notes.domain.utils.ViewModelFactory
+import rmnvich.apps.notes.presentation.ui.adapter.tag.TagsAdapter
 
 @Module
 class DashboardTagsModule : BaseModule {
 
+    @PerFragment
     @Provides
     fun provideViewModelFactory(interactor: DashboardTagsInteractor): ViewModelFactory {
         return ViewModelFactory(interactor)
@@ -38,5 +40,11 @@ class DashboardTagsModule : BaseModule {
     @Provides
     fun provideTagsRepository(database: Database): TagsRepository {
         return TagsRepositoryImpl(database)
+    }
+
+    @PerFragment
+    @Provides
+    fun provideAdapter(): TagsAdapter {
+        return TagsAdapter()
     }
 }

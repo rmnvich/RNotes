@@ -45,16 +45,16 @@ class AddEditNoteViewModel(private val addEditNoteNotesInteractor: AddEditNoteIn
 
     fun loadNote(noteId: Int) {
         mCompositeDisposable.add(addEditNoteNotesInteractor.getNoteById(noteId)
-            .doOnSubscribe { bIsShowingProgressBar.set(true) }
-            .subscribe({
-                bIsShowingProgressBar.set(false)
-                existsNote = it
+                .doOnSubscribe { bIsShowingProgressBar.set(true) }
+                .subscribe({
+                    bIsShowingProgressBar.set(false)
+                    existsNote = it
 
-                setObservableFields(it.text, it.color, it.tag, it.timestamp)
-            }, {
-                bIsShowingProgressBar.set(false)
-                showSnackbarMessage(R.string.error_message)
-            })
+                    setObservableFields(it.text, it.color, it.tag, it.timestamp)
+                }, {
+                    bIsShowingProgressBar.set(false)
+                    showSnackbarMessage(R.string.error_message)
+                })
         )
     }
 
@@ -73,18 +73,21 @@ class AddEditNoteViewModel(private val addEditNoteNotesInteractor: AddEditNoteIn
         if (!existsNote?.text?.isEmpty()!!) {
             bIsShowingProgressBar.set(true)
             mCompositeDisposable.add(addEditNoteNotesInteractor
-                .insertOrUpdateNote(existsNote!!)
-                .subscribe {
-                    bIsShowingProgressBar.set(false)
-                    onBackPressedEvent.call()
-                }
+                    .insertOrUpdateNote(existsNote!!)
+                    .subscribe({
+                        bIsShowingProgressBar.set(false)
+                        onBackPressedEvent.call()
+                    }, {
+                        bIsShowingProgressBar.set(false)
+                        showSnackbarMessage(R.string.error_message)
+                    })
             )
         } else onBackPressedEvent.call()
     }
 
     private fun setObservableFields(
-        noteText: String, noteColor: Int,
-        noteTag: Tag?, noteTimestamp: Long
+            noteText: String, noteColor: Int,
+            noteTag: Tag?, noteTimestamp: Long
     ) {
         this.noteText.set(noteText)
         this.noteColor.set(noteColor)

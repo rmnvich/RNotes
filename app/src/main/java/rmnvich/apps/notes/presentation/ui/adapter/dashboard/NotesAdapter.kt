@@ -15,6 +15,29 @@ import java.util.*
 
 class NotesAdapter : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
 
+    interface OnClickNoteListener {
+        fun onClickNote(noteId: Int)
+
+        fun onClickFavorite(noteId: Int, isFavorite: Boolean)
+    }
+
+    fun setClickListener(listener: OnClickNoteListener) {
+        mClickListener = listener
+    }
+
+    inline fun setOnItemClickListener(crossinline onClickNote: (Int) -> Unit,
+                                      crossinline onClickFavorite: (Int, Boolean) -> Unit) {
+        setClickListener(object : OnClickNoteListener {
+            override fun onClickNote(noteId: Int) {
+                onClickNote(noteId)
+            }
+
+            override fun onClickFavorite(noteId: Int, isFavorite: Boolean) {
+                onClickFavorite(noteId, isFavorite)
+            }
+        })
+    }
+
     private lateinit var mClickListener: OnClickNoteListener
     private var mNoteList: List<Note> = LinkedList()
 
@@ -38,29 +61,6 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(mNoteList[position])
-    }
-
-    interface OnClickNoteListener {
-        fun onClickNote(noteId: Int)
-
-        fun onClickFavorite(noteId: Int, isFavorite: Boolean)
-    }
-
-    fun setClickListener(listener: OnClickNoteListener) {
-        mClickListener = listener
-    }
-
-    inline fun setOnItemClickListener(crossinline onClickNote: (Int) -> Unit,
-                                      crossinline onClickFavorite: (Int, Boolean) -> Unit) {
-        setClickListener(object : OnClickNoteListener {
-            override fun onClickNote(noteId: Int) {
-                onClickNote(noteId)
-            }
-
-            override fun onClickFavorite(noteId: Int, isFavorite: Boolean) {
-                onClickFavorite(noteId, isFavorite)
-            }
-        })
     }
 
     inner class ViewHolder(private val binding: ItemNoteBinding)

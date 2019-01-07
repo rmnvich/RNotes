@@ -19,12 +19,16 @@ import rmnvich.apps.notes.databinding.DashboardTagsFragmentBinding
 import rmnvich.apps.notes.domain.entity.Tag
 import rmnvich.apps.notes.domain.utils.ViewModelFactory
 import rmnvich.apps.notes.presentation.ui.activity.main.MainActivity
+import rmnvich.apps.notes.presentation.ui.adapter.tag.TagsAdapter
 import javax.inject.Inject
 
 class DashboardTagsFragment : Fragment() {
 
     @Inject
     lateinit var mViewModelFactory: ViewModelFactory
+
+    @Inject
+    lateinit var mAdapter: TagsAdapter
 
     private lateinit var mDashboardTagsViewModel: DashboardTagsViewModel
     private lateinit var mDashboardTagsBinding: DashboardTagsFragmentBinding
@@ -53,8 +57,16 @@ class DashboardTagsFragment : Fragment() {
         mDashboardTagsBinding.viewmodel = mDashboardTagsViewModel
 
         mDashboardTagsBinding.swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent)
+
         mDashboardTagsBinding.recyclerTags.layoutManager = LinearLayoutManager(
                 context, LinearLayoutManager.VERTICAL, false)
+        mDashboardTagsBinding.recyclerTags.adapter = mAdapter
+        mAdapter.setOnTagClickListener(
+                onClickDelete = {
+
+                }, onClickApply = { tagId, tagName ->
+
+        })
 
         (activity as MainActivity).toolbar.setTitle(R.string.title_tags)
 
@@ -69,7 +81,7 @@ class DashboardTagsFragment : Fragment() {
     }
 
     private fun handleResponse(response: List<Tag>) {
-
+        mAdapter.setData(response)
     }
 
     private fun observeSnackbar() {

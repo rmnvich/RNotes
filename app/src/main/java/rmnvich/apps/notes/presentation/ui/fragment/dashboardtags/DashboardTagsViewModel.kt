@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableBoolean
+import android.databinding.ObservableField
 import io.reactivex.disposables.CompositeDisposable
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.domain.entity.Tag
@@ -18,11 +19,16 @@ class DashboardTagsViewModel(
     val bIsShowingProgressBar: ObservableBoolean = ObservableBoolean(false)
     val bDataIsEmpty: ObservableBoolean = ObservableBoolean(false)
 
+    val tagName: ObservableField<String> = ObservableField("")
+
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
 
     private val mSnackbarMessage: SingleLiveEvent<Int> = SingleLiveEvent()
-
     private var mResponse: MutableLiveData<List<Tag>>? = null
+
+    private var existsTag: Tag? = null
+
+    fun getSnackbar(): SingleLiveEvent<Int> = mSnackbarMessage
 
     fun forceUpdate() {
         getTags(true)
@@ -42,7 +48,25 @@ class DashboardTagsViewModel(
         return mResponse
     }
 
-    fun getSnackbar(): SingleLiveEvent<Int> = mSnackbarMessage
+    fun insertOrUpdateTag() {
+        if (existsTag == null) {
+            existsTag = Tag()
+        }
+        existsTag?.name = tagName.get()!!
+
+        if (!existsTag?.name?.isEmpty()!!) {
+            bIsShowingProgressBar.set(true)
+            mCompositeDisposable.add(dashboardTagsInteractor
+                    .insertOrUpdateTag(existsTag!!)
+                    .subscribe({
+                        bIsShowingProgressBar.set(false)
+                        tagName.set("")
+                    }, {
+                        bIsShowingProgressBar.set(false)
+                        showSnackbarMessage(R.string.error_message)
+                    }))
+        } else showSnackbarMessage(R.string.empty_tag_error)
+    }
 
     private fun loadTags() {
         mCompositeDisposable.add(dashboardTagsInteractor.getAllTags()
