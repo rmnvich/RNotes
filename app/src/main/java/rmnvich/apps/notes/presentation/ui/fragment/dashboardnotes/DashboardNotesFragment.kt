@@ -124,7 +124,7 @@ class DashboardNotesFragment : Fragment() {
     private fun handleResponse(response: List<Note>) {
         mAdapter.setData(response)
 
-        if (mDashboardNotesViewModel.bRecyclerIsScroll)
+        if (mDashboardNotesViewModel.bIsRecyclerScroll)
             mDashboardNotesBinding.recyclerNotes.scrollToPosition(0)
     }
 

@@ -9,9 +9,9 @@ interface TagsRepository {
 
     fun getAllTags(): Flowable<List<Tag>>
 
-    fun getTagById(tagId: Int): Single<Tag>
+    fun updateTag(tagId: Int, tagName: String): Completable
 
-    fun insertOrUpdateTag(tag: Tag): Completable
+    fun insertTag(tag: Tag): Completable
 
     fun deleteTag(tag: Tag): Completable
 }

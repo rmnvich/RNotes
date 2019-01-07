@@ -9,7 +9,6 @@ import rmnvich.apps.notes.R
 import rmnvich.apps.notes.domain.entity.Note
 import rmnvich.apps.notes.domain.interactors.dashboardnotes.DashboardNotesInteractor
 import rmnvich.apps.notes.domain.utils.SingleLiveEvent
-import rmnvich.apps.notes.presentation.utils.DebugLogger
 
 class DashboardNotesViewModel(
     private val dashboardNotesInteractor: DashboardNotesInteractor,
@@ -19,7 +18,7 @@ class DashboardNotesViewModel(
     val bIsShowingProgressBar: ObservableBoolean = ObservableBoolean(false)
     val bDataIsEmpty: ObservableBoolean = ObservableBoolean(false)
 
-    var bRecyclerIsScroll: Boolean = false
+    var bIsRecyclerScroll: Boolean = false
 
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
 
@@ -57,12 +56,12 @@ class DashboardNotesViewModel(
 
     fun addNote() {
         mAddEditNoteEvent.call()
-        bRecyclerIsScroll = true
+        bIsRecyclerScroll = true
     }
 
     fun editNote(noteId: Int?) {
         mSelectedNoteId.value = noteId
-        bRecyclerIsScroll = false
+        bIsRecyclerScroll = false
     }
 
     fun updateIsFavoriteNote(noteId: Int, isFavorite: Boolean) {

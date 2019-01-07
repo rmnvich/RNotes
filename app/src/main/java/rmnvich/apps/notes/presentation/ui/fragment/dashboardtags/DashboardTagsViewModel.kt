@@ -15,9 +15,10 @@ class DashboardTagsViewModel(
         private val dashboardTagsInteractor: DashboardTagsInteractor
 ) : ViewModel() {
 
-
     val bIsShowingProgressBar: ObservableBoolean = ObservableBoolean(false)
     val bDataIsEmpty: ObservableBoolean = ObservableBoolean(false)
+
+    var bIsRecyclerScroll: Boolean = false
 
     val tagName: ObservableField<String> = ObservableField("")
 
@@ -25,8 +26,6 @@ class DashboardTagsViewModel(
 
     private val mSnackbarMessage: SingleLiveEvent<Int> = SingleLiveEvent()
     private var mResponse: MutableLiveData<List<Tag>>? = null
-
-    private var existsTag: Tag? = null
 
     fun getSnackbar(): SingleLiveEvent<Int> = mSnackbarMessage
 
@@ -48,16 +47,46 @@ class DashboardTagsViewModel(
         return mResponse
     }
 
-    fun insertOrUpdateTag() {
-        if (existsTag == null) {
-            existsTag = Tag()
-        }
-        existsTag?.name = tagName.get()!!
+    fun deleteTag(tag: Tag) {
+        bIsRecyclerScroll = false
 
-        if (!existsTag?.name?.isEmpty()!!) {
+        bIsShowingProgressBar.set(true)
+        mCompositeDisposable.add(dashboardTagsInteractor
+                .deleteTag(tag)
+                .subscribe({
+                    bIsShowingProgressBar.set(false)
+                }, {
+                    bIsShowingProgressBar.set(false)
+                    showSnackbarMessage(R.string.error_message)
+                }))
+    }
+
+    fun updateTag(tagId: Int, tagName: String) {
+        bIsRecyclerScroll = false
+
+        if (!this.tagName.get()?.isEmpty()!!) {
             bIsShowingProgressBar.set(true)
             mCompositeDisposable.add(dashboardTagsInteractor
-                    .insertOrUpdateTag(existsTag!!)
+                    .updateTag(tagId, tagName)
+                    .subscribe({
+                        bIsShowingProgressBar.set(false)
+                    }, {
+                        bIsShowingProgressBar.set(false)
+                        showSnackbarMessage(R.string.error_message)
+                    }))
+        } else showSnackbarMessage(R.string.empty_tag_error)
+    }
+
+    fun insertTag() {
+        bIsRecyclerScroll = true
+
+        val tag = Tag()
+        tag.name = tagName.get()!!
+
+        if (!tag.name.isEmpty()) {
+            bIsShowingProgressBar.set(true)
+            mCompositeDisposable.add(dashboardTagsInteractor
+                    .insertTag(tag)
                     .subscribe({
                         bIsShowingProgressBar.set(false)
                         tagName.set("")

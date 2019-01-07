@@ -25,12 +25,14 @@
             android:id="@+id/iv_create_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/item_tag_layout_padding"
             android:background="@drawable/item_note_foreground"
             android:contentDescription="@string/create"
-            android:onClick="@{(view) -> viewmodel.insertOrUpdateTag()}"
+            android:onClick="@{(view) -> viewmodel.insertTag()}"
             android:padding="@dimen/item_tag_image_padding"
             android:src="@drawable/ic_action_add"
             app:layout_constraintBottom_toTopOf="@id/bottom_divider"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/top_divider" />
 
         <com.rengwuxian.materialedittext.MaterialEditText

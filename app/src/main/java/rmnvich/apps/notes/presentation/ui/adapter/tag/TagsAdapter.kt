@@ -8,12 +8,13 @@ import android.view.ViewGroup
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.databinding.ItemTagBinding
 import rmnvich.apps.notes.domain.entity.Tag
+import java.lang.IndexOutOfBoundsException
 import java.util.*
 
 class TagsAdapter : RecyclerView.Adapter<TagsAdapter.ViewHolder>() {
 
     interface OnClickTagListener {
-        fun onClickDelete(tagId: Int)
+        fun onClickDelete(tag: Tag)
 
         fun onClickApply(tagId: Int, tagName: String)
     }
@@ -22,11 +23,11 @@ class TagsAdapter : RecyclerView.Adapter<TagsAdapter.ViewHolder>() {
         mClickListener = listener
     }
 
-    inline fun setOnTagClickListener(crossinline onClickDelete: (Int) -> Unit,
+    inline fun setOnTagClickListener(crossinline onClickDelete: (Tag) -> Unit,
                                      crossinline onClickApply: (Int, String) -> Unit) {
         setClickListener(object : OnClickTagListener {
-            override fun onClickDelete(tagId: Int) {
-                onClickDelete(tagId)
+            override fun onClickDelete(tag: Tag) {
+                onClickDelete(tag)
             }
 
             override fun onClickApply(tagId: Int, tagName: String) {
@@ -65,9 +66,13 @@ class TagsAdapter : RecyclerView.Adapter<TagsAdapter.ViewHolder>() {
         : RecyclerView.ViewHolder(binding.root) {
 
         init {
+
             binding.ivDeleteTag.setOnClickListener {
-                mClickListener.onClickDelete(mTagList[adapterPosition].tagId)
+                try {
+                    mClickListener.onClickDelete(mTagList[adapterPosition])
+                } catch (e: IndexOutOfBoundsException) { }
             }
+
             binding.ivEditTag.setOnClickListener {
                 mClickListener.onClickApply(mTagList[adapterPosition].tagId,
                         binding.etTagText.text.toString())

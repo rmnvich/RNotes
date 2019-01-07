@@ -61,11 +61,10 @@ class DashboardTagsFragment : Fragment() {
         mDashboardTagsBinding.recyclerTags.layoutManager = LinearLayoutManager(
                 context, LinearLayoutManager.VERTICAL, false)
         mDashboardTagsBinding.recyclerTags.adapter = mAdapter
-        mAdapter.setOnTagClickListener(
-                onClickDelete = {
-
-                }, onClickApply = { tagId, tagName ->
-
+        mAdapter.setOnTagClickListener(onClickDelete = {
+            mDashboardTagsViewModel.deleteTag(it)
+        }, onClickApply = { tagId, tagName ->
+            mDashboardTagsViewModel.updateTag(tagId, tagName)
         })
 
         (activity as MainActivity).toolbar.setTitle(R.string.title_tags)
@@ -82,6 +81,9 @@ class DashboardTagsFragment : Fragment() {
 
     private fun handleResponse(response: List<Tag>) {
         mAdapter.setData(response)
+
+        if (mDashboardTagsViewModel.bIsRecyclerScroll)
+            mDashboardTagsBinding.recyclerTags.scrollToPosition(0)
     }
 
     private fun observeSnackbar() {

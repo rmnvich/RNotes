@@ -15,11 +15,11 @@ class TagsRepositoryImpl(database: Database) : TagsRepository {
         return tagDao.getAllTags()
     }
 
-    override fun getTagById(tagId: Int): Single<Tag> {
-        return tagDao.getTagById(tagId)
+    override fun updateTag(tagId: Int, tagName: String): Completable {
+        return Completable.fromAction { tagDao.updateTag(tagId, tagName) }
     }
 
-    override fun insertOrUpdateTag(tag: Tag): Completable {
+    override fun insertTag(tag: Tag): Completable {
         return Completable.fromAction { tagDao.insertTag(tag) }
     }
 
