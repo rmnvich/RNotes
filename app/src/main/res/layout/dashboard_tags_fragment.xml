@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewmodel"
+            type="rmnvich.apps.notes.presentation.ui.fragment.dashboardtags.DashboardTagsViewModel" />
+    </data>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        android:onRefresh="@{viewmodel}"
+        app:refreshing="@{viewmodel.bIsShowingProgressBar}"
+        tools:context=".presentation.ui.fragment.dashboardtags.DashboardTagsFragment">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/dashboard"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include
+                android:id="@+id/layout_create_tag"
+                layout="@layout/item_create_tag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/bottom_divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/divider"
+                app:layout_constraintTop_toBottomOf="@id/layout_create_tag" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_notes"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:clipToPadding="false"
+                android:paddingTop="@dimen/item_note_vertical_margin"
+                android:paddingBottom="@dimen/item_note_vertical_margin"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/bottom_divider"
+                tools:listitem="@layout/item_tag" />
+
+            <ImageView
+                android:id="@+id/iv_empty"
+                android:layout_width="@dimen/dashboard_iv_empty_size"
+                android:layout_height="@dimen/dashboard_iv_empty_size"
+                android:contentDescription="@string/empty"
+                android:src="@drawable/tags_empty"
+                android:visibility="@{viewmodel.bDataIsEmpty ? View.VISIBLE : View.INVISIBLE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_empty"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/you_have_no_tags"
+                android:textSize="16sp"
+                android:visibility="@{viewmodel.bDataIsEmpty ? View.VISIBLE : View.INVISIBLE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_empty" />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
+</layout>

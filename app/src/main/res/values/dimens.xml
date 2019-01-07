@@ -37,5 +37,9 @@
     <dimen name="navigation_item_padding_right">5dp</dimen>
     <dimen name="navigation_item_corner_radius">200dp</dimen>
 
+    <dimen name="item_tag_edittext_padding">25dp</dimen>
+    <dimen name="item_tag_image_padding">10dp</dimen>
+    <dimen name="item_tag_layout_padding">10dp</dimen>
+
     <integer name="animation_duration">400</integer>
 </resources>

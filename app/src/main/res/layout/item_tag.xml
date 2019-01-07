@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="tag"
+            type="rmnvich.apps.notes.domain.entity.Tag" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:padding="@dimen/item_tag_layout_padding">
+
+        <ImageView
+            android:id="@+id/iv_delete_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_note_foreground"
+            android:contentDescription="@string/delete"
+            android:padding="@dimen/item_tag_image_padding"
+            android:src="@drawable/ic_action_label_gray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/et_tag_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:alpha="0.9"
+            android:ellipsize="end"
+            android:maxLength="30"
+            android:paddingLeft="@dimen/item_tag_edittext_padding"
+            android:paddingRight="@dimen/item_tag_edittext_padding"
+            android:singleLine="true"
+            android:text="@={tag.name}"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/iv_edit_tag"
+            app:layout_constraintStart_toEndOf="@id/iv_delete_tag"
+            app:layout_constraintTop_toTopOf="parent"
+            app:met_hideUnderline="true" />
+
+        <ImageView
+            android:id="@+id/iv_edit_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_note_foreground"
+            android:contentDescription="@string/edit"
+            android:padding="@dimen/item_tag_image_padding"
+            android:src="@drawable/ic_action_create"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

@@ -11,12 +11,20 @@
     <string name="title_tags">Tags</string>
     <string name="title_trash">Trash</string>
 
-    <!-- DashboardFragment -->
+    <!-- DashboardNotesFragment -->
     <string name="you_have_no_notes">You have no notes</string>
     <string name="dashboard_title">Dashboard</string>
     <string name="empty">Empty</string>
     <string name="search">Search</string>
     <string name="filter">Filter</string>
+
+    <!-- DashboardTagsFragment -->
+    <string name="you_have_no_tags">You have no tags</string>
+    <string name="edit">Edit</string>
+    <string name="create">Create</string>
+    <string name="delete">Delete</string>
+    <string name="background">Background</string>
+    <string name="create_new_tag">Create new tag</string>
 
     <!-- AddEditNoteFragment -->
     <string name="tag">Tag</string>
@@ -27,7 +35,5 @@
 
     <!-- Messages -->
     <string name="error_message">An error occurred. Try again</string>
-    <string name="delete">Delete</string>
-    <string name="background">Background</string>
 
 </resources>
