@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,21 +44,28 @@ class DashboardTagsFragment : Fragment() {
                 .getComponent(javaClass).inject(this)
     }
 
-    override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        mDashboardTagsBinding = DataBindingUtil.inflate(
-                inflater,
-                R.layout.dashboard_tags_fragment, container, false
-        )
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        mDashboardTagsBinding = DataBindingUtil.inflate(inflater,
+                R.layout.dashboard_tags_fragment, container, false)
 
-        mDashboardTagsViewModel = ViewModelProviders.of(activity!!, mViewModelFactory)
-                .get(DashboardTagsViewModel::class.java)
-        mDashboardTagsBinding.viewmodel = mDashboardTagsViewModel
+        mDashboardTagsBinding.swipeRefreshLayout
+                .setColorSchemeResources(R.color.colorAccent)
 
-        mDashboardTagsBinding.swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent)
+        initRecyclerView()
+        initToolbar()
 
+        return mDashboardTagsBinding.root
+    }
+
+    private fun initToolbar() {
+        (activity as MainActivity).setSupportActionBar(mDashboardTagsBinding.tagsToolbar)
+        mDashboardTagsBinding.tagsToolbar.setNavigationOnClickListener {
+            (activity as MainActivity).drawer_layout.openDrawer(Gravity.START)
+        }
+    }
+
+    private fun initRecyclerView() {
         mDashboardTagsBinding.recyclerTags.layoutManager = LinearLayoutManager(
                 context, LinearLayoutManager.VERTICAL, false)
         mDashboardTagsBinding.recyclerTags.adapter = mAdapter
@@ -66,14 +74,14 @@ class DashboardTagsFragment : Fragment() {
         }, onClickApply = { tagId, tagName ->
             mDashboardTagsViewModel.updateTag(tagId, tagName)
         })
-
-        (activity as MainActivity).toolbar.setTitle(R.string.title_tags)
-
-        return mDashboardTagsBinding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        mDashboardTagsViewModel = ViewModelProviders.of(activity!!, mViewModelFactory)
+                .get(DashboardTagsViewModel::class.java)
+        mDashboardTagsBinding.viewmodel = mDashboardTagsViewModel
+
         mDashboardTagsViewModel.getTags(false)?.observe(this,
                 Observer<List<Tag>> { handleResponse(it!!) })
         observeSnackbar()
