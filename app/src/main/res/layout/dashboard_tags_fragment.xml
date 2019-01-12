@@ -14,7 +14,8 @@
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar"
@@ -47,7 +48,6 @@
             android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorWhite"
             android:onRefreshTags="@{viewmodel}"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:refreshing="@{viewmodel.bIsShowingProgressBar}">
