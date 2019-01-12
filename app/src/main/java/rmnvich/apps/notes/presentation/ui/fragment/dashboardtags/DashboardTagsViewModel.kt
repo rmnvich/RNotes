@@ -5,6 +5,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
+import android.text.TextUtils.isEmpty
 import io.reactivex.disposables.CompositeDisposable
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.domain.entity.Tag
@@ -64,16 +65,10 @@ class DashboardTagsViewModel(
     fun updateTag(tagId: Int, tagName: String) {
         bIsRecyclerScroll = false
 
-        if (!this.tagName.get()?.isEmpty()!!) {
-            bIsShowingProgressBar.set(true)
+        if (!tagName.isEmpty()) {
             mCompositeDisposable.add(dashboardTagsInteractor
                     .updateTag(tagId, tagName)
-                    .subscribe({
-                        bIsShowingProgressBar.set(false)
-                    }, {
-                        bIsShowingProgressBar.set(false)
-                        showSnackbarMessage(R.string.error_message)
-                    }))
+                    .subscribe({}, { showSnackbarMessage(R.string.error_message) }))
         } else showSnackbarMessage(R.string.empty_tag_error)
     }
 

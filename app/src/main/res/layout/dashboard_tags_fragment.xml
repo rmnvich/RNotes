@@ -61,9 +61,6 @@
                     android:id="@+id/recycler_tags"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:clipToPadding="false"
-                    android:paddingTop="@dimen/item_note_vertical_margin"
-                    android:paddingBottom="@dimen/item_note_vertical_margin"
                     tools:listitem="@layout/item_tag" />
 
                 <ImageView

@@ -1,15 +1,19 @@
 package rmnvich.apps.notes.presentation.ui.adapter.tag
 
+import android.content.Context
 import android.databinding.DataBindingUtil
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.databinding.ItemTagBinding
 import rmnvich.apps.notes.domain.entity.Tag
-import java.lang.IndexOutOfBoundsException
 import java.util.*
+
 
 class TagsAdapter : RecyclerView.Adapter<TagsAdapter.ViewHolder>() {
 
@@ -66,16 +70,43 @@ class TagsAdapter : RecyclerView.Adapter<TagsAdapter.ViewHolder>() {
         : RecyclerView.ViewHolder(binding.root) {
 
         init {
-
-            binding.ivDeleteTag.setOnClickListener {
-                try {
-                    mClickListener.onClickDelete(mTagList[adapterPosition])
-                } catch (e: IndexOutOfBoundsException) { }
-            }
+            val inputMethodManager = binding.root.context.getSystemService(
+                    Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
             binding.ivEditTag.setOnClickListener {
-                mClickListener.onClickApply(mTagList[adapterPosition].tagId,
-                        binding.etTagText.text.toString())
+                if (!binding.etTagText.hasFocus()) {
+                    binding.etTagText.isEnabled = true
+                    binding.etTagText.requestFocus()
+                    inputMethodManager.showSoftInput(binding.etTagText, InputMethodManager.SHOW_IMPLICIT)
+                } else {
+                    binding.etTagText.isEnabled = false
+                    binding.etTagText.clearFocus()
+                    inputMethodManager.hideSoftInputFromWindow(binding.etTagText.windowToken, 0)
+
+                    mClickListener.onClickApply(mTagList[adapterPosition].tagId,
+                            binding.etTagText.text.toString())
+                }
+            }
+
+            binding.etTagText.setOnFocusChangeListener { _, isFocused ->
+                if (isFocused) {
+                    binding.etTagText.setSelection(binding.etTagText.text.toString().length)
+                    binding.topDivider.visibility = VISIBLE
+                    binding.bottomDivider.visibility = VISIBLE
+
+                    binding.ivEditTag.setImageResource(R.drawable.ic_action_check)
+                    binding.ivDeleteTag.setImageResource(R.drawable.ic_action_label_empty)
+                } else {
+                    binding.etTagText.isEnabled = false
+                    binding.topDivider.visibility = INVISIBLE
+                    binding.bottomDivider.visibility = INVISIBLE
+
+                    binding.ivEditTag.setImageResource(R.drawable.ic_action_create)
+                    binding.ivDeleteTag.setImageResource(R.drawable.ic_action_label_gray)
+
+                    mClickListener.onClickApply(mTagList[adapterPosition].tagId,
+                            binding.etTagText.text.toString())
+                }
             }
         }
 

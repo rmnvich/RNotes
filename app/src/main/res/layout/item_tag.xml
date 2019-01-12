@@ -12,14 +12,29 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
-        android:padding="@dimen/item_tag_layout_padding">
+        android:background="@color/colorWhite">
 
-        <ImageButton
+        <View
+            android:id="@+id/top_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/divider"
+            android:visibility="invisible"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/bottom_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/divider"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <ImageView
             android:id="@+id/iv_delete_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/item_note_foreground"
+            android:layout_marginStart="@dimen/item_tag_layout_padding"
             android:contentDescription="@string/delete"
             android:padding="@dimen/item_tag_image_padding"
             android:src="@drawable/ic_action_label_gray"
@@ -35,6 +50,7 @@
             android:ellipsize="end"
             android:enabled="false"
             android:maxLength="30"
+            android:padding="@dimen/item_tag_layout_padding"
             android:paddingLeft="@dimen/item_tag_edittext_padding"
             android:paddingRight="@dimen/item_tag_edittext_padding"
             android:singleLine="true"
@@ -51,13 +67,13 @@
             android:id="@+id/iv_edit_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/item_note_foreground"
+            android:layout_marginEnd="@dimen/item_tag_layout_padding"
+            android:background="@null"
             android:contentDescription="@string/edit"
             android:padding="@dimen/item_tag_image_padding"
             android:src="@drawable/ic_action_create"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
     </android.support.constraint.ConstraintLayout>
 </layout>
