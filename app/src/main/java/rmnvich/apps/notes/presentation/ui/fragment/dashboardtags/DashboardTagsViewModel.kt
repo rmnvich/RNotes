@@ -50,16 +50,10 @@ class DashboardTagsViewModel(private val dashboardTagsInteractor: DashboardTagsI
     fun deleteTag(tag: Tag) {
         bIsRecyclerScroll = false
 
-        bIsShowingProgressBar.set(true)
         mCompositeDisposable.add(dashboardTagsInteractor
                 .deleteTag(tag)
-                .subscribe({
-                    mDeleteTaskCommand.value = tag
-                    bIsShowingProgressBar.set(false)
-                }, {
-                    bIsShowingProgressBar.set(false)
-                    showSnackbarMessage(R.string.error_message)
-                }))
+                .subscribe({ mDeleteTaskCommand.value = tag },
+                        { showSnackbarMessage(R.string.error_message) }))
     }
 
     fun updateTag(tagId: Int, tagName: String) {
@@ -94,16 +88,10 @@ class DashboardTagsViewModel(private val dashboardTagsInteractor: DashboardTagsI
 
     fun restoreTag(tag: Tag) {
         bIsRecyclerScroll = false
-        bIsShowingProgressBar.set(true)
 
         mCompositeDisposable.add(dashboardTagsInteractor
                 .insertTag(tag)
-                .subscribe({
-                    bIsShowingProgressBar.set(false)
-                }, {
-                    bIsShowingProgressBar.set(false)
-                    showSnackbarMessage(R.string.error_message)
-                }))
+                .subscribe({}, { showSnackbarMessage(R.string.error_message) }))
     }
 
     private fun loadTags() {
