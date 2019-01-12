@@ -7,6 +7,7 @@ import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
 import kotlinx.android.synthetic.main.main_activity.*
@@ -23,9 +24,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun init() {
-        setSupportActionBar(toolbar)
-        val toggle = ActionBarDrawerToggle(this, drawer_layout, toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        val toggle = ActionBarDrawerToggle(
+                this, drawer_layout,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close
+        )
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
@@ -42,22 +44,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             override fun onDrawerOpened(drawerView: View) {}
             override fun onDrawerClosed(drawerView: View) {
                 when (item.itemId) {
-                    R.id.nav_notes -> {
-                        fab_add.show()
-                        showFragment(DashboardNotesFragment.newInstance(false))
-                    }
-                    R.id.nav_favorites -> {
-                        fab_add.show()
-                        showFragment(DashboardNotesFragment.newInstance(true))
-                    }
-                    R.id.nav_tags -> {
-                        fab_add.hide()
-                        showFragment(DashboardTagsFragment.newInstance())
-                    }
-                    R.id.nav_trash -> {
-                        fab_add.hide()
-                        showFragment(DashboardNotesFragment.newInstance(true))
-                    }
+                    R.id.nav_notes -> showFragment(DashboardNotesFragment.newInstance(false))
+                    R.id.nav_favorites -> showFragment(DashboardNotesFragment.newInstance(true))
+                    R.id.nav_tags -> showFragment(DashboardTagsFragment.newInstance())
+                    R.id.nav_trash -> showFragment(DashboardNotesFragment.newInstance(true))
                 }
                 drawer_layout?.removeDrawerListener(this)
             }

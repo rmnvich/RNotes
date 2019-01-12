@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.*
+import kotlinx.android.synthetic.main.dashboard_notes_fragment.*
 import kotlinx.android.synthetic.main.main_activity.*
 import rmnvich.apps.notes.App
 import rmnvich.apps.notes.R
@@ -35,6 +36,8 @@ class DashboardNotesFragment : Fragment() {
     private lateinit var mDashboardNotesViewModel: DashboardNotesViewModel
     private lateinit var mDashboardNotesBinding: DashboardNotesFragmentBinding
 
+    private var isFavoriteNotes = false
+
     companion object {
         fun newInstance(isFavoriteNotes: Boolean): DashboardNotesFragment {
             val args = Bundle()
@@ -50,58 +53,55 @@ class DashboardNotesFragment : Fragment() {
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         val componentHolder = App.getApp(activity?.applicationContext).componentsHolder
-        val isFavoriteNotes = arguments?.getBoolean(EXTRA_FAVORITE_NOTES)
+        isFavoriteNotes = arguments?.getBoolean(EXTRA_FAVORITE_NOTES)!!
 
         if (!componentHolder.isComponentReleased(javaClass))
             componentHolder.releaseComponent(javaClass)
 
-        componentHolder.getComponent(
-            javaClass,
-            DashboardNotesModule(isFavoriteNotes!!)
-        )?.inject(this)
+        componentHolder.getComponent(javaClass,
+                DashboardNotesModule(isFavoriteNotes))
+                ?.inject(this)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        mDashboardNotesBinding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.dashboard_notes_fragment, container, false
-        )
-        var toolbarTitle = R.string.title_notes
-        var viewModelKey = KEY_ALL_NOTES
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View {
+        mDashboardNotesBinding = DataBindingUtil.inflate(inflater,
+                R.layout.dashboard_notes_fragment, container, false)
+        mDashboardNotesBinding.swipeRefreshLayout
+                .setColorSchemeResources(R.color.colorAccent)
 
-        if (arguments?.getBoolean(EXTRA_FAVORITE_NOTES)!!) {
-            viewModelKey = KEY_IS_FAVORITE_NOTES
-            toolbarTitle = R.string.title_favorites
+        initToolbar()
+        initRecyclerView()
+
+        return mDashboardNotesBinding.root
+    }
+
+    private fun initToolbar() {
+        val toolbarTitle = if (isFavoriteNotes) {
+            R.string.title_favorites
+        } else R.string.title_notes
+
+        (activity as MainActivity).setSupportActionBar(mDashboardNotesBinding.notesToolbar)
+        mDashboardNotesBinding.notesToolbar.setTitle(toolbarTitle)
+        mDashboardNotesBinding.notesToolbar.setNavigationOnClickListener {
+            (activity as MainActivity).drawer_layout.openDrawer(Gravity.START)
         }
+        setHasOptionsMenu(true)
+    }
 
-        mDashboardNotesViewModel = ViewModelProviders.of(activity!!, mViewModelFactory)
-            .get(viewModelKey, DashboardNotesViewModel::class.java)
-        mDashboardNotesBinding.viewmodel = mDashboardNotesViewModel
-
-        mDashboardNotesBinding.swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent)
-
-        val gridLayoutManager = StaggeredGridLayoutManager(
-            2,
-            StaggeredGridLayoutManager.VERTICAL
-        )
+    private fun initRecyclerView() {
+        val gridLayoutManager = StaggeredGridLayoutManager(1,
+                StaggeredGridLayoutManager.VERTICAL)
         gridLayoutManager.gapStrategy = StaggeredGridLayoutManager
-            .GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
+                .GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
         mDashboardNotesBinding.recyclerNotes.layoutManager = gridLayoutManager
 
         mDashboardNotesBinding.recyclerNotes.adapter = mAdapter
         mAdapter.setOnItemClickListener(
-            onClickNote = { mDashboardNotesViewModel.editNote(it) },
-            onClickFavorite = { noteId, isFavorite ->
-                mDashboardNotesViewModel.updateIsFavoriteNote(noteId, isFavorite)
-            })
-
-        (activity as MainActivity).toolbar.setTitle(toolbarTitle)
-        setHasOptionsMenu(true)
-
-        return mDashboardNotesBinding.root
+                onClickNote = { mDashboardNotesViewModel.editNote(it) },
+                onClickFavorite = { noteId, isFavorite ->
+                    mDashboardNotesViewModel.updateIsFavoriteNote(noteId, isFavorite)
+                })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -111,12 +111,20 @@ class DashboardNotesFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        val viewModelKey = if (isFavoriteNotes) {
+            KEY_IS_FAVORITE_NOTES
+        } else KEY_ALL_NOTES
+
+        mDashboardNotesViewModel = ViewModelProviders.of(activity!!, mViewModelFactory)
+                .get(viewModelKey, DashboardNotesViewModel::class.java)
+        mDashboardNotesBinding.viewmodel = mDashboardNotesViewModel
+
         mDashboardNotesViewModel.getNotes(false)?.observe(this,
-            Observer<List<Note>> { handleResponse(it!!) })
+                Observer<List<Note>> { handleResponse(it!!) })
         mDashboardNotesViewModel.getAddNoteEvent().observe(this,
-            Observer { handleAddEditNoteEvent(-1) })
+                Observer { handleAddEditNoteEvent(-1) })
         mDashboardNotesViewModel.getEditNoteEvent().observe(this,
-            Observer { handleAddEditNoteEvent(it!!) })
+                Observer { handleAddEditNoteEvent(it!!) })
         observeSnackbar()
         observeFab()
     }
@@ -141,21 +149,19 @@ class DashboardNotesFragment : Fragment() {
     private fun observeSnackbar() {
         mDashboardNotesViewModel.getSnackbar().observe(this, Observer {
             Snackbar.make(
-                mDashboardNotesBinding.root, getString(it!!),
-                Snackbar.LENGTH_LONG
+                    mDashboardNotesBinding.root, getString(it!!),
+                    Snackbar.LENGTH_LONG
             ).show()
         })
     }
 
     private fun observeFab() {
-        (activity as MainActivity).fab_add.setOnClickListener {
-            mDashboardNotesViewModel.addNote()
-        }
+        fab_add.setOnClickListener { mDashboardNotesViewModel.addNote() }
     }
 
     override fun onDetach() {
         super.onDetach()
         App.getApp(activity?.applicationContext).componentsHolder
-            .releaseComponent(javaClass)
+                .releaseComponent(javaClass)
     }
 }
