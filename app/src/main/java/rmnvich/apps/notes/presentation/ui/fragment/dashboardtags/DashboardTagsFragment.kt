@@ -8,10 +8,13 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SimpleAdapter
 import kotlinx.android.synthetic.main.main_activity.*
 import rmnvich.apps.notes.App
 
@@ -20,7 +23,9 @@ import rmnvich.apps.notes.databinding.DashboardTagsFragmentBinding
 import rmnvich.apps.notes.domain.entity.Tag
 import rmnvich.apps.notes.domain.utils.ViewModelFactory
 import rmnvich.apps.notes.presentation.ui.activity.main.MainActivity
+import rmnvich.apps.notes.presentation.ui.adapter.tag.SwipeToDeleteCallback
 import rmnvich.apps.notes.presentation.ui.adapter.tag.TagsAdapter
+import rmnvich.apps.notes.presentation.utils.DebugLogger
 import javax.inject.Inject
 
 class DashboardTagsFragment : Fragment() {
@@ -69,11 +74,14 @@ class DashboardTagsFragment : Fragment() {
         mDashboardTagsBinding.recyclerTags.layoutManager = LinearLayoutManager(
                 context, LinearLayoutManager.VERTICAL, false)
         mDashboardTagsBinding.recyclerTags.adapter = mAdapter
-        mAdapter.setOnTagClickListener(onClickDelete = {
-            mDashboardTagsViewModel.deleteTag(it)
-        }, onClickApply = { tagId, tagName ->
+        mAdapter.setOnTagClickListener(onClickApply = { tagId, tagName ->
             mDashboardTagsViewModel.updateTag(tagId, tagName)
         })
+        ItemTouchHelper(object : SwipeToDeleteCallback(context!!) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                mDashboardTagsViewModel.deleteTag(mAdapter.mTagList[viewHolder.adapterPosition])
+            }
+        }).attachToRecyclerView(mDashboardTagsBinding.recyclerTags)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -84,7 +92,16 @@ class DashboardTagsFragment : Fragment() {
 
         mDashboardTagsViewModel.getTags(false)?.observe(this,
                 Observer<List<Tag>> { handleResponse(it!!) })
+        mDashboardTagsViewModel.getDeleteTaskCommand().observe(this,
+                Observer { handleTagDeleting(it!!) })
         observeSnackbar()
+    }
+
+    private fun handleTagDeleting(tag: Tag) {
+        Snackbar.make(mDashboardTagsBinding.root, getString(R.string.tag_has_been_deleted),
+                Snackbar.LENGTH_LONG).setAction(getString(R.string.undo)) {
+            mDashboardTagsViewModel.restoreTag(tag)
+        }.show()
     }
 
     private fun handleResponse(response: List<Tag>) {

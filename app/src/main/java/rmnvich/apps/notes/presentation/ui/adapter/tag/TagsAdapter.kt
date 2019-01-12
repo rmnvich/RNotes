@@ -18,8 +18,6 @@ import java.util.*
 class TagsAdapter : RecyclerView.Adapter<TagsAdapter.ViewHolder>() {
 
     interface OnClickTagListener {
-        fun onClickDelete(tag: Tag)
-
         fun onClickApply(tagId: Int, tagName: String)
     }
 
@@ -27,13 +25,8 @@ class TagsAdapter : RecyclerView.Adapter<TagsAdapter.ViewHolder>() {
         mClickListener = listener
     }
 
-    inline fun setOnTagClickListener(crossinline onClickDelete: (Tag) -> Unit,
-                                     crossinline onClickApply: (Int, String) -> Unit) {
+    inline fun setOnTagClickListener(crossinline onClickApply: (Int, String) -> Unit) {
         setClickListener(object : OnClickTagListener {
-            override fun onClickDelete(tag: Tag) {
-                onClickDelete(tag)
-            }
-
             override fun onClickApply(tagId: Int, tagName: String) {
                 onClickApply(tagId, tagName)
             }
@@ -41,7 +34,7 @@ class TagsAdapter : RecyclerView.Adapter<TagsAdapter.ViewHolder>() {
     }
 
     private lateinit var mClickListener: OnClickTagListener
-    private var mTagList: List<Tag> = LinkedList()
+    var mTagList: List<Tag> = LinkedList()
 
     fun setData(data: List<Tag>) {
         val diffUtilCallback = TagsDiffUtil(mTagList, data)

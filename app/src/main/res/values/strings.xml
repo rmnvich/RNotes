@@ -36,5 +36,7 @@
 
     <!-- Messages -->
     <string name="error_message">An error occurred. Try again</string>
+    <string name="tag_has_been_deleted">Tag has been removed</string>
+    <string name="undo">Undo</string>
 
 </resources>

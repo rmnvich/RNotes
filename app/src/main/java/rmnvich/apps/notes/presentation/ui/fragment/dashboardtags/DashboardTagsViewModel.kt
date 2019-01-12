@@ -5,16 +5,13 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
-import android.text.TextUtils.isEmpty
 import io.reactivex.disposables.CompositeDisposable
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.domain.entity.Tag
 import rmnvich.apps.notes.domain.interactors.dashboardtags.DashboardTagsInteractor
 import rmnvich.apps.notes.domain.utils.SingleLiveEvent
 
-class DashboardTagsViewModel(
-        private val dashboardTagsInteractor: DashboardTagsInteractor
-) : ViewModel() {
+class DashboardTagsViewModel(private val dashboardTagsInteractor: DashboardTagsInteractor) : ViewModel() {
 
     val bIsShowingProgressBar: ObservableBoolean = ObservableBoolean(false)
     val bDataIsEmpty: ObservableBoolean = ObservableBoolean(false)
@@ -26,13 +23,15 @@ class DashboardTagsViewModel(
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
 
     private val mSnackbarMessage: SingleLiveEvent<Int> = SingleLiveEvent()
+    private val mDeleteTaskCommand: SingleLiveEvent<Tag> = SingleLiveEvent()
+
     private var mResponse: MutableLiveData<List<Tag>>? = null
 
     fun getSnackbar(): SingleLiveEvent<Int> = mSnackbarMessage
 
-    fun forceUpdate() {
-        getTags(true)
-    }
+    fun getDeleteTaskCommand(): SingleLiveEvent<Tag> = mDeleteTaskCommand
+
+    fun forceUpdate() = getTags(true)
 
     fun getTags(forceUpdate: Boolean): LiveData<List<Tag>>? {
         if (mResponse == null) {
@@ -55,6 +54,7 @@ class DashboardTagsViewModel(
         mCompositeDisposable.add(dashboardTagsInteractor
                 .deleteTag(tag)
                 .subscribe({
+                    mDeleteTaskCommand.value = tag
                     bIsShowingProgressBar.set(false)
                 }, {
                     bIsShowingProgressBar.set(false)
@@ -90,6 +90,20 @@ class DashboardTagsViewModel(
                         showSnackbarMessage(R.string.error_message)
                     }))
         } else showSnackbarMessage(R.string.empty_tag_error)
+    }
+
+    fun restoreTag(tag: Tag) {
+        bIsRecyclerScroll = false
+        bIsShowingProgressBar.set(true)
+
+        mCompositeDisposable.add(dashboardTagsInteractor
+                .insertTag(tag)
+                .subscribe({
+                    bIsShowingProgressBar.set(false)
+                }, {
+                    bIsShowingProgressBar.set(false)
+                    showSnackbarMessage(R.string.error_message)
+                }))
     }
 
     private fun loadTags() {
