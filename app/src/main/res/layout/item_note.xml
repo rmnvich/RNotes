@@ -59,19 +59,20 @@
             android:background="@drawable/divider"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/note_tag"
+            app:layout_constraintHorizontal_weight="2"
             app:layout_constraintStart_toEndOf="@id/note_circle_color"
             app:layout_constraintTop_toBottomOf="@id/note_text" />
 
         <TextView
             android:id="@+id/note_tag"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/item_note_divider_horizontal_margin"
             android:layout_marginTop="@dimen/item_note_circle_margin_top"
             android:layout_marginEnd="@dimen/item_note_divider_horizontal_margin"
             android:background="@drawable/item_tag_background"
             android:ellipsize="end"
-            android:maxEms="6"
+            android:gravity="center"
             android:maxLines="1"
             android:paddingStart="@dimen/item_note_tag_horizontal_padding"
             android:paddingTop="@dimen/item_note_tag_vertical_padding"
@@ -84,6 +85,7 @@
             android:visibility="@{TextUtils.isEmpty(note.tag.name) ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/note_divider_right"
+            app:layout_constraintHorizontal_weight="3"
             app:layout_constraintStart_toEndOf="@id/note_divider_left"
             app:layout_constraintTop_toBottomOf="@id/note_text" />
 
@@ -96,6 +98,7 @@
             android:background="@drawable/divider"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/note_button_star"
+            app:layout_constraintHorizontal_weight="2"
             app:layout_constraintStart_toEndOf="@id/note_tag"
             app:layout_constraintTop_toBottomOf="@id/note_text" />
 
