@@ -37,6 +37,10 @@
     <!-- Messages -->
     <string name="error_message">An error occurred. Try again</string>
     <string name="tag_has_been_deleted">Tag has been removed</string>
+
+    <!-- Other -->
+    <string name="progress_dialog_loading">Loading…</string>
+    <string name="search_hint">Search…</string>
     <string name="undo">Undo</string>
 
 </resources>

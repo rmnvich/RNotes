@@ -4,11 +4,13 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.databinding.DataBindingUtil
+import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import com.jaredrummler.android.colorpicker.ColorPickerDialog
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
@@ -16,8 +18,10 @@ import rmnvich.apps.notes.App
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.data.common.Constants.EXTRA_NOTE_ID
 import rmnvich.apps.notes.databinding.AddEditNoteActivityBinding
+import rmnvich.apps.notes.di.addeditnote.AddEditNoteModule
 import rmnvich.apps.notes.domain.entity.Tag
 import rmnvich.apps.notes.domain.utils.ViewModelFactory
+import rmnvich.apps.notes.presentation.ui.dialog.DialogTags
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -30,6 +34,9 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
     @Inject
     lateinit var mColorPickerDialog: Provider<ColorPickerDialog.Builder>
 
+    @Inject
+    lateinit var mDialogTags: Provider<DialogTags>
+
     private lateinit var mAddEditNoteViewModel: AddEditNoteViewModel
     private lateinit var mAddEditNoteBinding: AddEditNoteActivityBinding
 
@@ -38,7 +45,8 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
         mAddEditNoteBinding = DataBindingUtil.setContentView(this,
                 R.layout.add_edit_note_activity)
         App.getApp(applicationContext).componentsHolder
-                .getComponent(javaClass)?.inject(this)
+                .getComponent(javaClass, AddEditNoteModule(this))
+                ?.inject(this)
     }
 
     @Inject
@@ -75,9 +83,11 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when (item?.itemId) {
             R.id.menu_tag -> {
-                val tag = Tag()
-                tag.name = "Test tag 123"
-                mAddEditNoteViewModel.noteTag.set(tag)
+                mDialogTags.get().show(object : DialogTags.DialogTagsCallback {
+                    override fun onClickTag(tag: Tag) {
+                        mAddEditNoteViewModel.noteTag.set(tag)
+                    }
+                })
                 true
             }
             else -> super.onOptionsItemSelected(item)

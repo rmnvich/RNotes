@@ -41,5 +41,12 @@
     <dimen name="item_tag_image_padding">10dp</dimen>
     <dimen name="item_tag_layout_padding">10dp</dimen>
 
+    <dimen name="progress_layout_padding">15dp</dimen>
+    <dimen name="progress_layout_radius">5dp</dimen>
+    <dimen name="progress_layout_margin_top">5dp</dimen>
+
+    <dimen name="item_dialog_tag_padding">15dp</dimen>
+    <dimen name="item_dialog_tag_name_margin_start">15dp</dimen>
+
     <integer name="animation_duration">400</integer>
 </resources>

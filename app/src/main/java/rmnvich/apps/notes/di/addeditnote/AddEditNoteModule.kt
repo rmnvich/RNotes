@@ -1,5 +1,6 @@
 package rmnvich.apps.notes.di.addeditnote
 
+import android.content.Context
 import com.jaredrummler.android.colorpicker.ColorPickerDialog
 import dagger.Module
 import dagger.Provides
@@ -10,12 +11,14 @@ import rmnvich.apps.notes.data.repositories.datasource.Database
 import rmnvich.apps.notes.di.global.base.BaseModule
 import rmnvich.apps.notes.di.global.scope.PerFragment
 import rmnvich.apps.notes.domain.interactors.addeditnote.AddEditNoteInteractor
+import rmnvich.apps.notes.domain.interactors.dialogtags.DialogTagsInteractor
 import rmnvich.apps.notes.domain.repositories.NotesRepository
 import rmnvich.apps.notes.domain.repositories.TagsRepository
 import rmnvich.apps.notes.domain.utils.ViewModelFactory
+import rmnvich.apps.notes.presentation.ui.dialog.DialogTags
 
 @Module
-class AddEditNoteModule : BaseModule {
+class AddEditNoteModule(private val context: Context) : BaseModule {
 
     @PerFragment
     @Provides
@@ -25,10 +28,17 @@ class AddEditNoteModule : BaseModule {
 
     @PerFragment
     @Provides
-    fun provideInteractor(notesRepository: NotesRepository,
+    fun provideAddEditNoteInteractor(notesRepository: NotesRepository,
                           tagsRepository: TagsRepository,
                           schedulersProvider: SchedulersProvider): AddEditNoteInteractor {
         return AddEditNoteInteractor(notesRepository, tagsRepository, schedulersProvider)
+    }
+
+    @PerFragment
+    @Provides
+    fun provideDialogTagsInteractor(tagsRepository: TagsRepository,
+                                    schedulersProvider: SchedulersProvider) : DialogTagsInteractor {
+        return DialogTagsInteractor(tagsRepository, schedulersProvider)
     }
 
     @PerFragment
@@ -56,5 +66,10 @@ class AddEditNoteModule : BaseModule {
                 .setShowAlphaSlider(false)
                 .setAllowPresets(false)
                 .setShowColorShades(false)
+    }
+
+    @Provides
+    fun provideTagsDialog(dialogTagsInteractor: DialogTagsInteractor): DialogTags {
+        return DialogTags(dialogTagsInteractor, context)
     }
 }
