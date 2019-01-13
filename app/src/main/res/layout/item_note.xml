@@ -85,7 +85,7 @@
             android:visibility="@{TextUtils.isEmpty(note.tag.name) ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/note_divider_right"
-            app:layout_constraintHorizontal_weight="3"
+            app:layout_constraintHorizontal_weight="10"
             app:layout_constraintStart_toEndOf="@id/note_divider_left"
             app:layout_constraintTop_toBottomOf="@id/note_text" />
 

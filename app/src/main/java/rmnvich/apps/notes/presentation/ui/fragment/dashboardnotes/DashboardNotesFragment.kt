@@ -4,10 +4,12 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v7.widget.OrientationHelper
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.*
 import kotlinx.android.synthetic.main.dashboard_notes_fragment.*
@@ -90,7 +92,7 @@ class DashboardNotesFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        val gridLayoutManager = StaggeredGridLayoutManager(1,
+        val gridLayoutManager = StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL)
         gridLayoutManager.gapStrategy = StaggeredGridLayoutManager
                 .GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS

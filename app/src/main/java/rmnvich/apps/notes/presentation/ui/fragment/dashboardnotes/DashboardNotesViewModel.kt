@@ -67,8 +67,7 @@ class DashboardNotesViewModel(
     fun updateIsFavoriteNote(noteId: Int, isFavorite: Boolean) {
         mCompositeDisposable.add(dashboardNotesInteractor
             .updateIsFavoriteNote(noteId, isFavorite)
-            .doOnSubscribe { bIsShowingProgressBar.set(true) }
-            .subscribe { bIsShowingProgressBar.set(false) }
+            .subscribe()
         )
     }
 
