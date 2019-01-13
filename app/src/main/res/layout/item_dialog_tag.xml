@@ -30,14 +30,17 @@
 
         <TextView
             android:id="@+id/tv_dialog_tag_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/item_dialog_tag_name_margin_start"
             android:alpha="0.6"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:text="@{tag.name}"
             android:textColor="@android:color/black"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/iv_tag"
             app:layout_constraintTop_toTopOf="parent" />
 
