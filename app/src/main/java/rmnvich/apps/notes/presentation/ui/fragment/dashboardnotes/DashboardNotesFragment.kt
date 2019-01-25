@@ -4,12 +4,10 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
-import android.content.res.Configuration
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
-import android.support.v7.widget.OrientationHelper
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.*
 import com.daimajia.swipe.util.Attributes
@@ -130,6 +128,8 @@ class DashboardNotesFragment : Fragment() {
                 Observer { handleAddEditNoteEvent(-1) })
         mDashboardNotesViewModel.getEditNoteEvent().observe(this,
                 Observer { handleAddEditNoteEvent(it!!) })
+        mDashboardNotesViewModel.getDeleteNoteEvent().observe(this,
+                Observer { handleDeleteNoteEvent(it!!) })
         observeSnackbar()
         observeFab()
     }
@@ -150,7 +150,13 @@ class DashboardNotesFragment : Fragment() {
         activity?.overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 
-    //TODO: Make snackbar with action
+    private fun handleDeleteNoteEvent(noteId: Int) {
+        Snackbar.make(mDashboardNotesBinding.root, getString(R.string.note_has_been_deleted),
+                Snackbar.LENGTH_LONG).setAction(getString(R.string.undo)) {
+            mDashboardNotesViewModel.restoreNote(noteId)
+        }.show()
+    }
+
     private fun observeSnackbar() {
         mDashboardNotesViewModel.getSnackbar().observe(this, Observer {
             Snackbar.make(

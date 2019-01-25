@@ -1,6 +1,7 @@
 package rmnvich.apps.notes.presentation.ui.adapter.dashboard
 
 import android.databinding.DataBindingUtil
+import android.os.Handler
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -82,7 +83,10 @@ class NotesAdapter : RecyclerSwipeAdapter<NotesAdapter.ViewHolder>() {
                 mClickListener.onClickNote(mNoteList[adapterPosition].noteId)
             }
             binding.noteDeleteButton.setOnClickListener {
-                mClickListener.onClickDelete(mNoteList[adapterPosition].noteId)
+                binding.swipeLayout.close()
+                Handler().postDelayed({
+                    mClickListener.onClickDelete(mNoteList[adapterPosition].noteId)
+                }, 350)
             }
             binding.noteButtonStar.setOnLikeListener(object : OnLikeListener {
                 override fun liked(p0: LikeButton?) =

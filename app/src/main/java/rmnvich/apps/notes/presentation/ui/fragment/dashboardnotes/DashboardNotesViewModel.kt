@@ -25,6 +25,7 @@ class DashboardNotesViewModel(
     private val mSelectedNoteId: SingleLiveEvent<Int> = SingleLiveEvent()
 
     private val mAddEditNoteEvent = SingleLiveEvent<Void>()
+    private val mDeleteNoteEvent: SingleLiveEvent<Int> = SingleLiveEvent()
 
     private val mSnackbarMessage: SingleLiveEvent<Int> = SingleLiveEvent()
 
@@ -54,6 +55,8 @@ class DashboardNotesViewModel(
 
     fun getAddNoteEvent(): SingleLiveEvent<Void> = mAddEditNoteEvent
 
+    fun getDeleteNoteEvent(): SingleLiveEvent<Int> = mDeleteNoteEvent
+
     fun addNote() {
         mAddEditNoteEvent.call()
         bIsRecyclerScroll = true
@@ -65,7 +68,18 @@ class DashboardNotesViewModel(
     }
 
     fun deleteNote(noteId: Int) {
-        showSnackbarMessage(R.string.error_message)
+        mCompositeDisposable.add(dashboardNotesInteractor
+                .removeNoteToTrash(noteId)
+                .subscribe({ mDeleteNoteEvent.value = noteId },
+                        { showSnackbarMessage(R.string.error_message) })
+        )
+    }
+
+    fun restoreNote(noteId: Int) {
+        mCompositeDisposable.add(dashboardNotesInteractor
+                .restoreNote(noteId)
+                .subscribe({}, { showSnackbarMessage(R.string.error_message) })
+        )
     }
 
     fun updateIsFavoriteNote(noteId: Int, isFavorite: Boolean) {

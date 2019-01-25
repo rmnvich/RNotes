@@ -39,4 +39,16 @@ open class DashboardNotesInteractor(
                 .subscribeOn(schedulersProvider.io())
                 .observeOn(schedulersProvider.ui())
     }
+
+    fun removeNoteToTrash(noteId: Int): Completable {
+        return notesRepository.updateIsDeleteNote(noteId, true)
+                .subscribeOn(schedulersProvider.io())
+                .observeOn(schedulersProvider.ui())
+    }
+
+    fun restoreNote(noteId: Int): Completable {
+        return notesRepository.updateIsDeleteNote(noteId, false)
+                .subscribeOn(schedulersProvider.io())
+                .observeOn(schedulersProvider.ui())
+    }
 }

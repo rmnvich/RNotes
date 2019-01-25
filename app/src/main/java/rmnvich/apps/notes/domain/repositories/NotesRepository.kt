@@ -9,6 +9,8 @@ interface NotesRepository {
 
     fun getAllNotes(isFavorite: Boolean): Flowable<List<Note>>
 
+    fun getDeletedNotes(): Flowable<List<Note>>
+
     fun getAllFilteredByColorNotes(color: Int, isFavorite: Boolean): Flowable<List<Note>>
 
     fun getAllFilteredByTagNotes(tagId: Int, isFavorite: Boolean): Flowable<List<Note>>
@@ -20,6 +22,8 @@ interface NotesRepository {
     fun insertOrUpdateNote(note: Note): Completable
 
     fun updateIsFavoriteNote(noteId: Int, isFavorite: Boolean): Completable
+
+    fun updateIsDeleteNote(noteId:Int, isDeleted: Boolean): Completable
 
     fun deleteNote(note: Note): Completable
 

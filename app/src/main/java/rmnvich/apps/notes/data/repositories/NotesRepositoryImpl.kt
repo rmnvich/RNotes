@@ -14,19 +14,23 @@ class NotesRepositoryImpl(database: Database) : NotesRepository {
     override fun getAllNotes(isFavorite: Boolean): Flowable<List<Note>> {
         return if (isFavorite) {
             getAllFavoriteNotes()
-        } else noteDao.getAllNotes()
+        } else noteDao.getAllNotes(false)
     }
 
     override fun getAllFilteredByColorNotes(color: Int, isFavorite: Boolean): Flowable<List<Note>> {
-        return noteDao.getAllFilteredByColorNotes(color, isFavorite)
+        return noteDao.getAllFilteredByColorNotes(color, isFavorite, false)
     }
 
     override fun getAllFilteredByTagNotes(tagId: Int, isFavorite: Boolean): Flowable<List<Note>> {
-        return noteDao.getAllFilteredByTagNotes(tagId, isFavorite)
+        return noteDao.getAllFilteredByTagNotes(tagId, isFavorite, false)
     }
 
     override fun getAllFavoriteNotes(): Flowable<List<Note>> {
-        return noteDao.getAllFavoritesNotes(true)
+        return noteDao.getAllFavoritesNotes(true, false)
+    }
+
+    override fun getDeletedNotes(): Flowable<List<Note>> {
+        return noteDao.getDeletedNotes(true)
     }
 
     override fun getNoteById(noteId: Int): Single<Note> {
@@ -39,6 +43,10 @@ class NotesRepositoryImpl(database: Database) : NotesRepository {
 
     override fun updateIsFavoriteNote(noteId: Int, isFavorite: Boolean): Completable {
         return Completable.fromAction { noteDao.updateIsFavoriteNote(noteId, isFavorite) }
+    }
+
+    override fun updateIsDeleteNote(noteId: Int, isDeleted: Boolean): Completable {
+        return Completable.fromAction { noteDao.updateIsDeletedNote(noteId, isDeleted) }
     }
 
     override fun deleteNote(note: Note): Completable {
