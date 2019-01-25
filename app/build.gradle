@@ -68,6 +68,7 @@ dependencies {
     implementation 'com.jaredrummler:colorpicker:1.0.2'
     implementation 'com.mikhaellopez:hfrecyclerview-kotlin:1.1.1'
     implementation 'com.github.jd-alexander:LikeButton:0.2.3'
+    implementation "com.daimajia.swipelayout:library:1.2.0@aar"
 
     // RxJava2
     implementation 'io.reactivex.rxjava2:rxjava:2.2.0'

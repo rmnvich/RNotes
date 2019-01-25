@@ -11,8 +11,8 @@ import rmnvich.apps.notes.domain.interactors.dashboardnotes.DashboardNotesIntera
 import rmnvich.apps.notes.domain.utils.SingleLiveEvent
 
 class DashboardNotesViewModel(
-    private val dashboardNotesInteractor: DashboardNotesInteractor,
-    private val isFavoriteNotes: Boolean
+        private val dashboardNotesInteractor: DashboardNotesInteractor,
+        private val isFavoriteNotes: Boolean
 ) : ViewModel() {
 
     val bIsShowingProgressBar: ObservableBoolean = ObservableBoolean(false)
@@ -64,24 +64,28 @@ class DashboardNotesViewModel(
         bIsRecyclerScroll = false
     }
 
+    fun deleteNote(noteId: Int) {
+        showSnackbarMessage(R.string.error_message)
+    }
+
     fun updateIsFavoriteNote(noteId: Int, isFavorite: Boolean) {
         mCompositeDisposable.add(dashboardNotesInteractor
-            .updateIsFavoriteNote(noteId, isFavorite)
-            .subscribe()
+                .updateIsFavoriteNote(noteId, isFavorite)
+                .subscribe()
         )
     }
 
     private fun loadNotes() {
         mCompositeDisposable.add(dashboardNotesInteractor.getNotes(isFavoriteNotes)
-            .doOnSubscribe { bIsShowingProgressBar.set(true) }
-            .subscribe({
-                bIsShowingProgressBar.set(false)
-                bDataIsEmpty.set(it.isEmpty())
-                mResponse?.value = it
-            }, {
-                bIsShowingProgressBar.set(false)
-                showSnackbarMessage(R.string.error_message)
-            })
+                .doOnSubscribe { bIsShowingProgressBar.set(true) }
+                .subscribe({
+                    bIsShowingProgressBar.set(false)
+                    bDataIsEmpty.set(it.isEmpty())
+                    mResponse?.value = it
+                }, {
+                    bIsShowingProgressBar.set(false)
+                    showSnackbarMessage(R.string.error_message)
+                })
         )
     }
 

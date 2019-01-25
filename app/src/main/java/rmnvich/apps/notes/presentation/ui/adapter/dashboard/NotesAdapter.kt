@@ -5,7 +5,7 @@ import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.CompoundButton
+import com.daimajia.swipe.adapters.RecyclerSwipeAdapter
 import com.like.LikeButton
 import com.like.OnLikeListener
 import rmnvich.apps.notes.R
@@ -13,12 +13,14 @@ import rmnvich.apps.notes.databinding.ItemNoteBinding
 import rmnvich.apps.notes.domain.entity.Note
 import java.util.*
 
-class NotesAdapter : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
+class NotesAdapter : RecyclerSwipeAdapter<NotesAdapter.ViewHolder>() {
 
     interface OnClickNoteListener {
         fun onClickNote(noteId: Int)
 
         fun onClickFavorite(noteId: Int, isFavorite: Boolean)
+
+        fun onClickDelete(noteId: Int)
     }
 
     fun setClickListener(listener: OnClickNoteListener) {
@@ -26,8 +28,13 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
     }
 
     inline fun setOnItemClickListener(crossinline onClickNote: (Int) -> Unit,
+                                      crossinline onClickDelete: (Int) -> Unit,
                                       crossinline onClickFavorite: (Int, Boolean) -> Unit) {
         setClickListener(object : OnClickNoteListener {
+            override fun onClickDelete(noteId: Int) {
+                onClickDelete(noteId)
+            }
+
             override fun onClickNote(noteId: Int) {
                 onClickNote(noteId)
             }
@@ -63,14 +70,20 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
         holder.bind(mNoteList[position])
     }
 
+    override fun getSwipeLayoutResourceId(position: Int): Int {
+        return R.id.swipe_layout
+    }
+
     inner class ViewHolder(private val binding: ItemNoteBinding)
         : RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.root.setOnClickListener {
+            binding.noteLayout.setOnClickListener {
                 mClickListener.onClickNote(mNoteList[adapterPosition].noteId)
             }
-
+            binding.noteDeleteButton.setOnClickListener {
+                mClickListener.onClickDelete(mNoteList[adapterPosition].noteId)
+            }
             binding.noteButtonStar.setOnLikeListener(object : OnLikeListener {
                 override fun liked(p0: LikeButton?) =
                         mClickListener.onClickFavorite(mNoteList[adapterPosition].noteId, true)

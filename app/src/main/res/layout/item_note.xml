@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:swipe="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -14,110 +15,141 @@
             type="rmnvich.apps.notes.domain.entity.Note" />
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/item_note_vertical_margin"
         android:layout_marginVertical="@dimen/item_note_vertical_margin"
         android:background="@drawable/item_note_background"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="@drawable/item_note_foreground"
-        android:padding="@dimen/item_note_card_padding"
         tools:targetApi="o">
 
-        <TextView
-            android:id="@+id/note_text"
-            style="@style/Base.TextAppearance.AppCompat.Body1"
-            android:layout_width="wrap_content"
+        <com.daimajia.swipe.SwipeLayout
+            android:id="@+id/swipe_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:alpha="0.9"
-            android:ellipsize="end"
-            android:maxLines="5"
-            android:text="@{note.text}"
-            android:textSize="15sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            swipe:leftEdgeSwipeOffset="0dp"
+            swipe:rightEdgeSwipeOffset="0dp">
 
-        <rmnvich.apps.notes.presentation.ui.custom.CircleView
-            android:id="@+id/note_circle_color"
-            android:layout_width="@dimen/item_note_circle_color_size"
-            android:layout_height="@dimen/item_note_circle_color_size"
-            android:layout_marginTop="@dimen/item_note_circle_margin_top"
-            app:circleColor="@{note.color}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/note_divider_left"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/note_text" />
+            <FrameLayout
+                android:id="@+id/note_delete_layout"
+                android:layout_width="@dimen/item_note_swipe_layout_width"
+                android:layout_height="wrap_content"
+                android:background="@drawable/item_note_swipe_layout_background"
+                android:foreground="?attr/selectableItemBackground">
 
-        <View
-            android:id="@+id/note_divider_left"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/item_note_divider_height"
-            android:layout_marginStart="@dimen/item_note_divider_horizontal_margin"
-            android:layout_marginTop="@dimen/item_note_circle_margin_top"
-            android:background="@drawable/divider"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/note_tag"
-            app:layout_constraintHorizontal_weight="2"
-            app:layout_constraintStart_toEndOf="@id/note_circle_color"
-            app:layout_constraintTop_toBottomOf="@id/note_text" />
+                <ImageButton
+                    android:id="@+id/note_delete_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/delete"
+                    android:src="@drawable/ic_action_trash_inverted" />
+            </FrameLayout>
 
-        <TextView
-            android:id="@+id/note_tag"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/item_note_divider_horizontal_margin"
-            android:layout_marginTop="@dimen/item_note_circle_margin_top"
-            android:layout_marginEnd="@dimen/item_note_divider_horizontal_margin"
-            android:background="@drawable/item_tag_background"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:maxLines="1"
-            android:paddingStart="@dimen/item_note_tag_horizontal_padding"
-            android:paddingTop="@dimen/item_note_tag_vertical_padding"
-            android:paddingEnd="@dimen/item_note_tag_horizontal_padding"
-            android:paddingBottom="@dimen/item_note_tag_vertical_padding"
-            android:text="@{note.tag.name}"
-            android:textColor="@color/colorTagText"
-            android:textSize="12sp"
-            android:textStyle="italic"
-            android:visibility="@{TextUtils.isEmpty(note.tag.name) ? View.GONE : View.VISIBLE}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/note_divider_right"
-            app:layout_constraintHorizontal_weight="10"
-            app:layout_constraintStart_toEndOf="@id/note_divider_left"
-            app:layout_constraintTop_toBottomOf="@id/note_text" />
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/note_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="@drawable/item_note_foreground"
+                android:padding="@dimen/item_note_card_padding">
 
-        <View
-            android:id="@+id/note_divider_right"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/item_note_divider_height"
-            android:layout_marginTop="@dimen/item_note_circle_margin_top"
-            android:layout_marginEnd="@dimen/item_note_divider_horizontal_margin"
-            android:background="@drawable/divider"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/note_button_star"
-            app:layout_constraintHorizontal_weight="2"
-            app:layout_constraintStart_toEndOf="@id/note_tag"
-            app:layout_constraintTop_toBottomOf="@id/note_text" />
+                <TextView
+                    android:id="@+id/note_text"
+                    style="@style/Base.TextAppearance.AppCompat.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.9"
+                    android:ellipsize="end"
+                    android:maxLines="5"
+                    android:text="@{note.text}"
+                    android:textSize="15sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <com.like.LikeButton
-            android:id="@+id/note_button_star"
-            android:layout_width="@dimen/item_note_star_button_smart_size"
-            android:layout_height="@dimen/item_note_star_button_smart_size"
-            android:layout_marginTop="@dimen/item_note_circle_margin_top"
-            app:anim_scale_factor="2"
-            app:circle_end_color="@color/colorAccent"
-            app:circle_start_color="@color/colorPrimary"
-            app:dots_primary_color="@color/colorAccent"
-            app:dots_secondary_color="@color/colorPrimary"
-            app:icon_size="@dimen/item_note_star_button_smart_size"
-            app:icon_type="Star"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/note_divider_right"
-            app:layout_constraintTop_toBottomOf="@id/note_text"
-            app:liked="@{note.favorite}" />
-    </android.support.constraint.ConstraintLayout>
+                <rmnvich.apps.notes.presentation.ui.custom.CircleView
+                    android:id="@+id/note_circle_color"
+                    android:layout_width="@dimen/item_note_circle_color_size"
+                    android:layout_height="@dimen/item_note_circle_color_size"
+                    android:layout_marginTop="@dimen/item_note_circle_margin_top"
+                    app:circleColor="@{note.color}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/note_divider_left"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/note_text" />
+
+                <View
+                    android:id="@+id/note_divider_left"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/item_note_divider_height"
+                    android:layout_marginStart="@dimen/item_note_divider_horizontal_margin"
+                    android:layout_marginTop="@dimen/item_note_circle_margin_top"
+                    android:background="@drawable/divider"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/note_tag"
+                    app:layout_constraintHorizontal_weight="2"
+                    app:layout_constraintStart_toEndOf="@id/note_circle_color"
+                    app:layout_constraintTop_toBottomOf="@id/note_text" />
+
+                <TextView
+                    android:id="@+id/note_tag"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/item_note_divider_horizontal_margin"
+                    android:layout_marginTop="@dimen/item_note_circle_margin_top"
+                    android:layout_marginEnd="@dimen/item_note_divider_horizontal_margin"
+                    android:background="@drawable/item_tag_background"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/item_note_tag_horizontal_padding"
+                    android:paddingTop="@dimen/item_note_tag_vertical_padding"
+                    android:paddingEnd="@dimen/item_note_tag_horizontal_padding"
+                    android:paddingBottom="@dimen/item_note_tag_vertical_padding"
+                    android:text="@{note.tag.name}"
+                    android:textColor="@color/colorTagText"
+                    android:textSize="12sp"
+                    android:textStyle="italic"
+                    android:visibility="@{TextUtils.isEmpty(note.tag.name) ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/note_divider_right"
+                    app:layout_constraintHorizontal_weight="10"
+                    app:layout_constraintStart_toEndOf="@id/note_divider_left"
+                    app:layout_constraintTop_toBottomOf="@id/note_text" />
+
+                <View
+                    android:id="@+id/note_divider_right"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/item_note_divider_height"
+                    android:layout_marginTop="@dimen/item_note_circle_margin_top"
+                    android:layout_marginEnd="@dimen/item_note_divider_horizontal_margin"
+                    android:background="@drawable/divider"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/note_button_star"
+                    app:layout_constraintHorizontal_weight="2"
+                    app:layout_constraintStart_toEndOf="@id/note_tag"
+                    app:layout_constraintTop_toBottomOf="@id/note_text" />
+
+                <com.like.LikeButton
+                    android:id="@+id/note_button_star"
+                    android:layout_width="@dimen/item_note_star_button_smart_size"
+                    android:layout_height="@dimen/item_note_star_button_smart_size"
+                    android:layout_marginTop="@dimen/item_note_circle_margin_top"
+                    app:anim_scale_factor="2"
+                    app:circle_end_color="@color/colorAccent"
+                    app:circle_start_color="@color/colorPrimary"
+                    app:dots_primary_color="@color/colorAccent"
+                    app:dots_secondary_color="@color/colorPrimary"
+                    app:icon_size="@dimen/item_note_star_button_smart_size"
+                    app:icon_type="Star"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/note_divider_right"
+                    app:layout_constraintTop_toBottomOf="@id/note_text"
+                    app:liked="@{note.favorite}" />
+            </android.support.constraint.ConstraintLayout>
+        </com.daimajia.swipe.SwipeLayout>
+    </FrameLayout>
 </layout>

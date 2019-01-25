@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.OrientationHelper
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.*
+import com.daimajia.swipe.util.Attributes
 import kotlinx.android.synthetic.main.dashboard_notes_fragment.*
 import kotlinx.android.synthetic.main.main_activity.*
 import rmnvich.apps.notes.App
@@ -98,12 +99,14 @@ class DashboardNotesFragment : Fragment() {
                 .GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
         mDashboardNotesBinding.recyclerNotes.layoutManager = gridLayoutManager
 
-        mDashboardNotesBinding.recyclerNotes.adapter = mAdapter
+        mAdapter.mode = Attributes.Mode.Multiple
         mAdapter.setOnItemClickListener(
                 onClickNote = { mDashboardNotesViewModel.editNote(it) },
+                onClickDelete = { mDashboardNotesViewModel.deleteNote(it) },
                 onClickFavorite = { noteId, isFavorite ->
                     mDashboardNotesViewModel.updateIsFavoriteNote(noteId, isFavorite)
                 })
+        mDashboardNotesBinding.recyclerNotes.adapter = mAdapter
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
