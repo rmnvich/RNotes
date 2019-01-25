@@ -27,6 +27,10 @@
     <string name="background">Background</string>
     <string name="create_new_tag">Create new tag</string>
 
+    <!-- TrashFragment -->
+    <string name="trash_is_empty">Trash is empty</string>
+    <string name="empty_trash">Empty trash</string>
+
     <!-- AddEditNoteFragment -->
     <string name="tag">Tag</string>
     <string name="color">Color</string>

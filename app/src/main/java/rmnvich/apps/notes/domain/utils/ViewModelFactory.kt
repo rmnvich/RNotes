@@ -9,6 +9,7 @@ import rmnvich.apps.notes.domain.interactors.trash.TrashInteractor
 import rmnvich.apps.notes.presentation.ui.activity.addeditnote.AddEditNoteViewModel
 import rmnvich.apps.notes.presentation.ui.fragment.dashboardnotes.DashboardNotesViewModel
 import rmnvich.apps.notes.presentation.ui.fragment.dashboardtags.DashboardTagsViewModel
+import rmnvich.apps.notes.presentation.ui.fragment.trash.TrashViewModel
 
 class ViewModelFactory : ViewModelProvider.NewInstanceFactory {
 
@@ -47,6 +48,8 @@ class ViewModelFactory : ViewModelProvider.NewInstanceFactory {
                 AddEditNoteViewModel(mAddEditNoteInteractor) as VM
             modelClass.isAssignableFrom(DashboardTagsViewModel::class.java) ->
                 DashboardTagsViewModel(mDashboardTagsInteractor) as VM
+            modelClass.isAssignableFrom(TrashViewModel::class.java) ->
+                TrashViewModel(mTrashInteractor) as VM
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }

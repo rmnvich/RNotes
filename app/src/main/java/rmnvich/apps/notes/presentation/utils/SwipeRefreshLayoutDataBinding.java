@@ -5,6 +5,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 
 import rmnvich.apps.notes.presentation.ui.fragment.dashboardnotes.DashboardNotesViewModel;
 import rmnvich.apps.notes.presentation.ui.fragment.dashboardtags.DashboardTagsViewModel;
+import rmnvich.apps.notes.presentation.ui.fragment.trash.TrashViewModel;
 
 public class SwipeRefreshLayoutDataBinding {
 
@@ -12,6 +13,13 @@ public class SwipeRefreshLayoutDataBinding {
     public static void setSwipeRefreshLayoutOnRefreshNotesListener(
             SwipeRefreshLayout view,
             final DashboardNotesViewModel viewModel) {
+        view.setOnRefreshListener(viewModel::forceUpdate);
+    }
+
+    @BindingAdapter("android:onRefreshTrash")
+    public static void setSwipeRefreshLayoutOnRefreshTrashListener(
+            SwipeRefreshLayout view,
+            final TrashViewModel viewModel) {
         view.setOnRefreshListener(viewModel::forceUpdate);
     }
 

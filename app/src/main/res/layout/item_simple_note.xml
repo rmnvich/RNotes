@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.text.TextUtils" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="note"
+            type="rmnvich.apps.notes.domain.entity.Note" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/note_simple_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/item_note_vertical_margin"
+        android:layout_marginVertical="@dimen/item_note_vertical_margin"
+        android:background="@drawable/item_note_background"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="@drawable/item_note_foreground"
+        android:padding="@dimen/item_note_card_padding"
+        tools:targetApi="o">
+
+        <TextView
+            android:id="@+id/note_simple_text"
+            style="@style/Base.TextAppearance.AppCompat.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.9"
+            android:ellipsize="end"
+            android:maxLines="5"
+            android:text="@{note.text}"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+</layout>

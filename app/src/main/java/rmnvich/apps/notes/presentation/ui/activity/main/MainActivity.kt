@@ -7,13 +7,13 @@ import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
 import kotlinx.android.synthetic.main.main_activity.*
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.presentation.ui.fragment.dashboardnotes.DashboardNotesFragment
 import rmnvich.apps.notes.presentation.ui.fragment.dashboardtags.DashboardTagsFragment
+import rmnvich.apps.notes.presentation.ui.fragment.trash.TrashFragment
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     R.id.nav_notes -> showFragment(DashboardNotesFragment.newInstance(false))
                     R.id.nav_favorites -> showFragment(DashboardNotesFragment.newInstance(true))
                     R.id.nav_tags -> showFragment(DashboardTagsFragment.newInstance())
-                    R.id.nav_trash -> showFragment(DashboardNotesFragment.newInstance(true))
+                    R.id.nav_trash -> showFragment(TrashFragment.newInstance())
                 }
                 drawer_layout?.removeDrawerListener(this)
             }

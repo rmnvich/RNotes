@@ -91,7 +91,9 @@ class DashboardNotesFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        val gridLayoutManager = StaggeredGridLayoutManager(2,
+        val spanCount = if (isFavoriteNotes) 1 else 2
+
+        val gridLayoutManager = StaggeredGridLayoutManager(spanCount,
                 StaggeredGridLayoutManager.VERTICAL)
         gridLayoutManager.gapStrategy = StaggeredGridLayoutManager
                 .GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
