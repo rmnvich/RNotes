@@ -84,7 +84,8 @@ class TagsAdapter : RecyclerView.Adapter<TagsAdapter.ViewHolder>() {
             binding.etTagText.setOnFocusChangeListener { _, isFocused ->
                 if (isFocused) {
                     binding.etTagText.setSelection(binding.etTagText.text.toString().length)
-                    binding.topDivider.visibility = VISIBLE
+                    if (adapterPosition != 0)
+                        binding.topDivider.visibility = VISIBLE
                     binding.bottomDivider.visibility = VISIBLE
 
                     binding.ivEditTag.setImageResource(R.drawable.ic_action_check)
