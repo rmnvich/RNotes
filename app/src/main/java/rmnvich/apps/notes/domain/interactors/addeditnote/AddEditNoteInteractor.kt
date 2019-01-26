@@ -13,7 +13,6 @@ import java.util.concurrent.TimeUnit
 
 class AddEditNoteInteractor(
     private val notesRepository: NotesRepository,
-    private val tagsRepository: TagsRepository,
     private val schedulersProvider: SchedulersProvider
 ) {
 
@@ -26,13 +25,6 @@ class AddEditNoteInteractor(
     fun insertOrUpdateNote(note: Note): Completable {
         return notesRepository.insertOrUpdateNote(note)
             .subscribeOn(schedulersProvider.io())
-            .observeOn(schedulersProvider.ui())
-    }
-
-    fun getAllTags(): Flowable<List<Tag>> {
-        return tagsRepository.getAllTags()
-            .subscribeOn(schedulersProvider.io())
-            .delay(Constants.DEFAULT_DELAY, TimeUnit.MILLISECONDS)
             .observeOn(schedulersProvider.ui())
     }
 }

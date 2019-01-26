@@ -29,15 +29,14 @@ class AddEditNoteModule(private val context: Context) : BaseModule {
     @PerFragment
     @Provides
     fun provideAddEditNoteInteractor(notesRepository: NotesRepository,
-                          tagsRepository: TagsRepository,
-                          schedulersProvider: SchedulersProvider): AddEditNoteInteractor {
-        return AddEditNoteInteractor(notesRepository, tagsRepository, schedulersProvider)
+                                     schedulersProvider: SchedulersProvider): AddEditNoteInteractor {
+        return AddEditNoteInteractor(notesRepository, schedulersProvider)
     }
 
     @PerFragment
     @Provides
     fun provideDialogTagsInteractor(tagsRepository: TagsRepository,
-                                    schedulersProvider: SchedulersProvider) : DialogTagsInteractor {
+                                    schedulersProvider: SchedulersProvider): DialogTagsInteractor {
         return DialogTagsInteractor(tagsRepository, schedulersProvider)
     }
 

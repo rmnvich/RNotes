@@ -33,9 +33,9 @@ class NotesAdapter : RecyclerSwipeAdapter<NotesAdapter.ViewHolder>() {
     }
 
     inline fun setOnItemClickListener(
-        crossinline onClickNote: (Int) -> Unit,
-        crossinline onClickDelete: (Int, Int) -> Unit,
-        crossinline onClickFavorite: (Int, Boolean) -> Unit
+            crossinline onClickNote: (Int) -> Unit,
+            crossinline onClickDelete: (Int, Int) -> Unit,
+            crossinline onClickFavorite: (Int, Boolean) -> Unit
     ) {
         setClickListener(object : OnClickNoteListener {
             override fun onClickDelete(noteId: Int, position: Int) {
@@ -65,8 +65,8 @@ class NotesAdapter : RecyclerSwipeAdapter<NotesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding: ItemNoteBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(parent.context),
-            R.layout.item_note, parent, false
+                LayoutInflater.from(parent.context),
+                R.layout.item_note, parent, false
         )
         return ViewHolder(binding)
     }
@@ -94,18 +94,20 @@ class NotesAdapter : RecyclerSwipeAdapter<NotesAdapter.ViewHolder>() {
                 vibrate()
 
                 binding.swipeLayout.close()
-                mClickListener.onClickDelete(
-                    mNoteList[adapterPosition].noteId,
-                    adapterPosition
-                )
+                Handler().postDelayed({
+                    mClickListener.onClickDelete(
+                            mNoteList[adapterPosition].noteId,
+                            adapterPosition
+                    )
+                }, 400)
             }
 
             binding.noteButtonStar.setOnLikeListener(object : OnLikeListener {
                 override fun liked(p0: LikeButton?) =
-                    mClickListener.onClickFavorite(mNoteList[adapterPosition].noteId, true)
+                        mClickListener.onClickFavorite(mNoteList[adapterPosition].noteId, true)
 
                 override fun unLiked(p0: LikeButton?) =
-                    mClickListener.onClickFavorite(mNoteList[adapterPosition].noteId, false)
+                        mClickListener.onClickFavorite(mNoteList[adapterPosition].noteId, false)
             })
         }
 
@@ -117,8 +119,8 @@ class NotesAdapter : RecyclerSwipeAdapter<NotesAdapter.ViewHolder>() {
         private fun vibrate() {
             val vibrator = binding.root.context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                vibrator.vibrate(VibrationEffect.createOneShot(150, VibrationEffect.DEFAULT_AMPLITUDE))
-            } else vibrator.vibrate(150)
+                vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
+            } else vibrator.vibrate(50)
         }
     }
 }

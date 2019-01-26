@@ -59,14 +59,17 @@ class TrashAdapter : RecyclerView.Adapter<TrashAdapter.ViewHolder>() {
     }
 
     fun unselectAllNotes() {
+        clearSelectedNotes()
+        notifyDataSetChanged()
+    }
+
+    fun clearSelectedNotes() {
         for (i in 0 until mSelectedNotes.size) {
             val note = mSelectedNotes[i]
             note.isSelected = false
         }
         mSelectedNotes.removeAll(mSelectedNotes)
         mSelectListener.onNoteSelected(0)
-
-        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrashAdapter.ViewHolder {
@@ -106,12 +109,12 @@ class TrashAdapter : RecyclerView.Adapter<TrashAdapter.ViewHolder>() {
         }
 
         private fun selectNote(note: Note) {
-            note.isSelected = !note.isSelected
-
-            val background = if (note.isSelected) {
+            val background = if (!note.isSelected) {
+                note.isSelected = true
                 mSelectedNotes.add(note)
                 R.drawable.item_note_selected_background
             } else {
+                note.isSelected = false
                 mSelectedNotes.remove(note)
                 R.drawable.item_note_background
             }

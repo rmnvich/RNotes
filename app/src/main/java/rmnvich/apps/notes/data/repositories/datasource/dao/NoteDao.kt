@@ -29,8 +29,8 @@ interface NoteDao {
     @Query("UPDATE note SET isFavorite = :isFavorite WHERE noteId = :noteId")
     fun updateIsFavoriteNote(noteId: Int, isFavorite: Boolean)
 
-    @Query("UPDATE note SET isDeleted = :isDeleted WHERE noteId = :noteId")
-    fun updateIsDeletedNote(noteId: Int, isDeleted: Boolean)
+    @Query("UPDATE note SET isDeleted = :isDeleted AND isSelected = :isSelected WHERE noteId = :noteId")
+    fun updateIsDeletedNote(noteId: Int, isDeleted: Boolean, isSelected: Boolean)
 
     @Update
     fun updateNotes(notes: List<Note>)

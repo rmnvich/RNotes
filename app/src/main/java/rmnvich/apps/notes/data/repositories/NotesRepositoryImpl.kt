@@ -46,7 +46,7 @@ class NotesRepositoryImpl(database: Database) : NotesRepository {
     }
 
     override fun updateIsDeleteNote(noteId: Int, isDeleted: Boolean): Completable {
-        return Completable.fromAction { noteDao.updateIsDeletedNote(noteId, isDeleted) }
+        return Completable.fromAction { noteDao.updateIsDeletedNote(noteId, isDeleted, false) }
     }
 
     override fun deleteNote(note: Note): Completable {
@@ -60,6 +60,7 @@ class NotesRepositoryImpl(database: Database) : NotesRepository {
     override fun restoreNotes(notes: List<Note>): Completable {
         for (i in 0 until notes.size) {
             notes[i].isDeleted = false
+            notes[i].isSelected = false
         }
         return Completable.fromAction { noteDao.updateNotes(notes) }
     }

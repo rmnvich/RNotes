@@ -70,6 +70,8 @@ class AddEditNoteViewModel(private val addEditNoteNotesInteractor: AddEditNoteIn
             existsNote?.tag = null
         else existsNote?.tag = noteTag.get()!!
 
+        existsNote?.isSelected = false
+
         if (!existsNote?.text?.isEmpty()!!) {
             bIsShowingProgressBar.set(true)
             mCompositeDisposable.add(addEditNoteNotesInteractor

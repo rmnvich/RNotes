@@ -132,7 +132,7 @@ class TrashFragment : Fragment() {
         mTrashViewModel.getNotes()?.observe(this,
                 Observer<List<Note>> { handleResponse(it!!) })
         mTrashViewModel.getDeleteOrRestoreNotesEvent().observe(this,
-                Observer { mAdapter.unselectAllNotes() })
+                Observer { mAdapter.clearSelectedNotes() })
         observeSnackbar()
     }
 
