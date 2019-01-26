@@ -13,6 +13,7 @@
 
     <!-- DashboardNotesFragment -->
     <string name="you_have_no_notes">You have no notes</string>
+    <string name="you_have_no_favorite_notes">You have no favorite notes</string>
     <string name="dashboard_title">Dashboard</string>
     <string name="empty">Empty</string>
     <string name="search">Search</string>

@@ -77,6 +77,14 @@ class DashboardNotesFragment : Fragment() {
         mDashboardNotesBinding.swipeRefreshLayout
             .setColorSchemeResources(R.color.colorAccent)
 
+        if (isFavoriteNotes) {
+            mDashboardNotesBinding.ivEmpty.setImageResource(R.drawable.empty_favotites)
+            mDashboardNotesBinding.tvEmpty.setText(R.string.you_have_no_favorite_notes)
+        } else {
+            mDashboardNotesBinding.ivEmpty.setImageResource(R.drawable.notes_empty)
+            mDashboardNotesBinding.tvEmpty.setText(R.string.you_have_no_notes)
+        }
+
         initToolbar()
         initRecyclerView()
 
