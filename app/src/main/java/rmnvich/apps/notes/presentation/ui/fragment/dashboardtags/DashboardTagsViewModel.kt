@@ -16,7 +16,7 @@ class DashboardTagsViewModel(private val dashboardTagsInteractor: DashboardTagsI
     val bIsShowingProgressBar: ObservableBoolean = ObservableBoolean(false)
     val bDataIsEmpty: ObservableBoolean = ObservableBoolean(false)
 
-    var bIsRecyclerScroll: Boolean = false
+    var bIsRecyclerNeedToScroll: Boolean = false
 
     val tagName: ObservableField<String> = ObservableField("")
 
@@ -48,7 +48,7 @@ class DashboardTagsViewModel(private val dashboardTagsInteractor: DashboardTagsI
     }
 
     fun deleteTag(tag: Tag) {
-        bIsRecyclerScroll = false
+        bIsRecyclerNeedToScroll = false
 
         mCompositeDisposable.add(dashboardTagsInteractor
                 .deleteTag(tag)
@@ -57,7 +57,7 @@ class DashboardTagsViewModel(private val dashboardTagsInteractor: DashboardTagsI
     }
 
     fun updateTag(tagId: Int, tagName: String) {
-        bIsRecyclerScroll = false
+        bIsRecyclerNeedToScroll = false
 
         if (!tagName.isEmpty()) {
             mCompositeDisposable.add(dashboardTagsInteractor
@@ -67,7 +67,7 @@ class DashboardTagsViewModel(private val dashboardTagsInteractor: DashboardTagsI
     }
 
     fun insertTag() {
-        bIsRecyclerScroll = true
+        bIsRecyclerNeedToScroll = true
 
         val tag = Tag()
         tag.name = tagName.get()!!
@@ -87,7 +87,7 @@ class DashboardTagsViewModel(private val dashboardTagsInteractor: DashboardTagsI
     }
 
     fun restoreTag(tag: Tag) {
-        bIsRecyclerScroll = false
+        bIsRecyclerNeedToScroll = false
 
         mCompositeDisposable.add(dashboardTagsInteractor
                 .insertTag(tag)

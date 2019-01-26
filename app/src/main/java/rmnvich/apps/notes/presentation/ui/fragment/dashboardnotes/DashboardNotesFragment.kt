@@ -59,17 +59,23 @@ class DashboardNotesFragment : Fragment() {
         if (!componentHolder.isComponentReleased(javaClass))
             componentHolder.releaseComponent(javaClass)
 
-        componentHolder.getComponent(javaClass,
-                DashboardNotesModule(isFavoriteNotes))
-                ?.inject(this)
+        componentHolder.getComponent(
+            javaClass,
+            DashboardNotesModule(isFavoriteNotes)
+        )
+            ?.inject(this)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
-        mDashboardNotesBinding = DataBindingUtil.inflate(inflater,
-                R.layout.dashboard_notes_fragment, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        mDashboardNotesBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.dashboard_notes_fragment, container, false
+        )
         mDashboardNotesBinding.swipeRefreshLayout
-                .setColorSchemeResources(R.color.colorAccent)
+            .setColorSchemeResources(R.color.colorAccent)
 
         initToolbar()
         initRecyclerView()
@@ -93,19 +99,23 @@ class DashboardNotesFragment : Fragment() {
     private fun initRecyclerView() {
         val spanCount = if (isFavoriteNotes) 1 else 2
 
-        val gridLayoutManager = StaggeredGridLayoutManager(spanCount,
-                StaggeredGridLayoutManager.VERTICAL)
+        val gridLayoutManager = StaggeredGridLayoutManager(
+            spanCount,
+            StaggeredGridLayoutManager.VERTICAL
+        )
         gridLayoutManager.gapStrategy = StaggeredGridLayoutManager
-                .GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
+            .GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
         mDashboardNotesBinding.recyclerNotes.layoutManager = gridLayoutManager
 
         mAdapter.mode = Attributes.Mode.Multiple
         mAdapter.setOnItemClickListener(
-                onClickNote = { mDashboardNotesViewModel.editNote(it) },
-                onClickDelete = { mDashboardNotesViewModel.deleteNote(it) },
-                onClickFavorite = { noteId, isFavorite ->
-                    mDashboardNotesViewModel.updateIsFavoriteNote(noteId, isFavorite)
-                })
+            onClickNote = { mDashboardNotesViewModel.editNote(it) },
+            onClickDelete = { noteId, position ->
+                mDashboardNotesViewModel.deleteNote(noteId, position)
+            },
+            onClickFavorite = { noteId, isFavorite ->
+                mDashboardNotesViewModel.updateIsFavoriteNote(noteId, isFavorite)
+            })
         mDashboardNotesBinding.recyclerNotes.adapter = mAdapter
     }
 
@@ -121,17 +131,17 @@ class DashboardNotesFragment : Fragment() {
         } else KEY_ALL_NOTES
 
         mDashboardNotesViewModel = ViewModelProviders.of(activity!!, mViewModelFactory)
-                .get(viewModelKey, DashboardNotesViewModel::class.java)
+            .get(viewModelKey, DashboardNotesViewModel::class.java)
         mDashboardNotesBinding.viewmodel = mDashboardNotesViewModel
 
         mDashboardNotesViewModel.getNotes(false)?.observe(this,
-                Observer<List<Note>> { handleResponse(it!!) })
+            Observer<List<Note>> { handleResponse(it!!) })
         mDashboardNotesViewModel.getAddNoteEvent().observe(this,
-                Observer { handleAddEditNoteEvent(-1) })
+            Observer { handleAddEditNoteEvent(-1) })
         mDashboardNotesViewModel.getEditNoteEvent().observe(this,
-                Observer { handleAddEditNoteEvent(it!!) })
+            Observer { handleAddEditNoteEvent(it!!) })
         mDashboardNotesViewModel.getDeleteNoteEvent().observe(this,
-                Observer { handleDeleteNoteEvent(it!!) })
+            Observer { handleDeleteNoteEvent(it!!) })
         observeSnackbar()
         observeFab()
     }
@@ -139,8 +149,10 @@ class DashboardNotesFragment : Fragment() {
     private fun handleResponse(response: List<Note>) {
         mAdapter.setData(response)
 
-        if (mDashboardNotesViewModel.bIsRecyclerScroll)
+        if (mDashboardNotesViewModel.bIsRecyclerNeedToScroll) {
             mDashboardNotesBinding.recyclerNotes.scrollToPosition(0)
+            mDashboardNotesViewModel.bIsRecyclerNeedToScroll = false
+        }
     }
 
     private fun handleAddEditNoteEvent(noteId: Int) {
@@ -153,8 +165,10 @@ class DashboardNotesFragment : Fragment() {
     }
 
     private fun handleDeleteNoteEvent(noteId: Int) {
-        Snackbar.make(mDashboardNotesBinding.root, getString(R.string.note_has_been_deleted),
-                Snackbar.LENGTH_LONG).setAction(getString(R.string.undo)) {
+        Snackbar.make(
+            mDashboardNotesBinding.root, getString(R.string.note_has_been_deleted),
+            Snackbar.LENGTH_LONG
+        ).setAction(getString(R.string.undo)) {
             mDashboardNotesViewModel.restoreNote(noteId)
         }.show()
     }
@@ -162,8 +176,8 @@ class DashboardNotesFragment : Fragment() {
     private fun observeSnackbar() {
         mDashboardNotesViewModel.getSnackbar().observe(this, Observer {
             Snackbar.make(
-                    mDashboardNotesBinding.root, getString(it!!),
-                    Snackbar.LENGTH_LONG
+                mDashboardNotesBinding.root, getString(it!!),
+                Snackbar.LENGTH_LONG
             ).show()
         })
     }
@@ -175,6 +189,6 @@ class DashboardNotesFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         App.getApp(activity?.applicationContext).componentsHolder
-                .releaseComponent(javaClass)
+            .releaseComponent(javaClass)
     }
 }

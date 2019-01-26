@@ -14,7 +14,6 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SimpleAdapter
 import kotlinx.android.synthetic.main.main_activity.*
 import rmnvich.apps.notes.App
 
@@ -25,7 +24,6 @@ import rmnvich.apps.notes.domain.utils.ViewModelFactory
 import rmnvich.apps.notes.presentation.ui.activity.main.MainActivity
 import rmnvich.apps.notes.presentation.ui.adapter.tag.SwipeToDeleteCallback
 import rmnvich.apps.notes.presentation.ui.adapter.tag.TagsAdapter
-import rmnvich.apps.notes.presentation.utils.DebugLogger
 import javax.inject.Inject
 
 class DashboardTagsFragment : Fragment() {
@@ -107,7 +105,7 @@ class DashboardTagsFragment : Fragment() {
     private fun handleResponse(response: List<Tag>) {
         mAdapter.setData(response)
 
-        if (mDashboardTagsViewModel.bIsRecyclerScroll)
+        if (mDashboardTagsViewModel.bIsRecyclerNeedToScroll)
             mDashboardTagsBinding.recyclerTags.scrollToPosition(0)
     }
 

@@ -70,6 +70,7 @@
                     android:layout_marginBottom="?attr/actionBarSize"
                     android:contentDescription="@string/empty"
                     android:src="@drawable/tags_empty"
+                    android:alpha="0.6"
                     android:visibility="@{viewmodel.bDataIsEmpty ? View.VISIBLE : View.INVISIBLE}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
