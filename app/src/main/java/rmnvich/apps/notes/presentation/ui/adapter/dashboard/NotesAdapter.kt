@@ -1,7 +1,11 @@
 package rmnvich.apps.notes.presentation.ui.adapter.dashboard
 
+import android.content.Context
 import android.databinding.DataBindingUtil
+import android.os.Build
 import android.os.Handler
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -21,19 +25,21 @@ class NotesAdapter : RecyclerSwipeAdapter<NotesAdapter.ViewHolder>() {
 
         fun onClickFavorite(noteId: Int, isFavorite: Boolean)
 
-        fun onClickDelete(noteId: Int)
+        fun onClickDelete(noteId: Int, position: Int)
     }
 
     fun setClickListener(listener: OnClickNoteListener) {
         mClickListener = listener
     }
 
-    inline fun setOnItemClickListener(crossinline onClickNote: (Int) -> Unit,
-                                      crossinline onClickDelete: (Int) -> Unit,
-                                      crossinline onClickFavorite: (Int, Boolean) -> Unit) {
+    inline fun setOnItemClickListener(
+        crossinline onClickNote: (Int) -> Unit,
+        crossinline onClickDelete: (Int, Int) -> Unit,
+        crossinline onClickFavorite: (Int, Boolean) -> Unit
+    ) {
         setClickListener(object : OnClickNoteListener {
-            override fun onClickDelete(noteId: Int) {
-                onClickDelete(noteId)
+            override fun onClickDelete(noteId: Int, position: Int) {
+                onClickDelete(noteId, position)
             }
 
             override fun onClickNote(noteId: Int) {
@@ -58,8 +64,10 @@ class NotesAdapter : RecyclerSwipeAdapter<NotesAdapter.ViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: ItemNoteBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context),
-                R.layout.item_note, parent, false)
+        val binding: ItemNoteBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context),
+            R.layout.item_note, parent, false
+        )
         return ViewHolder(binding)
     }
 
@@ -75,31 +83,42 @@ class NotesAdapter : RecyclerSwipeAdapter<NotesAdapter.ViewHolder>() {
         return R.id.swipe_layout
     }
 
-    inner class ViewHolder(private val binding: ItemNoteBinding)
-        : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: ItemNoteBinding) : RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.noteLayout.setOnClickListener {
                 mClickListener.onClickNote(mNoteList[adapterPosition].noteId)
             }
+
             binding.noteDeleteButton.setOnClickListener {
+                vibrate()
+
                 binding.swipeLayout.close()
-                Handler().postDelayed({
-                    mClickListener.onClickDelete(mNoteList[adapterPosition].noteId)
-                }, 350)
+                mClickListener.onClickDelete(
+                    mNoteList[adapterPosition].noteId,
+                    adapterPosition
+                )
             }
+
             binding.noteButtonStar.setOnLikeListener(object : OnLikeListener {
                 override fun liked(p0: LikeButton?) =
-                        mClickListener.onClickFavorite(mNoteList[adapterPosition].noteId, true)
+                    mClickListener.onClickFavorite(mNoteList[adapterPosition].noteId, true)
 
                 override fun unLiked(p0: LikeButton?) =
-                        mClickListener.onClickFavorite(mNoteList[adapterPosition].noteId, false)
+                    mClickListener.onClickFavorite(mNoteList[adapterPosition].noteId, false)
             })
         }
 
         fun bind(note: Note) {
             binding.note = note
             binding.executePendingBindings()
+        }
+
+        private fun vibrate() {
+            val vibrator = binding.root.context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createOneShot(150, VibrationEffect.DEFAULT_AMPLITUDE))
+            } else vibrator.vibrate(150)
         }
     }
 }
