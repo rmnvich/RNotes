@@ -28,4 +28,6 @@ interface NotesRepository {
     fun deleteNote(note: Note): Completable
 
     fun deleteNotes(notes: List<Note>): Completable
+
+    fun restoreNotes(notes: List<Note>): Completable
 }

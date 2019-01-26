@@ -6,4 +6,17 @@
         android:id="@+id/menu_empty_trash"
         android:title="@string/empty_trash"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_restore"
+        android:icon="@drawable/ic_action_restore"
+        android:title="@string/restore"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_delete_forever"
+        android:icon="@drawable/ic_action_delete_forever"
+        android:title="@string/delete"
+        app:showAsAction="always" />
+
 </menu>

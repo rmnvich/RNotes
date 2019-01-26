@@ -54,6 +54,8 @@ class DashboardTagsFragment : Fragment() {
 
         mDashboardTagsBinding.swipeRefreshLayout
                 .setColorSchemeResources(R.color.colorAccent)
+        mDashboardTagsBinding.swipeRefreshLayout.isEnabled = false
+
 
         initRecyclerView()
         initToolbar()
@@ -88,7 +90,7 @@ class DashboardTagsFragment : Fragment() {
                 .get(DashboardTagsViewModel::class.java)
         mDashboardTagsBinding.viewmodel = mDashboardTagsViewModel
 
-        mDashboardTagsViewModel.getTags(false)?.observe(this,
+        mDashboardTagsViewModel.getTags()?.observe(this,
                 Observer<List<Tag>> { handleResponse(it!!) })
         mDashboardTagsViewModel.getDeleteTaskCommand().observe(this,
                 Observer { handleTagDeleting(it!!) })

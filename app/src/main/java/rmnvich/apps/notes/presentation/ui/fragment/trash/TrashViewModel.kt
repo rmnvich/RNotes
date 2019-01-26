@@ -15,69 +15,74 @@ class TrashViewModel(private val trashInteractor: TrashInteractor) : ViewModel()
     val bIsShowingProgressBar: ObservableBoolean = ObservableBoolean(false)
     val bDataIsEmpty: ObservableBoolean = ObservableBoolean(false)
 
+    var bIsNotesSelected: Boolean = false
+
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
 
     private val mSnackbarMessage: SingleLiveEvent<Int> = SingleLiveEvent()
+    private val mDeleteOrRestoreNotesEvent: SingleLiveEvent<Void> = SingleLiveEvent()
 
     private var mResponse: MutableLiveData<List<Note>>? = null
 
-    fun forceUpdate() {
-        getNotes(true)
-    }
-
-    fun getNotes(forceUpdate: Boolean): LiveData<List<Note>>? {
+    fun getNotes(): LiveData<List<Note>>? {
         if (mResponse == null) {
             mResponse = MutableLiveData()
             loadNotes()
         }
-
-        if (forceUpdate) {
-            mCompositeDisposable.clear()
-            mResponse = null
-
-            getNotes(false)
-        }
-
         return mResponse
     }
 
     fun getSnackbar(): SingleLiveEvent<Int> = mSnackbarMessage
 
-    fun emptyTrash(notes: List<Note>) {
+    fun getDeleteOrRestoreNotesEvent(): SingleLiveEvent<Void> = mDeleteOrRestoreNotesEvent
+
+    fun deleteNotes(notes: List<Note>) {
         mCompositeDisposable.addAll(
-            trashInteractor
-                .deleteNotes(notes)
-                .subscribe({}, { showSnackbarMessage(R.string.error_message) })
+                trashInteractor
+                        .deleteNotes(notes)
+                        .subscribe({
+                            mDeleteOrRestoreNotesEvent.call()
+                        }, { showSnackbarMessage(R.string.error_message) })
+        )
+    }
+
+    fun restoreNotes(notes: List<Note>) {
+        mCompositeDisposable.add(
+                trashInteractor
+                        .restoreNotes(notes)
+                        .subscribe({
+                            mDeleteOrRestoreNotesEvent.call()
+                        }, { showSnackbarMessage(R.string.error_message) })
         )
     }
 
     fun deleteNote(note: Note) {
         mCompositeDisposable.add(
-            trashInteractor
-                .deleteNote(note)
-                .subscribe({}, { showSnackbarMessage(R.string.error_message) })
+                trashInteractor
+                        .deleteNote(note)
+                        .subscribe({}, { showSnackbarMessage(R.string.error_message) })
         )
     }
 
     fun restoreNote(noteId: Int) {
         mCompositeDisposable.add(
-            trashInteractor
-                .restoreNote(noteId)
-                .subscribe({}, { showSnackbarMessage(R.string.error_message) })
+                trashInteractor
+                        .restoreNote(noteId)
+                        .subscribe({}, { showSnackbarMessage(R.string.error_message) })
         )
     }
 
     private fun loadNotes() {
         mCompositeDisposable.add(trashInteractor.getDeletedNotes()
-            .doOnSubscribe { bIsShowingProgressBar.set(true) }
-            .subscribe({
-                bIsShowingProgressBar.set(false)
-                bDataIsEmpty.set(it.isEmpty())
-                mResponse?.value = it
-            }, {
-                bIsShowingProgressBar.set(false)
-                showSnackbarMessage(R.string.error_message)
-            })
+                .doOnSubscribe { bIsShowingProgressBar.set(true) }
+                .subscribe({
+                    bIsShowingProgressBar.set(false)
+                    bDataIsEmpty.set(it.isEmpty())
+                    mResponse?.value = it
+                }, {
+                    bIsShowingProgressBar.set(false)
+                    showSnackbarMessage(R.string.error_message)
+                })
         )
     }
 

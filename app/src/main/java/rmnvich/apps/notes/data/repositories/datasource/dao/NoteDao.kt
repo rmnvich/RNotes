@@ -32,6 +32,9 @@ interface NoteDao {
     @Query("UPDATE note SET isDeleted = :isDeleted WHERE noteId = :noteId")
     fun updateIsDeletedNote(noteId: Int, isDeleted: Boolean)
 
+    @Update
+    fun updateNotes(notes: List<Note>)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertNote(note: Note)
 

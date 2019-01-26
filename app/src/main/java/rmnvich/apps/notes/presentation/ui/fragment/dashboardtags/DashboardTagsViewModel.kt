@@ -31,19 +31,11 @@ class DashboardTagsViewModel(private val dashboardTagsInteractor: DashboardTagsI
 
     fun getDeleteTaskCommand(): SingleLiveEvent<Tag> = mDeleteTaskCommand
 
-    fun forceUpdate() = getTags(true)
-
-    fun getTags(forceUpdate: Boolean): LiveData<List<Tag>>? {
+    fun getTags(): LiveData<List<Tag>>? {
         if (mResponse == null) {
             mResponse = MutableLiveData()
             loadTags()
         }
-
-        if (forceUpdate) {
-            mCompositeDisposable.clear()
-            loadTags()
-        }
-
         return mResponse
     }
 

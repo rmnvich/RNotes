@@ -56,4 +56,11 @@ class NotesRepositoryImpl(database: Database) : NotesRepository {
     override fun deleteNotes(notes: List<Note>): Completable {
         return Completable.fromAction { noteDao.deleteNotes(notes) }
     }
+
+    override fun restoreNotes(notes: List<Note>): Completable {
+        for (i in 0 until notes.size) {
+            notes[i].isDeleted = false
+        }
+        return Completable.fromAction { noteDao.updateNotes(notes) }
+    }
 }

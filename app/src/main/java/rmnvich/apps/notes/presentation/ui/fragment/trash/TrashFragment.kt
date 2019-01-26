@@ -41,21 +41,24 @@ class TrashFragment : Fragment() {
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         App.getApp(activity?.applicationContext).componentsHolder
-            .getComponent(javaClass).inject(this)
+                .getComponent(javaClass).inject(this)
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         mTrashBinding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.trash_fragment, container, false
+                inflater,
+                R.layout.trash_fragment, container, false
         )
-        mTrashBinding.swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent)
+        mTrashBinding.swipeRefreshLayout
+                .setColorSchemeResources(R.color.colorAccent)
+        mTrashBinding.swipeRefreshLayout.isEnabled = false
+        (activity as MainActivity).setSupportActionBar(mTrashBinding.trashToolbar)
 
         initRecyclerView()
-        initToolbar()
+        initDefaultToolbar()
 
         setHasOptionsMenu(true)
         return mTrashBinding.root
@@ -66,19 +69,33 @@ class TrashFragment : Fragment() {
         inflater?.inflate(R.menu.trash_menu, menu)
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu?) {
+        super.onPrepareOptionsMenu(menu)
+        menu?.findItem(R.id.menu_empty_trash)?.isVisible = !mTrashViewModel.bIsNotesSelected
+        menu?.findItem(R.id.menu_restore)?.isVisible = mTrashViewModel.bIsNotesSelected
+        menu?.findItem(R.id.menu_delete_forever)?.isVisible = mTrashViewModel.bIsNotesSelected
+    }
+
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when (item?.itemId) {
             R.id.menu_empty_trash -> {
                 if (mAdapter.itemCount > 0)
-                    handleOnClickEmptyTrash()
+                    handleDeleteNotes(true)
+                true
+            }
+            R.id.menu_delete_forever -> {
+                handleDeleteNotes(false)
+                true
+            }
+            R.id.menu_restore -> {
+                mTrashViewModel.restoreNotes(mAdapter.mSelectedNotes)
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    private fun initToolbar() {
-        (activity as MainActivity).setSupportActionBar(mTrashBinding.trashToolbar)
+    private fun initDefaultToolbar() {
         mTrashBinding.trashToolbar.title = getString(R.string.title_trash)
         mTrashBinding.trashToolbar.setNavigationIcon(R.drawable.ic_action_menu)
         mTrashBinding.trashToolbar.setNavigationOnClickListener {
@@ -86,13 +103,19 @@ class TrashFragment : Fragment() {
         }
     }
 
+    private fun initAlternativeToolbar(title: String) {
+        mTrashBinding.trashToolbar.title = title
+        mTrashBinding.trashToolbar.setNavigationIcon(R.drawable.ic_action_close)
+        mTrashBinding.trashToolbar.setNavigationOnClickListener { mAdapter.unselectAllNotes() }
+    }
+
     private fun initRecyclerView() {
         val gridLayoutManager = StaggeredGridLayoutManager(
-            2,
-            StaggeredGridLayoutManager.VERTICAL
+                2,
+                StaggeredGridLayoutManager.VERTICAL
         )
         gridLayoutManager.gapStrategy = StaggeredGridLayoutManager
-            .GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
+                .GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
         mTrashBinding.recyclerTrashNotes.layoutManager = gridLayoutManager
 
         mAdapter.setOnItemClickListener { handleOnClickNote(it) }
@@ -103,11 +126,13 @@ class TrashFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         mTrashViewModel = ViewModelProviders.of(activity!!, mViewModelFactory)
-            .get(TrashViewModel::class.java)
+                .get(TrashViewModel::class.java)
         mTrashBinding.viewmodel = mTrashViewModel
 
-        mTrashViewModel.getNotes(false)?.observe(this,
-            Observer<List<Note>> { handleResponse(it!!) })
+        mTrashViewModel.getNotes()?.observe(this,
+                Observer<List<Note>> { handleResponse(it!!) })
+        mTrashViewModel.getDeleteOrRestoreNotesEvent().observe(this,
+                Observer { mAdapter.unselectAllNotes() })
         observeSnackbar()
     }
 
@@ -115,25 +140,29 @@ class TrashFragment : Fragment() {
         mAdapter.setData(response)
     }
 
-    private fun handleOnClickEmptyTrash() {
+    private fun handleDeleteNotes(allNotes: Boolean) {
         alert(getString(R.string.restore_notes_impossible), getString(R.string.are_you_sure)) {
-            yesButton { mTrashViewModel.emptyTrash(mAdapter.mNoteList) }
+            yesButton {
+                if (allNotes)
+                    mTrashViewModel.deleteNotes(mAdapter.mNoteList)
+                else mTrashViewModel.deleteNotes(mAdapter.mSelectedNotes)
+            }
             noButton {}
         }.show()
     }
 
     private fun handleSelectNote(selectedNotesSize: Int) {
-        if (selectedNotesSize > 0) {
-            mTrashBinding.trashToolbar.setNavigationIcon(R.drawable.ic_action_close)
-            mTrashBinding.trashToolbar.setNavigationOnClickListener { mAdapter.unselectAllNotes() }
-            mTrashBinding.trashToolbar.title = selectedNotesSize.toString()
-        } else initToolbar()
+        mTrashViewModel.bIsNotesSelected = selectedNotesSize > 0
+        if (mTrashViewModel.bIsNotesSelected) {
+            initAlternativeToolbar(selectedNotesSize.toString())
+        } else initDefaultToolbar()
+        (activity)?.invalidateOptionsMenu()
     }
 
     private fun handleOnClickNote(note: Note) {
         selector(
-            getString(R.string.what_to_do),
-            listOf(getString(R.string.restore), getString(R.string.delete))
+                getString(R.string.what_to_do),
+                listOf(getString(R.string.restore), getString(R.string.delete))
         ) { _, position ->
             if (position == 0) {
                 mTrashViewModel.restoreNote(note.noteId)
@@ -144,8 +173,8 @@ class TrashFragment : Fragment() {
     private fun observeSnackbar() {
         mTrashViewModel.getSnackbar().observe(this, Observer {
             Snackbar.make(
-                mTrashBinding.root, getString(it!!),
-                Snackbar.LENGTH_LONG
+                    mTrashBinding.root, getString(it!!),
+                    Snackbar.LENGTH_LONG
             ).show()
         })
     }
@@ -153,6 +182,6 @@ class TrashFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         App.getApp(activity?.applicationContext).componentsHolder
-            .releaseComponent(javaClass)
+                .releaseComponent(javaClass)
     }
 }

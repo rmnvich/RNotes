@@ -15,18 +15,4 @@ public class SwipeRefreshLayoutDataBinding {
             final DashboardNotesViewModel viewModel) {
         view.setOnRefreshListener(viewModel::forceUpdate);
     }
-
-    @BindingAdapter("android:onRefreshTrash")
-    public static void setSwipeRefreshLayoutOnRefreshTrashListener(
-            SwipeRefreshLayout view,
-            final TrashViewModel viewModel) {
-        view.setOnRefreshListener(viewModel::forceUpdate);
-    }
-
-    @BindingAdapter("android:onRefreshTags")
-    public static void setSwipeRefreshLayoutOnRefreshTagsListener(
-            SwipeRefreshLayout view,
-            final DashboardTagsViewModel viewModel) {
-        view.setOnRefreshListener(viewModel::forceUpdate);
-    }
 }
