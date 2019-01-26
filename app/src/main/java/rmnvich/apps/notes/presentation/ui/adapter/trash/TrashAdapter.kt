@@ -30,7 +30,8 @@ class TrashAdapter : RecyclerView.Adapter<TrashAdapter.ViewHolder>() {
     }
 
     private lateinit var mClickListener: OnClickTrashNoteListener
-    private var mNoteList: List<Note> = LinkedList()
+
+    var mNoteList: List<Note> = LinkedList()
 
     fun setData(data: List<Note>) {
         val diffUtilCallback = TrashDiffUtil(mNoteList, data)

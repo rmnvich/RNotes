@@ -41,19 +41,25 @@ class TrashViewModel(private val trashInteractor: TrashInteractor) : ViewModel()
 
     fun getSnackbar(): SingleLiveEvent<Int> = mSnackbarMessage
 
-    fun onClickNote(note: Note) {
-        restoreNote(note.noteId)
+    fun emptyTrash(notes: List<Note>) {
+        mCompositeDisposable.addAll(
+            trashInteractor
+                .deleteNotes(notes)
+                .subscribe({}, { showSnackbarMessage(R.string.error_message) })
+        )
     }
 
     fun deleteNote(note: Note) {
-        mCompositeDisposable.add(trashInteractor
+        mCompositeDisposable.add(
+            trashInteractor
                 .deleteNote(note)
                 .subscribe({}, { showSnackbarMessage(R.string.error_message) })
         )
     }
 
     fun restoreNote(noteId: Int) {
-        mCompositeDisposable.add(trashInteractor
+        mCompositeDisposable.add(
+            trashInteractor
                 .restoreNote(noteId)
                 .subscribe({}, { showSnackbarMessage(R.string.error_message) })
         )
@@ -61,15 +67,15 @@ class TrashViewModel(private val trashInteractor: TrashInteractor) : ViewModel()
 
     private fun loadNotes() {
         mCompositeDisposable.add(trashInteractor.getDeletedNotes()
-                .doOnSubscribe { bIsShowingProgressBar.set(true) }
-                .subscribe({
-                    bIsShowingProgressBar.set(false)
-                    bDataIsEmpty.set(it.isEmpty())
-                    mResponse?.value = it
-                }, {
-                    bIsShowingProgressBar.set(false)
-                    showSnackbarMessage(R.string.error_message)
-                })
+            .doOnSubscribe { bIsShowingProgressBar.set(true) }
+            .subscribe({
+                bIsShowingProgressBar.set(false)
+                bDataIsEmpty.set(it.isEmpty())
+                mResponse?.value = it
+            }, {
+                bIsShowingProgressBar.set(false)
+                showSnackbarMessage(R.string.error_message)
+            })
         )
     }
 

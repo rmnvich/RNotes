@@ -48,5 +48,9 @@
     <string name="progress_dialog_loading">Loading…</string>
     <string name="search_hint">Search…</string>
     <string name="undo">Undo</string>
+    <string name="what_to_do">What to do?</string>
+    <string name="restore">Restore</string>
+    <string name="restore_notes_impossible">It will not be possible to recover these notes.</string>
+    <string name="are_you_sure">Are you sure?</string>
 
 </resources>
