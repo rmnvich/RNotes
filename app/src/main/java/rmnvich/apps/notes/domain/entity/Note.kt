@@ -5,7 +5,7 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 
 @Entity
-class Note {
+open class Note {
 
     @PrimaryKey(autoGenerate = true)
     var noteId: Int = 0
@@ -20,4 +20,6 @@ class Note {
 
     var isFavorite: Boolean = false
     var isDeleted: Boolean = false
+
+    var isSelected: Boolean = false
 }

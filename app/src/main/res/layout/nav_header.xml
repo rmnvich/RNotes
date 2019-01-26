@@ -11,5 +11,5 @@
         android:layout_height="match_parent"
         android:contentDescription="@string/background"
         android:scaleType="fitCenter"
-        android:src="@drawable/nav_background" />
+        android:src="@drawable/navigation_header_background" />
 </android.support.constraint.ConstraintLayout>

@@ -33,7 +33,9 @@ class TrashViewModel(private val trashInteractor: TrashInteractor) : ViewModel()
 
         if (forceUpdate) {
             mCompositeDisposable.clear()
-            loadNotes()
+            mResponse = null
+
+            getNotes(false)
         }
 
         return mResponse

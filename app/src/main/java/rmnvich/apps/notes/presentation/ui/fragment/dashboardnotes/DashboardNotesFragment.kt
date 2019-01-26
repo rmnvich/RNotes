@@ -81,7 +81,7 @@ class DashboardNotesFragment : Fragment() {
             mDashboardNotesBinding.ivEmpty.setImageResource(R.drawable.empty_favotites)
             mDashboardNotesBinding.tvEmpty.setText(R.string.you_have_no_favorite_notes)
         } else {
-            mDashboardNotesBinding.ivEmpty.setImageResource(R.drawable.notes_empty)
+            mDashboardNotesBinding.ivEmpty.setImageResource(R.drawable.empty_notes)
             mDashboardNotesBinding.tvEmpty.setText(R.string.you_have_no_notes)
         }
 

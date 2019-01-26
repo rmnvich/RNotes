@@ -69,7 +69,7 @@
                     android:layout_height="@dimen/dashboard_iv_empty_size"
                     android:layout_marginBottom="?attr/actionBarSize"
                     android:contentDescription="@string/empty"
-                    android:src="@drawable/tags_empty"
+                    android:src="@drawable/empty_tags"
                     android:alpha="0.6"
                     android:visibility="@{viewmodel.bDataIsEmpty ? View.VISIBLE : View.INVISIBLE}"
                     app:layout_constraintBottom_toBottomOf="parent"

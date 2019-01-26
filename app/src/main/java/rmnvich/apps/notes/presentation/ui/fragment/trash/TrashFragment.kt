@@ -7,14 +7,12 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.*
 import kotlinx.android.synthetic.main.main_activity.*
 import org.jetbrains.anko.noButton
 import org.jetbrains.anko.support.v4.alert
 import org.jetbrains.anko.support.v4.selector
-import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.yesButton
 import rmnvich.apps.notes.App
 import rmnvich.apps.notes.R
@@ -59,6 +57,7 @@ class TrashFragment : Fragment() {
         initRecyclerView()
         initToolbar()
 
+        setHasOptionsMenu(true)
         return mTrashBinding.root
     }
 
@@ -80,10 +79,11 @@ class TrashFragment : Fragment() {
 
     private fun initToolbar() {
         (activity as MainActivity).setSupportActionBar(mTrashBinding.trashToolbar)
+        mTrashBinding.trashToolbar.title = getString(R.string.title_trash)
+        mTrashBinding.trashToolbar.setNavigationIcon(R.drawable.ic_action_menu)
         mTrashBinding.trashToolbar.setNavigationOnClickListener {
             (activity as MainActivity).drawer_layout.openDrawer(Gravity.START)
         }
-        setHasOptionsMenu(true)
     }
 
     private fun initRecyclerView() {
@@ -96,6 +96,7 @@ class TrashFragment : Fragment() {
         mTrashBinding.recyclerTrashNotes.layoutManager = gridLayoutManager
 
         mAdapter.setOnItemClickListener { handleOnClickNote(it) }
+        mAdapter.setOnItemSelectListener { handleSelectNote(it) }
         mTrashBinding.recyclerTrashNotes.adapter = mAdapter
     }
 
@@ -119,6 +120,14 @@ class TrashFragment : Fragment() {
             yesButton { mTrashViewModel.emptyTrash(mAdapter.mNoteList) }
             noButton {}
         }.show()
+    }
+
+    private fun handleSelectNote(selectedNotesSize: Int) {
+        if (selectedNotesSize > 0) {
+            mTrashBinding.trashToolbar.setNavigationIcon(R.drawable.ic_action_close)
+            mTrashBinding.trashToolbar.setNavigationOnClickListener { mAdapter.unselectAllNotes() }
+            mTrashBinding.trashToolbar.title = selectedNotesSize.toString()
+        } else initToolbar()
     }
 
     private fun handleOnClickNote(note: Note) {
