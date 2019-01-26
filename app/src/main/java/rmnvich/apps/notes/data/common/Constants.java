@@ -15,7 +15,6 @@ public class Constants {
     public static String KEY_IS_FAVORITE_NOTES = "favorite_notes";
 
     //TODO: Fixed tags dialog statusbar
-    //TODO: Selectable recycler view in TrashFragment
     //TODO: Settings (vibrate, theme)
     //TODO: Reminder, photos, links
 }

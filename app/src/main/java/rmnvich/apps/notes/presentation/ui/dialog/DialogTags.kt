@@ -77,6 +77,9 @@ class DialogTags(private val interactor: DialogTagsInteractor,
         return interactor.getAllTags()
                 .doOnSubscribe { progressLayout.visibility = View.VISIBLE }
                 .subscribe({
+                    if (it.isEmpty())
+                        this.dismiss()
+
                     progressLayout.visibility = View.INVISIBLE
                     mAdapter.setData(it)
                 }, { this.dismiss() })

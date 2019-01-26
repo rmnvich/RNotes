@@ -1,5 +1,6 @@
 package rmnvich.apps.notes.presentation.ui.activity.main
 
+import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
@@ -9,6 +10,7 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import kotlinx.android.synthetic.main.main_activity.*
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.presentation.ui.fragment.dashboardnotes.DashboardNotesFragment
@@ -49,6 +51,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     R.id.nav_tags -> showFragment(DashboardTagsFragment.newInstance())
                     R.id.nav_trash -> showFragment(TrashFragment.newInstance())
                 }
+                dismissKeyboard()
                 drawer_layout?.removeDrawerListener(this)
             }
         })
@@ -61,6 +64,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
                 .replace(R.id.content, fragment)
                 .commit()
+    }
+
+    private fun dismissKeyboard() {
+        val inputMethodManager = getSystemService(
+                Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(currentFocus.windowToken, 0)
     }
 
     override fun onBackPressed() {
