@@ -14,6 +14,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.*
 import com.daimajia.swipe.util.Attributes
 import kotlinx.android.synthetic.main.dashboard_notes_fragment.*
+import kotlinx.android.synthetic.main.filter_layout.view.*
 import kotlinx.android.synthetic.main.main_activity.*
 import rmnvich.apps.notes.App
 import rmnvich.apps.notes.R
@@ -70,11 +71,8 @@ class DashboardNotesFragment : Fragment() {
         if (!componentHolder.isComponentReleased(javaClass))
             componentHolder.releaseComponent(javaClass)
 
-        componentHolder.getComponent(
-                javaClass,
-                DashboardNotesModule(isFavoriteNotes)
-        )
-                ?.inject(this)
+        componentHolder.getComponent(javaClass,
+                DashboardNotesModule(isFavoriteNotes))?.inject(this)
     }
 
     override fun onCreateView(
@@ -96,6 +94,30 @@ class DashboardNotesFragment : Fragment() {
         } else {
             mDashboardNotesBinding.ivEmpty.setImageResource(R.drawable.empty_notes)
             mDashboardNotesBinding.tvEmpty.setText(R.string.you_have_no_notes)
+        }
+
+        mDashboardNotesBinding.layoutFilterDrawer.layoutExpandTags.setOnClickListener {
+            if (mDashboardNotesBinding.layoutFilterDrawer.tagsExpandableLayout.isExpanded) {
+                mDashboardNotesBinding.layoutFilterDrawer.tagsExpandableLayout.collapse()
+                mDashboardNotesBinding.layoutFilterDrawer.ivTagsDropdown
+                        .setImageResource(R.drawable.ic_action_keyboard_arrow_down)
+            } else {
+                mDashboardNotesBinding.layoutFilterDrawer.tagsExpandableLayout.expand()
+                mDashboardNotesBinding.layoutFilterDrawer.ivTagsDropdown
+                        .setImageResource(R.drawable.ic_action_keyboard_arrow_up)
+            }
+        }
+
+        mDashboardNotesBinding.layoutFilterDrawer.layoutExpandColors.setOnClickListener {
+            if (mDashboardNotesBinding.layoutFilterDrawer.colorsExpandableLayout.isExpanded) {
+                mDashboardNotesBinding.layoutFilterDrawer.colorsExpandableLayout.collapse()
+                mDashboardNotesBinding.layoutFilterDrawer.ivColorsDropdown
+                        .setImageResource(R.drawable.ic_action_keyboard_arrow_down)
+            } else {
+                mDashboardNotesBinding.layoutFilterDrawer.colorsExpandableLayout.expand()
+                mDashboardNotesBinding.layoutFilterDrawer.ivColorsDropdown
+                        .setImageResource(R.drawable.ic_action_keyboard_arrow_up)
+            }
         }
 
         initToolbar()

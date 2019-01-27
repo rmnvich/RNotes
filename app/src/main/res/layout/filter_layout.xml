@@ -17,97 +17,156 @@
         android:layout_height="match_parent"
         android:background="@color/colorWhite">
 
-        <android.support.constraint.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_tags"
-                android:layout_width="wrap_content"
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/layout_expand_tags"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/filter_layout_tv_margin_top"
-                android:text="@string/tags"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:visibility="@{viewmodel.bTagsIsEmpty ? View.GONE : View.VISIBLE}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:padding="@dimen/filter_layout_tv_padding"
+                android:visibility="@{viewmodel.bTagsIsEmpty ? View.GONE : View.VISIBLE}">
+
+                <TextView
+                    android:id="@+id/tv_tags"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tags"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/iv_tags_dropdown"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/iv_tags_dropdown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/filter_layout_dropdown_margin"
+                    android:contentDescription="@string/dropdown"
+                    android:src="@drawable/ic_action_keyboard_arrow_down"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tv_tags"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
 
             <View
                 android:id="@+id/top_divider"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/item_note_divider_height"
                 android:layout_marginStart="@dimen/item_note_divider_horizontal_margin"
-                android:layout_marginTop="@dimen/filter_layout_divider_margin_top"
                 android:layout_marginEnd="@dimen/item_note_divider_horizontal_margin"
                 android:background="@drawable/divider"
-                android:visibility="@{viewmodel.bTagsIsEmpty ? View.GONE : View.VISIBLE}"
-                app:layout_constraintTop_toBottomOf="@id/tv_tags" />
+                android:visibility="@{viewmodel.bTagsIsEmpty ? View.GONE : View.VISIBLE}" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_checkable_tags"
+            <net.cachapa.expandablelayout.ExpandableLayout
+                android:id="@+id/tags_expandable_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false"
                 android:visibility="@{viewmodel.bTagsIsEmpty ? View.GONE : View.VISIBLE}"
-                app:layout_constraintTop_toBottomOf="@id/top_divider"
-                tools:listitem="@layout/item_simple_checkable_tag" />
+                app:el_duration="1000"
+                app:el_expanded="false"
+                app:el_parallax="0.5">
 
-            <TextView
-                android:id="@+id/tv_colors"
-                android:layout_width="wrap_content"
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_checkable_tags"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    app:layout_constraintTop_toBottomOf="@id/top_divider"
+                    tools:listitem="@layout/item_simple_checkable_tag" />
+            </net.cachapa.expandablelayout.ExpandableLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/layout_expand_colors"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/filter_layout_tv_margin_top"
-                android:text="@string/colors"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/recycler_checkable_tags" />
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:padding="@dimen/filter_layout_tv_padding">
+
+                <TextView
+                    android:id="@+id/tv_colors"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/colors"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/iv_colors_dropdown"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/iv_colors_dropdown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/filter_layout_dropdown_margin"
+                    android:contentDescription="@string/dropdown"
+                    android:src="@drawable/ic_action_keyboard_arrow_down"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tv_colors"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
 
             <View
                 android:id="@+id/divider"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/item_note_divider_height"
                 android:layout_marginStart="@dimen/item_note_divider_horizontal_margin"
-                android:layout_marginTop="@dimen/item_note_divider_horizontal_margin"
                 android:layout_marginEnd="@dimen/item_note_divider_horizontal_margin"
-                android:background="@drawable/divider"
-                app:layout_constraintTop_toBottomOf="@id/tv_colors" />
+                android:background="@drawable/divider" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_checkable_colors"
+            <net.cachapa.expandablelayout.ExpandableLayout
+                android:id="@+id/colors_expandable_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false"
-                app:layout_constraintTop_toBottomOf="@id/divider"
-                tools:listitem="@layout/item_checkable_color" />
+                app:el_duration="1000"
+                app:el_expanded="false"
+                app:el_parallax="0.5">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_checkable_colors"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    tools:listitem="@layout/item_checkable_color" />
+            </net.cachapa.expandablelayout.ExpandableLayout>
 
             <Button
                 android:id="@+id/btn_apply_filter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/filter_layout_button_margin"
+                android:layout_marginStart="@dimen/filter_layout_button_margin"
+                android:layout_marginTop="@dimen/filter_layout_button_margin"
+                android:layout_marginEnd="@dimen/filter_layout_button_margin"
                 android:background="@drawable/item_note_background"
                 android:foreground="@drawable/item_note_foreground"
-                android:text="@string/apply_filter"
                 android:onClick="@{(view) -> viewmodel.applyFilter()}"
-                android:textColor="@color/colorAccent"
-                app:layout_constraintTop_toBottomOf="@id/recycler_checkable_colors" />
+                android:text="@string/apply_filter"
+                android:textColor="@color/colorAccent" />
 
             <Button
                 android:id="@+id/btn_reset_filter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/filter_layout_button_margin"
-                android:onClick="@{(view) -> viewmodel.resetFilter()}"
                 android:background="@drawable/item_note_background"
                 android:foreground="@drawable/item_note_foreground"
+                android:onClick="@{(view) -> viewmodel.resetFilter()}"
                 android:text="@string/reset_filter"
-                android:textColor="@color/colorAccent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btn_apply_filter" />
-        </android.support.constraint.ConstraintLayout>
+                android:textColor="@color/colorAccent" />
+        </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </layout>

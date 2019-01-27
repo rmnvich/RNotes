@@ -68,6 +68,7 @@ dependencies {
     implementation 'com.jaredrummler:colorpicker:1.0.2'
     implementation 'com.mikhaellopez:hfrecyclerview-kotlin:1.1.1'
     implementation 'com.github.jd-alexander:LikeButton:0.2.3'
+    implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
     implementation "com.daimajia.swipelayout:library:1.2.0@aar"
 
     // Anko
