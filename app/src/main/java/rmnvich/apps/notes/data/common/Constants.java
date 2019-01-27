@@ -14,7 +14,6 @@ public class Constants {
     public static String KEY_ALL_NOTES = "all_notes";
     public static String KEY_IS_FAVORITE_NOTES = "favorite_notes";
 
-    //TODO: Fixed tags dialog statusbar
     //TODO: Settings (vibrate, theme)
     //TODO: Reminder, photos, links
 }

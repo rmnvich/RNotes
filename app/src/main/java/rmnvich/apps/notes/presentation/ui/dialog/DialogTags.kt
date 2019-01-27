@@ -2,9 +2,15 @@ package rmnvich.apps.notes.presentation.ui.dialog
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.support.constraint.ConstraintLayout
+import android.graphics.Color
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.LayerDrawable
+import android.os.Build
+import android.support.annotation.RequiresApi
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
@@ -23,8 +29,11 @@ import rmnvich.apps.notes.presentation.ui.custom.ExpandableBottomSheetDialog
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class DialogTags(private val interactor: DialogTagsInteractor,
-                 context: Context) : ExpandableBottomSheetDialog(context) {
+
+class DialogTags(
+    private val interactor: DialogTagsInteractor,
+    context: Context
+) : ExpandableBottomSheetDialog(context) {
 
     interface DialogTagsCallback {
         fun onClickTag(tag: Tag)
@@ -53,36 +62,64 @@ class DialogTags(private val interactor: DialogTagsInteractor,
         }
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.bottom_sheet_recycler_view)
-        recyclerView.layoutManager = LinearLayoutManager(context,
-                LinearLayoutManager.VERTICAL, false)
+        recyclerView.layoutManager = LinearLayoutManager(
+            context,
+            LinearLayoutManager.VERTICAL, false
+        )
         recyclerView.adapter = mAdapter
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            setWhiteNavigationBar()
+        }
 
         this.setContentView(view)
         Objects.requireNonNull(this.window)
-                .setSoftInputMode(WindowManager
-                        .LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+            .setSoftInputMode(
+                WindowManager
+                    .LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
+            )
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun setWhiteNavigationBar() {
+        if (window != null) {
+            val metrics = DisplayMetrics()
+            window!!.windowManager.defaultDisplay.getMetrics(metrics)
+
+            val dimDrawable = GradientDrawable()
+            val navigationBarDrawable = GradientDrawable()
+            navigationBarDrawable.shape = GradientDrawable.RECTANGLE
+            navigationBarDrawable.setColor(Color.WHITE)
+
+            val layers = arrayOf<Drawable>(dimDrawable, navigationBarDrawable)
+
+            val windowBackground = LayerDrawable(layers)
+            windowBackground.setLayerInsetTop(1, metrics.heightPixels)
+
+            window!!.setBackgroundDrawable(windowBackground)
+        }
     }
 
     private fun getSearchDisposable(): Disposable {
         return RxTextView.textChanges(etSearch)
-                .skipInitialValue()
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.computation())
-                .debounce(300, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { mAdapter.filter.filter(it) }
+            .skipInitialValue()
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.computation())
+            .debounce(300, TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { mAdapter.filter.filter(it) }
     }
 
     private fun getTagsDisposable(): Disposable {
         return interactor.getAllTags()
-                .doOnSubscribe { progressLayout.visibility = View.VISIBLE }
-                .subscribe({
-                    if (it.isEmpty())
-                        this.dismiss()
+            .doOnSubscribe { progressLayout.visibility = View.VISIBLE }
+            .subscribe({
+                if (it.isEmpty())
+                    this.dismiss()
 
-                    progressLayout.visibility = View.INVISIBLE
-                    mAdapter.setData(it)
-                }, { this.dismiss() })
+                progressLayout.visibility = View.INVISIBLE
+                mAdapter.setData(it)
+            }, { this.dismiss() })
     }
 
     fun show(callback: DialogTagsCallback) {

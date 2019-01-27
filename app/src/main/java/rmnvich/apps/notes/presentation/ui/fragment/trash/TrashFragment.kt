@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.StaggeredGridLayoutManager
+import android.util.Log.d
 import android.view.*
 import kotlinx.android.synthetic.main.main_activity.*
 import org.jetbrains.anko.noButton
@@ -21,6 +22,7 @@ import rmnvich.apps.notes.domain.entity.Note
 import rmnvich.apps.notes.domain.utils.ViewModelFactory
 import rmnvich.apps.notes.presentation.ui.activity.main.MainActivity
 import rmnvich.apps.notes.presentation.ui.adapter.trash.TrashAdapter
+import rmnvich.apps.notes.presentation.utils.DebugLogger.Companion.log
 import javax.inject.Inject
 
 class TrashFragment : Fragment() {
@@ -41,19 +43,19 @@ class TrashFragment : Fragment() {
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         App.getApp(activity?.applicationContext).componentsHolder
-                .getComponent(javaClass).inject(this)
+            .getComponent(javaClass).inject(this)
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         mTrashBinding = DataBindingUtil.inflate(
-                inflater,
-                R.layout.trash_fragment, container, false
+            inflater,
+            R.layout.trash_fragment, container, false
         )
         mTrashBinding.swipeRefreshLayout
-                .setColorSchemeResources(R.color.colorAccent)
+            .setColorSchemeResources(R.color.colorAccent)
         mTrashBinding.swipeRefreshLayout.isEnabled = false
         (activity as MainActivity).setSupportActionBar(mTrashBinding.trashToolbar)
 
@@ -111,11 +113,11 @@ class TrashFragment : Fragment() {
 
     private fun initRecyclerView() {
         val gridLayoutManager = StaggeredGridLayoutManager(
-                2,
-                StaggeredGridLayoutManager.VERTICAL
+            2,
+            StaggeredGridLayoutManager.VERTICAL
         )
         gridLayoutManager.gapStrategy = StaggeredGridLayoutManager
-                .GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
+            .GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
         mTrashBinding.recyclerTrashNotes.layoutManager = gridLayoutManager
 
         mAdapter.setOnItemClickListener { handleOnClickNote(it) }
@@ -126,13 +128,13 @@ class TrashFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         mTrashViewModel = ViewModelProviders.of(activity!!, mViewModelFactory)
-                .get(TrashViewModel::class.java)
+            .get(TrashViewModel::class.java)
         mTrashBinding.viewmodel = mTrashViewModel
 
         mTrashViewModel.getNotes()?.observe(this,
-                Observer<List<Note>> { handleResponse(it!!) })
+            Observer<List<Note>> { handleResponse(it!!) })
         mTrashViewModel.getDeleteOrRestoreNotesEvent().observe(this,
-                Observer { mAdapter.clearSelectedNotes() })
+            Observer { mAdapter.clearSelectedNotes() })
         observeSnackbar()
     }
 
@@ -161,8 +163,8 @@ class TrashFragment : Fragment() {
 
     private fun handleOnClickNote(note: Note) {
         selector(
-                getString(R.string.what_to_do),
-                listOf(getString(R.string.restore), getString(R.string.delete))
+            getString(R.string.what_to_do),
+            listOf(getString(R.string.restore), getString(R.string.delete))
         ) { _, position ->
             if (position == 0) {
                 mTrashViewModel.restoreNote(note.noteId)
@@ -173,15 +175,20 @@ class TrashFragment : Fragment() {
     private fun observeSnackbar() {
         mTrashViewModel.getSnackbar().observe(this, Observer {
             Snackbar.make(
-                    mTrashBinding.root, getString(it!!),
-                    Snackbar.LENGTH_LONG
+                mTrashBinding.root, getString(it!!),
+                Snackbar.LENGTH_LONG
             ).show()
         })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mAdapter.unselectAllNotes()
     }
 
     override fun onDetach() {
         super.onDetach()
         App.getApp(activity?.applicationContext).componentsHolder
-                .releaseComponent(javaClass)
+            .releaseComponent(javaClass)
     }
 }
