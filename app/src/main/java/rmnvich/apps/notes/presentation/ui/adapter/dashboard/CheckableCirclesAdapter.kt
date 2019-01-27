@@ -11,6 +11,7 @@ import java.util.*
 
 class CheckableCirclesAdapter : RecyclerView.Adapter<CheckableCirclesAdapter.ViewHolder>() {
 
+    //TODO: fix this
     private var mColors: List<Color> = listOf(
             Color(-16777216, "Black"),
             Color(-0xbbcca, "Red"),

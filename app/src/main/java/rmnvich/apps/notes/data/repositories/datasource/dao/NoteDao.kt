@@ -4,7 +4,6 @@ import android.arch.persistence.room.*
 import io.reactivex.Flowable
 import io.reactivex.Single
 import rmnvich.apps.notes.domain.entity.Note
-import rmnvich.apps.notes.domain.entity.Tag
 
 @Dao
 interface NoteDao {
