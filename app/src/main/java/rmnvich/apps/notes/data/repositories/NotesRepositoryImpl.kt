@@ -18,6 +18,7 @@ class NotesRepositoryImpl(database: Database) : NotesRepository {
         } else noteDao.getAllNotes(false)
     }
 
+    //TODO: filter
     override fun getAllFilteredNotes(colors: List<Int>, tags: List<Tag>, isFavorite: Boolean): Flowable<List<Note>> {
 //        return noteDao.getAllFilteredNotes(colors, tags, isFavorite, false)
         return getAllFavoriteNotes()

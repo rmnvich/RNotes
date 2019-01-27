@@ -14,6 +14,7 @@ interface NoteDao {
     @Query("SELECT * FROM note WHERE isDeleted LIKE :isDeleted ORDER BY timestamp DESC")
     fun getDeletedNotes(isDeleted: Boolean): Flowable<List<Note>>
 
+    //TODO: filter
 //    @Query("SELECT * FROM note WHERE isFavorite = :isFavorite AND isDeleted LIKE :isDeleted ORDER BY timestamp DESC")
 //    fun getAllFilteredNotes(colors: List<Int>, tags: List<Tag>, isFavorite: Boolean, isDeleted: Boolean): Flowable<List<Note>>
 
