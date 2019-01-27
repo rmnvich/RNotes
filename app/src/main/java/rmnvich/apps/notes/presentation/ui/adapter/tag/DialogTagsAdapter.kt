@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import rmnvich.apps.notes.R
-import rmnvich.apps.notes.databinding.ItemDialogTagBinding
+import rmnvich.apps.notes.databinding.ItemSimpleTagBinding
 import rmnvich.apps.notes.domain.entity.Tag
 
 class DialogTagsAdapter : RecyclerView.Adapter<DialogTagsAdapter.ViewHolder>(), Filterable {
@@ -44,10 +44,9 @@ class DialogTagsAdapter : RecyclerView.Adapter<DialogTagsAdapter.ViewHolder>(), 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: ItemDialogTagBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context),
-                R.layout.item_dialog_tag, parent, false)
+        val binding: ItemSimpleTagBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context),
+                R.layout.item_simple_tag, parent, false)
         return ViewHolder(binding)
-
     }
 
     override fun getItemCount(): Int {
@@ -62,8 +61,8 @@ class DialogTagsAdapter : RecyclerView.Adapter<DialogTagsAdapter.ViewHolder>(), 
         return object : Filter() {
             override fun performFiltering(charSequence: CharSequence): Filter.FilterResults {
                 val charString = charSequence.toString()
-                if (charString.isEmpty()) {
-                    mTagListFiltered = mTagList
+                mTagListFiltered = if (charString.isEmpty()) {
+                    mTagList
                 } else {
                     val filteredList = ArrayList<Tag>()
                     for (row in mTagList) {
@@ -71,7 +70,7 @@ class DialogTagsAdapter : RecyclerView.Adapter<DialogTagsAdapter.ViewHolder>(), 
                             filteredList.add(row)
                         }
                     }
-                    mTagListFiltered = filteredList
+                    filteredList
                 }
                 val filterResults = Filter.FilterResults()
                 filterResults.values = mTagListFiltered
@@ -86,7 +85,7 @@ class DialogTagsAdapter : RecyclerView.Adapter<DialogTagsAdapter.ViewHolder>(), 
         }
     }
 
-    inner class ViewHolder(private val binding: ItemDialogTagBinding)
+    inner class ViewHolder(private val binding: ItemSimpleTagBinding)
         : RecyclerView.ViewHolder(binding.root) {
 
         init {

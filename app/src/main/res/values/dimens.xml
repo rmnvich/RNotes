@@ -50,5 +50,7 @@
     <dimen name="item_dialog_tag_name_margin_start">15dp</dimen>
     <dimen name="item_note_swipe_layout_width">40dp</dimen>
 
+    <dimen name="filter_drawer_width">285dp</dimen>
+
     <integer name="animation_duration">400</integer>
 </resources>

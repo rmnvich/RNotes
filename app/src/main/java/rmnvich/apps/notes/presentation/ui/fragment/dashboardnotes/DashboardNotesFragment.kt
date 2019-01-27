@@ -8,6 +8,8 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v4.widget.DrawerLayout
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.*
 import com.daimajia.swipe.util.Attributes
@@ -19,9 +21,12 @@ import rmnvich.apps.notes.data.common.Constants.*
 import rmnvich.apps.notes.databinding.DashboardNotesFragmentBinding
 import rmnvich.apps.notes.di.dashboardnotes.DashboardNotesModule
 import rmnvich.apps.notes.domain.entity.Note
+import rmnvich.apps.notes.domain.entity.Tag
 import rmnvich.apps.notes.domain.utils.ViewModelFactory
 import rmnvich.apps.notes.presentation.ui.activity.addeditnote.AddEditNoteActivity
 import rmnvich.apps.notes.presentation.ui.activity.main.MainActivity
+import rmnvich.apps.notes.presentation.ui.adapter.dashboard.CheckableCirclesAdapter
+import rmnvich.apps.notes.presentation.ui.adapter.dashboard.CheckableTagsAdapter
 import rmnvich.apps.notes.presentation.ui.adapter.dashboard.NotesAdapter
 import javax.inject.Inject
 
@@ -32,7 +37,10 @@ class DashboardNotesFragment : Fragment() {
     lateinit var mViewModelFactory: ViewModelFactory
 
     @Inject
-    lateinit var mAdapter: NotesAdapter
+    lateinit var mNotesAdapter: NotesAdapter
+
+    @Inject
+    lateinit var mTagsAdapter: CheckableTagsAdapter
 
     private lateinit var mDashboardNotesViewModel: DashboardNotesViewModel
     private lateinit var mDashboardNotesBinding: DashboardNotesFragmentBinding
@@ -60,22 +68,24 @@ class DashboardNotesFragment : Fragment() {
             componentHolder.releaseComponent(javaClass)
 
         componentHolder.getComponent(
-            javaClass,
-            DashboardNotesModule(isFavoriteNotes)
+                javaClass,
+                DashboardNotesModule(isFavoriteNotes)
         )
-            ?.inject(this)
+                ?.inject(this)
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         mDashboardNotesBinding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.dashboard_notes_fragment, container, false
+                inflater,
+                R.layout.dashboard_notes_fragment, container, false
         )
         mDashboardNotesBinding.swipeRefreshLayout
-            .setColorSchemeResources(R.color.colorAccent)
+                .setColorSchemeResources(R.color.colorAccent)
+        mDashboardNotesBinding.filterDrawerLayout
+                .setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
 
         if (isFavoriteNotes) {
             mDashboardNotesBinding.ivEmpty.setImageResource(R.drawable.empty_favotites)
@@ -108,28 +118,50 @@ class DashboardNotesFragment : Fragment() {
         val spanCount = if (isFavoriteNotes) 1 else 2
 
         val gridLayoutManager = StaggeredGridLayoutManager(
-            spanCount,
-            StaggeredGridLayoutManager.VERTICAL
+                spanCount,
+                StaggeredGridLayoutManager.VERTICAL
         )
         gridLayoutManager.gapStrategy = StaggeredGridLayoutManager
-            .GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
+                .GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
         mDashboardNotesBinding.recyclerNotes.layoutManager = gridLayoutManager
 
-        mAdapter.mode = Attributes.Mode.Multiple
-        mAdapter.setOnItemClickListener(
-            onClickNote = { mDashboardNotesViewModel.editNote(it) },
-            onClickDelete = { noteId, position ->
-                mDashboardNotesViewModel.deleteNote(noteId, position)
-            },
-            onClickFavorite = { noteId, isFavorite ->
-                mDashboardNotesViewModel.updateIsFavoriteNote(noteId, isFavorite)
-            })
-        mDashboardNotesBinding.recyclerNotes.adapter = mAdapter
+        mNotesAdapter.mode = Attributes.Mode.Multiple
+        mNotesAdapter.setOnItemClickListener(
+                onClickNote = { mDashboardNotesViewModel.editNote(it) },
+                onClickDelete = { noteId, position ->
+                    mDashboardNotesViewModel.deleteNote(noteId, position)
+                },
+                onClickFavorite = { noteId, isFavorite ->
+                    mDashboardNotesViewModel.updateIsFavoriteNote(noteId, isFavorite)
+                })
+        mDashboardNotesBinding.recyclerNotes.adapter = mNotesAdapter
+
+        mDashboardNotesBinding.layoutFilterDrawer.recyclerCheckableTags.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        mDashboardNotesBinding.layoutFilterDrawer.recyclerCheckableTags.adapter = mTagsAdapter
+
+        val colorGridLayoutManager = StaggeredGridLayoutManager(4,
+                StaggeredGridLayoutManager.VERTICAL)
+
+        mDashboardNotesBinding.layoutFilterDrawer.recyclerCheckableColors
+                .layoutManager = colorGridLayoutManager
+        mDashboardNotesBinding.layoutFilterDrawer.recyclerCheckableColors
+                .adapter = CheckableCirclesAdapter()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater?.inflate(R.menu.dashboard_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            R.id.menu_filter -> {
+                filter_drawer_layout.openDrawer(Gravity.END)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -139,28 +171,34 @@ class DashboardNotesFragment : Fragment() {
         } else KEY_ALL_NOTES
 
         mDashboardNotesViewModel = ViewModelProviders.of(activity!!, mViewModelFactory)
-            .get(viewModelKey, DashboardNotesViewModel::class.java)
+                .get(viewModelKey, DashboardNotesViewModel::class.java)
         mDashboardNotesBinding.viewmodel = mDashboardNotesViewModel
 
         mDashboardNotesViewModel.getNotes(false)?.observe(this,
-            Observer<List<Note>> { handleResponse(it!!) })
+                Observer { handleNotesResponse(it!!) })
+        mDashboardNotesViewModel.getTags(false)?.observe(this,
+                Observer { handlerTagsResponse(it!!) })
         mDashboardNotesViewModel.getAddNoteEvent().observe(this,
-            Observer { handleAddEditNoteEvent(-1) })
+                Observer { handleAddEditNoteEvent(-1) })
         mDashboardNotesViewModel.getEditNoteEvent().observe(this,
-            Observer { handleAddEditNoteEvent(it!!) })
+                Observer { handleAddEditNoteEvent(it!!) })
         mDashboardNotesViewModel.getDeleteNoteEvent().observe(this,
-            Observer { handleDeleteNoteEvent(it!!) })
+                Observer { handleDeleteNoteEvent(it!!) })
         observeSnackbar()
         observeFab()
     }
 
-    private fun handleResponse(response: List<Note>) {
-        mAdapter.setData(response)
+    private fun handleNotesResponse(response: List<Note>) {
+        mNotesAdapter.setData(response)
 
         if (mDashboardNotesViewModel.bIsRecyclerNeedToScroll) {
             mDashboardNotesBinding.recyclerNotes.scrollToPosition(0)
             mDashboardNotesViewModel.bIsRecyclerNeedToScroll = false
         }
+    }
+
+    private fun handlerTagsResponse(response: List<Tag>) {
+        mTagsAdapter.setData(response)
     }
 
     private fun handleAddEditNoteEvent(noteId: Int) {
@@ -174,8 +212,8 @@ class DashboardNotesFragment : Fragment() {
 
     private fun handleDeleteNoteEvent(noteId: Int) {
         Snackbar.make(
-            mDashboardNotesBinding.root, getString(R.string.note_has_been_deleted),
-            Snackbar.LENGTH_LONG
+                mDashboardNotesBinding.root, getString(R.string.note_has_been_deleted),
+                Snackbar.LENGTH_LONG
         ).setAction(getString(R.string.undo)) {
             mDashboardNotesViewModel.restoreNote(noteId)
         }.show()
@@ -184,8 +222,8 @@ class DashboardNotesFragment : Fragment() {
     private fun observeSnackbar() {
         mDashboardNotesViewModel.getSnackbar().observe(this, Observer {
             Snackbar.make(
-                mDashboardNotesBinding.root, getString(it!!),
-                Snackbar.LENGTH_LONG
+                    mDashboardNotesBinding.root, getString(it!!),
+                    Snackbar.LENGTH_LONG
             ).show()
         })
     }
@@ -197,6 +235,6 @@ class DashboardNotesFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         App.getApp(activity?.applicationContext).componentsHolder
-            .releaseComponent(javaClass)
+                .releaseComponent(javaClass)
     }
 }

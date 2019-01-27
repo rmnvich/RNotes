@@ -31,7 +31,7 @@
         android:layout_height="match_parent"
         android:layout_below="@id/et_search"
         app:layout_constraintTop_toBottomOf="@id/et_search"
-        tools:listitem="@layout/item_dialog_tag" />
+        tools:listitem="@layout/item_simple_tag" />
 
     <include
         android:id="@+id/progress_layout"

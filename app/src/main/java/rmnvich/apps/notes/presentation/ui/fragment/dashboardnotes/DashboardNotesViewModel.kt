@@ -7,16 +7,18 @@ import android.databinding.ObservableBoolean
 import io.reactivex.disposables.CompositeDisposable
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.domain.entity.Note
+import rmnvich.apps.notes.domain.entity.Tag
 import rmnvich.apps.notes.domain.interactors.dashboardnotes.DashboardNotesInteractor
 import rmnvich.apps.notes.domain.utils.SingleLiveEvent
 
 class DashboardNotesViewModel(
-    private val dashboardNotesInteractor: DashboardNotesInteractor,
-    private val isFavoriteNotes: Boolean
+        private val dashboardNotesInteractor: DashboardNotesInteractor,
+        private val isFavoriteNotes: Boolean
 ) : ViewModel() {
 
     val bIsShowingProgressBar: ObservableBoolean = ObservableBoolean(false)
-    val bDataIsEmpty: ObservableBoolean = ObservableBoolean(false)
+    val bNotesIsEmpty: ObservableBoolean = ObservableBoolean(false)
+    val bTagsIsEmpty: ObservableBoolean = ObservableBoolean(false)
 
     var bIsRecyclerNeedToScroll: Boolean = false
 
@@ -29,15 +31,17 @@ class DashboardNotesViewModel(
 
     private val mSnackbarMessage: SingleLiveEvent<Int> = SingleLiveEvent()
 
-    private var mResponse: MutableLiveData<List<Note>>? = null
+    private var mNotesResponse: MutableLiveData<List<Note>>? = null
+    private var mTagsResponse: MutableLiveData<List<Tag>>? = null
 
     fun forceUpdate() {
         getNotes(true)
+        getTags(true)
     }
 
     fun getNotes(forceUpdate: Boolean): LiveData<List<Note>>? {
-        if (mResponse == null) {
-            mResponse = MutableLiveData()
+        if (mNotesResponse == null) {
+            mNotesResponse = MutableLiveData()
             loadNotes()
         }
 
@@ -46,7 +50,20 @@ class DashboardNotesViewModel(
             loadNotes()
         }
 
-        return mResponse
+        return mNotesResponse
+    }
+
+    fun getTags(forceUpdate: Boolean): LiveData<List<Tag>>? {
+        if (mTagsResponse == null) {
+            mTagsResponse = MutableLiveData()
+            loadTags()
+        }
+
+        if (forceUpdate) {
+            loadTags()
+        }
+
+        return mTagsResponse
     }
 
     fun getSnackbar(): SingleLiveEvent<Int> = mSnackbarMessage
@@ -72,10 +89,10 @@ class DashboardNotesViewModel(
         deletedItemPosition = position
 
         mCompositeDisposable.add(
-            dashboardNotesInteractor
-                .removeNoteToTrash(noteId)
-                .subscribe({ mDeleteNoteEvent.value = noteId },
-                    { showSnackbarMessage(R.string.error_message) })
+                dashboardNotesInteractor
+                        .removeNoteToTrash(noteId)
+                        .subscribe({ mDeleteNoteEvent.value = noteId },
+                                { showSnackbarMessage(R.string.error_message) })
         )
     }
 
@@ -84,32 +101,45 @@ class DashboardNotesViewModel(
             bIsRecyclerNeedToScroll = true
 
         mCompositeDisposable.add(
-            dashboardNotesInteractor
-                .restoreNote(noteId)
-                .subscribe({}, { showSnackbarMessage(R.string.error_message) })
+                dashboardNotesInteractor
+                        .restoreNote(noteId)
+                        .subscribe({}, { showSnackbarMessage(R.string.error_message) })
         )
     }
 
     fun updateIsFavoriteNote(noteId: Int, isFavorite: Boolean) {
         mCompositeDisposable.add(
-            dashboardNotesInteractor
-                .updateIsFavoriteNote(noteId, isFavorite)
-                .subscribe()
+                dashboardNotesInteractor
+                        .updateIsFavoriteNote(noteId, isFavorite)
+                        .subscribe()
         )
     }
 
     private fun loadNotes() {
         mCompositeDisposable.add(dashboardNotesInteractor.getNotes(isFavoriteNotes)
-            .doOnSubscribe { bIsShowingProgressBar.set(true) }
-            .subscribe({
-                bIsShowingProgressBar.set(false)
-                bDataIsEmpty.set(it.isEmpty())
-                mResponse?.value = it
-            }, {
-                bIsShowingProgressBar.set(false)
-                showSnackbarMessage(R.string.error_message)
-            })
+                .doOnSubscribe { bIsShowingProgressBar.set(true) }
+                .subscribe({
+                    bIsShowingProgressBar.set(false)
+                    bNotesIsEmpty.set(it.isEmpty())
+                    mNotesResponse?.value = it
+                }, {
+                    bIsShowingProgressBar.set(false)
+                    showSnackbarMessage(R.string.error_message)
+                })
         )
+    }
+
+    private fun loadTags() {
+        mCompositeDisposable.add(dashboardNotesInteractor.getAllTags()
+                .doOnSubscribe { bIsShowingProgressBar.set(true) }
+                .subscribe({
+                    bIsShowingProgressBar.set(false)
+                    bTagsIsEmpty.set(it.isEmpty())
+                    mTagsResponse?.value = it
+                }, {
+                    bIsShowingProgressBar.set(false)
+                    showSnackbarMessage(R.string.error_message)
+                }))
     }
 
     private fun showSnackbarMessage(message: Int?) {

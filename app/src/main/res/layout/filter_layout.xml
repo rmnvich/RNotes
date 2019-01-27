@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewmodel"
+            type="rmnvich.apps.notes.presentation.ui.fragment.dashboardnotes.DashboardNotesViewModel" />
+    </data>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_tags"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/tags"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="@{viewmodel.bTagsIsEmpty ? View.GONE : View.VISIBLE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/top_divider"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_note_divider_height"
+                android:layout_marginStart="@dimen/item_note_divider_horizontal_margin"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="@dimen/item_note_divider_horizontal_margin"
+                android:background="@drawable/divider"
+                android:visibility="@{viewmodel.bTagsIsEmpty ? View.GONE : View.VISIBLE}"
+                app:layout_constraintTop_toBottomOf="@id/tv_tags" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_checkable_tags"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:visibility="@{viewmodel.bTagsIsEmpty ? View.GONE : View.VISIBLE}"
+                app:layout_constraintTop_toBottomOf="@id/top_divider"
+                tools:listitem="@layout/item_simple_checkable_tag" />
+
+            <TextView
+                android:id="@+id/tv_colors"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/colors"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recycler_checkable_tags" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_note_divider_height"
+                android:layout_marginStart="@dimen/item_note_divider_horizontal_margin"
+                android:layout_marginTop="@dimen/item_note_divider_horizontal_margin"
+                android:layout_marginEnd="@dimen/item_note_divider_horizontal_margin"
+                android:background="@drawable/divider"
+                app:layout_constraintTop_toBottomOf="@id/tv_colors" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_checkable_colors"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                app:layout_constraintTop_toBottomOf="@id/divider"
+                tools:listitem="@layout/item_checkable_color" />
+
+            <Button
+                android:id="@+id/btn_apply_filter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/item_note_background"
+                android:foreground="@drawable/item_note_foreground"
+                android:text="@string/apply_filter"
+                android:textColor="@color/colorAccent"
+                app:layout_constraintTop_toBottomOf="@id/recycler_checkable_colors" />
+
+            <Button
+                android:id="@+id/btn_reset_filter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/item_note_background"
+                android:foreground="@drawable/item_note_foreground"
+                android:text="@string/reset_filter"
+                android:textColor="@color/colorAccent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_apply_filter" />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v4.widget.NestedScrollView>
+</layout>
