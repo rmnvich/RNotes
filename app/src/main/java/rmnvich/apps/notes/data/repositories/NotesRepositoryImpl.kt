@@ -5,6 +5,7 @@ import io.reactivex.Flowable
 import io.reactivex.Single
 import rmnvich.apps.notes.data.repositories.datasource.Database
 import rmnvich.apps.notes.domain.entity.Note
+import rmnvich.apps.notes.domain.entity.Tag
 import rmnvich.apps.notes.domain.repositories.NotesRepository
 
 class NotesRepositoryImpl(database: Database) : NotesRepository {
@@ -17,12 +18,9 @@ class NotesRepositoryImpl(database: Database) : NotesRepository {
         } else noteDao.getAllNotes(false)
     }
 
-    override fun getAllFilteredByColorNotes(color: Int, isFavorite: Boolean): Flowable<List<Note>> {
-        return noteDao.getAllFilteredByColorNotes(color, isFavorite, false)
-    }
-
-    override fun getAllFilteredByTagNotes(tagId: Int, isFavorite: Boolean): Flowable<List<Note>> {
-        return noteDao.getAllFilteredByTagNotes(tagId, isFavorite, false)
+    override fun getAllFilteredNotes(colors: List<Int>, tags: List<Tag>, isFavorite: Boolean): Flowable<List<Note>> {
+//        return noteDao.getAllFilteredNotes(colors, tags, isFavorite, false)
+        return getAllFavoriteNotes()
     }
 
     override fun getAllFavoriteNotes(): Flowable<List<Note>> {

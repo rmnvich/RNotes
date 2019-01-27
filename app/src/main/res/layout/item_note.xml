@@ -26,21 +26,21 @@
         <com.daimajia.swipe.SwipeLayout
             android:id="@+id/swipe_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             swipe:leftEdgeSwipeOffset="0dp"
             swipe:rightEdgeSwipeOffset="0dp">
 
             <FrameLayout
                 android:id="@+id/note_delete_layout"
                 android:layout_width="@dimen/item_note_swipe_layout_width"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@drawable/item_note_swipe_layout_background"
                 android:foreground="?attr/selectableItemBackground">
 
                 <ImageButton
                     android:id="@+id/note_delete_button"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:contentDescription="@string/delete"

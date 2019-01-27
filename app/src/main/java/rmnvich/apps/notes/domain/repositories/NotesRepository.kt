@@ -4,6 +4,7 @@ import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
 import rmnvich.apps.notes.domain.entity.Note
+import rmnvich.apps.notes.domain.entity.Tag
 
 interface NotesRepository {
 
@@ -11,9 +12,7 @@ interface NotesRepository {
 
     fun getDeletedNotes(): Flowable<List<Note>>
 
-    fun getAllFilteredByColorNotes(color: Int, isFavorite: Boolean): Flowable<List<Note>>
-
-    fun getAllFilteredByTagNotes(tagId: Int, isFavorite: Boolean): Flowable<List<Note>>
+    fun getAllFilteredNotes(colors: List<Int>, tags: List<Tag>, isFavorite: Boolean): Flowable<List<Note>>
 
     fun getAllFavoriteNotes(): Flowable<List<Note>>
 
@@ -23,7 +22,7 @@ interface NotesRepository {
 
     fun updateIsFavoriteNote(noteId: Int, isFavorite: Boolean): Completable
 
-    fun updateIsDeleteNote(noteId:Int, isDeleted: Boolean): Completable
+    fun updateIsDeleteNote(noteId: Int, isDeleted: Boolean): Completable
 
     fun deleteNote(note: Note): Completable
 

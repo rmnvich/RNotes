@@ -42,6 +42,9 @@ class DashboardNotesFragment : Fragment() {
     @Inject
     lateinit var mTagsAdapter: CheckableTagsAdapter
 
+    @Inject
+    lateinit var mCirclesAdapter: CheckableCirclesAdapter
+
     private lateinit var mDashboardNotesViewModel: DashboardNotesViewModel
     private lateinit var mDashboardNotesBinding: DashboardNotesFragmentBinding
 
@@ -140,13 +143,9 @@ class DashboardNotesFragment : Fragment() {
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         mDashboardNotesBinding.layoutFilterDrawer.recyclerCheckableTags.adapter = mTagsAdapter
 
-        val colorGridLayoutManager = StaggeredGridLayoutManager(4,
-                StaggeredGridLayoutManager.VERTICAL)
-
-        mDashboardNotesBinding.layoutFilterDrawer.recyclerCheckableColors
-                .layoutManager = colorGridLayoutManager
-        mDashboardNotesBinding.layoutFilterDrawer.recyclerCheckableColors
-                .adapter = CheckableCirclesAdapter()
+        mDashboardNotesBinding.layoutFilterDrawer.recyclerCheckableColors.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        mDashboardNotesBinding.layoutFilterDrawer.recyclerCheckableColors.adapter = mCirclesAdapter
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -184,6 +183,10 @@ class DashboardNotesFragment : Fragment() {
                 Observer { handleAddEditNoteEvent(it!!) })
         mDashboardNotesViewModel.getDeleteNoteEvent().observe(this,
                 Observer { handleDeleteNoteEvent(it!!) })
+        mDashboardNotesViewModel.getApplyFilterEvent().observe(this,
+                Observer { handleApplyFilterEvent() })
+        mDashboardNotesViewModel.getResetFilterEvent().observe(this,
+                Observer { handleResetFilterEvent() })
         observeSnackbar()
         observeFab()
     }
@@ -217,6 +220,16 @@ class DashboardNotesFragment : Fragment() {
         ).setAction(getString(R.string.undo)) {
             mDashboardNotesViewModel.restoreNote(noteId)
         }.show()
+    }
+
+    //TODO: filter
+    private fun handleApplyFilterEvent() {
+        mDashboardNotesViewModel.getFilteredNotes(mCirclesAdapter.mCheckedColors,
+                mTagsAdapter.mCheckedTags)
+    }
+
+    private fun handleResetFilterEvent() {
+
     }
 
     private fun observeSnackbar() {

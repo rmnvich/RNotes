@@ -13,6 +13,8 @@ class CheckableTagsAdapter : RecyclerView.Adapter<CheckableTagsAdapter.ViewHolde
 
     private var mTags: List<Tag> = LinkedList()
 
+    var mCheckedTags: MutableList<Tag> = LinkedList()
+
     fun setData(data: List<Tag>) {
         mTags = data
         notifyDataSetChanged()
@@ -38,6 +40,10 @@ class CheckableTagsAdapter : RecyclerView.Adapter<CheckableTagsAdapter.ViewHolde
         init {
             binding.root.setOnClickListener {
                 binding.chbTag.isChecked = !binding.chbTag.isChecked
+
+                if (binding.chbTag.isChecked) {
+                    mCheckedTags.add(mTags[adapterPosition])
+                } else mCheckedTags.remove(mTags[adapterPosition])
             }
         }
 

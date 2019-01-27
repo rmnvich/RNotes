@@ -12,6 +12,7 @@ import rmnvich.apps.notes.domain.interactors.dashboardnotes.DashboardNotesIntera
 import rmnvich.apps.notes.domain.repositories.NotesRepository
 import rmnvich.apps.notes.domain.repositories.TagsRepository
 import rmnvich.apps.notes.domain.utils.ViewModelFactory
+import rmnvich.apps.notes.presentation.ui.adapter.dashboard.CheckableCirclesAdapter
 import rmnvich.apps.notes.presentation.ui.adapter.dashboard.CheckableTagsAdapter
 import rmnvich.apps.notes.presentation.ui.adapter.dashboard.NotesAdapter
 
@@ -61,5 +62,11 @@ class DashboardNotesModule(private val isFavoriteNotes: Boolean) : BaseModule {
     @Provides
     fun provideTagsAdapter(): CheckableTagsAdapter {
         return CheckableTagsAdapter()
+    }
+
+    @PerFragment
+    @Provides
+    fun provideCirclesAdapter(): CheckableCirclesAdapter {
+        return CheckableCirclesAdapter()
     }
 }

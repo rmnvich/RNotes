@@ -1,32 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/colorWhite"
-    android:clickable="true"
-    android:focusable="true"
-    android:foreground="@drawable/item_note_foreground"
-    android:paddingStart="5dp"
-    android:paddingTop="10dp"
-    android:paddingEnd="5dp"
-    android:paddingBottom="10dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <rmnvich.apps.notes.presentation.ui.custom.CircleView
-        android:id="@+id/filter_circle_color"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        app:layout_constraintBottom_toTopOf="@id/chb_circle_color"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
 
-    <CheckBox
-        android:id="@+id/chb_circle_color"
-        android:layout_width="wrap_content"
+        <variable
+            name="color"
+            type="rmnvich.apps.notes.domain.entity.Color" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/filter_circle_color" />
-</android.support.constraint.ConstraintLayout>
+        android:background="@color/colorWhite"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="@drawable/item_note_foreground"
+        android:paddingStart="@dimen/item_checkable_color_horizontal_padding"
+        android:paddingTop="@dimen/item_checkable_color_vertical_padding"
+        android:paddingEnd="@dimen/item_checkable_color_horizontal_padding"
+        android:paddingBottom="@dimen/item_checkable_color_vertical_padding">
+
+        <rmnvich.apps.notes.presentation.ui.custom.CircleView
+            android:id="@+id/filter_circle_color"
+            android:layout_width="@dimen/item_checkable_color_size"
+            android:layout_height="@dimen/item_checkable_color_size"
+            app:circleColor="@{color.color}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_color_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_color_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/item_dialog_tag_name_margin_start"
+            android:alpha="0.6"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{color.colorName}"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/chb_circle_color"
+            app:layout_constraintStart_toEndOf="@id/filter_circle_color"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <CheckBox
+            android:id="@+id/chb_circle_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+</layout>
