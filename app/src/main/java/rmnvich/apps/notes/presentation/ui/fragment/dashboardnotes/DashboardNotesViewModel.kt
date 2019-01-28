@@ -6,7 +6,10 @@ import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableBoolean
 import io.reactivex.disposables.CompositeDisposable
 import rmnvich.apps.notes.R
+import rmnvich.apps.notes.domain.entity.Color
+import rmnvich.apps.notes.domain.entity.Filter
 import rmnvich.apps.notes.domain.entity.Note
+import rmnvich.apps.notes.domain.entity.Tag
 import rmnvich.apps.notes.domain.interactors.dashboardnotes.DashboardNotesInteractor
 import rmnvich.apps.notes.domain.utils.SingleLiveEvent
 
@@ -17,6 +20,7 @@ class DashboardNotesViewModel(
 
     val bIsShowingProgressBar: ObservableBoolean = ObservableBoolean(false)
     val bNotesIsEmpty: ObservableBoolean = ObservableBoolean(false)
+    val bTagsIsEmpty: ObservableBoolean = ObservableBoolean(false)
 
     var bIsRecyclerNeedToScroll: Boolean = false
 
@@ -27,13 +31,38 @@ class DashboardNotesViewModel(
     private val mAddEditNoteEvent = SingleLiveEvent<Void>()
     private val mDeleteNoteEvent = SingleLiveEvent<Int>()
 
+    private val mApplyFilterEvent = SingleLiveEvent<Void>()
+    private val mResetFilterEvent = SingleLiveEvent<Void>()
+
+    private val mSharedFilter = SingleLiveEvent<Filter>()
+
     private val mSnackbarMessage = SingleLiveEvent<Int>()
 
     private var mNotesResponse: MutableLiveData<List<Note>>? = null
+    private var mTagsResponse: MutableLiveData<List<Tag>>? = null
+
+    fun getSnackbar(): SingleLiveEvent<Int> = mSnackbarMessage
+
+    fun getEditNoteEvent(): SingleLiveEvent<Int> = mSelectedNoteId
+
+    fun getAddNoteEvent(): SingleLiveEvent<Void> = mAddEditNoteEvent
+
+    fun getDeleteNoteEvent(): SingleLiveEvent<Int> = mDeleteNoteEvent
+
+    fun getSharedFilter(): SingleLiveEvent<Filter> = mSharedFilter
+
+    fun getApplyFilterEvent(): SingleLiveEvent<Void> = mApplyFilterEvent
+
+    fun getResetFilterEvent(): SingleLiveEvent<Void> = mResetFilterEvent
+
+    fun applyFilter() = mApplyFilterEvent.call()
+
+    fun resetFilter() = mResetFilterEvent.call()
 
     fun forceUpdate() {
         mCompositeDisposable.clear()
         getNotes(true)
+        getTags(true)
     }
 
     fun getNotes(forceUpdate: Boolean): LiveData<List<Note>>? {
@@ -48,13 +77,17 @@ class DashboardNotesViewModel(
         return mNotesResponse
     }
 
-    fun getSnackbar(): SingleLiveEvent<Int> = mSnackbarMessage
+    fun getTags(forceUpdate: Boolean): LiveData<List<Tag>>? {
+        if (mTagsResponse == null) {
+            mTagsResponse = MutableLiveData()
+            loadTags()
+        }
 
-    fun getEditNoteEvent(): SingleLiveEvent<Int> = mSelectedNoteId
+        if (forceUpdate)
+            loadTags()
 
-    fun getAddNoteEvent(): SingleLiveEvent<Void> = mAddEditNoteEvent
-
-    fun getDeleteNoteEvent(): SingleLiveEvent<Int> = mDeleteNoteEvent
+        return mTagsResponse
+    }
 
     fun addNote() {
         mAddEditNoteEvent.call()
@@ -108,6 +141,15 @@ class DashboardNotesViewModel(
                     bIsShowingProgressBar.set(false)
                     showSnackbarMessage(R.string.error_message)
                 })
+        )
+    }
+
+    private fun loadTags() {
+        mCompositeDisposable.add(dashboardNotesInteractor.getAllTags()
+                .subscribe({
+                    bTagsIsEmpty.set(it.isEmpty())
+                    mTagsResponse?.value = it
+                }, { showSnackbarMessage(R.string.error_message) })
         )
     }
 

@@ -22,6 +22,7 @@ import rmnvich.apps.notes.domain.utils.ViewModelFactory
 import rmnvich.apps.notes.presentation.ui.activity.addeditnote.AddEditNoteActivity
 import rmnvich.apps.notes.presentation.ui.activity.main.MainActivity
 import rmnvich.apps.notes.presentation.ui.adapter.dashboard.NotesAdapter
+import rmnvich.apps.notes.presentation.utils.DebugLogger
 import javax.inject.Inject
 
 
@@ -131,7 +132,12 @@ class DashboardNotesFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when (item?.itemId) {
             R.id.menu_filter -> {
-
+                activity?.supportFragmentManager?.beginTransaction()
+                        ?.setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_up,
+                                R.anim.slide_in_down, R.anim.slide_out_down)
+                        ?.addToBackStack("")
+                        ?.replace(R.id.content, FilterFragment.newInstance(isFavoriteNotes))
+                        ?.commit()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -150,6 +156,21 @@ class DashboardNotesFragment : Fragment() {
 
         mDashboardNotesViewModel.getNotes(false)?.observe(this,
                 Observer { handleNotesResponse(it!!) })
+        mDashboardNotesViewModel.getSharedFilter().observe(this,
+                Observer { filter ->
+                    val colors = filter?.colors
+                    val tags = filter?.tags
+                    //TODO: filter
+                    if (!colors?.isEmpty()!! || !tags?.isEmpty()!!) {
+                        for (i in 0 until tags?.size!!) {
+                            DebugLogger.log(tags[i].name)
+                        }
+
+                        for (i in 0 until colors.size) {
+                            DebugLogger.log(colors[i].colorName)
+                        }
+                    }
+                })
         mDashboardNotesViewModel.getAddNoteEvent().observe(this,
                 Observer { handleAddEditNoteEvent(-1) })
         mDashboardNotesViewModel.getEditNoteEvent().observe(this,

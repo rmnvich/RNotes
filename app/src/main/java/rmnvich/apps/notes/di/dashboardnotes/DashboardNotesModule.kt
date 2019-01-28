@@ -57,16 +57,4 @@ class DashboardNotesModule(private val isFavoriteNotes: Boolean) : BaseModule {
     fun provideNotesAdapter(): NotesAdapter {
         return NotesAdapter()
     }
-
-    @PerFragment
-    @Provides
-    fun provideTagsAdapter(): CheckableTagsAdapter {
-        return CheckableTagsAdapter()
-    }
-
-    @PerFragment
-    @Provides
-    fun provideCirclesAdapter(): CheckableCirclesAdapter {
-        return CheckableCirclesAdapter()
-    }
 }
