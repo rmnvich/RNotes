@@ -28,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:elevation="0dp"
-                app:layout_scrollFlags="scroll|snap"
+                app:layout_scrollFlags="scroll|snap|enterAlways"
                 app:navigationIcon="@drawable/ic_action_menu"
                 app:title="@string/title_trash"
                 app:titleTextColor="@color/colorToolbarTitle" />

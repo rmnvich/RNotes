@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun showFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
-                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+                .setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_up)
                 .replace(R.id.content, fragment)
                 .commit()
     }

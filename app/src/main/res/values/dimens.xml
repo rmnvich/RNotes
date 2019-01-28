@@ -40,7 +40,7 @@
     <dimen name="navigation_header_margin_top">30dp</dimen>
 
     <dimen name="navigation_item_padding_right">5dp</dimen>
-    <dimen name="navigation_item_corner_radius">200dp</dimen>
+    <dimen name="navigation_item_corner_radius">10dp</dimen>
 
     <dimen name="progress_layout_padding">15dp</dimen>
     <dimen name="progress_layout_radius">5dp</dimen>
