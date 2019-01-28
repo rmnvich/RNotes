@@ -53,18 +53,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             override fun onDrawerOpened(drawerView: View) {}
             override fun onDrawerClosed(drawerView: View) {
                 when (item.itemId) {
-                    R.id.nav_notes -> {
-                        showFragment(mFragmentNotes, 0)
-                    }
-                    R.id.nav_favorites -> {
-                        showFragment(mFragmentFavoritesNotes, 1)
-                    }
-                    R.id.nav_trash -> {
-                        showFragment(mFragmentTrash, 2)
-                    }
-                    R.id.nav_tags -> {
-                        showFragment(mFragmentTags, 3)
-                    }
+                    R.id.nav_notes -> showFragment(mFragmentNotes, 0)
+                    R.id.nav_favorites -> showFragment(mFragmentFavoritesNotes, 1)
+                    R.id.nav_trash -> showFragment(mFragmentTrash, 2)
+                    R.id.nav_tags -> showFragment(mFragmentTags, 3)
                 }
                 dismissKeyboard()
                 drawer_layout?.removeDrawerListener(this)
