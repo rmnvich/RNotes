@@ -73,6 +73,7 @@ class DashboardNotesFragment : Fragment() {
         )
         mDashboardNotesBinding.swipeRefreshLayout
                 .setColorSchemeResources(R.color.colorAccent)
+        mDashboardNotesBinding.swipeRefreshLayout.isEnabled = false
 
         if (isFavoriteNotes) {
             mDashboardNotesBinding.ivEmpty.setImageResource(R.drawable.empty_favotites)
@@ -154,7 +155,7 @@ class DashboardNotesFragment : Fragment() {
                 .get(viewModelKey, DashboardNotesViewModel::class.java)
         mDashboardNotesBinding.viewmodel = mDashboardNotesViewModel
 
-        mDashboardNotesViewModel.getNotes(false)?.observe(this,
+        mDashboardNotesViewModel.getNotes()?.observe(this,
                 Observer { handleNotesResponse(it!!) })
         mDashboardNotesViewModel.getSharedFilter().observe(this,
                 Observer { filter ->

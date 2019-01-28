@@ -6,7 +6,6 @@ import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableBoolean
 import io.reactivex.disposables.CompositeDisposable
 import rmnvich.apps.notes.R
-import rmnvich.apps.notes.domain.entity.Color
 import rmnvich.apps.notes.domain.entity.Filter
 import rmnvich.apps.notes.domain.entity.Note
 import rmnvich.apps.notes.domain.entity.Tag
@@ -59,33 +58,19 @@ class DashboardNotesViewModel(
 
     fun resetFilter() = mResetFilterEvent.call()
 
-    fun forceUpdate() {
-        mCompositeDisposable.clear()
-        getNotes(true)
-        getTags(true)
-    }
-
-    fun getNotes(forceUpdate: Boolean): LiveData<List<Note>>? {
+    fun getNotes(): LiveData<List<Note>>? {
         if (mNotesResponse == null) {
             mNotesResponse = MutableLiveData()
             loadNotes()
         }
-
-        if (forceUpdate)
-            loadNotes()
-
         return mNotesResponse
     }
 
-    fun getTags(forceUpdate: Boolean): LiveData<List<Tag>>? {
+    fun getTags(): LiveData<List<Tag>>? {
         if (mTagsResponse == null) {
             mTagsResponse = MutableLiveData()
             loadTags()
         }
-
-        if (forceUpdate)
-            loadTags()
-
         return mTagsResponse
     }
 

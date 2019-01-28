@@ -50,27 +50,27 @@ class FilterFragment : Fragment() {
         super.onAttach(context)
         isFavoriteNotes = arguments?.getBoolean(EXTRA_FAVORITE_NOTES)!!
         App.getApp(activity?.applicationContext).componentsHolder
-                .getComponent(javaClass).inject(this)
+            .getComponent(javaClass).inject(this)
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         mFilterBinding = DataBindingUtil.inflate(
-                inflater,
-                R.layout.filter_fragment, container, false
+            inflater,
+            R.layout.filter_fragment, container, false
         )
 
         mFilterBinding.layoutExpandTags.setOnClickListener {
             if (mFilterBinding.tagsExpandableLayout.isExpanded) {
                 mFilterBinding.tagsExpandableLayout.collapse()
                 mFilterBinding.ivTagsDropdown
-                        .setImageResource(R.drawable.ic_action_keyboard_arrow_down)
+                    .setImageResource(R.drawable.ic_action_keyboard_arrow_down)
             } else {
                 mFilterBinding.tagsExpandableLayout.expand()
                 mFilterBinding.ivTagsDropdown
-                        .setImageResource(R.drawable.ic_action_keyboard_arrow_up)
+                    .setImageResource(R.drawable.ic_action_keyboard_arrow_up)
             }
         }
 
@@ -78,11 +78,11 @@ class FilterFragment : Fragment() {
             if (mFilterBinding.colorsExpandableLayout.isExpanded) {
                 mFilterBinding.colorsExpandableLayout.collapse()
                 mFilterBinding.ivColorsDropdown
-                        .setImageResource(R.drawable.ic_action_keyboard_arrow_down)
+                    .setImageResource(R.drawable.ic_action_keyboard_arrow_down)
             } else {
                 mFilterBinding.colorsExpandableLayout.expand()
                 mFilterBinding.ivColorsDropdown
-                        .setImageResource(R.drawable.ic_action_keyboard_arrow_up)
+                    .setImageResource(R.drawable.ic_action_keyboard_arrow_up)
             }
         }
 
@@ -114,21 +114,21 @@ class FilterFragment : Fragment() {
         } else KEY_ALL_NOTES
 
         mSharedViewModel = ViewModelProviders.of(activity!!)
-                .get(viewModelKey, DashboardNotesViewModel::class.java)
+            .get(viewModelKey, DashboardNotesViewModel::class.java)
         mFilterBinding.viewmodel = mSharedViewModel
 
-        mSharedViewModel.getTags(false)?.observe(this,
-                Observer { handleTagsResponse(it!!) })
+        mSharedViewModel.getTags()?.observe(this,
+            Observer { handleTagsResponse(it!!) })
         mSharedViewModel.getApplyFilterEvent().observe(this,
-                Observer { handleApplyFilterEvent() })
+            Observer { handleApplyFilterEvent() })
         mSharedViewModel.getResetFilterEvent().observe(this,
-                Observer { handleResetFilterEvent() })
+            Observer { handleResetFilterEvent() })
     }
 
     private fun handleApplyFilterEvent() {
         mSharedViewModel.getSharedFilter().value = Filter(
-                mCirclesAdapter.mCheckedColors,
-                mTagsAdapter.mCheckedTags
+            mCirclesAdapter.mCheckedColors,
+            mTagsAdapter.mCheckedTags
         )
         popBackStack()
     }
@@ -149,6 +149,6 @@ class FilterFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         App.getApp(activity?.applicationContext).componentsHolder
-                .releaseComponent(javaClass)
+            .releaseComponent(javaClass)
     }
 }

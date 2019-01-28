@@ -19,6 +19,14 @@ import rmnvich.apps.notes.presentation.ui.fragment.trash.TrashFragment
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+    private val mFragmentNotes = DashboardNotesFragment.newInstance(false)
+    private val mFragmentFavoritesNotes = DashboardNotesFragment.newInstance(true)
+    private val mFragmentTags = DashboardTagsFragment.newInstance()
+    private val mFragmentTrash = TrashFragment.newInstance()
+
+    private var mFragmentActive: Fragment = Fragment()
+    private var mCurrentFragmentPosition: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
@@ -27,14 +35,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun init() {
         val toggle = ActionBarDrawerToggle(
-                this, drawer_layout,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close
+            this, drawer_layout,
+            R.string.navigation_drawer_open, R.string.navigation_drawer_close
         )
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
-        showFragment(DashboardNotesFragment.newInstance(false))
-
+        showFragment(mFragmentNotes, 0)
         nav_view.setNavigationItemSelectedListener(this)
         nav_view.setCheckedItem(R.id.nav_notes)
     }
@@ -46,10 +53,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             override fun onDrawerOpened(drawerView: View) {}
             override fun onDrawerClosed(drawerView: View) {
                 when (item.itemId) {
-                    R.id.nav_notes -> showFragment(DashboardNotesFragment.newInstance(false))
-                    R.id.nav_favorites -> showFragment(DashboardNotesFragment.newInstance(true))
-                    R.id.nav_tags -> showFragment(DashboardTagsFragment.newInstance())
-                    R.id.nav_trash -> showFragment(TrashFragment.newInstance())
+                    R.id.nav_notes -> {
+                        showFragment(mFragmentNotes, 0)
+                    }
+                    R.id.nav_favorites -> {
+                        showFragment(mFragmentFavoritesNotes, 1)
+                    }
+                    R.id.nav_trash -> {
+                        showFragment(mFragmentTrash, 2)
+                    }
+                    R.id.nav_tags -> {
+                        showFragment(mFragmentTags, 3)
+                    }
                 }
                 dismissKeyboard()
                 drawer_layout?.removeDrawerListener(this)
@@ -59,16 +74,28 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-    private fun showFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-                .setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_up)
+    private fun showFragment(fragment: Fragment, fragmentPosition: Int) {
+        if (mFragmentActive != fragment) {
+            var enterAnim = R.anim.slide_in_up
+            var exitAnim = R.anim.slide_out_up
+            if (fragmentPosition < mCurrentFragmentPosition) {
+                enterAnim = R.anim.slide_in_down
+                exitAnim = R.anim.slide_out_down
+            }
+
+            supportFragmentManager.beginTransaction()
+                .setCustomAnimations(enterAnim, exitAnim)
                 .replace(R.id.content, fragment)
                 .commit()
+            mFragmentActive = fragment
+            mCurrentFragmentPosition = fragmentPosition
+        }
     }
 
     private fun dismissKeyboard() {
         val inputMethodManager = getSystemService(
-                Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            Context.INPUT_METHOD_SERVICE
+        ) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(currentFocus.windowToken, 0)
     }
 
