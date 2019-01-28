@@ -1,5 +1,6 @@
 package rmnvich.apps.notes.presentation.ui.adapter.dashboard
 
+import android.arch.persistence.room.Index
 import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Build
@@ -16,6 +17,7 @@ import com.like.OnLikeListener
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.databinding.ItemNoteBinding
 import rmnvich.apps.notes.domain.entity.Note
+import java.lang.IndexOutOfBoundsException
 import java.util.*
 
 class NotesAdapter : RecyclerSwipeAdapter<NotesAdapter.ViewHolder>() {
@@ -95,10 +97,13 @@ class NotesAdapter : RecyclerSwipeAdapter<NotesAdapter.ViewHolder>() {
 
                 binding.swipeLayout.close()
                 Handler().postDelayed({
-                    mClickListener.onClickDelete(
-                            mNoteList[adapterPosition].noteId,
-                            adapterPosition
-                    )
+                    try {
+                        mClickListener.onClickDelete(
+                                mNoteList[adapterPosition].noteId,
+                                adapterPosition
+                        )
+                    } catch (ignore: IndexOutOfBoundsException) {
+                    }
                 }, 400)
             }
 

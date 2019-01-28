@@ -7,9 +7,6 @@
 
         <import type="android.view.View" />
 
-        <variable
-            name="viewmodel"
-            type="rmnvich.apps.notes.presentation.ui.fragment.dashboardnotes.DashboardNotesViewModel" />
     </data>
 
     <android.support.v4.widget.NestedScrollView
@@ -30,7 +27,7 @@
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground"
                 android:padding="@dimen/filter_layout_tv_padding"
-                android:visibility="@{viewmodel.bTagsIsEmpty ? View.GONE : View.VISIBLE}">
+                tools:targetApi="m">
 
                 <TextView
                     android:id="@+id/tv_tags"
@@ -64,14 +61,12 @@
                 android:layout_height="@dimen/item_note_divider_height"
                 android:layout_marginStart="@dimen/item_note_divider_horizontal_margin"
                 android:layout_marginEnd="@dimen/item_note_divider_horizontal_margin"
-                android:background="@drawable/divider"
-                android:visibility="@{viewmodel.bTagsIsEmpty ? View.GONE : View.VISIBLE}" />
+                android:background="@drawable/divider" />
 
             <net.cachapa.expandablelayout.ExpandableLayout
                 android:id="@+id/tags_expandable_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="@{viewmodel.bTagsIsEmpty ? View.GONE : View.VISIBLE}"
                 app:el_duration="1000"
                 app:el_expanded="false"
                 app:el_parallax="0.5">
@@ -92,7 +87,8 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground"
-                android:padding="@dimen/filter_layout_tv_padding">
+                android:padding="@dimen/filter_layout_tv_padding"
+                tools:targetApi="m">
 
                 <TextView
                     android:id="@+id/tv_colors"
@@ -153,9 +149,9 @@
                 android:layout_marginEnd="@dimen/filter_layout_button_margin"
                 android:background="@drawable/item_note_background"
                 android:foreground="@drawable/item_note_foreground"
-                android:onClick="@{(view) -> viewmodel.applyFilter()}"
                 android:text="@string/apply_filter"
-                android:textColor="@color/colorAccent" />
+                android:textColor="@color/colorAccent"
+                tools:targetApi="m" />
 
             <Button
                 android:id="@+id/btn_reset_filter"
@@ -164,9 +160,9 @@
                 android:layout_margin="@dimen/filter_layout_button_margin"
                 android:background="@drawable/item_note_background"
                 android:foreground="@drawable/item_note_foreground"
-                android:onClick="@{(view) -> viewmodel.resetFilter()}"
                 android:text="@string/reset_filter"
-                android:textColor="@color/colorAccent" />
+                android:textColor="@color/colorAccent"
+                tools:targetApi="m" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </layout>

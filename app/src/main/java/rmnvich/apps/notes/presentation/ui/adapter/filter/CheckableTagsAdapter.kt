@@ -1,4 +1,4 @@
-package rmnvich.apps.notes.presentation.ui.adapter.dashboard
+package rmnvich.apps.notes.presentation.ui.adapter.filter
 
 import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView

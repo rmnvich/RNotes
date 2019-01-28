@@ -17,7 +17,7 @@ class AddEditNoteViewModel(private val addEditNoteNotesInteractor: AddEditNoteIn
     val bIsShowingProgressBar: ObservableBoolean = ObservableBoolean(false)
 
     val noteText: ObservableField<String> = ObservableField("")
-    val noteColor: ObservableField<Int> = ObservableField(Color.DKGRAY)
+    val noteColor: ObservableField<Int> = ObservableField(Color.BLACK)
     val noteTag: ObservableField<Tag> = ObservableField()
     val noteTimestamp: ObservableField<Long> = ObservableField(DateHelper.getCurrentTimeInMills())
 

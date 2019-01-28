@@ -8,13 +8,11 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
-import android.support.v4.widget.DrawerLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.*
 import com.daimajia.swipe.util.Attributes
 import kotlinx.android.synthetic.main.dashboard_notes_fragment.*
-import kotlinx.android.synthetic.main.filter_layout.view.*
 import kotlinx.android.synthetic.main.main_activity.*
 import rmnvich.apps.notes.App
 import rmnvich.apps.notes.R
@@ -22,12 +20,9 @@ import rmnvich.apps.notes.data.common.Constants.*
 import rmnvich.apps.notes.databinding.DashboardNotesFragmentBinding
 import rmnvich.apps.notes.di.dashboardnotes.DashboardNotesModule
 import rmnvich.apps.notes.domain.entity.Note
-import rmnvich.apps.notes.domain.entity.Tag
 import rmnvich.apps.notes.domain.utils.ViewModelFactory
 import rmnvich.apps.notes.presentation.ui.activity.addeditnote.AddEditNoteActivity
 import rmnvich.apps.notes.presentation.ui.activity.main.MainActivity
-import rmnvich.apps.notes.presentation.ui.adapter.dashboard.CheckableCirclesAdapter
-import rmnvich.apps.notes.presentation.ui.adapter.dashboard.CheckableTagsAdapter
 import rmnvich.apps.notes.presentation.ui.adapter.dashboard.NotesAdapter
 import javax.inject.Inject
 
@@ -39,12 +34,6 @@ class DashboardNotesFragment : Fragment() {
 
     @Inject
     lateinit var mNotesAdapter: NotesAdapter
-
-    @Inject
-    lateinit var mTagsAdapter: CheckableTagsAdapter
-
-    @Inject
-    lateinit var mCirclesAdapter: CheckableCirclesAdapter
 
     private lateinit var mDashboardNotesViewModel: DashboardNotesViewModel
     private lateinit var mDashboardNotesBinding: DashboardNotesFragmentBinding
@@ -85,8 +74,6 @@ class DashboardNotesFragment : Fragment() {
         )
         mDashboardNotesBinding.swipeRefreshLayout
                 .setColorSchemeResources(R.color.colorAccent)
-        mDashboardNotesBinding.filterDrawerLayout
-                .setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
 
         if (isFavoriteNotes) {
             mDashboardNotesBinding.ivEmpty.setImageResource(R.drawable.empty_favotites)
@@ -94,30 +81,6 @@ class DashboardNotesFragment : Fragment() {
         } else {
             mDashboardNotesBinding.ivEmpty.setImageResource(R.drawable.empty_notes)
             mDashboardNotesBinding.tvEmpty.setText(R.string.you_have_no_notes)
-        }
-
-        mDashboardNotesBinding.layoutFilterDrawer.layoutExpandTags.setOnClickListener {
-            if (mDashboardNotesBinding.layoutFilterDrawer.tagsExpandableLayout.isExpanded) {
-                mDashboardNotesBinding.layoutFilterDrawer.tagsExpandableLayout.collapse()
-                mDashboardNotesBinding.layoutFilterDrawer.ivTagsDropdown
-                        .setImageResource(R.drawable.ic_action_keyboard_arrow_down)
-            } else {
-                mDashboardNotesBinding.layoutFilterDrawer.tagsExpandableLayout.expand()
-                mDashboardNotesBinding.layoutFilterDrawer.ivTagsDropdown
-                        .setImageResource(R.drawable.ic_action_keyboard_arrow_up)
-            }
-        }
-
-        mDashboardNotesBinding.layoutFilterDrawer.layoutExpandColors.setOnClickListener {
-            if (mDashboardNotesBinding.layoutFilterDrawer.colorsExpandableLayout.isExpanded) {
-                mDashboardNotesBinding.layoutFilterDrawer.colorsExpandableLayout.collapse()
-                mDashboardNotesBinding.layoutFilterDrawer.ivColorsDropdown
-                        .setImageResource(R.drawable.ic_action_keyboard_arrow_down)
-            } else {
-                mDashboardNotesBinding.layoutFilterDrawer.colorsExpandableLayout.expand()
-                mDashboardNotesBinding.layoutFilterDrawer.ivColorsDropdown
-                        .setImageResource(R.drawable.ic_action_keyboard_arrow_up)
-            }
         }
 
         initToolbar()
@@ -160,14 +123,6 @@ class DashboardNotesFragment : Fragment() {
                     mDashboardNotesViewModel.updateIsFavoriteNote(noteId, isFavorite)
                 })
         mDashboardNotesBinding.recyclerNotes.adapter = mNotesAdapter
-
-        mDashboardNotesBinding.layoutFilterDrawer.recyclerCheckableTags.layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        mDashboardNotesBinding.layoutFilterDrawer.recyclerCheckableTags.adapter = mTagsAdapter
-
-        mDashboardNotesBinding.layoutFilterDrawer.recyclerCheckableColors.layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        mDashboardNotesBinding.layoutFilterDrawer.recyclerCheckableColors.adapter = mCirclesAdapter
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -178,7 +133,7 @@ class DashboardNotesFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when (item?.itemId) {
             R.id.menu_filter -> {
-                filter_drawer_layout.openDrawer(Gravity.END)
+
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -197,20 +152,13 @@ class DashboardNotesFragment : Fragment() {
 
         mDashboardNotesViewModel.getNotes(false)?.observe(this,
                 Observer { handleNotesResponse(it!!) })
-        mDashboardNotesViewModel.getTags(false)?.observe(this,
-                Observer { handlerTagsResponse(it!!) })
         mDashboardNotesViewModel.getAddNoteEvent().observe(this,
                 Observer { handleAddEditNoteEvent(-1) })
         mDashboardNotesViewModel.getEditNoteEvent().observe(this,
                 Observer { handleAddEditNoteEvent(it!!) })
         mDashboardNotesViewModel.getDeleteNoteEvent().observe(this,
                 Observer { handleDeleteNoteEvent(it!!) })
-        mDashboardNotesViewModel.getApplyFilterEvent().observe(this,
-                Observer { handleApplyFilterEvent() })
-        mDashboardNotesViewModel.getResetFilterEvent().observe(this,
-                Observer { handleResetFilterEvent() })
         observeSnackbar()
-        observeFab()
     }
 
     private fun handleNotesResponse(response: List<Note>) {
@@ -220,10 +168,6 @@ class DashboardNotesFragment : Fragment() {
             mDashboardNotesBinding.recyclerNotes.scrollToPosition(0)
             mDashboardNotesViewModel.bIsRecyclerNeedToScroll = false
         }
-    }
-
-    private fun handlerTagsResponse(response: List<Tag>) {
-        mTagsAdapter.setData(response)
     }
 
     private fun handleAddEditNoteEvent(noteId: Int) {
@@ -244,16 +188,6 @@ class DashboardNotesFragment : Fragment() {
         }.show()
     }
 
-    //TODO: filter
-    private fun handleApplyFilterEvent() {
-        mDashboardNotesViewModel.getFilteredNotes(mCirclesAdapter.mCheckedColors,
-                mTagsAdapter.mCheckedTags)
-    }
-
-    private fun handleResetFilterEvent() {
-
-    }
-
     private fun observeSnackbar() {
         mDashboardNotesViewModel.getSnackbar().observe(this, Observer {
             Snackbar.make(
@@ -261,10 +195,6 @@ class DashboardNotesFragment : Fragment() {
                     Snackbar.LENGTH_LONG
             ).show()
         })
-    }
-
-    private fun observeFab() {
-        fab_add.setOnClickListener { mDashboardNotesViewModel.addNote() }
     }
 
     override fun onDetach() {
