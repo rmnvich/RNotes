@@ -7,4 +7,10 @@
         android:icon="@drawable/ic_action_label_gray"
         android:title="@string/tag"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_add_photo"
+        android:icon="@drawable/ic_action_add_photo"
+        android:title="@string/add_image"
+        app:showAsAction="always" />
 </menu>

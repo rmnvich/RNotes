@@ -15,6 +15,7 @@
     <color name="colorDivider">#37919191</color>
     <color name="colorTagText">#c8000000</color>
     <color name="colorTagBackground">#50868686</color>
+    <color name="colorBlackAlpha">#8c000000</color>
     <color name="colorDarkGrayAlpha">#aa000000</color>
     <color name="colorBlackHint">#82000000</color>
 </resources>

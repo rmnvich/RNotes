@@ -18,6 +18,7 @@
     <dimen name="item_note_divider_horizontal_margin">5dp</dimen>
     <dimen name="item_note_background_width">0.8dp</dimen>
     <dimen name="item_note_divider_height">0.8dp</dimen>
+    <dimen name="item_note_image_height">200dp</dimen>
 
     <dimen name="item_tag_corner_radius">20dp</dimen>
     <dimen name="item_tag_horizontal_padding">10dp</dimen>
@@ -63,6 +64,12 @@
     <dimen name="item_checkable_color_size">30dp</dimen>
     <dimen name="filter_layout_tv_padding">10dp</dimen>
     <dimen name="filter_layout_dropdown_margin">5dp</dimen>
+
+    <dimen name="add_edit_note_activity_card_view_radius">10dp</dimen>
+    <dimen name="add_edit_note_activity_card_view_margin">10dp</dimen>
+    <dimen name="add_edit_note_activity_card_view_height">300dp</dimen>
+    <dimen name="delete_image_button_size">30dp</dimen>
+    <dimen name="item_note_text_padding_top">5dp</dimen>
 
     <integer name="animation_duration">400</integer>
 </resources>

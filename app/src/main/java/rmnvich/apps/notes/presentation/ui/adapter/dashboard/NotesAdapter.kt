@@ -11,12 +11,14 @@ import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter
 import com.like.LikeButton
 import com.like.OnLikeListener
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.databinding.ItemNoteBinding
 import rmnvich.apps.notes.domain.entity.Note
+import java.io.File
 import java.lang.IndexOutOfBoundsException
 import java.util.*
 
@@ -118,6 +120,11 @@ class NotesAdapter : RecyclerSwipeAdapter<NotesAdapter.ViewHolder>() {
 
         fun bind(note: Note) {
             binding.note = note
+
+            Glide.with(binding.root)
+                    .load(File(note.imagePath))
+                    .into(binding.ivNoteImage)
+
             binding.executePendingBindings()
         }
 

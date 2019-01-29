@@ -5,9 +5,11 @@ import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.databinding.ItemSimpleNoteBinding
 import rmnvich.apps.notes.domain.entity.Note
+import java.io.File
 import java.util.*
 
 class TrashAdapter : RecyclerView.Adapter<TrashAdapter.ViewHolder>() {
@@ -125,6 +127,11 @@ class TrashAdapter : RecyclerView.Adapter<TrashAdapter.ViewHolder>() {
 
         fun bind(note: Note) {
             binding.note = note
+
+            Glide.with(binding.root)
+                    .load(File(note.imagePath))
+                    .into(binding.ivNoteImage)
+
             binding.executePendingBindings()
         }
     }

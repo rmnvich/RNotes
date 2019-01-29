@@ -12,6 +12,7 @@ open class Note {
 
     var text: String = ""
 
+    var imagePath: String = ""
     var timestamp: Long = 0L
     var color: Int = 0
 

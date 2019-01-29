@@ -28,6 +28,7 @@ class NotesDiffUtil(
         return oldNote.text == newNote.text &&
                 oldNote.timestamp == newNote.timestamp &&
                 oldNote.color == newNote.color &&
+                oldNote.imagePath == newNote.imagePath &&
                 oldNote.tag?.name == newNote.tag?.name &&
                 oldNote.tag?.tagId == newNote.tag?.tagId &&
                 oldNote.isDeleted == newNote.isDeleted

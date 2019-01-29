@@ -1,27 +1,33 @@
 package rmnvich.apps.notes.presentation.ui.activity.addeditnote
 
+import android.Manifest
+import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
+import android.content.Intent
 import android.databinding.DataBindingUtil
-import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import com.bumptech.glide.Glide
 import com.jaredrummler.android.colorpicker.ColorPickerDialog
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
+import com.tbruyelle.rxpermissions2.RxPermissions
+import io.reactivex.disposables.CompositeDisposable
 import rmnvich.apps.notes.App
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.data.common.Constants.EXTRA_NOTE_ID
+import rmnvich.apps.notes.data.common.Constants.REQUEST_CODE_IMAGE
 import rmnvich.apps.notes.databinding.AddEditNoteActivityBinding
 import rmnvich.apps.notes.di.addeditnote.AddEditNoteModule
 import rmnvich.apps.notes.domain.entity.Tag
 import rmnvich.apps.notes.domain.utils.ViewModelFactory
 import rmnvich.apps.notes.presentation.ui.dialog.DialogTags
+import java.io.File
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -37,13 +43,18 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
     @Inject
     lateinit var mDialogTags: Provider<DialogTags>
 
+    private val mPermissionDisposable: CompositeDisposable = CompositeDisposable()
+    private val mRxPermissions = RxPermissions(this)
+
     private lateinit var mAddEditNoteViewModel: AddEditNoteViewModel
     private lateinit var mAddEditNoteBinding: AddEditNoteActivityBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mAddEditNoteBinding = DataBindingUtil.setContentView(this,
-                R.layout.add_edit_note_activity)
+        mAddEditNoteBinding = DataBindingUtil.setContentView(
+                this,
+                R.layout.add_edit_note_activity
+        )
         App.getApp(applicationContext).componentsHolder
                 .getComponent(javaClass, AddEditNoteModule(this))
                 ?.inject(this)
@@ -69,7 +80,10 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
 
         mAddEditNoteViewModel.getDeleteTagEvent().observe(this,
                 Observer { mAddEditNoteViewModel.noteTag.set(null) })
+        mAddEditNoteViewModel.getImagePathEvent().observe(this,
+                Observer { setImage(it!!) })
 
+        observeOnPickImage()
         observeOnPickColor()
         observeOnBackPressed()
         observeSnackbar()
@@ -90,8 +104,17 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
                 })
                 true
             }
+            R.id.menu_add_photo -> {
+                requestImagePermissions()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun observeOnPickImage() {
+        mAddEditNoteViewModel.getPickImageEvent().observe(this,
+                Observer { showImageDialog() })
     }
 
     private fun observeOnPickColor() {
@@ -120,11 +143,47 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
                 })
     }
 
+    private fun requestImagePermissions() {
+        mPermissionDisposable.add(mRxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE)
+                ?.subscribe { permission ->
+                    if (permission) {
+                        mAddEditNoteViewModel.showImagePickerDialog()
+                    }
+                }!!)
+    }
+
+    private fun setImage(filePath: String) {
+        Glide.with(this)
+                .load(File(filePath))
+                .into(mAddEditNoteBinding.ivNoteImage)
+        mAddEditNoteBinding.invalidateAll()
+    }
+
+    private fun showImageDialog() {
+        val photoPickerIntent = Intent(Intent.ACTION_PICK).setType("image/*")
+        startActivityForResult(
+                Intent.createChooser(
+                        photoPickerIntent, getString(R.string.select_a_file)
+                ), REQUEST_CODE_IMAGE
+        )
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_IMAGE && resultCode ==
+                Activity.RESULT_OK && data != null
+        ) {
+            mAddEditNoteViewModel.onActivityResult(data)
+        }
+    }
+
     private fun dismissKeyboard() {
         val inputMethodManager = getSystemService(
-                Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                Context.INPUT_METHOD_SERVICE
+        ) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(
-                mAddEditNoteBinding.etText.windowToken, 0)
+                mAddEditNoteBinding.etText.windowToken, 0
+        )
     }
 
     override fun onColorSelected(dialogId: Int, color: Int) =
@@ -138,6 +197,7 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
 
     override fun onDestroy() {
         super.onDestroy()
+        mPermissionDisposable.clear()
         App.getApp(applicationContext).componentsHolder
                 .releaseComponent(javaClass)
     }
