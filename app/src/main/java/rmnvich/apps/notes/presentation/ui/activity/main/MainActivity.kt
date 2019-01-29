@@ -35,8 +35,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun init() {
         val toggle = ActionBarDrawerToggle(
-            this, drawer_layout,
-            R.string.navigation_drawer_open, R.string.navigation_drawer_close
+                this, drawer_layout,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close
         )
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
@@ -55,8 +55,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 when (item.itemId) {
                     R.id.nav_notes -> showFragment(mFragmentNotes, 0)
                     R.id.nav_favorites -> showFragment(mFragmentFavoritesNotes, 1)
-                    R.id.nav_trash -> showFragment(mFragmentTrash, 2)
-                    R.id.nav_tags -> showFragment(mFragmentTags, 3)
+                    R.id.nav_reminders -> {
+                    }
+                    R.id.nav_gallery -> {
+                    }
+                    R.id.nav_tags -> showFragment(mFragmentTags, 4)
+                    R.id.nav_trash -> showFragment(mFragmentTrash, 5)
+                    R.id.nav_settings -> {
+                    }
+                    R.id.nav_help -> {
+                    }
+                    R.id.nav_share -> {
+                    }
                 }
                 dismissKeyboard()
                 drawer_layout?.removeDrawerListener(this)
@@ -76,9 +86,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
             supportFragmentManager.beginTransaction()
-                .setCustomAnimations(enterAnim, exitAnim)
-                .replace(R.id.content, fragment)
-                .commit()
+                    .setCustomAnimations(enterAnim, exitAnim)
+                    .replace(R.id.content, fragment)
+                    .commit()
             mFragmentActive = fragment
             mCurrentFragmentPosition = fragmentPosition
         }
@@ -86,7 +96,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun dismissKeyboard() {
         val inputMethodManager = getSystemService(
-            Context.INPUT_METHOD_SERVICE
+                Context.INPUT_METHOD_SERVICE
         ) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(currentFocus.windowToken, 0)
     }
