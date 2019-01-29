@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.os.Handler
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.StaggeredGridLayoutManager
@@ -133,12 +134,14 @@ class DashboardNotesFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when (item?.itemId) {
             R.id.menu_filter -> {
-                activity?.supportFragmentManager?.beginTransaction()
-                        ?.setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_up,
-                                R.anim.slide_in_down, R.anim.slide_out_down)
-                        ?.addToBackStack("")
-                        ?.replace(R.id.content, FilterFragment.newInstance(isFavoriteNotes))
-                        ?.commit()
+                Handler().postDelayed({
+                    activity?.supportFragmentManager?.beginTransaction()
+                            ?.setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_up,
+                                    R.anim.slide_in_down, R.anim.slide_out_down)
+                            ?.addToBackStack("")
+                            ?.replace(R.id.content, FilterFragment.newInstance(isFavoriteNotes))
+                            ?.commit()
+                }, 100)
                 true
             }
             else -> super.onOptionsItemSelected(item)

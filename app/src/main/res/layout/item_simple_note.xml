@@ -30,6 +30,7 @@
             android:id="@+id/card_view_note_image"
             android:layout_width="match_parent"
             android:layout_height="@dimen/item_note_image_height"
+            android:layout_margin="1dp"
             android:visibility="@{TextUtils.isEmpty(note.imagePath) ? View.GONE : View.VISIBLE}"
             app:cardCornerRadius="@dimen/item_note_card_corner_radius"
             app:cardElevation="0dp"
