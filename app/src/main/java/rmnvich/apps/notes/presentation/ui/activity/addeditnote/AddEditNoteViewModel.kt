@@ -39,6 +39,7 @@ class AddEditNoteViewModel(
     private val onImagePathEvent: SingleLiveEvent<String> = SingleLiveEvent()
     private val onShareNoteEvent: SingleLiveEvent<Intent> = SingleLiveEvent()
     private val onClickImageEvent: SingleLiveEvent<String> = SingleLiveEvent()
+    private val onClickDateEvent: SingleLiveEvent<Void> = SingleLiveEvent()
     private val mSnackbarMessage: SingleLiveEvent<Int> = SingleLiveEvent()
 
     var noteIsFavorite: Boolean = false
@@ -65,7 +66,11 @@ class AddEditNoteViewModel(
 
     fun getClickImageEvent(): SingleLiveEvent<String> = onClickImageEvent
 
+    fun getClickDateEvent(): SingleLiveEvent<Void> = onClickDateEvent
+
     fun showImagePickerDialog() = onPickImageEvent.call()
+
+    fun showDatePickerDialog() = onClickDateEvent.call()
 
     fun deleteTag() = onDeleteTagEvent.call()
 
@@ -73,6 +78,10 @@ class AddEditNoteViewModel(
 
     fun onClickImage() {
         onClickImageEvent.value = onImagePathEvent.value
+    }
+
+    fun onDatePickerDialogClicked(year: Int, month: Int, day: Int) {
+        noteTimestamp.set(DateHelper.getDate(year, month, day))
     }
 
     fun loadNote(noteId: Int) {
@@ -93,10 +102,10 @@ class AddEditNoteViewModel(
     fun insertOrUpdateNote() {
         if (existsNote == null) {
             existsNote = Note()
-            existsNote?.timestamp = DateHelper.getCurrentTimeInMills()
             existsNote?.isFavorite = noteIsFavorite
         }
 
+        existsNote?.timestamp = noteTimestamp.get()!!
         existsNote?.text = noteText.get()?.trim()!!
         existsNote?.color = noteColor.get()!!
 

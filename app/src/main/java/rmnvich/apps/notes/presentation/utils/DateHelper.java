@@ -14,4 +14,10 @@ public class DateHelper {
         return new SimpleDateFormat("dd MMMM yyyy",
                 Locale.getDefault()).format(time);
     }
+
+    public static long getDate(int year, int month, int date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, date);
+        return calendar.getTimeInMillis();
+    }
 }

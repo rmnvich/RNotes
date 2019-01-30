@@ -2,6 +2,7 @@ package rmnvich.apps.notes.presentation.ui.activity.addeditnote
 
 import android.Manifest
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
@@ -13,6 +14,7 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.bumptech.glide.Glide
 import com.jaredrummler.android.colorpicker.ColorPickerDialog
@@ -29,6 +31,7 @@ import rmnvich.apps.notes.domain.utils.ViewModelFactory
 import rmnvich.apps.notes.presentation.ui.activity.viewimage.ViewImageActivity
 import rmnvich.apps.notes.presentation.ui.dialog.DialogTags
 import java.io.File
+import java.util.*
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -88,6 +91,8 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
             Observer { mAddEditNoteViewModel.noteTag.set(null) })
         mAddEditNoteViewModel.getImagePathEvent().observe(this,
             Observer { setImage(it!!) })
+        mAddEditNoteViewModel.getClickDateEvent().observe(this,
+            Observer { showDatePickerDialog() })
         mAddEditNoteViewModel.getShareNoteEvent().observe(this,
             Observer {
                 startActivityForResult(
@@ -194,6 +199,15 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
             .load(File(filePath))
             .into(mAddEditNoteBinding.ivNoteImage)
         mAddEditNoteBinding.invalidateAll()
+    }
+
+    private fun showDatePickerDialog() {
+        DatePickerDialog(this, { _, year, month, day ->
+            mAddEditNoteViewModel.onDatePickerDialogClicked(year, month, day)
+        }, Calendar.getInstance().get(Calendar.YEAR),
+            Calendar.getInstance().get(Calendar.MONTH),
+            Calendar.getInstance().get(Calendar.DAY_OF_MONTH))
+            .show()
     }
 
     private fun showImageDialog() {
