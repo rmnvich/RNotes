@@ -202,6 +202,7 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
     }
 
     private fun showDatePickerDialog() {
+        dismissKeyboard()
         DatePickerDialog(this, { _, year, month, day ->
             mAddEditNoteViewModel.onDatePickerDialogClicked(year, month, day)
         }, Calendar.getInstance().get(Calendar.YEAR),
