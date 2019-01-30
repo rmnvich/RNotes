@@ -9,6 +9,7 @@ public class Constants {
     public static long DEFAULT_DELAY = 0;
 
     public static String EXTRA_NOTE_ID = "note_id";
+    public static String EXTRA_IMAGE_PATH = "image_path";
     public static String EXTRA_FAVORITE_NOTES = "is_favorite_notes";
 
     public static String KEY_ALL_NOTES = "all_notes";

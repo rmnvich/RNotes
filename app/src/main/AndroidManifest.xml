@@ -24,7 +24,6 @@
                     android:name="android.support.FILE_PROVIDER_PATHS"
                     android:resource="@xml/provider_path"/>
         </provider>
-
         <activity
                 android:name=".presentation.ui.activity.main.MainActivity"
                 android:configChanges="orientation|screenSize|keyboardHidden"
@@ -35,6 +34,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".presentation.ui.activity.viewimage.ViewImageActivity"
+                  android:theme="@style/ViewImageTheme"/>
         <activity
                 android:name=".presentation.ui.activity.addeditnote.AddEditNoteActivity"
                 android:configChanges="orientation|screenSize"

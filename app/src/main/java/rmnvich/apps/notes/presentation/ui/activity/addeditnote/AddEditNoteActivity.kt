@@ -26,6 +26,7 @@ import rmnvich.apps.notes.databinding.AddEditNoteActivityBinding
 import rmnvich.apps.notes.di.addeditnote.AddEditNoteModule
 import rmnvich.apps.notes.domain.entity.Tag
 import rmnvich.apps.notes.domain.utils.ViewModelFactory
+import rmnvich.apps.notes.presentation.ui.activity.viewimage.ViewImageActivity
 import rmnvich.apps.notes.presentation.ui.dialog.DialogTags
 import java.io.File
 import javax.inject.Inject
@@ -89,6 +90,8 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
             Observer { setImage(it!!) })
         mAddEditNoteViewModel.getShareNoteEvent().observe(this,
             Observer { startActivityForResult(Intent.createChooser(it, getString(R.string.send_via)), 0) })
+        mAddEditNoteViewModel.getClickImageEvent().observe(this,
+            Observer { handleClickImageEvent(it!!) })
 
         observeOnPickImage()
         observeOnPickColor()
@@ -129,6 +132,12 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun handleClickImageEvent(imagePath: String) {
+        startActivity(Intent(this, ViewImageActivity::class.java)
+            .putExtra(EXTRA_IMAGE_PATH, imagePath))
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 
     private fun observeOnPickImage() {

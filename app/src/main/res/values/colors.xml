@@ -18,4 +18,5 @@
     <color name="colorBlackAlpha">#8c000000</color>
     <color name="colorDarkGrayAlpha">#aa000000</color>
     <color name="colorBlackHint">#82000000</color>
+    <color name="colorTransperentToolbar">#33000000</color>
 </resources>

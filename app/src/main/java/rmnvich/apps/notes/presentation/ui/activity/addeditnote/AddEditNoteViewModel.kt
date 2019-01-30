@@ -38,6 +38,7 @@ class AddEditNoteViewModel(
     private val onPickImageEvent: SingleLiveEvent<Void> = SingleLiveEvent()
     private val onImagePathEvent: SingleLiveEvent<String> = SingleLiveEvent()
     private val onShareNoteEvent: SingleLiveEvent<Intent> = SingleLiveEvent()
+    private val onClickImageEvent: SingleLiveEvent<String> = SingleLiveEvent()
     private val mSnackbarMessage: SingleLiveEvent<Int> = SingleLiveEvent()
 
     var noteIsFavorite: Boolean = false
@@ -62,11 +63,17 @@ class AddEditNoteViewModel(
 
     fun getShareNoteEvent(): SingleLiveEvent<Intent> = onShareNoteEvent
 
+    fun getClickImageEvent(): SingleLiveEvent<String> = onClickImageEvent
+
     fun showImagePickerDialog() = onPickImageEvent.call()
 
     fun deleteTag() = onDeleteTagEvent.call()
 
     fun pickColor() = onPickColorEvent.call()
+
+    fun onClickImage() {
+        onClickImageEvent.value = onImagePathEvent.value
+    }
 
     fun loadNote(noteId: Int) {
         mCompositeDisposable.add(addEditNoteNotesInteractor.getNoteById(noteId)

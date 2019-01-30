@@ -76,6 +76,10 @@
                             android:layout_margin="@dimen/add_edit_note_activity_card_view_margin"
                             android:visibility="@{viewmodel.bIsShowingImage.get() ? View.VISIBLE : View.GONE}"
                             app:cardCornerRadius="@dimen/add_edit_note_activity_card_view_radius"
+                            android:foreground="@drawable/item_note_foreground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:onClick="@{(view) -> viewmodel.onClickImage()}"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toTopOf="@id/et_text">
 
