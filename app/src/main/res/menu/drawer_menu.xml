@@ -17,14 +17,6 @@
                     android:icon="@drawable/ic_action_star"
                     android:title="@string/title_favorites" />
                 <item
-                    android:id="@+id/nav_reminders"
-                    android:icon="@drawable/ic_action_reminder"
-                    android:title="@string/title_reminders" />
-                <item
-                    android:id="@+id/nav_gallery"
-                    android:icon="@drawable/ic_action_image"
-                    android:title="@string/title_gallery" />
-                <item
                     android:id="@+id/nav_tags"
                     android:icon="@drawable/ic_action_label"
                     android:title="@string/title_tags" />
@@ -35,6 +27,24 @@
             </group>
         </menu>
     </item>
+
+    <item android:title="@string/title_additional">
+        <menu>
+            <group
+                android:id="@+id/group_additional"
+                android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_reminders"
+                    android:icon="@drawable/ic_action_reminder"
+                    android:title="@string/title_reminders" />
+                <item
+                    android:id="@+id/nav_gallery"
+                    android:icon="@drawable/ic_action_image"
+                    android:title="@string/title_gallery" />
+            </group>
+        </menu>
+    </item>
+
     <item android:title="@string/title_other">
         <menu>
             <group

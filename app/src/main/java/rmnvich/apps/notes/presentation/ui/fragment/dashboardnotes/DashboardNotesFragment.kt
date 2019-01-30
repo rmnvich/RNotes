@@ -195,6 +195,7 @@ class DashboardNotesFragment : Fragment() {
 
     private fun handleAddEditNoteEvent(noteId: Int) {
         val intent = Intent(activity, AddEditNoteActivity::class.java)
+        intent.putExtra(EXTRA_FAVORITE_NOTES, isFavoriteNotes)
         if (noteId != -1)
             intent.putExtra(EXTRA_NOTE_ID, noteId)
 

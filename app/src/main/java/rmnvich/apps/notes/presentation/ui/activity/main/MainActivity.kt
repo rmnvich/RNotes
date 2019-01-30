@@ -55,12 +55,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 when (item.itemId) {
                     R.id.nav_notes -> showFragment(mFragmentNotes, 0)
                     R.id.nav_favorites -> showFragment(mFragmentFavoritesNotes, 1)
+                    R.id.nav_tags -> showFragment(mFragmentTags, 2)
+                    R.id.nav_trash -> showFragment(mFragmentTrash, 3)
                     R.id.nav_reminders -> {
                     }
                     R.id.nav_gallery -> {
                     }
-                    R.id.nav_tags -> showFragment(mFragmentTags, 4)
-                    R.id.nav_trash -> showFragment(mFragmentTrash, 5)
                     R.id.nav_settings -> {
                     }
                     R.id.nav_help -> {

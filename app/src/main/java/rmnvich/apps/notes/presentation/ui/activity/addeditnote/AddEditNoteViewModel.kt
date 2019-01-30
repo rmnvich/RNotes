@@ -24,6 +24,8 @@ class AddEditNoteViewModel(private val addEditNoteNotesInteractor: AddEditNoteIn
     val noteTag: ObservableField<Tag> = ObservableField()
     val noteTimestamp: ObservableField<Long> = ObservableField(DateHelper.getCurrentTimeInMills())
 
+    var noteIsFavorite: Boolean = false
+
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
 
     private val onBackPressedEvent: SingleLiveEvent<Void> = SingleLiveEvent()
@@ -77,6 +79,7 @@ class AddEditNoteViewModel(private val addEditNoteNotesInteractor: AddEditNoteIn
 
         existsNote?.text = noteText.get()?.trim()!!
         existsNote?.color = noteColor.get()!!
+        existsNote?.isFavorite = noteIsFavorite
 
         if (onImagePathEvent.value != null)
             existsNote?.imagePath = onImagePathEvent.value!!

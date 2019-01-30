@@ -20,8 +20,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.disposables.CompositeDisposable
 import rmnvich.apps.notes.App
 import rmnvich.apps.notes.R
-import rmnvich.apps.notes.data.common.Constants.EXTRA_NOTE_ID
-import rmnvich.apps.notes.data.common.Constants.REQUEST_CODE_IMAGE
+import rmnvich.apps.notes.data.common.Constants.*
 import rmnvich.apps.notes.databinding.AddEditNoteActivityBinding
 import rmnvich.apps.notes.di.addeditnote.AddEditNoteModule
 import rmnvich.apps.notes.domain.entity.Tag
@@ -77,6 +76,9 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
         val noteId = intent.getIntExtra(EXTRA_NOTE_ID, -1)
         if (noteId != -1)
             mAddEditNoteViewModel.loadNote(noteId)
+
+        mAddEditNoteViewModel.noteIsFavorite =
+                intent.getBooleanExtra(EXTRA_FAVORITE_NOTES, false)
 
         mAddEditNoteViewModel.getDeleteTagEvent().observe(this,
                 Observer { mAddEditNoteViewModel.noteTag.set(null) })
