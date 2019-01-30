@@ -3,14 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/menu_add_photo"
+        android:icon="@drawable/ic_action_add_photo"
+        android:title="@string/add_image"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/menu_tag"
         android:icon="@drawable/ic_action_label_gray"
         android:title="@string/tag"
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/menu_add_photo"
-        android:icon="@drawable/ic_action_add_photo"
-        android:title="@string/add_image"
+        android:id="@+id/menu_share_note"
+        android:icon="@drawable/ic_action_share_gray"
+        android:title="@string/share"
         app:showAsAction="always" />
 </menu>

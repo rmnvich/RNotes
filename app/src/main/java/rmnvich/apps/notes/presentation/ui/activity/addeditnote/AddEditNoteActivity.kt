@@ -110,6 +110,10 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
                 requestImagePermissions()
                 true
             }
+            R.id.menu_share_note -> {
+
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
