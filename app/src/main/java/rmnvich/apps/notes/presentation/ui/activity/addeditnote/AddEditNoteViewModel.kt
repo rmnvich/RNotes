@@ -94,11 +94,11 @@ class AddEditNoteViewModel(
         if (existsNote == null) {
             existsNote = Note()
             existsNote?.timestamp = DateHelper.getCurrentTimeInMills()
+            existsNote?.isFavorite = noteIsFavorite
         }
 
         existsNote?.text = noteText.get()?.trim()!!
         existsNote?.color = noteColor.get()!!
-        existsNote?.isFavorite = noteIsFavorite
 
         if (onImagePathEvent.value != null)
             existsNote?.imagePath = onImagePathEvent.value!!

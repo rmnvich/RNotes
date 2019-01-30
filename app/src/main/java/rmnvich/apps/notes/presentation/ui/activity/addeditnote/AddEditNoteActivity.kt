@@ -89,7 +89,12 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
         mAddEditNoteViewModel.getImagePathEvent().observe(this,
             Observer { setImage(it!!) })
         mAddEditNoteViewModel.getShareNoteEvent().observe(this,
-            Observer { startActivityForResult(Intent.createChooser(it, getString(R.string.send_via)), 0) })
+            Observer {
+                startActivityForResult(
+                    Intent.createChooser(it, getString(R.string.send_via)),
+                    REQUEST_CODE_SHARE
+                )
+            })
         mAddEditNoteViewModel.getClickImageEvent().observe(this,
             Observer { handleClickImageEvent(it!!) })
 
@@ -124,7 +129,7 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
                     val bitmap = drawable.bitmap
 
                     mAddEditNoteViewModel.onShareClicked(bitmap)
-                } catch(e: TypeCastException) {
+                } catch (e: TypeCastException) {
                     mAddEditNoteViewModel.onShareClicked(null)
                 }
 
@@ -135,8 +140,10 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
     }
 
     private fun handleClickImageEvent(imagePath: String) {
-        startActivity(Intent(this, ViewImageActivity::class.java)
-            .putExtra(EXTRA_IMAGE_PATH, imagePath))
+        startActivity(
+            Intent(this, ViewImageActivity::class.java)
+                .putExtra(EXTRA_IMAGE_PATH, imagePath)
+        )
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 
@@ -200,10 +207,10 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if ((requestCode == REQUEST_CODE_IMAGE || requestCode == REQUEST_CODE_SHARE)
-            && resultCode == Activity.RESULT_OK && data != null
-        ) {
+        if (requestCode == REQUEST_CODE_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
             mAddEditNoteViewModel.onActivityResult(data, requestCode)
+        } else if (requestCode == REQUEST_CODE_SHARE) {
+            mAddEditNoteViewModel.onActivityResult(null, requestCode)
         }
     }
 
