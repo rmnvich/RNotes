@@ -69,4 +69,5 @@
     <string name="colors">Colors</string>
     <string name="dropdown">Dropdown</string>
     <string name="share">Share</string>
+    <string name="send_via">Send via</string>
 </resources>

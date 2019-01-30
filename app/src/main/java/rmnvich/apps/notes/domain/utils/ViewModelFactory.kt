@@ -1,5 +1,6 @@
 package rmnvich.apps.notes.domain.utils
 
+import android.app.Application
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import rmnvich.apps.notes.domain.interactors.addeditnote.AddEditNoteInteractor
@@ -14,6 +15,8 @@ import rmnvich.apps.notes.presentation.ui.fragment.trash.TrashViewModel
 class ViewModelFactory : ViewModelProvider.NewInstanceFactory {
 
     private var isFavoriteNotes = false
+
+    private lateinit var mApplicationContext: Application
 
     private lateinit var mDashboardNotesInteractor: DashboardNotesInteractor
 
@@ -36,8 +39,9 @@ class ViewModelFactory : ViewModelProvider.NewInstanceFactory {
         this.mTrashInteractor = trashInteractor
     }
 
-    constructor(addEditNoteInteractor: AddEditNoteInteractor) : super() {
+    constructor(addEditNoteInteractor: AddEditNoteInteractor, applicationContext: Application) : super() {
         this.mAddEditNoteInteractor = addEditNoteInteractor
+        this.mApplicationContext = applicationContext
     }
 
     override fun <VM : ViewModel?> create(modelClass: Class<VM>): VM {
@@ -45,7 +49,7 @@ class ViewModelFactory : ViewModelProvider.NewInstanceFactory {
             modelClass.isAssignableFrom(DashboardNotesViewModel::class.java) ->
                 DashboardNotesViewModel(mDashboardNotesInteractor, isFavoriteNotes) as VM
             modelClass.isAssignableFrom(AddEditNoteViewModel::class.java) ->
-                AddEditNoteViewModel(mAddEditNoteInteractor) as VM
+                AddEditNoteViewModel(mApplicationContext, mAddEditNoteInteractor) as VM
             modelClass.isAssignableFrom(DashboardTagsViewModel::class.java) ->
                 DashboardTagsViewModel(mDashboardTagsInteractor) as VM
             modelClass.isAssignableFrom(TrashViewModel::class.java) ->

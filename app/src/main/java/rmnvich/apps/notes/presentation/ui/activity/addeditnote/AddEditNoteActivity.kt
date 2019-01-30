@@ -7,6 +7,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
@@ -51,18 +52,18 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mAddEditNoteBinding = DataBindingUtil.setContentView(
-                this,
-                R.layout.add_edit_note_activity
+            this,
+            R.layout.add_edit_note_activity
         )
         App.getApp(applicationContext).componentsHolder
-                .getComponent(javaClass, AddEditNoteModule(this))
-                ?.inject(this)
+            .getComponent(javaClass, AddEditNoteModule(application, this))
+            ?.inject(this)
     }
 
     @Inject
     fun init() {
         mAddEditNoteViewModel = ViewModelProviders.of(this, mViewModelFactory)
-                .get(AddEditNoteViewModel::class.java)
+            .get(AddEditNoteViewModel::class.java)
         mAddEditNoteBinding.viewmodel = mAddEditNoteViewModel
 
         mAddEditNoteBinding.swipeRefreshLayout.isEnabled = false
@@ -74,16 +75,20 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
         }
 
         val noteId = intent.getIntExtra(EXTRA_NOTE_ID, -1)
-        if (noteId != -1)
+        if (noteId != -1) {
             mAddEditNoteViewModel.loadNote(noteId)
+            mAddEditNoteBinding.root.isFocusableInTouchMode = true
+        }
 
         mAddEditNoteViewModel.noteIsFavorite =
                 intent.getBooleanExtra(EXTRA_FAVORITE_NOTES, false)
 
         mAddEditNoteViewModel.getDeleteTagEvent().observe(this,
-                Observer { mAddEditNoteViewModel.noteTag.set(null) })
+            Observer { mAddEditNoteViewModel.noteTag.set(null) })
         mAddEditNoteViewModel.getImagePathEvent().observe(this,
-                Observer { setImage(it!!) })
+            Observer { setImage(it!!) })
+        mAddEditNoteViewModel.getShareNoteEvent().observe(this,
+            Observer { startActivityForResult(Intent.createChooser(it, getString(R.string.send_via)), 0) })
 
         observeOnPickImage()
         observeOnPickColor()
@@ -111,6 +116,14 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
                 true
             }
             R.id.menu_share_note -> {
+                try {
+                    val drawable = mAddEditNoteBinding.ivNoteImage.drawable as BitmapDrawable
+                    val bitmap = drawable.bitmap
+
+                    mAddEditNoteViewModel.onShareClicked(bitmap)
+                } catch(e: TypeCastException) {
+                    mAddEditNoteViewModel.onShareClicked(null)
+                }
 
                 true
             }
@@ -120,80 +133,82 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
 
     private fun observeOnPickImage() {
         mAddEditNoteViewModel.getPickImageEvent().observe(this,
-                Observer { showImageDialog() })
+            Observer { showImageDialog() })
     }
 
     private fun observeOnPickColor() {
         mAddEditNoteViewModel.getPickColorEvent().observe(this,
-                Observer {
-                    dismissKeyboard()
-                    mColorPickerDialog.get().show(this)
-                })
+            Observer {
+                dismissKeyboard()
+                mColorPickerDialog.get().show(this)
+            })
     }
 
     private fun observeOnBackPressed() {
         mAddEditNoteViewModel.getBackPressedEvent().observe(this,
-                Observer {
-                    finish()
-                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
-                })
+            Observer {
+                finish()
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+            })
     }
 
     private fun observeSnackbar() {
         mAddEditNoteViewModel.getSnackbar().observe(this,
-                Observer {
-                    Snackbar.make(
-                            mAddEditNoteBinding.root, getString(it!!),
-                            Snackbar.LENGTH_SHORT
-                    ).show()
-                })
+            Observer {
+                Snackbar.make(
+                    mAddEditNoteBinding.root, getString(it!!),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            })
     }
 
     private fun requestImagePermissions() {
-        mPermissionDisposable.add(mRxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE)
+        mPermissionDisposable.add(
+            mRxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 ?.subscribe { permission ->
                     if (permission) {
                         mAddEditNoteViewModel.showImagePickerDialog()
                     }
-                }!!)
+                }!!
+        )
     }
 
     private fun setImage(filePath: String) {
         Glide.with(this)
-                .load(File(filePath))
-                .into(mAddEditNoteBinding.ivNoteImage)
+            .load(File(filePath))
+            .into(mAddEditNoteBinding.ivNoteImage)
         mAddEditNoteBinding.invalidateAll()
     }
 
     private fun showImageDialog() {
         val photoPickerIntent = Intent(Intent.ACTION_PICK).setType("image/*")
         startActivityForResult(
-                Intent.createChooser(
-                        photoPickerIntent, getString(R.string.select_a_file)
-                ), REQUEST_CODE_IMAGE
+            Intent.createChooser(
+                photoPickerIntent, getString(R.string.select_a_file)
+            ), REQUEST_CODE_IMAGE
         )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE_IMAGE && resultCode ==
-                Activity.RESULT_OK && data != null
+        if ((requestCode == REQUEST_CODE_IMAGE || requestCode == REQUEST_CODE_SHARE)
+            && resultCode == Activity.RESULT_OK && data != null
         ) {
-            mAddEditNoteViewModel.onActivityResult(data)
+            mAddEditNoteViewModel.onActivityResult(data, requestCode)
         }
     }
 
     private fun dismissKeyboard() {
         val inputMethodManager = getSystemService(
-                Context.INPUT_METHOD_SERVICE
+            Context.INPUT_METHOD_SERVICE
         ) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(
-                mAddEditNoteBinding.etText.windowToken, 0
+            mAddEditNoteBinding.etText.windowToken, 0
         )
     }
 
     override fun onColorSelected(dialogId: Int, color: Int) =
-            mAddEditNoteViewModel.noteColor.set(color)
+        mAddEditNoteViewModel.noteColor.set(color)
 
     override fun onDialogDismissed(dialogId: Int) = Unit
 
@@ -205,7 +220,7 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
         super.onDestroy()
         mPermissionDisposable.clear()
         App.getApp(applicationContext).componentsHolder
-                .releaseComponent(javaClass)
+            .releaseComponent(javaClass)
     }
 
 }

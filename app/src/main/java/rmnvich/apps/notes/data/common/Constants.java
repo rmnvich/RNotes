@@ -15,6 +15,7 @@ public class Constants {
     public static String KEY_IS_FAVORITE_NOTES = "favorite_notes";
 
     public static int REQUEST_CODE_IMAGE = 0;
+    public static int REQUEST_CODE_SHARE = 1;
 
     //TODO: Settings (vibrate, theme)
     //TODO: Reminder, photos, links

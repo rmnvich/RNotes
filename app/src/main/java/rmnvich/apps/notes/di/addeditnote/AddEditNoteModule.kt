@@ -1,5 +1,6 @@
 package rmnvich.apps.notes.di.addeditnote
 
+import android.app.Application
 import android.content.Context
 import com.jaredrummler.android.colorpicker.ColorPickerDialog
 import dagger.Module
@@ -20,12 +21,14 @@ import rmnvich.apps.notes.domain.utils.ViewModelFactory
 import rmnvich.apps.notes.presentation.ui.dialog.DialogTags
 
 @Module
-class AddEditNoteModule(private val context: Context) : BaseModule {
+class AddEditNoteModule(private val application: Application,
+                        private val context: Context
+) : BaseModule {
 
     @PerFragment
     @Provides
     fun provideViewModelFactory(interactor: AddEditNoteInteractor): ViewModelFactory {
-        return ViewModelFactory(interactor)
+        return ViewModelFactory(interactor, application)
     }
 
     @PerFragment
@@ -52,7 +55,7 @@ class AddEditNoteModule(private val context: Context) : BaseModule {
     @PerFragment
     @Provides
     fun provideFileRepository(): FileRepository {
-        return FileRepositoryImpl(context)
+        return FileRepositoryImpl(application)
     }
 
     @PerFragment
