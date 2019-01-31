@@ -76,7 +76,7 @@ class TagsAdapter : RecyclerView.Adapter<TagsAdapter.ViewHolder>() {
                     binding.etTagText.clearFocus()
                     inputMethodManager.hideSoftInputFromWindow(binding.etTagText.windowToken, 0)
 
-                    mClickListener.onClickApply(mTagList[adapterPosition].tagId,
+                    mClickListener.onClickApply(mTagList[adapterPosition].id,
                             binding.etTagText.text.toString())
                 }
             }
@@ -98,7 +98,7 @@ class TagsAdapter : RecyclerView.Adapter<TagsAdapter.ViewHolder>() {
                     binding.ivEditTag.setImageResource(R.drawable.ic_action_create)
                     binding.ivDeleteTag.setImageResource(R.drawable.ic_action_label_gray)
 
-                    mClickListener.onClickApply(mTagList[adapterPosition].tagId,
+                    mClickListener.onClickApply(mTagList[adapterPosition].id,
                             binding.etTagText.text.toString())
                 }
             }

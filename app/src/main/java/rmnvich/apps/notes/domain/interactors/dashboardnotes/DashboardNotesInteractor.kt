@@ -5,6 +5,7 @@ import io.reactivex.Flowable
 import rmnvich.apps.notes.data.common.Constants
 import rmnvich.apps.notes.data.common.SchedulersProvider
 import rmnvich.apps.notes.domain.entity.Note
+import rmnvich.apps.notes.domain.entity.NoteWithTag
 import rmnvich.apps.notes.domain.entity.Tag
 import rmnvich.apps.notes.domain.repositories.NotesRepository
 import rmnvich.apps.notes.domain.repositories.TagsRepository
@@ -16,7 +17,7 @@ open class DashboardNotesInteractor(
         private val schedulersProvider: SchedulersProvider
 ) {
 
-    fun getNotes(isFavorite: Boolean): Flowable<List<Note>> {
+    fun getNotes(isFavorite: Boolean): Flowable<List<NoteWithTag>> {
         return notesRepository.getAllNotes(isFavorite)
                 .subscribeOn(schedulersProvider.io())
                 .delay(Constants.DEFAULT_DELAY, TimeUnit.MILLISECONDS)
@@ -30,27 +31,27 @@ open class DashboardNotesInteractor(
                 .observeOn(schedulersProvider.ui())
     }
 
-    fun getAllFilteredNotes(colors: List<Int>, tags: List<Tag>, isFavorite: Boolean): Flowable<List<Note>> {
+    fun getAllFilteredNotes(colors: List<Int>, tags: List<Tag>, isFavorite: Boolean): Flowable<List<NoteWithTag>> {
         return notesRepository.getAllFilteredNotes(colors, tags, isFavorite)
                 .subscribeOn(schedulersProvider.io())
                 .delay(Constants.DEFAULT_DELAY, TimeUnit.MILLISECONDS)
                 .observeOn(schedulersProvider.ui())
     }
 
-    fun updateIsFavoriteNote(noteId: Int, isFavorite: Boolean): Completable {
-        return notesRepository.updateIsFavoriteNote(noteId, isFavorite)
+    fun favoriteOrUnfavoriteNote(noteId: Int, isFavorite: Boolean): Completable {
+        return notesRepository.favoriteOrUnfavoriteNote(noteId, isFavorite)
                 .subscribeOn(schedulersProvider.io())
                 .observeOn(schedulersProvider.ui())
     }
 
     fun removeNoteToTrash(noteId: Int): Completable {
-        return notesRepository.updateIsDeleteNote(noteId, true)
+        return notesRepository.deleteOrRestoreNote(noteId, true)
                 .subscribeOn(schedulersProvider.io())
                 .observeOn(schedulersProvider.ui())
     }
 
     fun restoreNote(noteId: Int): Completable {
-        return notesRepository.updateIsDeleteNote(noteId, false)
+        return notesRepository.deleteOrRestoreNote(noteId, false)
                 .subscribeOn(schedulersProvider.io())
                 .observeOn(schedulersProvider.ui())
     }

@@ -7,7 +7,7 @@ import android.databinding.ObservableBoolean
 import io.reactivex.disposables.CompositeDisposable
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.domain.entity.Filter
-import rmnvich.apps.notes.domain.entity.Note
+import rmnvich.apps.notes.domain.entity.NoteWithTag
 import rmnvich.apps.notes.domain.entity.Tag
 import rmnvich.apps.notes.domain.interactors.dashboardnotes.DashboardNotesInteractor
 import rmnvich.apps.notes.domain.utils.SingleLiveEvent
@@ -37,7 +37,7 @@ class DashboardNotesViewModel(
 
     private val mSnackbarMessage = SingleLiveEvent<Int>()
 
-    private var mNotesResponse: MutableLiveData<List<Note>>? = null
+    private var mNotesResponse: MutableLiveData<List<NoteWithTag>>? = null
     private var mTagsResponse: MutableLiveData<List<Tag>>? = null
 
     fun getSnackbar(): SingleLiveEvent<Int> = mSnackbarMessage
@@ -58,7 +58,7 @@ class DashboardNotesViewModel(
 
     fun resetFilter() = mResetFilterEvent.call()
 
-    fun getNotes(): LiveData<List<Note>>? {
+    fun getNotes(): LiveData<List<NoteWithTag>>? {
         if (mNotesResponse == null) {
             mNotesResponse = MutableLiveData()
             loadNotes()
@@ -110,7 +110,7 @@ class DashboardNotesViewModel(
     fun updateIsFavoriteNote(noteId: Int, isFavorite: Boolean) {
         mCompositeDisposable.add(
                 dashboardNotesInteractor
-                        .updateIsFavoriteNote(noteId, isFavorite)
+                        .favoriteOrUnfavoriteNote(noteId, isFavorite)
                         .subscribe()
         )
     }

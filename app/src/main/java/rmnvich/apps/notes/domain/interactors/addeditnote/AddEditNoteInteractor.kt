@@ -2,7 +2,6 @@ package rmnvich.apps.notes.domain.interactors.addeditnote
 
 import android.graphics.Bitmap
 import android.net.Uri
-import android.os.Environment
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -10,13 +9,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import rmnvich.apps.notes.data.common.SchedulersProvider
 import rmnvich.apps.notes.domain.entity.Note
+import rmnvich.apps.notes.domain.entity.NoteWithTag
 import rmnvich.apps.notes.domain.repositories.FileRepository
 import rmnvich.apps.notes.domain.repositories.NotesRepository
-import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import java.util.*
 import java.util.concurrent.Callable
 
 class AddEditNoteInteractor(
@@ -25,14 +21,20 @@ class AddEditNoteInteractor(
     private val schedulersProvider: SchedulersProvider
 ) {
 
-    fun getNoteById(noteId: Int): Single<Note> {
+    fun getNoteById(noteId: Int): Single<NoteWithTag> {
         return notesRepository.getNoteById(noteId)
             .subscribeOn(schedulersProvider.io())
             .observeOn(schedulersProvider.ui())
     }
 
-    fun insertOrUpdateNote(note: Note): Completable {
-        return notesRepository.insertOrUpdateNote(note)
+    fun insertNote(note: Note): Completable {
+        return notesRepository.insertNote(note)
+            .subscribeOn(schedulersProvider.io())
+            .observeOn(schedulersProvider.ui())
+    }
+
+    fun updateNote(note: Note, noteId: Int): Completable {
+        return notesRepository.updateNote(note, noteId)
             .subscribeOn(schedulersProvider.io())
             .observeOn(schedulersProvider.ui())
     }

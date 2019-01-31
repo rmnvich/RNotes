@@ -19,7 +19,7 @@ class TagsDiffUtil(
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         val oldTag = oldList[oldItemPosition]
         val newTag = newList[newItemPosition]
-        return oldTag.tagId == newTag.tagId
+        return oldTag.id == newTag.id
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {

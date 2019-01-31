@@ -4,25 +4,28 @@ import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
 import rmnvich.apps.notes.domain.entity.Note
+import rmnvich.apps.notes.domain.entity.NoteWithTag
 import rmnvich.apps.notes.domain.entity.Tag
 
 interface NotesRepository {
 
-    fun getAllNotes(isFavorite: Boolean): Flowable<List<Note>>
+    fun getAllNotes(isFavorite: Boolean): Flowable<List<NoteWithTag>>
+
+    fun getAllFilteredNotes(colors: List<Int>, tags: List<Tag>, isFavorite: Boolean): Flowable<List<NoteWithTag>>
+
+    fun getAllFavoriteNotes(): Flowable<List<NoteWithTag>>
+
+    fun getNoteById(noteId: Int): Single<NoteWithTag>
+
+    fun insertNote(note: Note): Completable
+
+    fun updateNote(note: Note, noteId: Int): Completable
+
+    fun favoriteOrUnfavoriteNote(noteId: Int, isFavorite: Boolean): Completable
 
     fun getDeletedNotes(): Flowable<List<Note>>
 
-    fun getAllFilteredNotes(colors: List<Int>, tags: List<Tag>, isFavorite: Boolean): Flowable<List<Note>>
-
-    fun getAllFavoriteNotes(): Flowable<List<Note>>
-
-    fun getNoteById(noteId: Int): Single<Note>
-
-    fun insertOrUpdateNote(note: Note): Completable
-
-    fun updateIsFavoriteNote(noteId: Int, isFavorite: Boolean): Completable
-
-    fun updateIsDeleteNote(noteId: Int, isDeleted: Boolean): Completable
+    fun deleteOrRestoreNote(noteId: Int, isDeleted: Boolean): Completable
 
     fun deleteNote(note: Note): Completable
 

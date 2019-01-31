@@ -21,7 +21,7 @@ class TrashInteractor(
     }
 
     fun restoreNote(noteId: Int): Completable {
-        return notesRepository.updateIsDeleteNote(noteId, false)
+        return notesRepository.deleteOrRestoreNote(noteId, false)
                 .subscribeOn(schedulersProvider.io())
                 .observeOn(schedulersProvider.ui())
     }

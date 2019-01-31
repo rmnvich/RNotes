@@ -4,7 +4,7 @@ public class Constants {
 
     public static String LOG_TAG = "qwe";
 
-    public static String DATABASE_NAME = "test_database5";
+    public static String DATABASE_NAME = "test_database6";
 
     public static long DEFAULT_DELAY = 0;
 
@@ -18,6 +18,6 @@ public class Constants {
     public static int REQUEST_CODE_IMAGE = 0;
     public static int REQUEST_CODE_SHARE = 1;
 
-    //TODO: Settings (vibrate, theme)
+    //TODO: Settings (vibrate, theme, pin)
     //TODO: Reminder, photos, links
 }

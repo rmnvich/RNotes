@@ -14,7 +14,6 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.bumptech.glide.Glide
 import com.jaredrummler.android.colorpicker.ColorPickerDialog
@@ -80,7 +79,7 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
 
         val noteId = intent.getIntExtra(EXTRA_NOTE_ID, -1)
         if (noteId != -1) {
-            mAddEditNoteViewModel.loadNote(noteId)
+            mAddEditNoteViewModel.getNote(noteId)
             mAddEditNoteBinding.root.isFocusableInTouchMode = true
         }
 
@@ -88,7 +87,10 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
                 intent.getBooleanExtra(EXTRA_FAVORITE_NOTES, false)
 
         mAddEditNoteViewModel.getDeleteTagEvent().observe(this,
-            Observer { mAddEditNoteViewModel.noteTag.set(null) })
+            Observer {
+                mAddEditNoteViewModel.noteTag.set("")
+                mAddEditNoteViewModel.noteTagId = -1
+            })
         mAddEditNoteViewModel.getImagePathEvent().observe(this,
             Observer { setImage(it!!) })
         mAddEditNoteViewModel.getClickDateEvent().observe(this,
@@ -119,7 +121,8 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
             R.id.menu_tag -> {
                 mDialogTags.get().show(object : DialogTags.DialogTagsCallback {
                     override fun onClickTag(tag: Tag) {
-                        mAddEditNoteViewModel.noteTag.set(tag)
+                        mAddEditNoteViewModel.noteTag.set(tag.name)
+                        mAddEditNoteViewModel.noteTagId = tag.id
                     }
                 })
                 true
@@ -203,11 +206,13 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
 
     private fun showDatePickerDialog() {
         dismissKeyboard()
-        DatePickerDialog(this, { _, year, month, day ->
-            mAddEditNoteViewModel.onDatePickerDialogClicked(year, month, day)
-        }, Calendar.getInstance().get(Calendar.YEAR),
+        DatePickerDialog(
+            this, { _, year, month, day ->
+                mAddEditNoteViewModel.onDatePickerDialogClicked(year, month, day)
+            }, Calendar.getInstance().get(Calendar.YEAR),
             Calendar.getInstance().get(Calendar.MONTH),
-            Calendar.getInstance().get(Calendar.DAY_OF_MONTH))
+            Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+        )
             .show()
     }
 

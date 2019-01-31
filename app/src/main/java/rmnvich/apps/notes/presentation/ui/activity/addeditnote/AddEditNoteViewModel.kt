@@ -2,6 +2,8 @@ package rmnvich.apps.notes.presentation.ui.activity.addeditnote
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
 import android.content.Intent
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
@@ -12,7 +14,7 @@ import io.reactivex.disposables.CompositeDisposable
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.data.common.Constants.REQUEST_CODE_IMAGE
 import rmnvich.apps.notes.domain.entity.Note
-import rmnvich.apps.notes.domain.entity.Tag
+import rmnvich.apps.notes.domain.entity.NoteWithTag
 import rmnvich.apps.notes.domain.interactors.addeditnote.AddEditNoteInteractor
 import rmnvich.apps.notes.domain.utils.SingleLiveEvent
 import rmnvich.apps.notes.presentation.utils.DateHelper
@@ -29,8 +31,14 @@ class AddEditNoteViewModel(
 
     val noteText: ObservableField<String> = ObservableField("")
     val noteColor: ObservableField<Int> = ObservableField(Color.BLACK)
-    val noteTag: ObservableField<Tag> = ObservableField()
+    val noteTag: ObservableField<String> = ObservableField("")
     val noteTimestamp: ObservableField<Long> = ObservableField(DateHelper.getCurrentTimeInMills())
+
+    var noteIsFavorite: Boolean = false
+    var noteTagId: Int = -1
+    var noteId: Int = -1
+
+    private var mNoteResponse: MutableLiveData<NoteWithTag>? = null
 
     private val onBackPressedEvent: SingleLiveEvent<Void> = SingleLiveEvent()
     private val onDeleteTagEvent: SingleLiveEvent<Void> = SingleLiveEvent()
@@ -42,13 +50,9 @@ class AddEditNoteViewModel(
     private val onClickDateEvent: SingleLiveEvent<Void> = SingleLiveEvent()
     private val mSnackbarMessage: SingleLiveEvent<Int> = SingleLiveEvent()
 
-    var noteIsFavorite: Boolean = false
-
-    private var existsNote: Note? = null
+    private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
 
     private var files: MutableList<File> = mutableListOf()
-
-    private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
 
     fun getSnackbar(): SingleLiveEvent<Int> = mSnackbarMessage
 
@@ -84,14 +88,26 @@ class AddEditNoteViewModel(
         noteTimestamp.set(DateHelper.getDate(year, month, day))
     }
 
-    fun loadNote(noteId: Int) {
+    fun getNote(noteId: Int): LiveData<NoteWithTag>? {
+        if (mNoteResponse == null) {
+            mNoteResponse = MutableLiveData()
+            loadNote(noteId)
+        }
+        return mNoteResponse
+    }
+
+    private fun loadNote(noteId: Int) {
         mCompositeDisposable.add(addEditNoteNotesInteractor.getNoteById(noteId)
             .doOnSubscribe { bIsShowingProgressBar.set(true) }
             .subscribe({
                 bIsShowingProgressBar.set(false)
-                existsNote = it
+                mNoteResponse?.value = it
+                this.noteId = it.noteId
 
-                setObservableFields(it.text, it.color, it.tag, it.timestamp, it.imagePath)
+                setObservableFields(
+                    it.noteText, it.noteColor, it.tagName,
+                    it.noteTimestamp, it.noteImagePath
+                )
             }, {
                 bIsShowingProgressBar.set(false)
                 showSnackbarMessage(R.string.error_message)
@@ -100,37 +116,20 @@ class AddEditNoteViewModel(
     }
 
     fun insertOrUpdateNote() {
-        if (existsNote == null) {
-            existsNote = Note()
-            existsNote?.isFavorite = noteIsFavorite
-        }
+        if (!noteText.get()?.isEmpty()!!) {
+            val note = Note()
+            note.text = noteText.get()?.trim()!!
+            note.timestamp = noteTimestamp.get()!!
+            note.color = noteColor.get()!!
+            note.tagId = noteTagId
 
-        existsNote?.timestamp = noteTimestamp.get()!!
-        existsNote?.text = noteText.get()?.trim()!!
-        existsNote?.color = noteColor.get()!!
+            if (onImagePathEvent.value != null)
+                note.imagePath = onImagePathEvent.value!!
 
-        if (onImagePathEvent.value != null)
-            existsNote?.imagePath = onImagePathEvent.value!!
-
-        if (noteTag.get() == null)
-            existsNote?.tag = null
-        else existsNote?.tag = noteTag.get()!!
-
-        existsNote?.isSelected = false
-
-        if (!existsNote?.text?.isEmpty()!!) {
-            bIsShowingProgressBar.set(true)
-            mCompositeDisposable.add(
-                addEditNoteNotesInteractor
-                    .insertOrUpdateNote(existsNote!!)
-                    .subscribe({
-                        bIsShowingProgressBar.set(false)
-                        onBackPressedEvent.call()
-                    }, {
-                        bIsShowingProgressBar.set(false)
-                        showSnackbarMessage(R.string.error_message)
-                    })
-            )
+            if (noteId == -1) {
+                note.isFavorite = noteIsFavorite
+                insertNote(note)
+            } else updateNote(note, noteId)
         } else onBackPressedEvent.call()
     }
 
@@ -195,8 +194,38 @@ class AddEditNoteViewModel(
         }
     }
 
+    private fun insertNote(note: Note) {
+        bIsShowingProgressBar.set(true)
+        mCompositeDisposable.add(
+            addEditNoteNotesInteractor
+                .insertNote(note)
+                .subscribe({
+                    bIsShowingProgressBar.set(false)
+                    onBackPressedEvent.call()
+                }, {
+                    bIsShowingProgressBar.set(false)
+                    showSnackbarMessage(R.string.error_message)
+                })
+        )
+    }
+
+    private fun updateNote(note: Note, noteId: Int) {
+        bIsShowingProgressBar.set(true)
+        mCompositeDisposable.add(
+            addEditNoteNotesInteractor
+                .updateNote(note, noteId)
+                .subscribe({
+                    bIsShowingProgressBar.set(false)
+                    onBackPressedEvent.call()
+                }, {
+                    bIsShowingProgressBar.set(false)
+                    showSnackbarMessage(R.string.error_message)
+                })
+        )
+    }
+
     private fun setObservableFields(
-        noteText: String, noteColor: Int, noteTag: Tag?,
+        noteText: String, noteColor: Int, noteTag: String,
         noteTimestamp: Long, noteImagePath: String
     ) {
         this.noteText.set(noteText)

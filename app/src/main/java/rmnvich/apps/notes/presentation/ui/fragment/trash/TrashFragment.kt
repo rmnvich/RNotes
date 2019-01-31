@@ -165,7 +165,7 @@ class TrashFragment : Fragment() {
                 listOf(getString(R.string.restore), getString(R.string.delete))
         ) { _, position ->
             if (position == 0) {
-                mTrashViewModel.restoreNote(note.noteId)
+                mTrashViewModel.restoreNote(note.id)
             } else mTrashViewModel.deleteNote(note)
         }
     }

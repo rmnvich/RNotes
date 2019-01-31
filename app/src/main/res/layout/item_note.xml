@@ -12,7 +12,7 @@
 
         <variable
             name="note"
-            type="rmnvich.apps.notes.domain.entity.Note" />
+            type="rmnvich.apps.notes.domain.entity.NoteWithTag" />
     </data>
 
     <FrameLayout
@@ -60,7 +60,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/item_note_image_height"
                     android:layout_margin="1dp"
-                    android:visibility="@{TextUtils.isEmpty(note.imagePath) ? View.GONE : View.VISIBLE}"
+                    android:visibility="@{TextUtils.isEmpty(note.noteImagePath) ? View.GONE : View.VISIBLE}"
                     app:cardCornerRadius="@dimen/item_note_card_corner_radius"
                     app:cardElevation="0dp"
                     app:layout_constraintTop_toTopOf="parent">
@@ -84,7 +84,7 @@
                     android:paddingStart="@dimen/item_note_card_padding"
                     android:paddingTop="@dimen/item_note_text_padding_top"
                     android:paddingEnd="@dimen/item_note_card_padding"
-                    android:text="@{note.text}"
+                    android:text="@{note.noteText}"
                     android:textSize="15sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/card_view_note_image" />
@@ -96,7 +96,7 @@
                     android:layout_marginStart="@dimen/item_note_card_padding"
                     android:layout_marginTop="@dimen/item_note_circle_margin_top"
                     android:layout_marginBottom="@dimen/item_note_card_padding"
-                    app:circleColor="@{note.color}"
+                    app:circleColor="@{note.noteColor}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/note_divider_left"
                     app:layout_constraintStart_toStartOf="parent"
@@ -132,11 +132,11 @@
                     android:paddingTop="@dimen/item_note_tag_vertical_padding"
                     android:paddingEnd="@dimen/item_note_tag_horizontal_padding"
                     android:paddingBottom="@dimen/item_note_tag_vertical_padding"
-                    android:text="@{note.tag.name}"
+                    android:text="@{note.tagName}"
                     android:textColor="@color/colorTagText"
                     android:textSize="12sp"
                     android:textStyle="italic"
-                    android:visibility="@{TextUtils.isEmpty(note.tag.name) ? View.GONE : View.VISIBLE}"
+                    android:visibility="@{TextUtils.isEmpty(note.tagName) ? View.GONE : View.VISIBLE}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/note_divider_right"
                     app:layout_constraintHorizontal_weight="10"
@@ -178,7 +178,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/note_divider_right"
                     app:layout_constraintTop_toBottomOf="@id/note_text"
-                    app:liked="@{note.favorite}" />
+                    app:liked="@{note.noteIsFavorite}" />
             </android.support.constraint.ConstraintLayout>
         </com.daimajia.swipe.SwipeLayout>
     </FrameLayout>

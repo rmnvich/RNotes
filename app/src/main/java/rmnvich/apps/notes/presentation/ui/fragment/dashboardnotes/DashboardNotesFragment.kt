@@ -18,7 +18,7 @@ import rmnvich.apps.notes.R
 import rmnvich.apps.notes.data.common.Constants.*
 import rmnvich.apps.notes.databinding.DashboardNotesFragmentBinding
 import rmnvich.apps.notes.di.dashboardnotes.DashboardNotesModule
-import rmnvich.apps.notes.domain.entity.Note
+import rmnvich.apps.notes.domain.entity.NoteWithTag
 import rmnvich.apps.notes.domain.utils.ViewModelFactory
 import rmnvich.apps.notes.presentation.ui.activity.addeditnote.AddEditNoteActivity
 import rmnvich.apps.notes.presentation.ui.activity.main.MainActivity
@@ -184,7 +184,7 @@ class DashboardNotesFragment : Fragment() {
         observeSnackbar()
     }
 
-    private fun handleNotesResponse(response: List<Note>) {
+    private fun handleNotesResponse(response: List<NoteWithTag>) {
         mNotesAdapter.setData(response)
 
         if (mDashboardNotesViewModel.bIsRecyclerNeedToScroll) {

@@ -66,18 +66,14 @@ class TrashAdapter : RecyclerView.Adapter<TrashAdapter.ViewHolder>() {
     }
 
     fun clearSelectedNotes() {
-        for (i in 0 until mSelectedNotes.size) {
-            val note = mSelectedNotes[i]
-            note.isSelected = false
-        }
         mSelectedNotes.removeAll(mSelectedNotes)
         mSelectListener.onNoteSelected(0)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrashAdapter.ViewHolder {
         val binding: ItemSimpleNoteBinding = DataBindingUtil.inflate(
-                LayoutInflater.from(parent.context),
-                R.layout.item_simple_note, parent, false
+            LayoutInflater.from(parent.context),
+            R.layout.item_simple_note, parent, false
         )
         return ViewHolder(binding)
     }
@@ -111,17 +107,14 @@ class TrashAdapter : RecyclerView.Adapter<TrashAdapter.ViewHolder>() {
         }
 
         private fun selectNote(note: Note) {
-            val background = if (!note.isSelected) {
-                note.isSelected = true
+            val background = if (!mSelectedNotes.contains(note)) {
                 mSelectedNotes.add(note)
                 R.drawable.item_note_selected_background
             } else {
-                note.isSelected = false
                 mSelectedNotes.remove(note)
                 R.drawable.item_note_background
             }
             binding.root.setBackgroundResource(background)
-
             mSelectListener.onNoteSelected(mSelectedNotes.size)
         }
 
@@ -129,8 +122,8 @@ class TrashAdapter : RecyclerView.Adapter<TrashAdapter.ViewHolder>() {
             binding.note = note
 
             Glide.with(binding.root)
-                    .load(File(note.imagePath))
-                    .into(binding.ivNoteImage)
+                .load(File(note.imagePath))
+                .into(binding.ivNoteImage)
 
             binding.executePendingBindings()
         }

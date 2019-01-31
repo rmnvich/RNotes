@@ -1,6 +1,5 @@
 package rmnvich.apps.notes.presentation.ui.adapter.dashboard
 
-import android.arch.persistence.room.Index
 import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Build
@@ -17,9 +16,8 @@ import com.like.LikeButton
 import com.like.OnLikeListener
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.databinding.ItemNoteBinding
-import rmnvich.apps.notes.domain.entity.Note
+import rmnvich.apps.notes.domain.entity.NoteWithTag
 import java.io.File
-import java.lang.IndexOutOfBoundsException
 import java.util.*
 
 class NotesAdapter : RecyclerSwipeAdapter<NotesAdapter.ViewHolder>() {
@@ -57,9 +55,9 @@ class NotesAdapter : RecyclerSwipeAdapter<NotesAdapter.ViewHolder>() {
     }
 
     private lateinit var mClickListener: OnClickNoteListener
-    private var mNoteList: List<Note> = LinkedList()
+    private var mNoteList: List<NoteWithTag> = LinkedList()
 
-    fun setData(data: List<Note>) {
+    fun setData(data: List<NoteWithTag>) {
         val diffUtilCallback = NotesDiffUtil(mNoteList, data)
         val diffResult = DiffUtil.calculateDiff(diffUtilCallback)
 
@@ -118,11 +116,11 @@ class NotesAdapter : RecyclerSwipeAdapter<NotesAdapter.ViewHolder>() {
             })
         }
 
-        fun bind(note: Note) {
+        fun bind(note: NoteWithTag) {
             binding.note = note
 
             Glide.with(binding.root)
-                    .load(File(note.imagePath))
+                    .load(File(note.noteImagePath))
                     .into(binding.ivNoteImage)
 
             binding.executePendingBindings()

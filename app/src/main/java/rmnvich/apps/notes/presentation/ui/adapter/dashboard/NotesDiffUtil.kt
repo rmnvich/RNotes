@@ -1,11 +1,11 @@
 package rmnvich.apps.notes.presentation.ui.adapter.dashboard
 
 import android.support.v7.util.DiffUtil
-import rmnvich.apps.notes.domain.entity.Note
+import rmnvich.apps.notes.domain.entity.NoteWithTag
 
 class NotesDiffUtil(
-        private val oldList: List<Note>,
-        private val newList: List<Note>
+        private val oldList: List<NoteWithTag>,
+        private val newList: List<NoteWithTag>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {
@@ -25,13 +25,12 @@ class NotesDiffUtil(
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         val oldNote = oldList[oldItemPosition]
         val newNote = newList[newItemPosition]
-        return oldNote.text == newNote.text &&
-                oldNote.timestamp == newNote.timestamp &&
-                oldNote.color == newNote.color &&
-                oldNote.imagePath == newNote.imagePath &&
-                oldNote.tag?.name == newNote.tag?.name &&
-                oldNote.tag?.tagId == newNote.tag?.tagId &&
-                oldNote.isDeleted == newNote.isDeleted
+        return oldNote.noteText == newNote.noteText &&
+                oldNote.noteTimestamp == newNote.noteTimestamp &&
+                oldNote.noteColor == newNote.noteColor &&
+                oldNote.noteImagePath == newNote.noteImagePath &&
+                oldNote.tagName == newNote.tagName &&
+                oldNote.noteIsDeleted == newNote.noteIsDeleted
     }
 
 

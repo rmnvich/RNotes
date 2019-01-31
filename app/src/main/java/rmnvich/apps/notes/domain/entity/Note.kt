@@ -1,6 +1,6 @@
 package rmnvich.apps.notes.domain.entity
 
-import android.arch.persistence.room.Embedded
+import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 
@@ -8,19 +8,17 @@ import android.arch.persistence.room.PrimaryKey
 open class Note {
 
     @PrimaryKey(autoGenerate = true)
-    var noteId: Int = 0
+    var id: Int = 0
+
+    @ColumnInfo(name = "tag_id")
+    var tagId: Int = -1
 
     var text: String = ""
-
     var imagePath: String = ""
-    var timestamp: Long = 0L
-    var color: Int = 0
 
-    @Embedded
-    var tag: Tag? = null
+    var color: Int = 0
+    var timestamp: Long = 0L
 
     var isFavorite: Boolean = false
     var isDeleted: Boolean = false
-
-    var isSelected: Boolean = false
 }
