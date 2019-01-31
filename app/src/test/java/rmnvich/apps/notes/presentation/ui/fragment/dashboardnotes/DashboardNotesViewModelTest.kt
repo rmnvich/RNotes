@@ -41,12 +41,11 @@ class DashboardNotesViewModelTest {
         MockitoAnnotations.initMocks(this)
 
         mNotesRepository = NotesRepositoryImpl(mDatabase)
-        mInteractor = DashboardNotesInteractor(
-            mNotesRepository,
-            TestSchedulersProvider()
-        )
-
-        mViewModel = DashboardNotesViewModel(mApplication, mInteractor)
+//        mInteractor = DashboardNotesInteractor(
+//            mNotesRepository,
+//            TestSchedulersProvider()
+//        )
+//        mViewModel = DashboardNotesViewModel(mApplication, mInteractor)
     }
 
     private fun getFakeNote(): Note {

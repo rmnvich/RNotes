@@ -35,8 +35,8 @@ class AddEditNoteViewModel(
     val noteTimestamp: ObservableField<Long> = ObservableField(DateHelper.getCurrentTimeInMills())
 
     var noteIsFavorite: Boolean = false
-    var noteTagId: Int = -1
-    var noteId: Int = -1
+    var noteTagId: Int = 0
+    var noteId: Int = 0
 
     private var mNoteResponse: MutableLiveData<NoteWithTag>? = null
 
@@ -126,7 +126,7 @@ class AddEditNoteViewModel(
             if (onImagePathEvent.value != null)
                 note.imagePath = onImagePathEvent.value!!
 
-            if (noteId == -1) {
+            if (noteId == 0) {
                 note.isFavorite = noteIsFavorite
                 insertNote(note)
             } else updateNote(note, noteId)

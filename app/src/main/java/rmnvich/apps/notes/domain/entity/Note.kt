@@ -5,13 +5,13 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 
 @Entity
-open class Note {
+class Note {
 
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
 
     @ColumnInfo(name = "tag_id")
-    var tagId: Int = -1
+    var tagId: Int = 0
 
     var text: String = ""
     var imagePath: String = ""
