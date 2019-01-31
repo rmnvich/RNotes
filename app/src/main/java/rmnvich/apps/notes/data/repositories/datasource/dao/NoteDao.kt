@@ -9,12 +9,15 @@ import rmnvich.apps.notes.domain.entity.NoteWithTag
 @Dao
 interface NoteDao {
 
+    @Transaction
     @Query("SELECT note.id AS note_id, note.text AS note_text, note.imagePath AS note_image_path, note.timestamp AS note_timestamp, note.color AS note_color, note.isFavorite AS note_is_favorite, note.isDeleted AS note_is_deleted, tag.name AS note_tag_name FROM note, tag WHERE note.isDeleted = :isDeleted ORDER BY timestamp DESC")
     fun getAllNotes(isDeleted: Boolean): Flowable<List<NoteWithTag>>
 
+    @Transaction
     @Query("SELECT note.id AS note_id, note.text AS note_text, note.imagePath AS note_image_path, note.timestamp AS note_timestamp, note.color AS note_color, note.isFavorite AS note_is_favorite, note.isDeleted AS note_is_deleted, tag.name AS note_tag_name FROM note, tag WHERE note.isFavorite = :isFavorite AND note.isDeleted = :isDeleted ORDER BY timestamp DESC")
     fun getAllFavoritesNotes(isFavorite: Boolean, isDeleted: Boolean): Flowable<List<NoteWithTag>>
 
+    @Transaction
     @Query("SELECT note.id AS note_id, note.text AS note_text, note.imagePath AS note_image_path, note.timestamp AS note_timestamp, note.color AS note_color, note.isFavorite AS note_is_favorite, note.isDeleted AS note_is_deleted, tag.name AS note_tag_name FROM note, tag WHERE note.id = :noteId")
     fun getNoteWithTagByNoteId(noteId: Int): Single<NoteWithTag>
 
