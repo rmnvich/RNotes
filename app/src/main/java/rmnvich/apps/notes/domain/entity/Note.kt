@@ -9,9 +9,7 @@ import android.arch.persistence.room.PrimaryKey
     foreignKeys = [ForeignKey(
         entity = Note::class,
         parentColumns = ["id"],
-        childColumns = ["tag_id"],
-        onDelete = ForeignKey.SET_NULL,
-        onUpdate = ForeignKey.CASCADE
+        childColumns = ["tag_id"]
     )]
 )
 class Note {
