@@ -26,5 +26,8 @@ class NoteWithTag {
     var noteIsDeleted: Boolean = false
 
     @ColumnInfo(name = "note_tag_name")
-    var tagName: String = ""
+    var tagName: String? = null
+
+    @ColumnInfo(name = "note_tag_id")
+    var tagId: Int? = null
 }

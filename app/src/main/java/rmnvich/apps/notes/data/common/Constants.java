@@ -4,7 +4,7 @@ public class Constants {
 
     public static String LOG_TAG = "qwe";
 
-    public static String DATABASE_NAME = "test_database9";
+    public static String DATABASE_NAME = "test_database33";
 
     public static long DEFAULT_DELAY = 0;
 

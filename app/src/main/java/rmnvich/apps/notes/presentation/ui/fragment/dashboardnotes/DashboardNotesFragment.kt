@@ -167,7 +167,7 @@ class DashboardNotesFragment : Fragment() {
                     //TODO: filter
                     if (!colors?.isEmpty()!! || !tags?.isEmpty()!!) {
                         for (i in 0 until tags?.size!!) {
-                            DebugLogger.log(tags[i].name)
+                            DebugLogger.log(tags[i].name!!)
                         }
 
                         for (i in 0 until colors.size) {

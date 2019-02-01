@@ -89,7 +89,7 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
         mAddEditNoteViewModel.getDeleteTagEvent().observe(this,
             Observer {
                 mAddEditNoteViewModel.noteTag.set("")
-                mAddEditNoteViewModel.noteTagId = 0
+                mAddEditNoteViewModel.noteTagId = null
             })
         mAddEditNoteViewModel.getImagePathEvent().observe(this,
             Observer { setImage(it!!) })

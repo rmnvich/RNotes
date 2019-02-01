@@ -35,7 +35,7 @@ class AddEditNoteViewModel(
     val noteTimestamp: ObservableField<Long> = ObservableField(DateHelper.getCurrentTimeInMills())
 
     var noteIsFavorite: Boolean = false
-    var noteTagId: Int = 0
+    var noteTagId: Int? = null
     var noteId: Int = 0
 
     private var mNoteResponse: MutableLiveData<NoteWithTag>? = null
@@ -102,7 +102,9 @@ class AddEditNoteViewModel(
             .subscribe({
                 bIsShowingProgressBar.set(false)
                 mNoteResponse?.value = it
+
                 this.noteId = it.noteId
+                this.noteTagId = it.tagId
 
                 setObservableFields(
                     it.noteText, it.noteColor, it.tagName,
@@ -225,13 +227,16 @@ class AddEditNoteViewModel(
     }
 
     private fun setObservableFields(
-        noteText: String, noteColor: Int, noteTag: String,
+        noteText: String, noteColor: Int, noteTag: String?,
         noteTimestamp: Long, noteImagePath: String
     ) {
         this.noteText.set(noteText)
         this.noteColor.set(noteColor)
-        this.noteTag.set(noteTag)
         this.noteTimestamp.set(noteTimestamp)
+
+        if (noteTag != null)
+            this.noteTag.set(noteTag)
+        else this.noteTag.set("")
 
         onImagePathEvent.value = noteImagePath
         if (!noteImagePath.isEmpty())
