@@ -60,8 +60,10 @@ class DashboardNotesFragment : Fragment() {
         if (!componentHolder.isComponentReleased(javaClass))
             componentHolder.releaseComponent(javaClass)
 
-        componentHolder.getComponent(javaClass,
-                DashboardNotesModule(isFavoriteNotes))?.inject(this)
+        componentHolder.getComponent(
+                javaClass,
+                DashboardNotesModule(isFavoriteNotes)
+        )?.inject(this)
     }
 
     override fun onCreateView(
@@ -136,8 +138,10 @@ class DashboardNotesFragment : Fragment() {
             R.id.menu_filter -> {
                 Handler().postDelayed({
                     activity?.supportFragmentManager?.beginTransaction()
-                            ?.setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_up,
-                                    R.anim.slide_in_down, R.anim.slide_out_down)
+                            ?.setCustomAnimations(
+                                    R.anim.slide_in_up, R.anim.slide_out_up,
+                                    R.anim.slide_in_down, R.anim.slide_out_down
+                            )
                             ?.addToBackStack("")
                             ?.replace(R.id.content, FilterFragment.newInstance(isFavoriteNotes))
                             ?.commit()
@@ -162,18 +166,8 @@ class DashboardNotesFragment : Fragment() {
                 Observer { handleNotesResponse(it!!) })
         mDashboardNotesViewModel.getSharedFilter().observe(this,
                 Observer { filter ->
-                    val colors = filter?.colors
-                    val tags = filter?.tags
-                    //TODO: filter
-                    if (!colors?.isEmpty()!! || !tags?.isEmpty()!!) {
-                        for (i in 0 until tags?.size!!) {
-                            DebugLogger.log(tags[i].name!!)
-                        }
-
-                        for (i in 0 until colors.size) {
-                            DebugLogger.log(colors[i].colorName)
-                        }
-                    }
+                    mDashboardNotesViewModel.getFilteredNotes(filter?.colors!!,
+                            filter.tags, filter.isUnionConditions)
                 })
         mDashboardNotesViewModel.getAddNoteEvent().observe(this,
                 Observer { handleAddEditNoteEvent(-1) })

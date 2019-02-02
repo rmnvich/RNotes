@@ -24,9 +24,12 @@
     <string name="dashboard_title">Dashboard</string>
     <string name="empty">Empty</string>
     <string name="search">Search</string>
+
+    <!-- FilterFragment -->
     <string name="filter">Filter</string>
     <string name="apply_filter">Apply filter</string>
     <string name="reset_filter">Reset filter</string>
+    <string name="union_conditions">Union conditions</string>
 
     <!-- DashboardTagsFragment -->
     <string name="you_have_no_tags">You have no labels</string>
@@ -70,4 +73,5 @@
     <string name="dropdown">Dropdown</string>
     <string name="share">Share</string>
     <string name="send_via">Send via</string>
+
 </resources>

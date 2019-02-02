@@ -6,7 +6,6 @@ import io.reactivex.Single
 import rmnvich.apps.notes.data.repositories.datasource.Database
 import rmnvich.apps.notes.domain.entity.Note
 import rmnvich.apps.notes.domain.entity.NoteWithTag
-import rmnvich.apps.notes.domain.entity.Tag
 import rmnvich.apps.notes.domain.repositories.NotesRepository
 
 class NotesRepositoryImpl(database: Database) : NotesRepository {
@@ -18,11 +17,14 @@ class NotesRepositoryImpl(database: Database) : NotesRepository {
     }
 
     override fun getAllFilteredNotes(
-        colors: List<Int>,
-        tags: List<Tag>,
-        isFavorite: Boolean
+            colors: List<Int>,
+            tags: List<Int>,
+            isFavorite: Boolean,
+            isUnionConditions: Boolean
     ): Flowable<List<NoteWithTag>> {
-        return getAllFavoriteNotes()
+        return if (isUnionConditions)
+            noteDao.getFilteredNotesWithUnionConditions(colors, tags, isFavorite, false)
+        else noteDao.getFilteredNotesWithoutUnionConditions(colors, tags, isFavorite, false)
     }
 
     override fun getAllFavoriteNotes(): Flowable<List<NoteWithTag>> {
@@ -39,16 +41,16 @@ class NotesRepositoryImpl(database: Database) : NotesRepository {
 
     override fun updateNote(note: Note, noteId: Int): Completable {
         return noteDao.getNoteById(noteId)
-            .flatMapCompletable {
-                Completable.fromAction {
-                    it.text = note.text
-                    it.color = note.color
-                    it.imagePath = note.imagePath
-                    it.timestamp = note.timestamp
-                    it.tagId = note.tagId
-                    noteDao.updateNote(it)
+                .flatMapCompletable {
+                    Completable.fromAction {
+                        it.text = note.text
+                        it.color = note.color
+                        it.imagePath = note.imagePath
+                        it.timestamp = note.timestamp
+                        it.tagId = note.tagId
+                        noteDao.updateNote(it)
+                    }
                 }
-            }
     }
 
     override fun favoriteOrUnfavoriteNote(noteId: Int, isFavorite: Boolean): Completable {

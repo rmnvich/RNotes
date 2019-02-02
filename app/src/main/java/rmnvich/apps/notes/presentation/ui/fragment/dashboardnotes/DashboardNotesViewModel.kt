@@ -11,10 +11,11 @@ import rmnvich.apps.notes.domain.entity.NoteWithTag
 import rmnvich.apps.notes.domain.entity.Tag
 import rmnvich.apps.notes.domain.interactors.dashboardnotes.DashboardNotesInteractor
 import rmnvich.apps.notes.domain.utils.SingleLiveEvent
+import rmnvich.apps.notes.presentation.utils.DebugLogger
 
 class DashboardNotesViewModel(
-        private val dashboardNotesInteractor: DashboardNotesInteractor,
-        private val isFavoriteNotes: Boolean
+    private val dashboardNotesInteractor: DashboardNotesInteractor,
+    private val isFavoriteNotes: Boolean
 ) : ViewModel() {
 
     val bIsShowingProgressBar: ObservableBoolean = ObservableBoolean(false)
@@ -66,6 +67,23 @@ class DashboardNotesViewModel(
         return mNotesResponse
     }
 
+    //TODO: filter
+    fun getFilteredNotes(colors: List<Int>, tags: List<Int>, isUnionConditions: Boolean) {
+        DebugLogger.log("------------------------------------------")
+        bIsShowingProgressBar.set(true)
+        mCompositeDisposable.add(dashboardNotesInteractor
+            .getAllFilteredNotes(colors, tags, isFavoriteNotes, isUnionConditions)
+            .subscribe({
+                for (i in 0 until it.size)
+                    DebugLogger.log(it[i].noteText)
+                bIsShowingProgressBar.set(false)
+            }, {
+                bIsShowingProgressBar.set(false)
+                showSnackbarMessage(R.string.error_message)
+            })
+        )
+    }
+
     fun getTags(): LiveData<List<Tag>>? {
         if (mTagsResponse == null) {
             mTagsResponse = MutableLiveData()
@@ -89,10 +107,10 @@ class DashboardNotesViewModel(
         deletedItemPosition = position
 
         mCompositeDisposable.add(
-                dashboardNotesInteractor
-                        .removeNoteToTrash(noteId)
-                        .subscribe({ mDeleteNoteEvent.value = noteId },
-                                { showSnackbarMessage(R.string.error_message) })
+            dashboardNotesInteractor
+                .removeNoteToTrash(noteId)
+                .subscribe({ mDeleteNoteEvent.value = noteId },
+                    { showSnackbarMessage(R.string.error_message) })
         )
     }
 
@@ -101,36 +119,37 @@ class DashboardNotesViewModel(
             bIsRecyclerNeedToScroll = true
 
         mCompositeDisposable.add(
-                dashboardNotesInteractor
-                        .restoreNote(noteId)
-                        .subscribe({}, { showSnackbarMessage(R.string.error_message) })
+            dashboardNotesInteractor
+                .restoreNote(noteId)
+                .subscribe({}, { showSnackbarMessage(R.string.error_message) })
         )
     }
 
     fun updateIsFavoriteNote(noteId: Int, isFavorite: Boolean) {
         mCompositeDisposable.add(
-                dashboardNotesInteractor
-                        .favoriteOrUnfavoriteNote(noteId, isFavorite)
-                        .subscribe()
+            dashboardNotesInteractor
+                .favoriteOrUnfavoriteNote(noteId, isFavorite)
+                .subscribe()
         )
     }
 
     private fun loadNotes() {
         mCompositeDisposable.add(dashboardNotesInteractor.getNotes(isFavoriteNotes)
-                .doOnSubscribe { bIsShowingProgressBar.set(true) }
-                .subscribe({
-                    bIsShowingProgressBar.set(false)
-                    bNotesIsEmpty.set(it.isEmpty())
-                    mNotesResponse?.value = it
-                }, {
-                    bIsShowingProgressBar.set(false)
-                    showSnackbarMessage(R.string.error_message)
-                })
+            .doOnSubscribe { bIsShowingProgressBar.set(true) }
+            .subscribe({
+                bIsShowingProgressBar.set(false)
+                bNotesIsEmpty.set(it.isEmpty())
+                mNotesResponse?.value = it
+            }, {
+                bIsShowingProgressBar.set(false)
+                showSnackbarMessage(R.string.error_message)
+            })
         )
     }
 
     private fun loadTags() {
-        mCompositeDisposable.add(dashboardNotesInteractor.getAllTags()
+        mCompositeDisposable.add(
+            dashboardNotesInteractor.getAllTags()
                 .subscribe({
                     bTagsIsEmpty.set(it.isEmpty())
                     mTagsResponse?.value = it

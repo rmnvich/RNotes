@@ -70,6 +70,7 @@
     <dimen name="add_edit_note_activity_card_view_height">400dp</dimen>
     <dimen name="delete_image_button_size">30dp</dimen>
     <dimen name="item_note_text_padding_top">5dp</dimen>
+    <dimen name="filter_fragment_switch_padding">12dp</dimen>
 
     <integer name="animation_duration">400</integer>
 </resources>

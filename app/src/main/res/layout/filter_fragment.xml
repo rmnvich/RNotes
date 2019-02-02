@@ -68,7 +68,6 @@
                         android:textSize="16sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/iv_tags_dropdown"
                         app:layout_constraintHorizontal_chainStyle="packed"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -81,7 +80,6 @@
                         android:contentDescription="@string/dropdown"
                         android:src="@drawable/ic_action_keyboard_arrow_down"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/tv_tags"
                         app:layout_constraintTop_toTopOf="parent" />
                 </android.support.constraint.ConstraintLayout>
@@ -125,7 +123,6 @@
                         android:textSize="16sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/iv_colors_dropdown"
                         app:layout_constraintHorizontal_chainStyle="packed"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -138,7 +135,6 @@
                         android:contentDescription="@string/dropdown"
                         android:src="@drawable/ic_action_keyboard_arrow_down"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/tv_colors"
                         app:layout_constraintTop_toTopOf="parent" />
                 </android.support.constraint.ConstraintLayout>
@@ -158,6 +154,22 @@
                         android:nestedScrollingEnabled="false"
                         tools:listitem="@layout/item_checkable_color" />
                 </net.cachapa.expandablelayout.ExpandableLayout>
+
+                <Switch
+                    android:id="@+id/switch_union_conditions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/filter_layout_button_margin"
+                    android:layout_marginTop="@dimen/filter_layout_button_margin"
+                    android:layout_marginEnd="@dimen/filter_layout_button_margin"
+                    android:background="@drawable/item_note_background"
+                    android:foreground="@drawable/item_note_foreground"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/filter_fragment_switch_padding"
+                    android:text="@string/union_conditions"
+                    android:textColor="@color/colorBlackAlpha"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/btn_apply_filter"

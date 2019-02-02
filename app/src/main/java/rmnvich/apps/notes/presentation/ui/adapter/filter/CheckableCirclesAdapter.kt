@@ -33,7 +33,7 @@ class CheckableCirclesAdapter : RecyclerView.Adapter<CheckableCirclesAdapter.Vie
             Color(-0x9f8275, "Blue gray"),
             Color(-0x616162, "Gray"))
 
-    var mCheckedColors: MutableList<Color> = LinkedList()
+    var mCheckedColors: MutableList<Int> = LinkedList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding: ItemCheckableColorBinding = DataBindingUtil.inflate(
@@ -58,8 +58,8 @@ class CheckableCirclesAdapter : RecyclerView.Adapter<CheckableCirclesAdapter.Vie
                 binding.chbCircleColor.isChecked = !binding.chbCircleColor.isChecked
 
                 if (binding.chbCircleColor.isChecked) {
-                    mCheckedColors.add(mColors[adapterPosition])
-                } else mCheckedColors.remove(mColors[adapterPosition])
+                    mCheckedColors.add(mColors[adapterPosition].color)
+                } else mCheckedColors.remove(mColors[adapterPosition].color)
             }
         }
 

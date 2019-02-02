@@ -18,6 +18,24 @@ interface NoteDao {
     fun getAllFavoritesNotes(isFavorite: Boolean, isDeleted: Boolean): Flowable<List<NoteWithTag>>
 
     @Transaction
+    @Query("SELECT note.id AS note_id, note.text AS note_text, note.imagePath AS note_image_path, note.timestamp AS note_timestamp, note.color AS note_color, note.isFavorite AS note_is_favorite, note.isDeleted AS note_is_deleted, tag.name AS note_tag_name, tag.id AS note_tag_id FROM note LEFT JOIN tag ON note.tag_id = tag.id WHERE note.isFavorite = :isFavorite AND note.isDeleted = :isDeleted AND (note.color IN (:colors) AND tag_id IN (:tags)) ORDER BY timestamp DESC")
+    fun getFilteredNotesWithUnionConditions(
+        colors: List<Int>,
+        tags: List<Int>,
+        isFavorite: Boolean,
+        isDeleted: Boolean
+    ): Flowable<List<NoteWithTag>>
+
+    @Transaction
+    @Query("SELECT note.id AS note_id, note.text AS note_text, note.imagePath AS note_image_path, note.timestamp AS note_timestamp, note.color AS note_color, note.isFavorite AS note_is_favorite, note.isDeleted AS note_is_deleted, tag.name AS note_tag_name, tag.id AS note_tag_id FROM note LEFT JOIN tag ON note.tag_id = tag.id WHERE note.isFavorite = :isFavorite AND note.isDeleted = :isDeleted AND (note.color IN (:colors) OR tag_id IN (:tags)) ORDER BY timestamp DESC")
+    fun getFilteredNotesWithoutUnionConditions(
+            colors: List<Int>,
+            tags: List<Int>,
+            isFavorite: Boolean,
+            isDeleted: Boolean
+    ): Flowable<List<NoteWithTag>>
+
+    @Transaction
     @Query("SELECT note.id AS note_id, note.text AS note_text, note.imagePath AS note_image_path, note.timestamp AS note_timestamp, note.color AS note_color, note.isFavorite AS note_is_favorite, note.isDeleted AS note_is_deleted, tag.name AS note_tag_name, tag.id AS note_tag_id FROM note LEFT JOIN tag ON tag_id = tag.id WHERE note.id = :noteId")
     fun getNoteWithTagByNoteId(noteId: Int): Single<NoteWithTag>
 
