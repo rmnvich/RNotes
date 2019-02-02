@@ -13,26 +13,16 @@ class NotesRepositoryImpl(database: Database) : NotesRepository {
     private val noteDao = database.noteDao()
 
     override fun getAllNotes(isFavorite: Boolean): Flowable<List<NoteWithTag>> {
-        return if (isFavorite) getAllFavoriteNotes() else noteDao.getAllNotes(false)
+        return noteDao.getAllNotes(isFavorite)
     }
 
     override fun getAllFilteredNotes(
-        colors: List<Int>,
-        tags: List<Int>,
-        isFavorite: Boolean,
-        isUnionConditions: Boolean
+            colors: List<Int>,
+            tags: List<Int>,
+            isFavorite: Boolean,
+            isUnionConditions: Boolean
     ): Flowable<List<NoteWithTag>> {
-        return if (isFavorite)
-            if (isUnionConditions)
-                noteDao.getFavoritesFilteredNotesWithUnionConditions(colors, tags, isFavorite, false)
-            else noteDao.getFavoritesFilteredNotesWithoutUnionConditions(colors, tags, isFavorite, false)
-        else if (isUnionConditions)
-            noteDao.getAllFilteredNotesWithUnionConditions(colors, tags, false)
-        else noteDao.getAllFilteredNotesWithoutUnionConditions(colors, tags, false)
-    }
-
-    override fun getAllFavoriteNotes(): Flowable<List<NoteWithTag>> {
-        return noteDao.getAllFavoritesNotes(true, false)
+        return noteDao.getFilteredNotes(colors, tags, isFavorite, isUnionConditions)
     }
 
     override fun getNoteById(noteId: Int): Single<NoteWithTag> {
@@ -45,16 +35,16 @@ class NotesRepositoryImpl(database: Database) : NotesRepository {
 
     override fun updateNote(note: Note, noteId: Int): Completable {
         return noteDao.getNoteById(noteId)
-            .flatMapCompletable {
-                Completable.fromAction {
-                    it.text = note.text
-                    it.color = note.color
-                    it.imagePath = note.imagePath
-                    it.timestamp = note.timestamp
-                    it.tagId = note.tagId
-                    noteDao.updateNote(it)
+                .flatMapCompletable {
+                    Completable.fromAction {
+                        it.text = note.text
+                        it.color = note.color
+                        it.imagePath = note.imagePath
+                        it.timestamp = note.timestamp
+                        it.tagId = note.tagId
+                        noteDao.updateNote(it)
+                    }
                 }
-            }
     }
 
     override fun favoriteOrUnfavoriteNote(noteId: Int, isFavorite: Boolean): Completable {
