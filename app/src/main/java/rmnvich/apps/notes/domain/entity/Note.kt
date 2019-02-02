@@ -7,9 +7,10 @@ import android.arch.persistence.room.PrimaryKey
 
 @Entity(
     foreignKeys = [ForeignKey(
-        entity = Note::class,
+        entity = Tag::class,
         parentColumns = ["id"],
-        childColumns = ["tag_id"]
+        childColumns = ["tag_id"],
+        onDelete = ForeignKey.SET_NULL
     )]
 )
 class Note {

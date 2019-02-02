@@ -33,14 +33,14 @@ interface NoteDao {
     @Query("UPDATE note SET isDeleted = :isDeleted WHERE id = :noteId")
     fun deleteOrRestoreNote(noteId: Int, isDeleted: Boolean)
 
+    @Insert
+    fun insertNote(note: Note)
+
     @Update
     fun updateNotes(notes: List<Note>)
 
     @Update
     fun updateNote(note: Note)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertNote(note: Note)
 
     @Delete
     fun deleteNote(note: Note)

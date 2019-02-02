@@ -7,7 +7,7 @@ import android.arch.persistence.room.PrimaryKey
 class Tag {
 
     @PrimaryKey(autoGenerate = true)
-    var id: Int? = null
+    var id: Int = 0
 
-    var name: String? = null
+    var name: String = ""
 }

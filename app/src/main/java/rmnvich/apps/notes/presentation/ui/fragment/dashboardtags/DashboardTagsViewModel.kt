@@ -64,7 +64,7 @@ class DashboardTagsViewModel(private val dashboardTagsInteractor: DashboardTagsI
         val tag = Tag()
         tag.name = tagName.get()!!
 
-        if (!tag.name!!.isEmpty()) {
+        if (!tag.name.isEmpty()) {
             bIsShowingProgressBar.set(true)
             mCompositeDisposable.add(dashboardTagsInteractor
                     .insertTag(tag)
