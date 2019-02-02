@@ -11,7 +11,6 @@ import rmnvich.apps.notes.domain.entity.NoteWithTag
 import rmnvich.apps.notes.domain.entity.Tag
 import rmnvich.apps.notes.domain.interactors.dashboardnotes.DashboardNotesInteractor
 import rmnvich.apps.notes.domain.utils.SingleLiveEvent
-import rmnvich.apps.notes.presentation.utils.DebugLogger
 
 class DashboardNotesViewModel(
     private val dashboardNotesInteractor: DashboardNotesInteractor,
@@ -19,7 +18,9 @@ class DashboardNotesViewModel(
 ) : ViewModel() {
 
     val bIsShowingProgressBar: ObservableBoolean = ObservableBoolean(false)
+
     val bNotesIsEmpty: ObservableBoolean = ObservableBoolean(false)
+
     val bTagsIsEmpty: ObservableBoolean = ObservableBoolean(false)
 
     var bIsRecyclerNeedToScroll: Boolean = false
@@ -29,9 +30,11 @@ class DashboardNotesViewModel(
     private val mSelectedNoteId = SingleLiveEvent<Int>()
 
     private val mAddEditNoteEvent = SingleLiveEvent<Void>()
+
     private val mDeleteNoteEvent = SingleLiveEvent<Int>()
 
     private val mApplyFilterEvent = SingleLiveEvent<Void>()
+
     private val mResetFilterEvent = SingleLiveEvent<Void>()
 
     private val mSharedFilter = SingleLiveEvent<Filter>()
@@ -39,6 +42,7 @@ class DashboardNotesViewModel(
     private val mSnackbarMessage = SingleLiveEvent<Int>()
 
     private var mNotesResponse: MutableLiveData<List<NoteWithTag>>? = null
+
     private var mTagsResponse: MutableLiveData<List<Tag>>? = null
 
     fun getSnackbar(): SingleLiveEvent<Int> = mSnackbarMessage
@@ -67,21 +71,12 @@ class DashboardNotesViewModel(
         return mNotesResponse
     }
 
-    //TODO: filter
     fun getFilteredNotes(colors: List<Int>, tags: List<Int>, isUnionConditions: Boolean) {
-        DebugLogger.log("------------------------------------------")
+        mCompositeDisposable.clear()
         bIsShowingProgressBar.set(true)
-        mCompositeDisposable.add(dashboardNotesInteractor
-            .getAllFilteredNotes(colors, tags, isFavoriteNotes, isUnionConditions)
-            .subscribe({
-                for (i in 0 until it.size)
-                    DebugLogger.log(it[i].noteText)
-                bIsShowingProgressBar.set(false)
-            }, {
-                bIsShowingProgressBar.set(false)
-                showSnackbarMessage(R.string.error_message)
-            })
-        )
+        if (colors.isEmpty() && tags.isEmpty()) {
+            loadNotes()
+        } else loadFilteredNotes(colors, tags, isUnionConditions)
     }
 
     fun getTags(): LiveData<List<Tag>>? {
@@ -134,7 +129,8 @@ class DashboardNotesViewModel(
     }
 
     private fun loadNotes() {
-        mCompositeDisposable.add(dashboardNotesInteractor.getNotes(isFavoriteNotes)
+        mCompositeDisposable.add(dashboardNotesInteractor
+            .getNotes(isFavoriteNotes)
             .doOnSubscribe { bIsShowingProgressBar.set(true) }
             .subscribe({
                 bIsShowingProgressBar.set(false)
@@ -144,6 +140,22 @@ class DashboardNotesViewModel(
                 bIsShowingProgressBar.set(false)
                 showSnackbarMessage(R.string.error_message)
             })
+        )
+    }
+
+    private fun loadFilteredNotes(colors: List<Int>, tags: List<Int>, isUnionConditions: Boolean) {
+        mCompositeDisposable.add(
+            dashboardNotesInteractor
+                .getAllFilteredNotes(colors, tags, isFavoriteNotes, isUnionConditions)
+                .doOnSubscribe { bIsShowingProgressBar.set(true) }
+                .subscribe({
+                    bIsShowingProgressBar.set(false)
+                    bNotesIsEmpty.set(it.isEmpty())
+                    mNotesResponse?.value = it
+                }, {
+                    bIsShowingProgressBar.set(false)
+                    showSnackbarMessage(R.string.error_message)
+                })
         )
     }
 

@@ -27,27 +27,41 @@ class AddEditNoteViewModel(
 ) : AndroidViewModel(applicationContext) {
 
     val bIsShowingProgressBar: ObservableBoolean = ObservableBoolean(false)
+
     val bIsShowingImage: ObservableBoolean = ObservableBoolean(false)
 
     val noteText: ObservableField<String> = ObservableField("")
+
     val noteColor: ObservableField<Int> = ObservableField(Color.BLACK)
+
     val noteTag: ObservableField<String> = ObservableField("")
+
     val noteTimestamp: ObservableField<Long> = ObservableField(DateHelper.getCurrentTimeInMills())
 
     var noteIsFavorite: Boolean = false
+
     var noteTagId: Int? = null
+
     var noteId: Int = 0
 
     private var mNoteResponse: MutableLiveData<NoteWithTag>? = null
 
     private val onBackPressedEvent: SingleLiveEvent<Void> = SingleLiveEvent()
+
     private val onDeleteTagEvent: SingleLiveEvent<Void> = SingleLiveEvent()
+
     private val onPickColorEvent: SingleLiveEvent<Void> = SingleLiveEvent()
+
     private val onPickImageEvent: SingleLiveEvent<Void> = SingleLiveEvent()
+
     private val onImagePathEvent: SingleLiveEvent<String> = SingleLiveEvent()
+
     private val onShareNoteEvent: SingleLiveEvent<Intent> = SingleLiveEvent()
+
     private val onClickImageEvent: SingleLiveEvent<String> = SingleLiveEvent()
+
     private val onClickDateEvent: SingleLiveEvent<Void> = SingleLiveEvent()
+
     private val mSnackbarMessage: SingleLiveEvent<Int> = SingleLiveEvent()
 
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()

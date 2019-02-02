@@ -13,6 +13,7 @@ import rmnvich.apps.notes.domain.utils.SingleLiveEvent
 class TrashViewModel(private val trashInteractor: TrashInteractor) : ViewModel() {
 
     val bIsShowingProgressBar: ObservableBoolean = ObservableBoolean(false)
+
     val bDataIsEmpty: ObservableBoolean = ObservableBoolean(false)
 
     var bIsNotesSelected: Boolean = false
@@ -20,6 +21,7 @@ class TrashViewModel(private val trashInteractor: TrashInteractor) : ViewModel()
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
 
     private val mSnackbarMessage: SingleLiveEvent<Int> = SingleLiveEvent()
+
     private val mDeleteOrRestoreNotesEvent: SingleLiveEvent<Void> = SingleLiveEvent()
 
     private var mResponse: MutableLiveData<List<Note>>? = null

@@ -14,6 +14,7 @@ import rmnvich.apps.notes.domain.utils.SingleLiveEvent
 class DashboardTagsViewModel(private val dashboardTagsInteractor: DashboardTagsInteractor) : ViewModel() {
 
     val bIsShowingProgressBar: ObservableBoolean = ObservableBoolean(false)
+
     val bDataIsEmpty: ObservableBoolean = ObservableBoolean(false)
 
     var bIsRecyclerNeedToScroll: Boolean = false
@@ -23,6 +24,7 @@ class DashboardTagsViewModel(private val dashboardTagsInteractor: DashboardTagsI
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
 
     private val mSnackbarMessage: SingleLiveEvent<Int> = SingleLiveEvent()
+
     private val mDeleteTaskCommand: SingleLiveEvent<Tag> = SingleLiveEvent()
 
     private var mResponse: MutableLiveData<List<Tag>>? = null
