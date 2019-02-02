@@ -31,9 +31,10 @@ open class DashboardNotesInteractor(
                 .observeOn(schedulersProvider.ui())
     }
 
-    fun getAllFilteredNotes(colors: List<Int>, tags: List<Int>,
-                            isFavorite: Boolean, isUnionConditions: Boolean): Flowable<List<NoteWithTag>> {
-        return notesRepository.getAllFilteredNotes(colors, tags, isFavorite, isUnionConditions)
+    fun getAllFilteredNotes(colors: List<Int>, tags: List<Int>, isFavorite: Boolean,
+                            isUnionConditions: Boolean, isOnlyWithPicture: Boolean): Flowable<List<NoteWithTag>> {
+        return notesRepository.getAllFilteredNotes(colors, tags, isFavorite,
+                isUnionConditions, isOnlyWithPicture)
                 .subscribeOn(schedulersProvider.io())
                 .delay(Constants.DEFAULT_DELAY, TimeUnit.MILLISECONDS)
                 .observeOn(schedulersProvider.ui())

@@ -129,7 +129,8 @@ class FilterFragment : Fragment() {
         mSharedViewModel.getSharedFilter().value = Filter(
                 mCirclesAdapter.mCheckedColors,
                 mTagsAdapter.mCheckedTags,
-                mFilterBinding.switchUnionConditions.isChecked
+                mFilterBinding.switchUnionConditions.isChecked,
+                mFilterBinding.switchOnlyWithPicture.isChecked
         )
         popBackStack()
     }
@@ -137,7 +138,8 @@ class FilterFragment : Fragment() {
     private fun handleResetFilterEvent() {
         mSharedViewModel.getSharedFilter().value = Filter(
                 emptyList(), emptyList(),
-                mFilterBinding.switchUnionConditions.isChecked
+                mFilterBinding.switchUnionConditions.isChecked,
+                mFilterBinding.switchOnlyWithPicture.isChecked
         )
         popBackStack()
     }

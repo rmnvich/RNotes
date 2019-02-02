@@ -71,12 +71,14 @@ class DashboardNotesViewModel(
         return mNotesResponse
     }
 
-    fun getFilteredNotes(colors: List<Int>, tags: List<Int>, isUnionConditions: Boolean) {
+    fun getFilteredNotes(colors: List<Int>, tags: List<Int>,
+                         isUnionConditions: Boolean, isOnlyWithPicture: Boolean) {
         mCompositeDisposable.clear()
         bIsShowingProgressBar.set(true)
         if (colors.isEmpty() && tags.isEmpty()) {
             loadNotes()
-        } else loadFilteredNotes(colors, tags, isUnionConditions)
+        } else loadFilteredNotes(colors, tags,
+                isUnionConditions, isOnlyWithPicture)
     }
 
     fun getTags(): LiveData<List<Tag>>? {
@@ -143,10 +145,12 @@ class DashboardNotesViewModel(
         )
     }
 
-    private fun loadFilteredNotes(colors: List<Int>, tags: List<Int>, isUnionConditions: Boolean) {
+    private fun loadFilteredNotes(colors: List<Int>, tags: List<Int>,
+                                  isUnionConditions: Boolean, isOnlyWithPicture: Boolean) {
         mCompositeDisposable.add(
             dashboardNotesInteractor
-                .getAllFilteredNotes(colors, tags, isFavoriteNotes, isUnionConditions)
+                .getAllFilteredNotes(colors, tags, isFavoriteNotes,
+                        isUnionConditions, isOnlyWithPicture)
                 .doOnSubscribe { bIsShowingProgressBar.set(true) }
                 .subscribe({
                     bIsShowingProgressBar.set(false)

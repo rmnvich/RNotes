@@ -20,9 +20,11 @@ class NotesRepositoryImpl(database: Database) : NotesRepository {
             colors: List<Int>,
             tags: List<Int>,
             isFavorite: Boolean,
-            isUnionConditions: Boolean
+            isUnionConditions: Boolean,
+            isOnlyWithPicture: Boolean
     ): Flowable<List<NoteWithTag>> {
-        return noteDao.getFilteredNotes(colors, tags, isFavorite, isUnionConditions)
+        return noteDao.getFilteredNotes(colors, tags, isFavorite,
+                isUnionConditions, isOnlyWithPicture)
     }
 
     override fun getNoteById(noteId: Int): Single<NoteWithTag> {

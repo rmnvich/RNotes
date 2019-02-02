@@ -167,7 +167,7 @@ class DashboardNotesFragment : Fragment() {
         mDashboardNotesViewModel.getSharedFilter().observe(this,
                 Observer { filter ->
                     mDashboardNotesViewModel.getFilteredNotes(filter?.colors!!,
-                            filter.tags, filter.isUnionConditions)
+                            filter.tags, filter.isUnionConditions, filter.isOnlyWithPicture)
                 })
         mDashboardNotesViewModel.getAddNoteEvent().observe(this,
                 Observer { handleAddEditNoteEvent(-1) })
