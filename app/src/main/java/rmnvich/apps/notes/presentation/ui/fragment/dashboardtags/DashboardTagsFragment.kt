@@ -15,6 +15,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.main_activity.*
+import org.jetbrains.anko.noButton
+import org.jetbrains.anko.support.v4.alert
+import org.jetbrains.anko.yesButton
 import rmnvich.apps.notes.App
 
 import rmnvich.apps.notes.R
@@ -79,7 +82,8 @@ class DashboardTagsFragment : Fragment() {
         })
         ItemTouchHelper(object : SwipeToDeleteCallback(context!!) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                mDashboardTagsViewModel.deleteTag(mAdapter.mTagList[viewHolder.adapterPosition])
+                handleDeletingTag(mAdapter.mTagList[viewHolder.adapterPosition],
+                        viewHolder.adapterPosition)
             }
         }).attachToRecyclerView(mDashboardTagsBinding.recyclerTags)
     }
@@ -93,15 +97,20 @@ class DashboardTagsFragment : Fragment() {
         mDashboardTagsViewModel.getTags()?.observe(this,
                 Observer<List<Tag>> { handleResponse(it!!) })
         mDashboardTagsViewModel.getDeleteTaskCommand().observe(this,
-                Observer { handleTagDeleting(it!!) })
+                Observer { handleTagDeleteEvent() })
         observeSnackbar()
     }
 
-    private fun handleTagDeleting(tag: Tag) {
-        Snackbar.make(mDashboardTagsBinding.root, getString(R.string.tag_has_been_deleted),
-                Snackbar.LENGTH_LONG).setAction(getString(R.string.undo)) {
-            mDashboardTagsViewModel.restoreTag(tag)
+    private fun handleDeletingTag(tag: Tag, position: Int) {
+        alert(getString(R.string.alert_dialog_delete_tag_message), getString(R.string.alert_dialog_delete_tag_title)) {
+            yesButton { mDashboardTagsViewModel.deleteTag(tag) }
+            noButton { mAdapter.notifyItemChanged(position) }
         }.show()
+    }
+
+    private fun handleTagDeleteEvent() {
+        Snackbar.make(mDashboardTagsBinding.root, getString(R.string.tag_has_been_deleted),
+                Snackbar.LENGTH_LONG).show()
     }
 
     private fun handleResponse(response: List<Tag>) {

@@ -40,6 +40,8 @@
     <string name="delete">Delete</string>
     <string name="background">Background</string>
     <string name="create_new_tag">Create new label</string>
+    <string name="alert_dialog_delete_tag_title">Warning</string>
+    <string name="alert_dialog_delete_tag_message">This label will be removed from all your notes. Your notes won\'t be deleted.</string>
 
     <!-- TrashFragment -->
     <string name="trash_is_empty">Trash is empty</string>

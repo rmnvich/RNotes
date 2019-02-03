@@ -25,13 +25,13 @@ class DashboardTagsViewModel(private val dashboardTagsInteractor: DashboardTagsI
 
     private val mSnackbarMessage: SingleLiveEvent<Int> = SingleLiveEvent()
 
-    private val mDeleteTaskCommand: SingleLiveEvent<Tag> = SingleLiveEvent()
+    private val mDeleteTaskCommand: SingleLiveEvent<Void> = SingleLiveEvent()
 
     private var mResponse: MutableLiveData<List<Tag>>? = null
 
     fun getSnackbar(): SingleLiveEvent<Int> = mSnackbarMessage
 
-    fun getDeleteTaskCommand(): SingleLiveEvent<Tag> = mDeleteTaskCommand
+    fun getDeleteTaskCommand(): SingleLiveEvent<Void> = mDeleteTaskCommand
 
     fun getTags(): LiveData<List<Tag>>? {
         if (mResponse == null) {
@@ -46,7 +46,7 @@ class DashboardTagsViewModel(private val dashboardTagsInteractor: DashboardTagsI
 
         mCompositeDisposable.add(dashboardTagsInteractor
                 .deleteTag(tag)
-                .subscribe({ mDeleteTaskCommand.value = tag },
+                .subscribe({ mDeleteTaskCommand.call() },
                         { showSnackbarMessage(R.string.error_message) }))
     }
 
@@ -78,14 +78,6 @@ class DashboardTagsViewModel(private val dashboardTagsInteractor: DashboardTagsI
                         showSnackbarMessage(R.string.error_message)
                     }))
         } else showSnackbarMessage(R.string.empty_tag_error)
-    }
-
-    fun restoreTag(tag: Tag) {
-        bIsRecyclerNeedToScroll = false
-
-        mCompositeDisposable.add(dashboardTagsInteractor
-                .insertTag(tag)
-                .subscribe({}, { showSnackbarMessage(R.string.error_message) }))
     }
 
     private fun loadTags() {
