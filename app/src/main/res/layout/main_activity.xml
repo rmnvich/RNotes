@@ -21,7 +21,6 @@
         android:layout_marginStart="@dimen/navigation_view_full_screen"
         android:background="@color/colorWhite"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header"
         app:itemBackground="@drawable/navigation_item_background"
         app:itemIconTint="@color/colorToolbarTitle"
         app:itemTextColor="@color/colorToolbarTitle"
