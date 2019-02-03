@@ -1,4 +1,4 @@
-package rmnvich.apps.notes.di.filter
+package rmnvich.apps.notes.di.dashboardnotes.filter
 
 import dagger.Subcomponent
 import rmnvich.apps.notes.di.global.base.BaseComponent

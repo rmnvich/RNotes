@@ -59,7 +59,6 @@ class DashboardTagsFragment : Fragment() {
                 .setColorSchemeResources(R.color.colorAccent)
         mDashboardTagsBinding.swipeRefreshLayout.isEnabled = false
 
-
         initRecyclerView()
         initToolbar()
 

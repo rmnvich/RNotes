@@ -27,6 +27,14 @@ class NotesRepositoryImpl(database: Database) : NotesRepository {
                 isUnionConditions, isOnlyWithPicture)
     }
 
+    //TODO: fix this
+    override fun getSearchedNotes(query: String, isFavorite: Boolean): Flowable<List<NoteWithTag>> {
+        val searchQuery = if (query.isEmpty())
+            "F11CD6F0EC98691BBD0F778205A10476E1EF7DA3B06994F54F"
+        else query
+        return noteDao.getSearchedNotes(searchQuery, isFavorite)
+    }
+
     override fun getNoteById(noteId: Int): Single<NoteWithTag> {
         return noteDao.getNoteWithTagByNoteId(noteId)
     }

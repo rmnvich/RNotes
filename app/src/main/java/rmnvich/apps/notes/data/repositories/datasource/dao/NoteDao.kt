@@ -24,6 +24,10 @@ interface NoteDao {
     ): Flowable<List<NoteWithTag>>
 
     @Transaction
+    @Query("SELECT note.id AS note_id, note.text AS note_text, note.imagePath AS note_image_path, note.timestamp AS note_timestamp, note.color AS note_color, note.isFavorite AS note_is_favorite, note.isDeleted AS note_is_deleted, tag.name AS note_tag_name, tag.id AS note_tag_id FROM note LEFT JOIN tag ON note.tag_id = tag.id WHERE note.isDeleted = 0 AND CASE WHEN :isFavorite == 1 THEN note.isFavorite = 1 ELSE note.isFavorite = 0 OR note.isFavorite = 1 END AND note.text LIKE '%' || :query || '%' ORDER BY timestamp DESC")
+    fun getSearchedNotes(query: String, isFavorite: Boolean): Flowable<List<NoteWithTag>>
+
+    @Transaction
     @Query("SELECT note.id AS note_id, note.text AS note_text, note.imagePath AS note_image_path, note.timestamp AS note_timestamp, note.color AS note_color, note.isFavorite AS note_is_favorite, note.isDeleted AS note_is_deleted, tag.name AS note_tag_name, tag.id AS note_tag_id FROM note LEFT JOIN tag ON tag_id = tag.id WHERE note.id = :noteId")
     fun getNoteWithTagByNoteId(noteId: Int): Single<NoteWithTag>
 

@@ -21,6 +21,7 @@
     <!-- DashboardNotesFragment -->
     <string name="you_have_no_notes">You have no notes</string>
     <string name="you_have_no_favorite_notes">You have no favorite notes</string>
+    <string name="no_notes_found">No match found</string>
     <string name="dashboard_title">Dashboard</string>
     <string name="empty">Empty</string>
     <string name="search">Search</string>
@@ -76,5 +77,6 @@
     <string name="dropdown">Dropdown</string>
     <string name="share">Share</string>
     <string name="send_via">Send via</string>
+    <string name="back">Back</string>
 
 </resources>

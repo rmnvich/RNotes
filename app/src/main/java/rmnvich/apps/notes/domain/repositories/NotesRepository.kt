@@ -5,7 +5,6 @@ import io.reactivex.Flowable
 import io.reactivex.Single
 import rmnvich.apps.notes.domain.entity.Note
 import rmnvich.apps.notes.domain.entity.NoteWithTag
-import rmnvich.apps.notes.domain.entity.Tag
 
 interface NotesRepository {
 
@@ -13,6 +12,8 @@ interface NotesRepository {
 
     fun getAllFilteredNotes(colors: List<Int>, tags: List<Int>, isFavorite: Boolean,
                             isUnionConditions: Boolean, isOnlyWithPicture: Boolean): Flowable<List<NoteWithTag>>
+
+    fun getSearchedNotes(query: String, isFavorite: Boolean): Flowable<List<NoteWithTag>>
 
     fun getNoteById(noteId: Int): Single<NoteWithTag>
 

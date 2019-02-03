@@ -40,6 +40,13 @@ open class DashboardNotesInteractor(
                 .observeOn(schedulersProvider.ui())
     }
 
+    fun getSearchedNotes(query: String, isFavorite: Boolean): Flowable<List<NoteWithTag>> {
+        return notesRepository.getSearchedNotes(query, isFavorite)
+                .subscribeOn(schedulersProvider.io())
+                .delay(Constants.DEFAULT_DELAY, TimeUnit.MILLISECONDS)
+                .observeOn(schedulersProvider.ui())
+    }
+
     fun favoriteOrUnfavoriteNote(noteId: Int, isFavorite: Boolean): Completable {
         return notesRepository.favoriteOrUnfavoriteNote(noteId, isFavorite)
                 .subscribeOn(schedulersProvider.io())

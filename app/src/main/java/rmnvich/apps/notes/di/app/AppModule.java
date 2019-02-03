@@ -10,21 +10,24 @@ import dagger.multibindings.IntoMap;
 import rmnvich.apps.notes.data.repositories.datasource.Database;
 import rmnvich.apps.notes.di.addeditnote.AddEditNoteComponent;
 import rmnvich.apps.notes.di.dashboardnotes.DashboardNotesComponent;
+import rmnvich.apps.notes.di.dashboardnotes.filter.FilterComponent;
+import rmnvich.apps.notes.di.dashboardnotes.search.SearchComponent;
 import rmnvich.apps.notes.di.dashboardtags.DashboardTagsComponent;
-import rmnvich.apps.notes.di.filter.FilterComponent;
 import rmnvich.apps.notes.di.global.base.BaseComponentBuilder;
 import rmnvich.apps.notes.di.global.scope.PerApplication;
 import rmnvich.apps.notes.di.trash.TrashComponent;
 import rmnvich.apps.notes.presentation.ui.activity.addeditnote.AddEditNoteActivity;
 import rmnvich.apps.notes.presentation.ui.fragment.dashboardnotes.DashboardNotesFragment;
 import rmnvich.apps.notes.presentation.ui.fragment.dashboardnotes.FilterFragment;
+import rmnvich.apps.notes.presentation.ui.fragment.dashboardnotes.SearchFragment;
 import rmnvich.apps.notes.presentation.ui.fragment.dashboardtags.DashboardTagsFragment;
 import rmnvich.apps.notes.presentation.ui.fragment.trash.TrashFragment;
 
 import static rmnvich.apps.notes.data.common.Constants.DATABASE_NAME;
 
 @Module(subcomponents = {DashboardNotesComponent.class, AddEditNoteComponent.class,
-        DashboardTagsComponent.class, TrashComponent.class, FilterComponent.class})
+        DashboardTagsComponent.class, TrashComponent.class, FilterComponent.class,
+        SearchComponent.class})
 public class AppModule {
 
     private final Context mContext;
@@ -77,6 +80,13 @@ public class AppModule {
     @IntoMap
     @ClassKey(FilterFragment.class)
     BaseComponentBuilder provideFilterFragment(FilterComponent.Builder builder) {
+        return builder;
+    }
+
+    @Provides
+    @IntoMap
+    @ClassKey(SearchFragment.class)
+    BaseComponentBuilder provideSearchFragment(SearchComponent.Builder builder) {
         return builder;
     }
 }

@@ -23,7 +23,6 @@ import rmnvich.apps.notes.domain.utils.ViewModelFactory
 import rmnvich.apps.notes.presentation.ui.activity.addeditnote.AddEditNoteActivity
 import rmnvich.apps.notes.presentation.ui.activity.main.MainActivity
 import rmnvich.apps.notes.presentation.ui.adapter.dashboard.NotesAdapter
-import rmnvich.apps.notes.presentation.utils.DebugLogger
 import javax.inject.Inject
 
 
@@ -136,20 +135,28 @@ class DashboardNotesFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when (item?.itemId) {
             R.id.menu_filter -> {
-                Handler().postDelayed({
-                    activity?.supportFragmentManager?.beginTransaction()
-                            ?.setCustomAnimations(
-                                    R.anim.slide_in_up, R.anim.slide_out_up,
-                                    R.anim.slide_in_down, R.anim.slide_out_down
-                            )
-                            ?.addToBackStack("")
-                            ?.replace(R.id.content, FilterFragment.newInstance(isFavoriteNotes))
-                            ?.commit()
-                }, 100)
+                showFragment(FilterFragment.newInstance(isFavoriteNotes))
+                true
+            }
+            R.id.menu_search -> {
+                showFragment(SearchFragment.newInstance(isFavoriteNotes))
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun showFragment(fragment: Fragment) {
+        Handler().postDelayed({
+            activity?.supportFragmentManager?.beginTransaction()
+                    ?.setCustomAnimations(
+                            R.anim.slide_in_up, R.anim.slide_out_up,
+                            R.anim.slide_in_down, R.anim.slide_out_down
+                    )
+                    ?.addToBackStack("")
+                    ?.replace(R.id.content, fragment)
+                    ?.commit()
+        }, 100)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -166,7 +173,7 @@ class DashboardNotesFragment : Fragment() {
                 Observer { handleNotesResponse(it!!) })
         mDashboardNotesViewModel.getSharedFilter().observe(this,
                 Observer { filter ->
-                    mDashboardNotesViewModel.getFilteredNotes(filter?.colors!!,
+                    mDashboardNotesViewModel.applyFilterToNotes(filter?.colors!!,
                             filter.tags, filter.isUnionConditions, filter.isOnlyWithPicture)
                 })
         mDashboardNotesViewModel.getAddNoteEvent().observe(this,
