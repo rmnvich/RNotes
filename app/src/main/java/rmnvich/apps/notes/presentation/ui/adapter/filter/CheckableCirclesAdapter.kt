@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.databinding.ItemCheckableColorBinding
 import rmnvich.apps.notes.domain.entity.Color
-import timber.log.Timber
 import java.util.*
 
 class CheckableCirclesAdapter : RecyclerView.Adapter<CheckableCirclesAdapter.ViewHolder>() {

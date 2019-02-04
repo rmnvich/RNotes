@@ -38,6 +38,10 @@
                     android:icon="@drawable/ic_action_reminder"
                     android:title="@string/title_reminders" />
                 <item
+                    android:id="@+id/nav_todo_lists"
+                    android:icon="@drawable/ic_action_todo_lists"
+                    android:title="@string/title_todo_lists" />
+                <item
                     android:id="@+id/nav_gallery"
                     android:icon="@drawable/ic_action_image"
                     android:title="@string/title_gallery" />
@@ -47,22 +51,18 @@
 
     <item android:title="@string/title_other">
         <menu>
-            <group
-                android:id="@+id/group_other"
-                android:checkableBehavior="single">
-                <item
-                    android:id="@+id/nav_settings"
-                    android:icon="@drawable/ic_action_settings"
-                    android:title="@string/title_settings" />
-                <item
-                    android:id="@+id/nav_help"
-                    android:icon="@drawable/ic_action_help"
-                    android:title="@string/title_help" />
-                <item
-                    android:id="@+id/nav_share"
-                    android:icon="@drawable/ic_action_share"
-                    android:title="@string/title_share" />
-            </group>
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_action_settings"
+                android:title="@string/title_settings" />
+            <item
+                android:id="@+id/nav_help"
+                android:icon="@drawable/ic_action_help"
+                android:title="@string/title_help" />
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_action_share"
+                android:title="@string/title_share" />
         </menu>
     </item>
 </menu>

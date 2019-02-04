@@ -78,5 +78,6 @@
     <string name="share">Share</string>
     <string name="send_via">Send via</string>
     <string name="back">Back</string>
+    <string name="title_todo_lists">To-Do lists</string>
 
 </resources>
