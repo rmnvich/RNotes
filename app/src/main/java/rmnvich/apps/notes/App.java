@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import rmnvich.apps.notes.di.global.ComponentHolder;
+import timber.log.Timber;
 
 public class App extends Application {
 
@@ -16,6 +17,8 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Timber.plant(new FileLoggingTree(getApplicationContext()));
+        Timber.d("------------------------------------");
 
         componentsHolder = new ComponentHolder(this);
         componentsHolder.init();

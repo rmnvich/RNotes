@@ -3,10 +3,12 @@ package rmnvich.apps.notes.presentation.ui.adapter.filter
 import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.databinding.ItemCheckableColorBinding
 import rmnvich.apps.notes.domain.entity.Color
+import timber.log.Timber
 import java.util.*
 
 class CheckableCirclesAdapter : RecyclerView.Adapter<CheckableCirclesAdapter.ViewHolder>() {
@@ -41,16 +43,18 @@ class CheckableCirclesAdapter : RecyclerView.Adapter<CheckableCirclesAdapter.Vie
     }
 
     inner class ViewHolder(private val binding: ItemCheckableColorBinding)
-        : RecyclerView.ViewHolder(binding.root) {
+        : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+
+        override fun onClick(view: View?) {
+            binding.chbCircleColor.isChecked = !binding.chbCircleColor.isChecked
+
+            if (binding.chbCircleColor.isChecked) {
+                mCheckedColors.add(mColors[adapterPosition].color)
+            } else mCheckedColors.remove(mColors[adapterPosition].color)
+        }
 
         init {
-            binding.root.setOnClickListener {
-                binding.chbCircleColor.isChecked = !binding.chbCircleColor.isChecked
-
-                if (binding.chbCircleColor.isChecked) {
-                    mCheckedColors.add(mColors[adapterPosition].color)
-                } else mCheckedColors.remove(mColors[adapterPosition].color)
-            }
+            binding.root.setOnClickListener(this)
         }
 
         fun bind(color: Color) {

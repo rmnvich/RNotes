@@ -3,6 +3,7 @@ package rmnvich.apps.notes.presentation.ui.adapter.filter
 import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.databinding.ItemSimpleCheckableTagBinding
@@ -35,16 +36,18 @@ class CheckableTagsAdapter : RecyclerView.Adapter<CheckableTagsAdapter.ViewHolde
     }
 
     inner class ViewHolder(private val binding: ItemSimpleCheckableTagBinding)
-        : RecyclerView.ViewHolder(binding.root) {
+        : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+
+        override fun onClick(view: View?) {
+            binding.chbTag.isChecked = !binding.chbTag.isChecked
+
+            if (binding.chbTag.isChecked) {
+                mCheckedTags.add(mTags[adapterPosition].id)
+            } else mCheckedTags.remove(mTags[adapterPosition].id)
+        }
 
         init {
-            binding.root.setOnClickListener {
-                binding.chbTag.isChecked = !binding.chbTag.isChecked
-
-                if (binding.chbTag.isChecked) {
-                    mCheckedTags.add(mTags[adapterPosition].id)
-                } else mCheckedTags.remove(mTags[adapterPosition].id)
-            }
+            binding.root.setOnClickListener(this)
         }
 
         fun bind(tag: Tag) {
