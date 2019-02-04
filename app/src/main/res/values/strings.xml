@@ -58,6 +58,7 @@
     <string name="delete_image">Delete image</string>
     <string name="add_image">Add image</string>
     <string name="image">Image</string>
+    <string name="share_blank_note">You can not share a blank note</string>
 
     <!-- Messages -->
     <string name="error_message">An error occurred. Try again</string>

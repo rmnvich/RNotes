@@ -6,6 +6,7 @@ public class Constants {
 
     public static String DATABASE_NAME = "test_database" + 52;
 
+    public static int DEFAULT_COLOR = -16777216;
     public static long DEFAULT_DELAY = 0;
 
     public static String EXTRA_NOTE_ID = "note_id";
