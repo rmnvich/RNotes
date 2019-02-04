@@ -151,6 +151,7 @@ class SearchFragment : Fragment() {
         if (noteId != -1)
             intent.putExtra(Constants.EXTRA_NOTE_ID, noteId)
 
+        dismissKeyboard()
         activity?.startActivity(intent)
         activity?.overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
@@ -181,12 +182,15 @@ class SearchFragment : Fragment() {
         inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
     }
 
-    private fun popBackStack() {
+    private fun dismissKeyboard() {
         val inputMethodManager = activity?.getSystemService(Service
                 .INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(mSearchNotesBinding
                 .etSearch.windowToken, 0)
+    }
 
+    private fun popBackStack() {
+        dismissKeyboard()
         Handler().postDelayed({
             (activity as MainActivity).supportFragmentManager?.popBackStack()
         }, 250)
