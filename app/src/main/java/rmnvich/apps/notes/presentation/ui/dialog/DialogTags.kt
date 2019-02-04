@@ -37,6 +37,8 @@ class DialogTags(
 
     interface DialogTagsCallback {
         fun onClickTag(tag: Tag)
+
+        fun tagsIsEmpty()
     }
 
     private var mCallback: DialogTagsCallback? = null
@@ -114,8 +116,10 @@ class DialogTags(
         return interactor.getAllTags()
             .doOnSubscribe { progressLayout.visibility = View.VISIBLE }
             .subscribe({
-                if (it.isEmpty())
+                if (it.isEmpty()) {
+                    mCallback?.tagsIsEmpty()
                     this.dismiss()
+                }
 
                 progressLayout.visibility = View.INVISIBLE
                 mAdapter.setData(it)

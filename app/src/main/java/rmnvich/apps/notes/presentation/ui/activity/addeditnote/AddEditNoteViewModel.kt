@@ -98,6 +98,10 @@ class AddEditNoteViewModel(
         onClickImageEvent.value = onImagePathEvent.value
     }
 
+    fun tagsIsEmpty() {
+        showSnackbarMessage(R.string.you_have_no_tags)
+    }
+
     fun onDatePickerDialogClicked(year: Int, month: Int, day: Int) {
         noteTimestamp.set(DateHelper.getDate(year, month, day))
     }

@@ -124,6 +124,10 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
                         mAddEditNoteViewModel.noteTag.set(tag.name)
                         mAddEditNoteViewModel.noteTagId = tag.id
                     }
+
+                    override fun tagsIsEmpty() {
+                        mAddEditNoteViewModel.tagsIsEmpty()
+                    }
                 })
                 true
             }
