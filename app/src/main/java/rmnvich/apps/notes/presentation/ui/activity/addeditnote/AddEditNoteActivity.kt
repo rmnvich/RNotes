@@ -16,7 +16,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
 import com.bumptech.glide.Glide
-import com.jaredrummler.android.colorpicker.ColorPickerDialog
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.disposables.CompositeDisposable
@@ -28,6 +27,7 @@ import rmnvich.apps.notes.di.addeditnote.AddEditNoteModule
 import rmnvich.apps.notes.domain.entity.Tag
 import rmnvich.apps.notes.domain.utils.ViewModelFactory
 import rmnvich.apps.notes.presentation.ui.activity.viewimage.ViewImageActivity
+import rmnvich.apps.notes.presentation.ui.custom.ColorPickerDialog
 import rmnvich.apps.notes.presentation.ui.dialog.DialogTags
 import java.io.File
 import java.util.*

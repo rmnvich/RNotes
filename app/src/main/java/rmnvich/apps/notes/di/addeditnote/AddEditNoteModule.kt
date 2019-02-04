@@ -2,7 +2,6 @@ package rmnvich.apps.notes.di.addeditnote
 
 import android.app.Application
 import android.content.Context
-import com.jaredrummler.android.colorpicker.ColorPickerDialog
 import dagger.Module
 import dagger.Provides
 import rmnvich.apps.notes.data.common.SchedulersProvider
@@ -18,6 +17,7 @@ import rmnvich.apps.notes.domain.repositories.FileRepository
 import rmnvich.apps.notes.domain.repositories.NotesRepository
 import rmnvich.apps.notes.domain.repositories.TagsRepository
 import rmnvich.apps.notes.domain.utils.ViewModelFactory
+import rmnvich.apps.notes.presentation.ui.custom.ColorPickerDialog
 import rmnvich.apps.notes.presentation.ui.dialog.DialogTags
 
 @Module
