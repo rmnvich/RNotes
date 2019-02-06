@@ -1,45 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="rmnvich.apps.notes">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="rmnvich.apps.notes">
 
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-            android:name=".App"
-            android:allowBackup="true"
-            android:icon="@mipmap/ic_launcher"
-            android:label="@string/app_name"
-            android:roundIcon="@mipmap/ic_launcher"
-            android:supportsRtl="true"
-            android:theme="@style/AppTheme"
-            tools:ignore="GoogleAppIndexingWarning">
-        <provider
-                android:name="android.support.v4.content.FileProvider"
-                android:authorities="rmnvich.apps.notes.fileprovider"
-                android:exported="false"
-                android:grantUriPermissions="true">
-            <meta-data
-                    android:name="android.support.FILE_PROVIDER_PATHS"
-                    android:resource="@xml/provider_path"/>
-        </provider>
-        <activity
-                android:name=".presentation.ui.activity.main.MainActivity"
-                android:configChanges="orientation|screenSize|keyboardHidden"
-                android:windowSoftInputMode="adjustResize">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+        android:name=".App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".presentation.ui.activity.addeditreminder.AddEditReminderActivity"></activity>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="rmnvich.apps.notes.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_path" />
+        </provider>
+
+        <activity
+            android:name=".presentation.ui.activity.main.MainActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.ui.activity.viewimage.ViewImageActivity"
-                  android:theme="@style/ViewImageTheme"/>
         <activity
-                android:name=".presentation.ui.activity.addeditnote.AddEditNoteActivity"
-                android:configChanges="orientation|screenSize"
-                android:windowSoftInputMode="adjustResize"/>
+            android:name=".presentation.ui.activity.viewimage.ViewImageActivity"
+            android:theme="@style/ViewImageTheme" />
+        <activity
+            android:name=".presentation.ui.activity.addeditnote.AddEditNoteActivity"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

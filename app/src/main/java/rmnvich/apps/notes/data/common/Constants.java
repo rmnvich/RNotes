@@ -19,8 +19,5 @@ public class Constants {
     public static int REQUEST_CODE_IMAGE = 0;
     public static int REQUEST_CODE_SHARE = 1;
 
-    //TODO: added AddEditReminderViewModel, ReminderAdapter
-
-    //TODO: Settings (vibrate, theme, pin)
-    //TODO: Reminder, photos, links
+    //TODO: Settings (vibrate, theme, pin, default color)
 }

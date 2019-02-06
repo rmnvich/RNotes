@@ -6,11 +6,13 @@ import rmnvich.apps.notes.domain.interactors.dashboardreminders.DashboardReminde
 
 class DashboardRemindersViewModel(
         private val mDashboardRemindersInteractor: DashboardRemindersInteractor,
-        private val doneReminders: Boolean) : ViewModel() {
+        private val isDoneReminders: Boolean) : ViewModel() {
 
     val bIsShowingProgressBar: ObservableBoolean = ObservableBoolean(false)
 
     val bRemindersIsEmpty: ObservableBoolean = ObservableBoolean(false)
+
+
 
     fun addReminder() {
 

@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 import rmnvich.apps.notes.di.global.base.BaseModule
 import rmnvich.apps.notes.di.global.scope.PerFragment
-import rmnvich.apps.notes.presentation.ui.adapter.dashboard.NotesAdapter
+import rmnvich.apps.notes.presentation.ui.adapter.note.NotesAdapter
 
 @Module
 class SearchModule : BaseModule {

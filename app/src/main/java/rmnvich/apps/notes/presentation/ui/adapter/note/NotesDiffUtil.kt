@@ -1,4 +1,4 @@
-package rmnvich.apps.notes.presentation.ui.adapter.dashboard
+package rmnvich.apps.notes.presentation.ui.adapter.note
 
 import android.support.v7.util.DiffUtil
 import rmnvich.apps.notes.domain.entity.NoteWithTag
@@ -32,6 +32,4 @@ class NotesDiffUtil(
                 oldNote.tagName == newNote.tagName &&
                 oldNote.noteIsDeleted == newNote.noteIsDeleted
     }
-
-
 }

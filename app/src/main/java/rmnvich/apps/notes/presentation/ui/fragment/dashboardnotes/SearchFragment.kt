@@ -27,7 +27,7 @@ import rmnvich.apps.notes.databinding.SearchFragmentBinding
 import rmnvich.apps.notes.domain.entity.NoteWithTag
 import rmnvich.apps.notes.presentation.ui.activity.addeditnote.AddEditNoteActivity
 import rmnvich.apps.notes.presentation.ui.activity.main.MainActivity
-import rmnvich.apps.notes.presentation.ui.adapter.dashboard.NotesAdapter
+import rmnvich.apps.notes.presentation.ui.adapter.note.NotesAdapter
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 

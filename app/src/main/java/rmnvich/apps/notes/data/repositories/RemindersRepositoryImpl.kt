@@ -7,7 +7,7 @@ import rmnvich.apps.notes.data.repositories.datasource.Database
 import rmnvich.apps.notes.domain.entity.Reminder
 import rmnvich.apps.notes.domain.repositories.RemindersRepository
 
-class ReminderRepositoryImpl(database: Database) : RemindersRepository {
+class RemindersRepositoryImpl(database: Database) : RemindersRepository {
 
     private val reminderDao = database.reminderDao()
 

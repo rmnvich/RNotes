@@ -1,4 +1,4 @@
-package rmnvich.apps.notes.presentation.ui.adapter.dashboard
+package rmnvich.apps.notes.presentation.ui.adapter.note
 
 import android.content.Context
 import android.databinding.DataBindingUtil
@@ -94,8 +94,8 @@ class NotesAdapter : RecyclerSwipeAdapter<NotesAdapter.ViewHolder>() {
 
             binding.noteDeleteButton.setOnClickListener {
                 vibrate()
-
                 binding.swipeLayout.close()
+
                 Handler().postDelayed({
                     try {
                         mClickListener.onClickDelete(
