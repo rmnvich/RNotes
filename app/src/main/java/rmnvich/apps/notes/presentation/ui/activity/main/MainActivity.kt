@@ -63,9 +63,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     R.id.nav_todo_lists -> {
 
                     }
-                    R.id.nav_gallery -> {
-
-                    }
                     R.id.nav_settings -> {
 
                     }

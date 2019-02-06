@@ -5,10 +5,12 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import rmnvich.apps.notes.domain.interactors.addeditnote.AddEditNoteInteractor
 import rmnvich.apps.notes.domain.interactors.dashboardnotes.DashboardNotesInteractor
+import rmnvich.apps.notes.domain.interactors.dashboardreminders.DashboardRemindersInteractor
 import rmnvich.apps.notes.domain.interactors.dashboardtags.DashboardTagsInteractor
 import rmnvich.apps.notes.domain.interactors.trash.TrashInteractor
 import rmnvich.apps.notes.presentation.ui.activity.addeditnote.AddEditNoteViewModel
 import rmnvich.apps.notes.presentation.ui.fragment.dashboardnotes.DashboardNotesViewModel
+import rmnvich.apps.notes.presentation.ui.fragment.dashboardreminders.DashboardRemindersViewModel
 import rmnvich.apps.notes.presentation.ui.fragment.dashboardtags.DashboardTagsViewModel
 import rmnvich.apps.notes.presentation.ui.fragment.trash.TrashViewModel
 
@@ -16,11 +18,15 @@ class ViewModelFactory : ViewModelProvider.NewInstanceFactory {
 
     private var isFavoriteNotes = false
 
+    private var isDoneReminders = false
+
     private lateinit var mApplicationContext: Application
 
     private lateinit var mDashboardNotesInteractor: DashboardNotesInteractor
 
     private lateinit var mDashboardTagsInteractor: DashboardTagsInteractor
+
+    private lateinit var mDashboardRemindersInteractor: DashboardRemindersInteractor
 
     private lateinit var mTrashInteractor: TrashInteractor
 
@@ -33,6 +39,11 @@ class ViewModelFactory : ViewModelProvider.NewInstanceFactory {
 
     constructor(dashboardTagsInteractor: DashboardTagsInteractor) : super() {
         this.mDashboardTagsInteractor = dashboardTagsInteractor
+    }
+
+    constructor(dashboardRemindersInteractor: DashboardRemindersInteractor, isDone: Boolean) : super() {
+        this.mDashboardRemindersInteractor = dashboardRemindersInteractor
+        this.isDoneReminders = isDone
     }
 
     constructor(trashInteractor: TrashInteractor) : super() {
@@ -54,6 +65,8 @@ class ViewModelFactory : ViewModelProvider.NewInstanceFactory {
                 DashboardTagsViewModel(mDashboardTagsInteractor) as VM
             modelClass.isAssignableFrom(TrashViewModel::class.java) ->
                 TrashViewModel(mTrashInteractor) as VM
+            modelClass.isAssignableFrom(DashboardRemindersViewModel::class.java) ->
+                DashboardRemindersViewModel(mDashboardRemindersInteractor, isDoneReminders) as VM
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }

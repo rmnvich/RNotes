@@ -20,4 +20,14 @@ public class DateHelper {
         calendar.set(year, month, date);
         return calendar.getTimeInMillis();
     }
+
+    public static String convertLongToDate(long time) {
+        return new SimpleDateFormat("dd/MM/yyyy",
+                Locale.getDefault()).format(time);
+    }
+
+    public static String convertLongToTime(long time) {
+        return new SimpleDateFormat("HH:mm",
+                Locale.getDefault()).format(time);
+    }
 }

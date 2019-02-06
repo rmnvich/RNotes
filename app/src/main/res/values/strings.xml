@@ -26,6 +26,9 @@
     <string name="empty">Empty</string>
     <string name="search">Search</string>
 
+    <!-- DashboardRemindersFragment -->
+    <string name="you_have_no_reminders">You have no reminders</string>
+
     <!-- FilterFragment -->
     <string name="filter">Filter</string>
     <string name="apply_filter">Apply filter</string>
@@ -80,5 +83,8 @@
     <string name="send_via">Send via</string>
     <string name="back">Back</string>
     <string name="title_todo_lists">To-Do lists</string>
+    <string name="clock">Clock</string>
+    <string name="repeat">Repeat</string>
+    <string name="calendar">Calendar</string>
 
 </resources>

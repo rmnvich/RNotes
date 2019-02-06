@@ -41,10 +41,6 @@
                     android:id="@+id/nav_todo_lists"
                     android:icon="@drawable/ic_action_todo_lists"
                     android:title="@string/title_todo_lists" />
-                <item
-                    android:id="@+id/nav_gallery"
-                    android:icon="@drawable/ic_action_image"
-                    android:title="@string/title_gallery" />
             </group>
         </menu>
     </item>

@@ -75,5 +75,15 @@
     <dimen name="filter_fragment_switch_padding">12dp</dimen>
     <dimen name="search_fragment_et_search_padding">15dp</dimen>
 
+    <dimen name="item_reminder_card_view_corner_radius">0dp</dimen>
+    <dimen name="item_reminder_card_view_horizontal_margin">5dp</dimen>
+    <dimen name="item_reminder_card_view_vertical_margin">3dp</dimen>
+    <dimen name="item_reminder_card_view_padding">15dp</dimen>
+    <dimen name="item_reminder_divider_margin_top">10dp</dimen>
+    <dimen name="item_reminder_time_margin_start">5dp</dimen>
+    <dimen name="item_reminder_layout_margin_top">7dp</dimen>
+    <dimen name="item_reminder_image_view_size">18dp</dimen>
+    <dimen name="item_reminder_tv_margin_start">5dp</dimen>
+
     <integer name="animation_duration">400</integer>
 </resources>
