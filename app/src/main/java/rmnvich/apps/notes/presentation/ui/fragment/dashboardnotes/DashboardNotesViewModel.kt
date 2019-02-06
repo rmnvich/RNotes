@@ -12,7 +12,6 @@ import rmnvich.apps.notes.domain.entity.NoteWithTag
 import rmnvich.apps.notes.domain.entity.Tag
 import rmnvich.apps.notes.domain.interactors.dashboardnotes.DashboardNotesInteractor
 import rmnvich.apps.notes.domain.utils.SingleLiveEvent
-import rmnvich.apps.notes.presentation.utils.DebugLogger
 
 class DashboardNotesViewModel(
     private val dashboardNotesInteractor: DashboardNotesInteractor,
@@ -173,7 +172,6 @@ class DashboardNotesViewModel(
             .getNotes(isFavoriteNotes)
             .doOnSubscribe { bIsShowingProgressBar.set(true) }
             .subscribe({
-                DebugLogger.log("loadNotes()")
                 bIsShowingProgressBar.set(false)
                 bNotesIsEmpty.set(it.isEmpty())
                 mNotesResponse?.value = it
@@ -189,7 +187,6 @@ class DashboardNotesViewModel(
             .getSearchedNotes(query, isFavoriteNotes)
             .doOnSubscribe { bIsShowingProgressBar.set(true) }
             .subscribe({
-                DebugLogger.log("loadSearchedNotes()")
                 bIsShowingProgressBar.set(false)
                 bSearchedNotesIsEmpty.set(it.isEmpty())
                 mSearchedNotesResponse?.value = it
@@ -210,7 +207,6 @@ class DashboardNotesViewModel(
             )
             .doOnSubscribe { bIsShowingProgressBar.set(true) }
             .subscribe({
-                DebugLogger.log("loadFilteredNotes()")
                 bIsShowingProgressBar.set(false)
                 bNotesIsEmpty.set(it.isEmpty())
                 mNotesResponse?.value = it
