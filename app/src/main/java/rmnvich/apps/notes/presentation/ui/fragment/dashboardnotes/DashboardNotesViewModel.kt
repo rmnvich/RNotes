@@ -12,10 +12,11 @@ import rmnvich.apps.notes.domain.entity.NoteWithTag
 import rmnvich.apps.notes.domain.entity.Tag
 import rmnvich.apps.notes.domain.interactors.dashboardnotes.DashboardNotesInteractor
 import rmnvich.apps.notes.domain.utils.SingleLiveEvent
+import rmnvich.apps.notes.presentation.utils.DebugLogger
 
 class DashboardNotesViewModel(
-        private val dashboardNotesInteractor: DashboardNotesInteractor,
-        private val isFavoriteNotes: Boolean
+    private val dashboardNotesInteractor: DashboardNotesInteractor,
+    private val isFavoriteNotes: Boolean
 ) : ViewModel() {
 
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
@@ -104,8 +105,10 @@ class DashboardNotesViewModel(
         return mTagsResponse
     }
 
-    fun applyFilterToNotes(colors: List<Int>, tags: List<Int>,
-                           isUnionConditions: Boolean, isOnlyWithPicture: Boolean) {
+    fun applyFilterToNotes(
+        colors: List<Int>, tags: List<Int>,
+        isUnionConditions: Boolean, isOnlyWithPicture: Boolean
+    ) {
         if (mNotesDisposable != null && !mNotesDisposable!!.isDisposed)
             mNotesDisposable!!.dispose()
 
@@ -115,8 +118,11 @@ class DashboardNotesViewModel(
         bIsShowingProgressBar.set(true)
         if (colors.isEmpty() && tags.isEmpty()) {
             loadNotes()
-        } else loadFilteredNotes(colors, tags,
-                isUnionConditions, isOnlyWithPicture)
+        } else loadFilteredNotes(
+            colors, tags,
+            isUnionConditions, isOnlyWithPicture
+        )
+
     }
 
     fun searchNotes(query: String) {
@@ -136,10 +142,10 @@ class DashboardNotesViewModel(
         deletedItemPosition = position
 
         mCompositeDisposable.add(
-                dashboardNotesInteractor
-                        .removeNoteToTrash(noteId)
-                        .subscribe({ mDeleteNoteEvent.value = noteId },
-                                { showSnackbarMessage(R.string.error_message) })
+            dashboardNotesInteractor
+                .removeNoteToTrash(noteId)
+                .subscribe({ mDeleteNoteEvent.value = noteId },
+                    { showSnackbarMessage(R.string.error_message) })
         )
     }
 
@@ -148,70 +154,75 @@ class DashboardNotesViewModel(
             bIsRecyclerNeedToScroll = true
 
         mCompositeDisposable.add(
-                dashboardNotesInteractor
-                        .restoreNote(noteId)
-                        .subscribe({}, { showSnackbarMessage(R.string.error_message) })
+            dashboardNotesInteractor
+                .restoreNote(noteId)
+                .subscribe({}, { showSnackbarMessage(R.string.error_message) })
         )
     }
 
     fun updateIsFavoriteNote(noteId: Int, isFavorite: Boolean) {
         mCompositeDisposable.add(
-                dashboardNotesInteractor
-                        .favoriteOrUnfavoriteNote(noteId, isFavorite)
-                        .subscribe()
+            dashboardNotesInteractor
+                .favoriteOrUnfavoriteNote(noteId, isFavorite)
+                .subscribe()
         )
     }
 
     private fun loadNotes() {
         mNotesDisposable = dashboardNotesInteractor
-                .getNotes(isFavoriteNotes)
-                .doOnSubscribe { bIsShowingProgressBar.set(true) }
-                .subscribe({
-                    bIsShowingProgressBar.set(false)
-                    bNotesIsEmpty.set(it.isEmpty())
-                    mNotesResponse?.value = it
-                }, {
-                    bIsShowingProgressBar.set(false)
-                    showSnackbarMessage(R.string.error_message)
-                })
-        mCompositeDisposable.add(mNotesDisposable!!)
+            .getNotes(isFavoriteNotes)
+            .doOnSubscribe { bIsShowingProgressBar.set(true) }
+            .subscribe({
+                DebugLogger.log("loadNotes()")
+                bIsShowingProgressBar.set(false)
+                bNotesIsEmpty.set(it.isEmpty())
+                mNotesResponse?.value = it
+            }, {
+                bIsShowingProgressBar.set(false)
+                showSnackbarMessage(R.string.error_message)
+            })
     }
 
     private fun loadSearchedNotes(query: String) {
         disposeSearchedNotesDisposable()
         mSearchedNotesDisposable = dashboardNotesInteractor
-                .getSearchedNotes(query, isFavoriteNotes)
-                .doOnSubscribe { bIsShowingProgressBar.set(true) }
-                .subscribe({
-                    bIsShowingProgressBar.set(false)
-                    bSearchedNotesIsEmpty.set(it.isEmpty())
-                    mSearchedNotesResponse?.value = it
-                }, {
-                    bIsShowingProgressBar.set(false)
-                    showSnackbarMessage(R.string.error_message)
-                })
-        mCompositeDisposable.add(mSearchedNotesDisposable!!)
+            .getSearchedNotes(query, isFavoriteNotes)
+            .doOnSubscribe { bIsShowingProgressBar.set(true) }
+            .subscribe({
+                DebugLogger.log("loadSearchedNotes()")
+                bIsShowingProgressBar.set(false)
+                bSearchedNotesIsEmpty.set(it.isEmpty())
+                mSearchedNotesResponse?.value = it
+            }, {
+                bIsShowingProgressBar.set(false)
+                showSnackbarMessage(R.string.error_message)
+            })
     }
 
-    private fun loadFilteredNotes(colors: List<Int>, tags: List<Int>,
-                                  isUnionConditions: Boolean, isOnlyWithPicture: Boolean) {
+    private fun loadFilteredNotes(
+        colors: List<Int>, tags: List<Int>,
+        isUnionConditions: Boolean, isOnlyWithPicture: Boolean
+    ) {
         mFilteredNotesDisposable = dashboardNotesInteractor
-                .getAllFilteredNotes(colors, tags, isFavoriteNotes,
-                        isUnionConditions, isOnlyWithPicture)
-                .doOnSubscribe { bIsShowingProgressBar.set(true) }
-                .subscribe({
-                    bIsShowingProgressBar.set(false)
-                    bNotesIsEmpty.set(it.isEmpty())
-                    mNotesResponse?.value = it
-                }, {
-                    bIsShowingProgressBar.set(false)
-                    showSnackbarMessage(R.string.error_message)
-                })
-        mCompositeDisposable.add(mFilteredNotesDisposable!!)
+            .getAllFilteredNotes(
+                colors, tags, isFavoriteNotes,
+                isUnionConditions, isOnlyWithPicture
+            )
+            .doOnSubscribe { bIsShowingProgressBar.set(true) }
+            .subscribe({
+                DebugLogger.log("loadFilteredNotes()")
+                bIsShowingProgressBar.set(false)
+                bNotesIsEmpty.set(it.isEmpty())
+                mNotesResponse?.value = it
+            }, {
+                bIsShowingProgressBar.set(false)
+                showSnackbarMessage(R.string.error_message)
+            })
     }
 
     private fun loadTags() {
-        mCompositeDisposable.add(dashboardNotesInteractor.getAllTags()
+        mCompositeDisposable.add(
+            dashboardNotesInteractor.getAllTags()
                 .subscribe({
                     bTagsIsEmpty.set(it.isEmpty())
                     mTagsResponse?.value = it
