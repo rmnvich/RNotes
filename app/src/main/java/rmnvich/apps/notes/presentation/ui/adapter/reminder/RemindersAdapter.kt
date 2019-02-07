@@ -23,7 +23,7 @@ class RemindersAdapter : RecyclerSwipeAdapter<RemindersAdapter.ViewHolder>() {
 
         fun onClickDone(reminderId: Int, isDone: Boolean)
 
-        fun onClickDelete(reminderId: Int)
+        fun onClickDelete(reminder: Reminder)
     }
 
     fun setClickListener(listener: OnClickReminderListener) {
@@ -33,7 +33,7 @@ class RemindersAdapter : RecyclerSwipeAdapter<RemindersAdapter.ViewHolder>() {
     inline fun setOnItemClickListener(
             crossinline onClickReminder: (Int) -> Unit,
             crossinline onClickDone: (Int, Boolean) -> Unit,
-            crossinline onClickDelete: (Int) -> Unit
+            crossinline onClickDelete: (Reminder) -> Unit
     ) {
         setClickListener(object : OnClickReminderListener {
             override fun onClickReminder(reminderId: Int) {
@@ -44,8 +44,8 @@ class RemindersAdapter : RecyclerSwipeAdapter<RemindersAdapter.ViewHolder>() {
                 onClickDone(reminderId, isDone)
             }
 
-            override fun onClickDelete(reminderId: Int) {
-                onClickDelete(reminderId)
+            override fun onClickDelete(reminder: Reminder) {
+                onClickDelete(reminder)
             }
 
         })
@@ -96,7 +96,7 @@ class RemindersAdapter : RecyclerSwipeAdapter<RemindersAdapter.ViewHolder>() {
 
                 Handler().postDelayed({
                     try {
-                        mClickListener.onClickDelete(mReminderList[adapterPosition].id)
+                        mClickListener.onClickDelete(mReminderList[adapterPosition])
                     } catch (ignore: IndexOutOfBoundsException) {
                     }
                 }, 400)
@@ -110,7 +110,7 @@ class RemindersAdapter : RecyclerSwipeAdapter<RemindersAdapter.ViewHolder>() {
                     try {
                         mClickListener.onClickDone(
                                 mReminderList[adapterPosition].id,
-                                !mReminderList[adapterPosition].isDone
+                                !mReminderList[adapterPosition].isCompleted
                         )
                     } catch (ignore: IndexOutOfBoundsException) {
                     }

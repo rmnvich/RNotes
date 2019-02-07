@@ -9,7 +9,7 @@
 
         <variable
             name="viewmodel"
-            type="rmnvich.apps.notes.presentation.ui.fragment.dashboardtags.DashboardTagsViewModel" />
+            type="rmnvich.apps.notes.presentation.ui.fragment.tags.DashboardTagsViewModel" />
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorWhite"
             app:elevation="0dp"
-            tools:context=".presentation.ui.fragment.dashboardtags.DashboardTagsFragment">
+            tools:context=".presentation.ui.fragment.tags.DashboardTagsFragment">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/tags_toolbar"

@@ -15,6 +15,9 @@
     <color name="colorCalendarTint">#43a047</color>
     <color name="colorRepeatTint">#ffa000</color>
 
+    <color name="colorTabTitleSelectedTrue">#c8333333</color>
+    <color name="colorTabTitleSelectedFalse">#64000000</color>
+
     <color name="colorToolbarTitle">#c8333333</color>
     <color name="colorTagBackground">#50868686</color>
     <color name="colorDivider">#37919191</color>

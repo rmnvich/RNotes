@@ -1,4 +1,4 @@
-package rmnvich.apps.notes.presentation.ui.fragment.dashboardtags
+package rmnvich.apps.notes.presentation.ui.fragment.tags
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
@@ -25,13 +25,13 @@ class DashboardTagsViewModel(private val dashboardTagsInteractor: DashboardTagsI
 
     private val mSnackbarMessage: SingleLiveEvent<Int> = SingleLiveEvent()
 
-    private val mDeleteTaskCommand: SingleLiveEvent<Void> = SingleLiveEvent()
+    private val mDeleteTaskEvent: SingleLiveEvent<Void> = SingleLiveEvent()
 
     private var mResponse: MutableLiveData<List<Tag>>? = null
 
     fun getSnackbar(): SingleLiveEvent<Int> = mSnackbarMessage
 
-    fun getDeleteTaskCommand(): SingleLiveEvent<Void> = mDeleteTaskCommand
+    fun getDeleteTaskCommand(): SingleLiveEvent<Void> = mDeleteTaskEvent
 
     fun getTags(): LiveData<List<Tag>>? {
         if (mResponse == null) {
@@ -46,7 +46,7 @@ class DashboardTagsViewModel(private val dashboardTagsInteractor: DashboardTagsI
 
         mCompositeDisposable.add(dashboardTagsInteractor
                 .deleteTag(tag)
-                .subscribe({ mDeleteTaskCommand.call() },
+                .subscribe({ mDeleteTaskEvent.call() },
                         { showSnackbarMessage(R.string.error_message) }))
     }
 

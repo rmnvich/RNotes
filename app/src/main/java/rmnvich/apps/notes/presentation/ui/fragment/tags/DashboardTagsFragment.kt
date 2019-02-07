@@ -1,4 +1,4 @@
-package rmnvich.apps.notes.presentation.ui.fragment.dashboardtags
+package rmnvich.apps.notes.presentation.ui.fragment.tags
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders

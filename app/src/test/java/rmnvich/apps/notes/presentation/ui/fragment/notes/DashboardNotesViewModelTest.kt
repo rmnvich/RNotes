@@ -1,17 +1,12 @@
-package rmnvich.apps.notes.presentation.ui.fragment.dashboardnotes
+package rmnvich.apps.notes.presentation.ui.fragment.notes
 
 import android.app.Application
-import android.arch.lifecycle.MutableLiveData
-import junit.framework.Assert.assertFalse
-import junit.framework.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
-import rmnvich.apps.notes.TestSchedulersProvider
 import rmnvich.apps.notes.data.repositories.NotesRepositoryImpl
 import rmnvich.apps.notes.data.repositories.datasource.Database
 import rmnvich.apps.notes.domain.entity.Note

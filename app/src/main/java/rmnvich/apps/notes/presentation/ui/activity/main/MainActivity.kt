@@ -13,8 +13,9 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import kotlinx.android.synthetic.main.main_activity.*
 import rmnvich.apps.notes.R
-import rmnvich.apps.notes.presentation.ui.fragment.dashboardnotes.DashboardNotesFragment
-import rmnvich.apps.notes.presentation.ui.fragment.dashboardtags.DashboardTagsFragment
+import rmnvich.apps.notes.presentation.ui.fragment.notes.DashboardNotesFragment
+import rmnvich.apps.notes.presentation.ui.fragment.reminders.ViewPagerRemindersFragment
+import rmnvich.apps.notes.presentation.ui.fragment.tags.DashboardTagsFragment
 import rmnvich.apps.notes.presentation.ui.fragment.trash.TrashFragment
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private val mFragmentFavoritesNotes = DashboardNotesFragment.newInstance(true)
     private val mFragmentTags = DashboardTagsFragment.newInstance()
     private val mFragmentTrash = TrashFragment.newInstance()
+    private val mFragmentReminders = ViewPagerRemindersFragment.newInstance()
 
     private var mFragmentActive: Fragment = Fragment()
     private var mCurrentFragmentPosition: Int = 0
@@ -57,9 +59,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     R.id.nav_favorites -> showFragment(mFragmentFavoritesNotes, 1)
                     R.id.nav_tags -> showFragment(mFragmentTags, 2)
                     R.id.nav_trash -> showFragment(mFragmentTrash, 3)
-                    R.id.nav_reminders -> {
-
-                    }
+                    R.id.nav_reminders -> showFragment(mFragmentReminders, 4)
                     R.id.nav_todo_lists -> {
 
                     }

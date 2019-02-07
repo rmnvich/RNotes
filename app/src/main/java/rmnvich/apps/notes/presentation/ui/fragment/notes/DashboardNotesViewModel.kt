@@ -1,4 +1,4 @@
-package rmnvich.apps.notes.presentation.ui.fragment.dashboardnotes
+package rmnvich.apps.notes.presentation.ui.fragment.notes
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
@@ -38,9 +38,9 @@ class DashboardNotesViewModel(
 
     private var mSearchedNotesDisposable: Disposable? = null
 
-    private val mSelectedNoteId = SingleLiveEvent<Int>()
+    private val mEditNoteEvent = SingleLiveEvent<Int>()
 
-    private val mAddEditNoteEvent = SingleLiveEvent<Void>()
+    private val mAddNoteEvent = SingleLiveEvent<Void>()
 
     private val mDeleteNoteEvent = SingleLiveEvent<Int>()
 
@@ -60,9 +60,9 @@ class DashboardNotesViewModel(
 
     fun getSnackbar(): SingleLiveEvent<Int> = mSnackbarMessage
 
-    fun getEditNoteEvent(): SingleLiveEvent<Int> = mSelectedNoteId
+    fun getEditNoteEvent(): SingleLiveEvent<Int> = mEditNoteEvent
 
-    fun getAddNoteEvent(): SingleLiveEvent<Void> = mAddEditNoteEvent
+    fun getAddNoteEvent(): SingleLiveEvent<Void> = mAddNoteEvent
 
     fun getDeleteNoteEvent(): SingleLiveEvent<Int> = mDeleteNoteEvent
 
@@ -129,12 +129,12 @@ class DashboardNotesViewModel(
     }
 
     fun addNote() {
-        mAddEditNoteEvent.call()
+        mAddNoteEvent.call()
         bIsRecyclerNeedToScroll = true
     }
 
     fun editNote(noteId: Int?) {
-        mSelectedNoteId.value = noteId
+        mEditNoteEvent.value = noteId
     }
 
     fun deleteNote(noteId: Int, position: Int) {

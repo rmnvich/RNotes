@@ -1,4 +1,4 @@
-package rmnvich.apps.notes.di.dashboardreminders
+package rmnvich.apps.notes.di.reminders
 
 import dagger.Module
 import dagger.Provides
@@ -13,11 +13,11 @@ import rmnvich.apps.notes.domain.utils.ViewModelFactory
 import rmnvich.apps.notes.presentation.ui.adapter.reminder.RemindersAdapter
 
 @Module
-class DashboardRemindersModule(private val isDone: Boolean) : BaseModule {
+class DashboardRemindersModule(private val isCompletedReminders: Boolean) : BaseModule {
 
     @Provides
     fun provideViewModelFactory(interactor: DashboardRemindersInteractor): ViewModelFactory {
-        return ViewModelFactory(interactor, isDone)
+        return ViewModelFactory(interactor, isCompletedReminders)
     }
 
     @PerFragment

@@ -14,5 +14,5 @@ class Reminder {
     var timeRemind: Long = 0L
     var repeatType: Int = 0
 
-    var isDone: Boolean = false
+    var isCompleted: Boolean = false
 }

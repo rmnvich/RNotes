@@ -1,4 +1,4 @@
-package rmnvich.apps.notes.presentation.ui.fragment.dashboardnotes
+package rmnvich.apps.notes.presentation.ui.fragment.notes
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -17,7 +17,7 @@ import rmnvich.apps.notes.App
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.data.common.Constants.*
 import rmnvich.apps.notes.databinding.DashboardNotesFragmentBinding
-import rmnvich.apps.notes.di.dashboardnotes.DashboardNotesModule
+import rmnvich.apps.notes.di.notes.DashboardNotesModule
 import rmnvich.apps.notes.domain.entity.NoteWithTag
 import rmnvich.apps.notes.domain.utils.ViewModelFactory
 import rmnvich.apps.notes.presentation.ui.activity.addeditnote.AddEditNoteActivity

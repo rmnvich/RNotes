@@ -11,16 +11,16 @@ class RemindersRepositoryImpl(database: Database) : RemindersRepository {
 
     private val reminderDao = database.reminderDao()
 
-    override fun getReminders(isDone: Boolean): Flowable<List<Reminder>> {
-        return reminderDao.getReminders(isDone)
+    override fun getReminders(isCompleted: Boolean): Flowable<List<Reminder>> {
+        return reminderDao.getReminders(isCompleted)
     }
 
     override fun getReminderById(reminderId: Int): Single<Reminder> {
         return reminderDao.getReminderById(reminderId)
     }
 
-    override fun doneOrUndoneReminder(reminderId: Int, isDone: Boolean): Completable {
-        return Completable.fromAction { reminderDao.doneOrUndoneReminder(reminderId, isDone) }
+    override fun doneOrUndoneReminder(reminderId: Int, isCompleted: Boolean): Completable {
+        return Completable.fromAction { reminderDao.doneOrUndoneReminder(reminderId, isCompleted) }
     }
 
     override fun insertReminder(reminder: Reminder): Completable {
@@ -34,7 +34,7 @@ class RemindersRepositoryImpl(database: Database) : RemindersRepository {
                         it.text = reminder.text
                         it.repeatType = reminder.repeatType
                         it.timeRemind = reminder.timeRemind
-                        it.isDone = reminder.isDone
+                        it.isCompleted = reminder.isCompleted
                         reminderDao.updateReminder(it)
                     }
                 }

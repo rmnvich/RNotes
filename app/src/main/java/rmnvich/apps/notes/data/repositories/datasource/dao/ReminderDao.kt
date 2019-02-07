@@ -8,14 +8,14 @@ import rmnvich.apps.notes.domain.entity.Reminder
 @Dao
 interface ReminderDao {
 
-    @Query("SELECT * FROM reminder WHERE isDone = :isDone ORDER BY timeRemind DESC")
-    fun getReminders(isDone: Boolean): Flowable<List<Reminder>>
+    @Query("SELECT * FROM reminder WHERE isCompleted = :isCompleted ORDER BY timeRemind DESC")
+    fun getReminders(isCompleted: Boolean): Flowable<List<Reminder>>
 
     @Query("SELECT * FROM reminder WHERE id = :reminderId")
     fun getReminderById(reminderId: Int): Single<Reminder>
 
-    @Query("UPDATE reminder SET isDone = :isDone WHERE id = :reminderId")
-    fun doneOrUndoneReminder(reminderId: Int, isDone: Boolean)
+    @Query("UPDATE reminder SET isCompleted = :isCompleted WHERE id = :reminderId")
+    fun doneOrUndoneReminder(reminderId: Int, isCompleted: Boolean)
 
     @Insert
     fun insertReminder(reminder: Reminder)

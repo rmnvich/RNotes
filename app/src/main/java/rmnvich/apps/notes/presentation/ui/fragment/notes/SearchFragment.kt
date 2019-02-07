@@ -1,4 +1,4 @@
-package rmnvich.apps.notes.presentation.ui.fragment.dashboardnotes
+package rmnvich.apps.notes.presentation.ui.fragment.notes
 
 import android.app.Service
 import android.arch.lifecycle.Observer

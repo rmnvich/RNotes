@@ -1,4 +1,4 @@
-package rmnvich.apps.notes.di.dashboardtags
+package rmnvich.apps.notes.di.tags
 
 import dagger.Module
 import dagger.Provides

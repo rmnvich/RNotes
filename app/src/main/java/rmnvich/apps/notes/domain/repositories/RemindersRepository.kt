@@ -7,11 +7,11 @@ import rmnvich.apps.notes.domain.entity.Reminder
 
 interface RemindersRepository {
 
-    fun getReminders(isDone: Boolean): Flowable<List<Reminder>>
+    fun getReminders(isCompleted: Boolean): Flowable<List<Reminder>>
 
     fun getReminderById(reminderId: Int): Single<Reminder>
 
-    fun doneOrUndoneReminder(reminderId: Int, isDone: Boolean): Completable
+    fun doneOrUndoneReminder(reminderId: Int, isCompleted: Boolean): Completable
 
     fun insertReminder(reminder: Reminder): Completable
 

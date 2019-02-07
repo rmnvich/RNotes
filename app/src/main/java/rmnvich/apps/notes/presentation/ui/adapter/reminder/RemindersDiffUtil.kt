@@ -26,7 +26,7 @@ class RemindersDiffUtil(
         val oldNote = oldList[oldItemPosition]
         val newNote = newList[newItemPosition]
         return oldNote.text == newNote.text &&
-                oldNote.isDone == newNote.isDone &&
+                oldNote.isCompleted == newNote.isCompleted &&
                 oldNote.repeatType == newNote.repeatType &&
                 oldNote.timeRemind == newNote.timeRemind
     }

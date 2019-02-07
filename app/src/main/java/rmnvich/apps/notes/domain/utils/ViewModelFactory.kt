@@ -11,16 +11,16 @@ import rmnvich.apps.notes.domain.interactors.dashboardtags.DashboardTagsInteract
 import rmnvich.apps.notes.domain.interactors.trash.TrashInteractor
 import rmnvich.apps.notes.presentation.ui.activity.addeditnote.AddEditNoteViewModel
 import rmnvich.apps.notes.presentation.ui.activity.addeditreminder.AddEditReminderViewModel
-import rmnvich.apps.notes.presentation.ui.fragment.dashboardnotes.DashboardNotesViewModel
-import rmnvich.apps.notes.presentation.ui.fragment.dashboardreminders.DashboardRemindersViewModel
-import rmnvich.apps.notes.presentation.ui.fragment.dashboardtags.DashboardTagsViewModel
+import rmnvich.apps.notes.presentation.ui.fragment.notes.DashboardNotesViewModel
+import rmnvich.apps.notes.presentation.ui.fragment.reminders.DashboardRemindersViewModel
+import rmnvich.apps.notes.presentation.ui.fragment.tags.DashboardTagsViewModel
 import rmnvich.apps.notes.presentation.ui.fragment.trash.TrashViewModel
 
 class ViewModelFactory : ViewModelProvider.NewInstanceFactory {
 
     private var isFavoriteNotes = false
 
-    private var isDoneReminders = false
+    private var isCompletedReminders = false
 
     private lateinit var mApplicationContext: Application
 
@@ -45,9 +45,9 @@ class ViewModelFactory : ViewModelProvider.NewInstanceFactory {
         this.mDashboardTagsInteractor = dashboardTagsInteractor
     }
 
-    constructor(dashboardRemindersInteractor: DashboardRemindersInteractor, isDone: Boolean) : super() {
+    constructor(dashboardRemindersInteractor: DashboardRemindersInteractor, isCompleted: Boolean) : super() {
         this.mDashboardRemindersInteractor = dashboardRemindersInteractor
-        this.isDoneReminders = isDone
+        this.isCompletedReminders = isCompleted
     }
 
     constructor(trashInteractor: TrashInteractor) : super() {
@@ -75,7 +75,7 @@ class ViewModelFactory : ViewModelProvider.NewInstanceFactory {
             modelClass.isAssignableFrom(TrashViewModel::class.java) ->
                 TrashViewModel(mTrashInteractor) as VM
             modelClass.isAssignableFrom(DashboardRemindersViewModel::class.java) ->
-                DashboardRemindersViewModel(mDashboardRemindersInteractor, isDoneReminders) as VM
+                DashboardRemindersViewModel(mDashboardRemindersInteractor, isCompletedReminders) as VM
             modelClass.isAssignableFrom(AddEditReminderViewModel::class.java) ->
                 AddEditReminderViewModel(mAddEditReminderInteractor) as VM
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)

@@ -9,7 +9,7 @@
 
         <variable
             name="viewmodel"
-            type="rmnvich.apps.notes.presentation.ui.fragment.dashboardnotes.DashboardNotesViewModel" />
+            type="rmnvich.apps.notes.presentation.ui.fragment.notes.DashboardNotesViewModel" />
     </data>
 
     <android.support.design.widget.CoordinatorLayout

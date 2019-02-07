@@ -1,4 +1,4 @@
-package rmnvich.apps.notes.di.dashboardnotes.search
+package rmnvich.apps.notes.di.notes.search
 
 import dagger.Module
 import dagger.Provides
