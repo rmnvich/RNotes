@@ -8,6 +8,6 @@ class AddEditReminderActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_edit_reminder)
+        setContentView(R.layout.add_edit_reminder_activity)
     }
 }

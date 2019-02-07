@@ -15,7 +15,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".presentation.ui.activity.addeditreminder.AddEditReminderActivity"></activity>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -37,13 +36,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".presentation.ui.activity.viewimage.ViewImageActivity"
             android:theme="@style/ViewImageTheme" />
+
+        <activity
+            android:name=".presentation.ui.activity.addeditreminder.AddEditReminderActivity"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize" />
+
         <activity
             android:name=".presentation.ui.activity.addeditnote.AddEditNoteActivity"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize" />
     </application>
-
 </manifest>

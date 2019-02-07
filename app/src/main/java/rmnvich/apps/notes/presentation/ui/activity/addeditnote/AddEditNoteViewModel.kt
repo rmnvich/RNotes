@@ -136,8 +136,8 @@ class AddEditNoteViewModel(
     }
 
     fun insertOrUpdateNote() {
-        val isDataCorrect = !noteText.get()?.isEmpty()!! ||
-                (onImagePathEvent.value != null && !onImagePathEvent.value?.isEmpty()!!)
+        val isDataCorrect = !noteText.get().isNullOrEmpty() ||
+                !onImagePathEvent.value.isNullOrEmpty()
 
         if (isDataCorrect) {
             val note = Note()

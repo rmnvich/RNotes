@@ -21,11 +21,7 @@ class DashboardRemindersViewModel(
 
     val bRemindersIsEmpty: ObservableBoolean = ObservableBoolean(false)
 
-    var bIsRecyclerNeedToScroll: Boolean = false
-
     private val mEditReminderEvent = SingleLiveEvent<Int>()
-
-    private val mAddReminderEvent = SingleLiveEvent<Void>()
 
     private val mSnackbarMessage = SingleLiveEvent<Int>()
 
@@ -34,8 +30,6 @@ class DashboardRemindersViewModel(
     fun getSnackbar(): SingleLiveEvent<Int> = mSnackbarMessage
 
     fun getEditReminderEvent(): SingleLiveEvent<Int> = mEditReminderEvent
-
-    fun getAddReminderEvent(): SingleLiveEvent<Void> = mAddReminderEvent
 
     private fun showSnackbarMessage(message: Int?) {
         mSnackbarMessage.value = message
@@ -47,11 +41,6 @@ class DashboardRemindersViewModel(
             loadReminders()
         }
         return mRemindersResponse
-    }
-
-    fun addReminder() {
-        mAddReminderEvent.call()
-        bIsRecyclerNeedToScroll = true
     }
 
     fun editReminder(reminderId: Int?) {

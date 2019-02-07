@@ -43,7 +43,6 @@
     <string name="you_have_no_tags">You have no labels</string>
     <string name="empty_tag_error">Label is empty</string>
     <string name="edit">Edit</string>
-    <string name="create">Create</string>
     <string name="delete">Delete</string>
     <string name="background">Background</string>
     <string name="create_new_tag">Create new label</string>
@@ -54,7 +53,7 @@
     <string name="trash_is_empty">Trash is empty</string>
     <string name="empty_trash">Empty trash</string>
 
-    <!-- AddEditNoteFragment -->
+    <!-- AddEditNoteActivity -->
     <string name="tag">Label</string>
     <string name="color">Color</string>
     <string name="add_note">Add note</string>
@@ -65,6 +64,11 @@
     <string name="add_image">Add image</string>
     <string name="image">Image</string>
     <string name="share_blank_note">You can not share a blank note</string>
+
+    <!-- AddEditReminderActivity -->
+    <string name="create_reminder">Create reminder</string>
+    <string name="create">Create</string>
+    <string name="remind_me_to">Remind me to…</string>
 
     <!-- Messages -->
     <string name="error_message">An error occurred. Try again</string>
@@ -89,6 +93,8 @@
     <string name="title_todo_lists">To-Do lists</string>
     <string name="clock">Clock</string>
     <string name="repeat">Repeat</string>
+    <string name="time">Time</string>
+    <string name="date">Date</string>
     <string name="calendar">Calendar</string>
 
 </resources>

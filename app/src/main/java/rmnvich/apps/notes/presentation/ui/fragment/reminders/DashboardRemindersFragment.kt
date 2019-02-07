@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -14,7 +13,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.daimajia.swipe.util.Attributes
-import org.jetbrains.anko.support.v4.toast
 import rmnvich.apps.notes.App
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.data.common.Constants
@@ -22,7 +20,7 @@ import rmnvich.apps.notes.databinding.DashboardRemindersFragmentBinding
 import rmnvich.apps.notes.di.reminders.DashboardRemindersModule
 import rmnvich.apps.notes.domain.entity.Reminder
 import rmnvich.apps.notes.domain.utils.ViewModelFactory
-import rmnvich.apps.notes.presentation.ui.activity.addeditnote.AddEditNoteActivity
+import rmnvich.apps.notes.presentation.ui.activity.addeditreminder.AddEditReminderActivity
 import rmnvich.apps.notes.presentation.ui.adapter.reminder.RemindersAdapter
 import javax.inject.Inject
 
@@ -48,21 +46,21 @@ class DashboardRemindersFragment : Fragment() {
             componentHolder.releaseComponent(javaClass)
 
         componentHolder.getComponent(
-            javaClass,
-            DashboardRemindersModule(isCompletedReminders)
+                javaClass,
+                DashboardRemindersModule(isCompletedReminders)
         )?.inject(this)
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         mDashboardRemindersBinding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.dashboard_reminders_fragment, container, false
+                inflater,
+                R.layout.dashboard_reminders_fragment, container, false
         )
         mDashboardRemindersBinding.swipeRefreshLayout
-            .setColorSchemeResources(R.color.colorAccent)
+                .setColorSchemeResources(R.color.colorAccent)
         mDashboardRemindersBinding.swipeRefreshLayout.isEnabled = false
 
         if (isCompletedReminders) {
@@ -73,28 +71,23 @@ class DashboardRemindersFragment : Fragment() {
             mDashboardRemindersBinding.ivEmpty.setImageResource(R.drawable.empty_reminders)
         }
 
-        val fab = view?.findViewById<FloatingActionButton>(R.id.fab_add_reminder)
-        fab?.setOnClickListener {
-            mDashboardRemindersViewModel.addReminder()
-        }
-
         initRecyclerView()
         return mDashboardRemindersBinding.root
     }
 
     private fun initRecyclerView() {
         mDashboardRemindersBinding.recyclerReminders.layoutManager = LinearLayoutManager(
-            context,
-            LinearLayoutManager.VERTICAL, false
+                context,
+                LinearLayoutManager.VERTICAL, false
         )
 
         mRemindersAdapter.mode = Attributes.Mode.Single
         mRemindersAdapter.setOnItemClickListener(
-            onClickReminder = { mDashboardRemindersViewModel.editReminder(it) },
-            onClickDelete = { mDashboardRemindersViewModel.deleteReminder(it) },
-            onClickDone = { reminderId, isDone ->
-                mDashboardRemindersViewModel.doneOrUndoneReminder(reminderId, isDone)
-            }
+                onClickReminder = { mDashboardRemindersViewModel.editReminder(it) },
+                onClickDelete = { mDashboardRemindersViewModel.deleteReminder(it) },
+                onClickDone = { reminderId, isDone ->
+                    mDashboardRemindersViewModel.doneOrUndoneReminder(reminderId, isDone)
+                }
         )
         mDashboardRemindersBinding.recyclerReminders.adapter = mRemindersAdapter
     }
@@ -106,42 +99,33 @@ class DashboardRemindersFragment : Fragment() {
         } else Constants.KEY_ACTIVE_REMINDERS
 
         mDashboardRemindersViewModel = ViewModelProviders.of(activity!!, mViewModelFactory)
-            .get(viewModelKey, DashboardRemindersViewModel::class.java)
+                .get(viewModelKey, DashboardRemindersViewModel::class.java)
         mDashboardRemindersBinding.viewmodel = mDashboardRemindersViewModel
 
         mDashboardRemindersViewModel.getReminders()?.observe(this,
-            Observer { handleRemindersResponse(it!!) })
-        mDashboardRemindersViewModel.getAddReminderEvent().observe(this,
-            Observer { handleAddEditReminderEvent(-1) })
+                Observer { handleRemindersResponse(it!!) })
         mDashboardRemindersViewModel.getEditReminderEvent().observe(this,
-            Observer { handleAddEditReminderEvent(it!!) })
+                Observer { handleEditReminderEvent(it!!) })
         observeSnackbar()
     }
 
     private fun handleRemindersResponse(response: List<Reminder>) {
         mRemindersAdapter.setData(response)
-
-        if (mDashboardRemindersViewModel.bIsRecyclerNeedToScroll) {
-            mDashboardRemindersBinding.recyclerReminders.scrollToPosition(0)
-            mDashboardRemindersViewModel.bIsRecyclerNeedToScroll = false
-        }
     }
 
-    private fun handleAddEditReminderEvent(reminderId: Int) {
-//        val intent = Intent(activity, AddEditNoteActivity::class.java)
-//        if (reminderId != -1)
-//            intent.putExtra(Constants.EXTRA_REMINDER_ID, reminderId)
-//
-//        activity?.startActivity(intent)
-//        activity?.overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
-        toast("Fab was clicked")
+    private fun handleEditReminderEvent(reminderId: Int) {
+        val intent = Intent(activity, AddEditReminderActivity::class.java)
+        intent.putExtra(Constants.EXTRA_REMINDER_ID, reminderId)
+
+        activity?.startActivity(intent)
+        activity?.overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 
     private fun observeSnackbar() {
         mDashboardRemindersViewModel.getSnackbar().observe(this, Observer {
             Snackbar.make(
-                mDashboardRemindersBinding.root, getString(it!!),
-                Snackbar.LENGTH_LONG
+                    mDashboardRemindersBinding.root, getString(it!!),
+                    Snackbar.LENGTH_LONG
             ).show()
         })
     }
@@ -149,6 +133,6 @@ class DashboardRemindersFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         App.getApp(activity?.applicationContext).componentsHolder
-            .releaseComponent(javaClass)
+                .releaseComponent(javaClass)
     }
 }
