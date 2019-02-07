@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.os.Handler
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -81,7 +82,7 @@ class DashboardRemindersFragment : Fragment() {
                 LinearLayoutManager.VERTICAL, false
         )
 
-        mRemindersAdapter.mode = Attributes.Mode.Single
+        mRemindersAdapter.mode = Attributes.Mode.Multiple
         mRemindersAdapter.setOnItemClickListener(
                 onClickReminder = { mDashboardRemindersViewModel.editReminder(it) },
                 onClickDelete = { mDashboardRemindersViewModel.deleteReminder(it) },

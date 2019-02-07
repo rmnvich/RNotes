@@ -4,7 +4,6 @@ import io.reactivex.Completable
 import io.reactivex.Flowable
 import rmnvich.apps.notes.data.common.Constants
 import rmnvich.apps.notes.data.common.SchedulersProvider
-import rmnvich.apps.notes.domain.entity.Note
 import rmnvich.apps.notes.domain.entity.NoteWithTag
 import rmnvich.apps.notes.domain.entity.Tag
 import rmnvich.apps.notes.domain.repositories.NotesRepository

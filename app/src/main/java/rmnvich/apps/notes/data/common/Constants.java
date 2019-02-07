@@ -6,7 +6,7 @@ public class Constants {
 
     public static String DATABASE_NAME = "test_database" + 54;
 
-    public static long DEFAULT_DELAY = 0;
+    public static long DEFAULT_DELAY = 1000;
     public static int DEFAULT_COLOR = -16777216;
 
     public static String EXTRA_NOTE_ID = "note_id";
@@ -22,8 +22,17 @@ public class Constants {
     public static String KEY_ACTIVE_REMINDERS = "active_reminders";
     public static String KEY_COMPLETED_REMINDERS = "completed_reminders";
 
+    public static int REPEAT_TYPE_ONCE = 0;
+    public static int REPEAT_TYPE_HOURLY = 1;
+    public static int REPEAT_TYPE_DAILY = 2;
+    public static int REPEAT_TYPE_WEEKLY = 2;
+    public static int REPEAT_TYPE_MONTHLY = 4;
+    public static int REPEAT_TYPE_YEARLY = 5;
+
     public static int REQUEST_CODE_IMAGE = 0;
     public static int REQUEST_CODE_SHARE = 1;
 
+    //TODO: Fix StatusBar color in BottomSheetDialog
+    //TODO: Delay only when data loading first time
     //TODO: Settings (vibrate, theme, pin, default color)
 }

@@ -96,5 +96,16 @@
     <string name="time">Time</string>
     <string name="date">Date</string>
     <string name="calendar">Calendar</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="select">Select</string>
 
+    <string-array name="repeat_types">
+        <item>Once</item>
+        <item>Hourly</item>
+        <item>Daily</item>
+        <item>Weekly</item>
+        <item>Monthly</item>
+        <item>Yearly</item>
+    </string-array>
 </resources>

@@ -10,19 +10,49 @@ public class DateHelper {
         return Calendar.getInstance().getTimeInMillis();
     }
 
+    public static long getDefaultTimeRemindInMills() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY) + 1);
+        calendar.set(Calendar.MINUTE, 0);
+        return calendar.getTimeInMillis();
+    }
+
     public static String convertLongTimeToString(long time) {
         return new SimpleDateFormat("dd MMMM yyyy",
                 Locale.getDefault()).format(time);
     }
 
-    public static long getDate(int year, int month, int date) {
+    public static long getDate(int year, int month, int day) {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, date);
+        calendar.set(year, month, day);
         return calendar.getTimeInMillis();
     }
 
+    public static long getDate(long time, int year, int month, int day) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(time);
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        return calendar.getTimeInMillis();
+    }
+
+    public static long getTime(long time, int hour, int minute) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(time);
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        return calendar.getTimeInMillis();
+    }
+
+    public static int getField(long time, int field) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(time);
+        return calendar.get(field);
+    }
+
     public static String convertLongToDate(long time) {
-        return new SimpleDateFormat("dd/MM/yyyy",
+        return new SimpleDateFormat("dd.MM.yyyy",
                 Locale.getDefault()).format(time);
     }
 

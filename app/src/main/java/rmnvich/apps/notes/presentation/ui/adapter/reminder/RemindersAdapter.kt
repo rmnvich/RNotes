@@ -86,7 +86,7 @@ class RemindersAdapter : RecyclerSwipeAdapter<RemindersAdapter.ViewHolder>() {
             RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.root.setOnClickListener {
+            binding.reminderLayout.setOnClickListener {
                 mClickListener.onClickReminder(mReminderList[adapterPosition].id)
             }
 
@@ -120,6 +120,10 @@ class RemindersAdapter : RecyclerSwipeAdapter<RemindersAdapter.ViewHolder>() {
 
         fun bind(reminder: Reminder) {
             binding.reminder = reminder
+
+            binding.tvReminderRepeat.text = binding.root.context.resources
+                    .getStringArray(R.array.repeat_types)[reminder.repeatType]
+
             binding.executePendingBindings()
         }
 

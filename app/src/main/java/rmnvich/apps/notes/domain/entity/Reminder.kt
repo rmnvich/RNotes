@@ -2,6 +2,7 @@ package rmnvich.apps.notes.domain.entity
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
+import rmnvich.apps.notes.data.common.Constants.REPEAT_TYPE_ONCE
 
 @Entity
 class Reminder {
@@ -12,7 +13,7 @@ class Reminder {
     var text: String = ""
 
     var timeRemind: Long = 0L
-    var repeatType: Int = 0
+    var repeatType: Int = REPEAT_TYPE_ONCE
 
     var isCompleted: Boolean = false
 }

@@ -40,7 +40,7 @@
                 app:stl_underlineThickness="0dp" />
         </android.support.design.widget.AppBarLayout>
 
-        <android.support.v4.view.ViewPager
+        <rmnvich.apps.notes.presentation.ui.custom.NonSwipeableViewPager
             android:id="@+id/reminders_viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

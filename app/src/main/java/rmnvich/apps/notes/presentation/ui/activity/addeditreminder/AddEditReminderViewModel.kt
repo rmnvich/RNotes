@@ -1,8 +1,9 @@
 package rmnvich.apps.notes.presentation.ui.activity.addeditreminder
 
+import android.app.Application
+import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import io.reactivex.disposables.CompositeDisposable
@@ -10,10 +11,13 @@ import rmnvich.apps.notes.R
 import rmnvich.apps.notes.domain.entity.Reminder
 import rmnvich.apps.notes.domain.interactors.addeditreminder.AddEditReminderInteractor
 import rmnvich.apps.notes.domain.utils.SingleLiveEvent
+import rmnvich.apps.notes.presentation.utils.DateHelper
+import rmnvich.apps.notes.presentation.utils.DateHelper.getDefaultTimeRemindInMills
 
 class AddEditReminderViewModel(
+        private val applicationContext: Application,
         private val addEditReminderInteractor: AddEditReminderInteractor
-) : ViewModel() {
+) : AndroidViewModel(applicationContext) {
 
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
 
@@ -23,19 +27,26 @@ class AddEditReminderViewModel(
 
     val reminderText: ObservableField<String> = ObservableField("")
 
-    val timeRemind: ObservableField<Long> = ObservableField(0L)
-
     val repeatType: ObservableField<Int> = ObservableField(0)
+
+    val repeatName: ObservableField<String> = ObservableField(
+            applicationContext.resources
+                    .getStringArray(R.array.repeat_types)[0]
+    )
+
+    val timeRemind: ObservableField<Long> = ObservableField(
+            getDefaultTimeRemindInMills()
+    )
 
     var reminderId: Int = 0
 
     private val onCreateClickEvent = SingleLiveEvent<Void>()
 
-    private val onClickDateEvent = SingleLiveEvent<Void>()
+    private val onClickDateEvent = SingleLiveEvent<Long>()
 
-    private val onClickTimeEvent = SingleLiveEvent<Void>()
+    private val onClickTimeEvent = SingleLiveEvent<Long>()
 
-    private val onClickRepeatEvent = SingleLiveEvent<Void>()
+    private val onClickRepeatEvent = SingleLiveEvent<Int>()
 
     private val mSnackbarMessage: SingleLiveEvent<Int> = SingleLiveEvent()
 
@@ -43,32 +54,36 @@ class AddEditReminderViewModel(
 
     fun getCreateClickEvent(): SingleLiveEvent<Void> = onCreateClickEvent
 
-    fun getClickDateEvent(): SingleLiveEvent<Void> = onClickDateEvent
+    fun getClickDateEvent(): SingleLiveEvent<Long> = onClickDateEvent
 
-    fun getClickTimeEvent(): SingleLiveEvent<Void> = onClickTimeEvent
+    fun getClickTimeEvent(): SingleLiveEvent<Long> = onClickTimeEvent
 
-    fun getClickRepeatEvent(): SingleLiveEvent<Void> = onClickRepeatEvent
+    fun getClickRepeatEvent(): SingleLiveEvent<Int> = onClickRepeatEvent
 
-    fun onClickDate() = onClickDateEvent.call()
-
-    fun onClickTime() = onClickTimeEvent.call()
-
-    fun onClickRepeat() = onClickRepeatEvent.call()
-
-    fun onClickCreate() {
-        onCreateClickEvent.call()
+    fun onClickDate() {
+        onClickDateEvent.value = timeRemind.get()
     }
 
-    fun onDatePickerDialogClicked() {
-
+    fun onClickTime() {
+        onClickTimeEvent.value = timeRemind.get()
     }
 
-    fun onTimePickerDialogClicked() {
+    fun onClickRepeat() {
+        onClickRepeatEvent.value = repeatType.get()
+    }
 
+    fun onDatePickerDialogClicked(year: Int, month: Int, day: Int) {
+        timeRemind.set(DateHelper.getDate(timeRemind.get()!!, year, month, day))
+    }
+
+    fun onTimePickerDialogClicked(hour: Int, minute: Int) {
+        timeRemind.set(DateHelper.getTime(timeRemind.get()!!, hour, minute))
     }
 
     fun onRepeatDialogClicked(repeatType: Int) {
-
+        this.repeatType.set(repeatType)
+        repeatName.set(applicationContext.resources
+                .getStringArray(R.array.repeat_types)[repeatType])
     }
 
     fun getReminder(reminderId: Int): LiveData<Reminder>? {
@@ -143,6 +158,11 @@ class AddEditReminderViewModel(
         this.reminderText.set(reminderText)
         this.timeRemind.set(timeRemind)
         this.repeatType.set(repeatType)
+
+        this.repeatName.set(
+                applicationContext.resources
+                        .getStringArray(R.array.repeat_types)[repeatType]
+        )
     }
 
     private fun showSnackbarMessage(message: Int?) {

@@ -216,8 +216,7 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
             }, Calendar.getInstance().get(Calendar.YEAR),
             Calendar.getInstance().get(Calendar.MONTH),
             Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
-        )
-            .show()
+        ).show()
     }
 
     private fun showImageDialog() {

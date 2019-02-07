@@ -34,7 +34,6 @@ class RemindersRepositoryImpl(database: Database) : RemindersRepository {
                         it.text = reminder.text
                         it.repeatType = reminder.repeatType
                         it.timeRemind = reminder.timeRemind
-                        it.isCompleted = reminder.isCompleted
                         reminderDao.updateReminder(it)
                     }
                 }
