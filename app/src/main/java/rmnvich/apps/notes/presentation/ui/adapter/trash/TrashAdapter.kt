@@ -2,6 +2,7 @@ package rmnvich.apps.notes.presentation.ui.adapter.trash
 
 import android.databinding.DataBindingUtil
 import android.support.v7.util.DiffUtil
+import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -72,8 +73,8 @@ class TrashAdapter : RecyclerView.Adapter<TrashAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrashAdapter.ViewHolder {
         val binding: ItemSimpleNoteBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(parent.context),
-            R.layout.item_simple_note, parent, false
+                LayoutInflater.from(parent.context),
+                R.layout.item_simple_note, parent, false
         )
         return ViewHolder(binding)
     }
@@ -84,7 +85,9 @@ class TrashAdapter : RecyclerView.Adapter<TrashAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: TrashAdapter.ViewHolder, position: Int) {
         holder.bind(mNoteList[position])
-        holder.itemView.setBackgroundResource(R.drawable.item_note_background)
+        (holder.itemView as CardView).setCardBackgroundColor(
+                holder.itemView.context.resources.getColor(R.color.colorWhite)
+        )
     }
 
     inner class ViewHolder(private val binding: ItemSimpleNoteBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -107,14 +110,17 @@ class TrashAdapter : RecyclerView.Adapter<TrashAdapter.ViewHolder>() {
         }
 
         private fun selectNote(note: Note) {
-            val background = if (!mSelectedNotes.contains(note)) {
+            val resources = binding.root.context.resources
+
+            val color = if (!mSelectedNotes.contains(note)) {
                 mSelectedNotes.add(note)
-                R.drawable.item_note_selected_background
+                resources.getColor(R.color.colorRipple)
             } else {
                 mSelectedNotes.remove(note)
-                R.drawable.item_note_background
+                resources.getColor(R.color.colorWhite)
             }
-            binding.root.setBackgroundResource(background)
+
+            (binding.root as CardView).setCardBackgroundColor(color)
             mSelectListener.onNoteSelected(mSelectedNotes.size)
         }
 
@@ -122,8 +128,8 @@ class TrashAdapter : RecyclerView.Adapter<TrashAdapter.ViewHolder>() {
             binding.note = note
 
             Glide.with(binding.root)
-                .load(File(note.imagePath))
-                .into(binding.ivNoteImage)
+                    .load(File(note.imagePath))
+                    .into(binding.ivNoteImage)
 
             binding.executePendingBindings()
         }

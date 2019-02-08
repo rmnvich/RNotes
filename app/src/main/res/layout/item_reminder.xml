@@ -13,12 +13,12 @@
             type="rmnvich.apps.notes.domain.entity.Reminder" />
     </data>
 
-    <FrameLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/item_reminder_card_view_horizontal_margin"
         android:layout_marginVertical="@dimen/item_reminder_card_view_vertical_margin"
-        android:background="@drawable/item_note_background"
+        app:cardCornerRadius="@dimen/item_reminder_card_view_corner_radius"
         tools:targetApi="o">
 
         <com.daimajia.swipe.SwipeLayout
@@ -173,5 +173,5 @@
             </android.support.constraint.ConstraintLayout>
 
         </com.daimajia.swipe.SwipeLayout>
-    </FrameLayout>
+    </android.support.v7.widget.CardView>
 </layout>
