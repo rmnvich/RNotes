@@ -9,9 +9,11 @@
     <color name="colorAccentLight">#91ffce71</color>
     <color name="colorAccent">#D8961B</color>
 
+    <color name="colorBackground">#E7E7E7</color>
+
     <color name="colorWhite">#FFFFFF</color>
-    <color name="colorRed">#F44336</color>
-    <color name="colorGreen">#43a047</color>
+    <color name="colorRed">#E6E53935</color>
+    <color name="colorGreen">#CC43A047</color>
 
     <color name="colorClockTint">#1976d2</color>
     <color name="colorCalendarTint">#43a047</color>

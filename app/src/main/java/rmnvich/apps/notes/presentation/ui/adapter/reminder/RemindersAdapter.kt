@@ -18,6 +18,16 @@ import java.util.*
 
 class RemindersAdapter : RecyclerSwipeAdapter<RemindersAdapter.ViewHolder>() {
 
+    private var mColors: List<Int> = listOf(
+            -855682478,     //Material A200 Red
+            -864268801,     //Material A200 Deep purple
+            -866947586,     //Material A200 Blue
+            -868170497,     //Material A200 Cyan
+            -860684455,     //Material A200 Lime
+            -855648448,     //Material A200 Amber
+            -855675328      //Material A200 Orange
+    )
+
     interface OnClickReminderListener {
         fun onClickReminder(reminderId: Int)
 
@@ -123,6 +133,8 @@ class RemindersAdapter : RecyclerSwipeAdapter<RemindersAdapter.ViewHolder>() {
 
             binding.tvReminderRepeat.text = binding.root.context.resources
                     .getStringArray(R.array.repeat_types)[reminder.repeatType]
+            binding.reminderCircleView.circleColor = mColors[reminder.colorNumber]
+            binding.tvReminderFirstLater.text = reminder.text.substring(0, 1)
 
             binding.executePendingBindings()
         }

@@ -68,6 +68,7 @@
     <!-- AddEditReminderActivity -->
     <string name="create_reminder">Create reminder</string>
     <string name="create">Create</string>
+    <string name="empty_reminder">You can not add empty reminder</string>
     <string name="remind_me_to">Remind me to…</string>
 
     <!-- Messages -->

@@ -13,6 +13,7 @@ import rmnvich.apps.notes.domain.interactors.addeditreminder.AddEditReminderInte
 import rmnvich.apps.notes.domain.utils.SingleLiveEvent
 import rmnvich.apps.notes.presentation.utils.DateHelper
 import rmnvich.apps.notes.presentation.utils.DateHelper.getDefaultTimeRemindInMills
+import java.util.concurrent.ThreadLocalRandom
 
 class AddEditReminderViewModel(
         private val applicationContext: Application,
@@ -95,16 +96,18 @@ class AddEditReminderViewModel(
     }
 
     fun insertOrUpdateReminder() {
-        if (!reminderText.get().isNullOrEmpty()) {
+        if (!reminderText.get()?.trim().isNullOrEmpty()) {
             val reminder = Reminder()
             reminder.text = reminderText.get()?.trim()!!
             reminder.timeRemind = timeRemind.get()!!
             reminder.repeatType = repeatType.get()!!
+            reminder.colorNumber = ThreadLocalRandom
+                    .current().nextInt(0, 7)
 
             if (reminderId == 0) {
                 insertReminder(reminder)
             } else updateReminder(reminder, reminderId)
-        } else onCreateClickEvent.call()
+        } else showSnackbarMessage(R.string.empty_reminder)
     }
 
     private fun loadReminder(reminderId: Int) {

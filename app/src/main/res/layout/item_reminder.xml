@@ -63,41 +63,63 @@
                 android:foreground="@drawable/item_reminder_foreground"
                 android:padding="@dimen/item_reminder_card_view_padding">
 
+                <rmnvich.apps.notes.presentation.ui.custom.CircleView
+                    android:id="@+id/reminder_circle_view"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_reminder_first_later"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="25sp"
+                    app:layout_constraintBottom_toBottomOf="@id/reminder_circle_view"
+                    app:layout_constraintEnd_toEndOf="@id/reminder_circle_view"
+                    app:layout_constraintStart_toStartOf="@id/reminder_circle_view"
+                    app:layout_constraintTop_toTopOf="@id/reminder_circle_view" />
+
                 <TextView
                     android:id="@+id/tv_reminder_text"
                     style="@style/Base.TextAppearance.AppCompat.Body1"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/item_reminder_card_view_padding"
                     android:alpha="0.8"
                     android:ellipsize="end"
-                    android:maxLines="3"
+                    android:maxLines="2"
                     android:text="@{reminder.text}"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toTopOf="@id/reminder_divider"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/reminder_circle_view"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <View
                     android:id="@+id/reminder_divider"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="@dimen/item_note_divider_height"
+                    android:layout_marginStart="@dimen/item_reminder_card_view_padding"
                     android:layout_marginTop="@dimen/item_reminder_divider_margin_top"
+                    android:layout_marginEnd="@dimen/item_reminder_card_view_horizontal_margin"
                     android:background="@color/colorDivider"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/reminder_circle_view"
                     app:layout_constraintTop_toBottomOf="@id/tv_reminder_text" />
 
                 <LinearLayout
                     android:id="@+id/layout_clock"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/item_reminder_time_margin_start"
+                    android:layout_marginStart="@dimen/item_reminder_card_view_padding"
                     android:layout_marginTop="@dimen/item_reminder_layout_margin_top"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toStartOf="@id/layout_date"
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/reminder_circle_view"
                     app:layout_constraintTop_toBottomOf="@id/reminder_divider"
                     tools:ignore="UseCompoundDrawables">
 
@@ -149,7 +171,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/item_reminder_layout_margin_top"
-                    android:layout_marginEnd="@dimen/item_reminder_time_margin_start"
+                    android:layout_marginEnd="@dimen/item_reminder_card_view_horizontal_margin"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/layout_date"
@@ -168,7 +190,8 @@
                         android:id="@+id/tv_reminder_repeat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/item_reminder_tv_margin_start" />
+                        android:layout_marginStart="@dimen/item_reminder_tv_margin_start"
+                        android:ellipsize="end" />
                 </LinearLayout>
             </android.support.constraint.ConstraintLayout>
 
