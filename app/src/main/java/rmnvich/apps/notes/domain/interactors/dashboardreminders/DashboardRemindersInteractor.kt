@@ -9,26 +9,32 @@ import rmnvich.apps.notes.domain.repositories.RemindersRepository
 import java.util.concurrent.TimeUnit
 
 class DashboardRemindersInteractor(
-    private val remindersRepository: RemindersRepository,
-    private val schedulersProvider: SchedulersProvider
+        private val remindersRepository: RemindersRepository,
+        private val schedulersProvider: SchedulersProvider
 ) {
 
     fun getReminders(isDone: Boolean): Flowable<List<Reminder>> {
         return Flowable.timer(Constants.DEFAULT_DELAY, TimeUnit.MILLISECONDS)
-            .flatMap { remindersRepository.getReminders(isDone) }
-            .subscribeOn(schedulersProvider.io())
-            .observeOn(schedulersProvider.ui())
+                .flatMap { remindersRepository.getReminders(isDone) }
+                .subscribeOn(schedulersProvider.io())
+                .observeOn(schedulersProvider.ui())
     }
 
     fun deleteReminder(reminder: Reminder): Completable {
         return remindersRepository.deleteReminder(reminder)
-            .subscribeOn(schedulersProvider.io())
-            .observeOn(schedulersProvider.ui())
+                .subscribeOn(schedulersProvider.io())
+                .observeOn(schedulersProvider.ui())
+    }
+
+    fun deleteCompletedReminders(): Completable {
+        return remindersRepository.deleteCompletedReminders()
+                .subscribeOn(schedulersProvider.io())
+                .observeOn(schedulersProvider.ui())
     }
 
     fun doneOrUndoneReminder(reminderId: Int, isDone: Boolean): Completable {
         return remindersRepository.doneOrUndoneReminder(reminderId, isDone)
-            .subscribeOn(schedulersProvider.io())
-            .observeOn(schedulersProvider.ui())
+                .subscribeOn(schedulersProvider.io())
+                .observeOn(schedulersProvider.ui())
     }
 }

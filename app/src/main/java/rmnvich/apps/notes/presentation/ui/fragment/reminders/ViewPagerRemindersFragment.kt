@@ -58,6 +58,7 @@ class ViewPagerRemindersFragment : Fragment() {
             activity?.overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         }
 
+        setHasOptionsMenu(true)
         return binding.root
     }
 

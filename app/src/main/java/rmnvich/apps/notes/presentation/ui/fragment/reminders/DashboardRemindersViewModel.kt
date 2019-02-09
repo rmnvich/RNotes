@@ -11,8 +11,8 @@ import rmnvich.apps.notes.domain.interactors.dashboardreminders.DashboardReminde
 import rmnvich.apps.notes.domain.utils.SingleLiveEvent
 
 class DashboardRemindersViewModel(
-    private val mDashboardRemindersInteractor: DashboardRemindersInteractor,
-    private val isCompletedReminders: Boolean
+        private val mDashboardRemindersInteractor: DashboardRemindersInteractor,
+        private val isCompletedReminders: Boolean
 ) : ViewModel() {
 
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
@@ -49,34 +49,44 @@ class DashboardRemindersViewModel(
 
     fun deleteReminder(reminder: Reminder) {
         mCompositeDisposable.add(
-            mDashboardRemindersInteractor
-                .deleteReminder(reminder)
-                .subscribe({
-                    showSnackbarMessage(R.string.reminder_has_been_deleted)
-                }, { showSnackbarMessage(R.string.error_message) })
+                mDashboardRemindersInteractor
+                        .deleteReminder(reminder)
+                        .subscribe({
+                            showSnackbarMessage(R.string.reminder_has_been_deleted)
+                        }, { showSnackbarMessage(R.string.error_message) })
+        )
+    }
+
+    fun deleteCompletedReminders() {
+        mCompositeDisposable.add(
+                mDashboardRemindersInteractor
+                        .deleteCompletedReminders()
+                        .subscribe({
+                            showSnackbarMessage(R.string.reminders_has_been_deleted)
+                        }, { showSnackbarMessage(R.string.error_message) })
         )
     }
 
     fun doneOrUndoneReminder(reminderId: Int, isDone: Boolean) {
         mCompositeDisposable.add(
-            mDashboardRemindersInteractor
-                .doneOrUndoneReminder(reminderId, isDone)
-                .subscribe()
+                mDashboardRemindersInteractor
+                        .doneOrUndoneReminder(reminderId, isDone)
+                        .subscribe()
         )
     }
 
     private fun loadReminders() {
         mCompositeDisposable.add(mDashboardRemindersInteractor
-            .getReminders(isCompletedReminders)
-            .doOnSubscribe { bIsShowingProgressBar.set(true) }
-            .subscribe({
-                bIsShowingProgressBar.set(false)
-                bRemindersIsEmpty.set(it.isEmpty())
-                mRemindersResponse?.value = it
-            }, {
-                bIsShowingProgressBar.set(false)
-                showSnackbarMessage(R.string.error_message)
-            })
+                .getReminders(isCompletedReminders)
+                .doOnSubscribe { bIsShowingProgressBar.set(true) }
+                .subscribe({
+                    bIsShowingProgressBar.set(false)
+                    bRemindersIsEmpty.set(it.isEmpty())
+                    mRemindersResponse?.value = it
+                }, {
+                    bIsShowingProgressBar.set(false)
+                    showSnackbarMessage(R.string.error_message)
+                })
         )
     }
 

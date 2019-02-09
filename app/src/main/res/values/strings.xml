@@ -29,6 +29,8 @@
     <!-- DashboardRemindersFragment -->
     <string name="you_have_no_reminders">You have no active reminders</string>
     <string name="you_have_no_completed_reminders">You have no completed reminders</string>
+    <string name="empty_completed_reminders">Empty completed reminders</string>
+    <string name="restore_reminders_impossible">It will not be possible to recover these reminders.</string>
     <string name="active_reminders">Active</string>
     <string name="completed_reminders">Completed</string>
 
@@ -50,8 +52,11 @@
     <string name="alert_dialog_delete_tag_message">This label will be removed from all your notes. Your notes won\'t be deleted.</string>
 
     <!-- TrashFragment -->
+    <string name="restore_notes_impossible">It will not be possible to recover these notes.</string>
     <string name="trash_is_empty">Trash is empty</string>
     <string name="empty_trash">Empty trash</string>
+    <string name="what_to_do">What to do?</string>
+    <string name="restore">Restore</string>
 
     <!-- AddEditNoteActivity -->
     <string name="tag">Label</string>
@@ -75,15 +80,13 @@
     <string name="error_message">An error occurred. Try again</string>
     <string name="tag_has_been_deleted">Label has been deleted</string>
     <string name="reminder_has_been_deleted">Reminder has been deleted</string>
+    <string name="reminders_has_been_deleted">Completed reminders has been deleted</string>
     <string name="note_has_been_deleted">Note has been removed</string>
 
     <!-- Other -->
     <string name="progress_dialog_loading">Loading…</string>
     <string name="search_hint">Search…</string>
     <string name="undo">Undo</string>
-    <string name="what_to_do">What to do?</string>
-    <string name="restore">Restore</string>
-    <string name="restore_notes_impossible">It will not be possible to recover these notes.</string>
     <string name="are_you_sure">Are you sure?</string>
     <string name="tags">Labels</string>
     <string name="colors">Colors</string>

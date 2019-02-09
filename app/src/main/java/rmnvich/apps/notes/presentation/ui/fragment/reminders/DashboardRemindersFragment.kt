@@ -10,10 +10,12 @@ import android.os.Handler
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.daimajia.swipe.util.Attributes
+import org.jetbrains.anko.noButton
+import org.jetbrains.anko.support.v4.alert
+import org.jetbrains.anko.support.v4.toast
+import org.jetbrains.anko.yesButton
 import rmnvich.apps.notes.App
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.data.common.Constants
@@ -73,6 +75,8 @@ class DashboardRemindersFragment : Fragment() {
         }
 
         initRecyclerView()
+        setHasOptionsMenu(true)
+
         return mDashboardRemindersBinding.root
     }
 
@@ -91,6 +95,24 @@ class DashboardRemindersFragment : Fragment() {
                 }
         )
         mDashboardRemindersBinding.recyclerReminders.adapter = mRemindersAdapter
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater?.inflate(R.menu.reminders_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            R.id.menu_empty_completed_reminders -> {
+                alert(getString(R.string.restore_reminders_impossible), getString(R.string.are_you_sure)) {
+                    yesButton { mDashboardRemindersViewModel.deleteCompletedReminders() }
+                    noButton {}
+                }.show()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

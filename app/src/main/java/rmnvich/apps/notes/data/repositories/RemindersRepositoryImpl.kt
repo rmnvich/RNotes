@@ -42,4 +42,8 @@ class RemindersRepositoryImpl(database: Database) : RemindersRepository {
     override fun deleteReminder(reminder: Reminder): Completable {
         return Completable.fromAction { reminderDao.deleteReminder(reminder) }
     }
+
+    override fun deleteCompletedReminders(): Completable {
+        return Completable.fromAction { reminderDao.deleteCompletedReminders() }
+    }
 }

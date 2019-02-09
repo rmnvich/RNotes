@@ -17,6 +17,9 @@ interface ReminderDao {
     @Query("UPDATE reminder SET isCompleted = :isCompleted WHERE id = :reminderId")
     fun doneOrUndoneReminder(reminderId: Int, isCompleted: Boolean)
 
+    @Query("DELETE FROM reminder WHERE isCompleted = 1")
+    fun deleteCompletedReminders()
+
     @Insert
     fun insertReminder(reminder: Reminder)
 

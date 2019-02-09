@@ -18,4 +18,6 @@ interface RemindersRepository {
     fun updateReminder(reminder: Reminder, reminderId: Int): Completable
 
     fun deleteReminder(reminder: Reminder): Completable
+
+    fun deleteCompletedReminders(): Completable
 }
