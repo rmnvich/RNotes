@@ -103,8 +103,8 @@ class TrashFragment : Fragment() {
         }
     }
 
-    private fun initAlternativeToolbar(title: String) {
-        mTrashBinding.trashToolbar.title = title
+    private fun initAlternativeToolbar(selectedNotesSize: Int) {
+        mTrashBinding.trashToolbar.title = "$selectedNotesSize ${getString(R.string.notes_selected)}"
         mTrashBinding.trashToolbar.setNavigationIcon(R.drawable.ic_action_close)
         mTrashBinding.trashToolbar.setNavigationOnClickListener { mAdapter.unselectAllNotes() }
     }
@@ -154,7 +154,7 @@ class TrashFragment : Fragment() {
     private fun handleSelectNote(selectedNotesSize: Int) {
         mTrashViewModel.bIsNotesSelected = selectedNotesSize > 0
         if (mTrashViewModel.bIsNotesSelected) {
-            initAlternativeToolbar(selectedNotesSize.toString())
+            initAlternativeToolbar(selectedNotesSize)
         } else initDefaultToolbar()
         (activity)?.invalidateOptionsMenu()
     }
