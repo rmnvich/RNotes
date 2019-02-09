@@ -101,8 +101,6 @@ class AddEditReminderViewModel(
             reminder.text = reminderText.get()?.trim()!!
             reminder.timeRemind = timeRemind.get()!!
             reminder.repeatType = repeatType.get()!!
-            reminder.colorNumber = ThreadLocalRandom
-                    .current().nextInt(0, 7)
 
             if (reminderId == 0) {
                 insertReminder(reminder)

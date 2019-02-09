@@ -66,7 +66,7 @@ class DialogTagsAdapter : RecyclerView.Adapter<DialogTagsAdapter.ViewHolder>(), 
                 } else {
                     val filteredList = ArrayList<Tag>()
                     for (row in mTagList) {
-                        if (row.name?.toLowerCase()?.contains(charString.toLowerCase())!!) {
+                        if (row.name.toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(row)
                         }
                     }

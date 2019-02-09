@@ -129,7 +129,7 @@ class DashboardNotesFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.dashboard_menu, menu)
+        inflater?.inflate(R.menu.notes_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

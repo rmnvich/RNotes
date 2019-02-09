@@ -33,7 +33,7 @@
                 app:stl_defaultTabTextColor="@color/tab_title_color"
                 app:stl_distributeEvenly="true"
                 app:stl_dividerThickness="0dp"
-                app:stl_indicatorColor="@color/colorBlackAlpha"
+                app:stl_indicatorColor="@color/colorTabIndicator"
                 app:stl_indicatorGravity="bottom"
                 app:stl_indicatorInterpolation="linear"
                 app:stl_indicatorThickness="1dp"

@@ -83,8 +83,10 @@
     <dimen name="item_reminder_divider_margin_top">10dp</dimen>
     <dimen name="item_reminder_time_margin_start">20dp</dimen>
     <dimen name="item_reminder_layout_margin_top">7dp</dimen>
-    <dimen name="item_reminder_image_view_size">18dp</dimen>
-    <dimen name="item_reminder_tv_margin_start">5dp</dimen>
+    <dimen name="item_reminder_image_view_size">15dp</dimen>
+    <dimen name="item_reminder_date_horizontal_padding">10dp</dimen>
+    <dimen name="item_reminder_date_vertical_padding">5dp</dimen>
+    <dimen name="item_reminder_tv_margin_start">3dp</dimen>
     <dimen name="item_reminder_image_button_width">80dp</dimen>
 
     <dimen name="add_edit_reminder_activity_padding">10dp</dimen>
