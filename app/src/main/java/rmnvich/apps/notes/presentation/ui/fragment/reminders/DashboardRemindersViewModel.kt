@@ -9,6 +9,7 @@ import rmnvich.apps.notes.R
 import rmnvich.apps.notes.domain.entity.Reminder
 import rmnvich.apps.notes.domain.interactors.dashboardreminders.DashboardRemindersInteractor
 import rmnvich.apps.notes.domain.utils.SingleLiveEvent
+import rmnvich.apps.notes.presentation.utils.DebugLogger
 
 class DashboardRemindersViewModel(
         private val mDashboardRemindersInteractor: DashboardRemindersInteractor,
@@ -67,10 +68,18 @@ class DashboardRemindersViewModel(
         )
     }
 
-    fun doneOrUndoneReminder(reminderId: Int, isDone: Boolean) {
+    fun doneOrUndoneReminder(reminderId: Int, isCompleted: Boolean) {
         mCompositeDisposable.add(
                 mDashboardRemindersInteractor
-                        .doneOrUndoneReminder(reminderId, isDone)
+                        .doneOrUndoneReminder(reminderId, isCompleted)
+                        .subscribe()
+        )
+    }
+
+    fun pinOrUnpinReminder(reminderId: Int, isPinned: Boolean) {
+        mCompositeDisposable.add(
+                mDashboardRemindersInteractor
+                        .pinOrUnpinReminder(reminderId, isPinned)
                         .subscribe()
         )
     }

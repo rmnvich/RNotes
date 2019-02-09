@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.os.Handler
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -14,7 +13,6 @@ import android.view.*
 import com.daimajia.swipe.util.Attributes
 import org.jetbrains.anko.noButton
 import org.jetbrains.anko.support.v4.alert
-import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.yesButton
 import rmnvich.apps.notes.App
 import rmnvich.apps.notes.R
@@ -90,8 +88,11 @@ class DashboardRemindersFragment : Fragment() {
         mRemindersAdapter.setOnItemClickListener(
                 onClickReminder = { mDashboardRemindersViewModel.editReminder(it) },
                 onClickDelete = { mDashboardRemindersViewModel.deleteReminder(it) },
-                onClickDone = { reminderId, isDone ->
-                    mDashboardRemindersViewModel.doneOrUndoneReminder(reminderId, isDone)
+                onClickComplete = { reminderId, isCompleted ->
+                    mDashboardRemindersViewModel.doneOrUndoneReminder(reminderId, isCompleted)
+                },
+                onClickPin = { reminderId, isPinned ->
+                    mDashboardRemindersViewModel.pinOrUnpinReminder(reminderId, isPinned)
                 }
         )
         mDashboardRemindersBinding.recyclerReminders.adapter = mRemindersAdapter

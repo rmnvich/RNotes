@@ -13,6 +13,8 @@ interface RemindersRepository {
 
     fun doneOrUndoneReminder(reminderId: Int, isCompleted: Boolean): Completable
 
+    fun pinOrUnpinReminder(reminderId: Int, isPinned: Boolean): Completable
+
     fun insertReminder(reminder: Reminder): Completable
 
     fun updateReminder(reminder: Reminder, reminderId: Int): Completable

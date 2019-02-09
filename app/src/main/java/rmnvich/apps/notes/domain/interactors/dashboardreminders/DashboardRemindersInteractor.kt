@@ -32,8 +32,14 @@ class DashboardRemindersInteractor(
                 .observeOn(schedulersProvider.ui())
     }
 
-    fun doneOrUndoneReminder(reminderId: Int, isDone: Boolean): Completable {
-        return remindersRepository.doneOrUndoneReminder(reminderId, isDone)
+    fun doneOrUndoneReminder(reminderId: Int, isCompleted: Boolean): Completable {
+        return remindersRepository.doneOrUndoneReminder(reminderId, isCompleted)
+                .subscribeOn(schedulersProvider.io())
+                .observeOn(schedulersProvider.ui())
+    }
+
+    fun pinOrUnpinReminder(reminderId: Int, isPinned: Boolean): Completable {
+        return remindersRepository.pinOrUnpinReminder(reminderId, isPinned)
                 .subscribeOn(schedulersProvider.io())
                 .observeOn(schedulersProvider.ui())
     }

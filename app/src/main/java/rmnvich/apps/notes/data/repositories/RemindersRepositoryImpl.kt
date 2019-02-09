@@ -23,6 +23,10 @@ class RemindersRepositoryImpl(database: Database) : RemindersRepository {
         return Completable.fromAction { reminderDao.doneOrUndoneReminder(reminderId, isCompleted) }
     }
 
+    override fun pinOrUnpinReminder(reminderId: Int, isPinned: Boolean): Completable {
+        return Completable.fromAction { reminderDao.pinOrUnpinReminder(reminderId, isPinned) }
+    }
+
     override fun insertReminder(reminder: Reminder): Completable {
         return Completable.fromAction { reminderDao.insertReminder(reminder) }
     }

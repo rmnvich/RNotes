@@ -13,6 +13,7 @@
 
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorRed">#E6E53935</color>
+    <color name="colorBlue">#CC1E88E5</color>
     <color name="colorGreen">#CC43A047</color>
 
     <color name="colorClockTint">#1976d2</color>

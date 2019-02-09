@@ -17,17 +17,18 @@ class RemindersDiffUtil(
     }
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        val oldNote = oldList[oldItemPosition]
-        val newNote = newList[newItemPosition]
-        return oldNote.id == newNote.id
+        val oldReminder = oldList[oldItemPosition]
+        val newReminder = newList[newItemPosition]
+        return oldReminder.id == newReminder.id
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        val oldNote = oldList[oldItemPosition]
-        val newNote = newList[newItemPosition]
-        return oldNote.text == newNote.text &&
-                oldNote.isCompleted == newNote.isCompleted &&
-                oldNote.repeatType == newNote.repeatType &&
-                oldNote.timeRemind == newNote.timeRemind
+        val oldReminder = oldList[oldItemPosition]
+        val newReminder = newList[newItemPosition]
+        return oldReminder.text == newReminder.text &&
+                oldReminder.isCompleted == newReminder.isCompleted &&
+                oldReminder.repeatType == newReminder.repeatType &&
+                oldReminder.timeRemind == newReminder.timeRemind &&
+                oldReminder.isPinned == newReminder.isPinned
     }
 }

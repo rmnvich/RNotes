@@ -21,7 +21,9 @@ class RemindersAdapter : RecyclerSwipeAdapter<RemindersAdapter.ViewHolder>() {
     interface OnClickReminderListener {
         fun onClickReminder(reminderId: Int)
 
-        fun onClickDone(reminderId: Int, isDone: Boolean)
+        fun onClickComplete(reminderId: Int, isCompleted: Boolean)
+
+        fun onClickPin(reminderId: Int, isPinned: Boolean)
 
         fun onClickDelete(reminder: Reminder)
     }
@@ -32,7 +34,8 @@ class RemindersAdapter : RecyclerSwipeAdapter<RemindersAdapter.ViewHolder>() {
 
     inline fun setOnItemClickListener(
             crossinline onClickReminder: (Int) -> Unit,
-            crossinline onClickDone: (Int, Boolean) -> Unit,
+            crossinline onClickComplete: (Int, Boolean) -> Unit,
+            crossinline onClickPin: (Int, Boolean) -> Unit,
             crossinline onClickDelete: (Reminder) -> Unit
     ) {
         setClickListener(object : OnClickReminderListener {
@@ -40,8 +43,12 @@ class RemindersAdapter : RecyclerSwipeAdapter<RemindersAdapter.ViewHolder>() {
                 onClickReminder(reminderId)
             }
 
-            override fun onClickDone(reminderId: Int, isDone: Boolean) {
-                onClickDone(reminderId, isDone)
+            override fun onClickComplete(reminderId: Int, isCompleted: Boolean) {
+                onClickComplete(reminderId, isCompleted)
+            }
+
+            override fun onClickPin(reminderId: Int, isPinned: Boolean) {
+                onClickPin(reminderId, isPinned)
             }
 
             override fun onClickDelete(reminder: Reminder) {
@@ -90,32 +97,53 @@ class RemindersAdapter : RecyclerSwipeAdapter<RemindersAdapter.ViewHolder>() {
                 mClickListener.onClickReminder(mReminderList[adapterPosition].id)
             }
 
-            binding.btnDeleteReminder.setOnClickListener {
-                vibrate()
-                binding.swipeLayout.close()
+            binding.btnDeleteReminder.setOnClickListener { deleteReminder() }
 
-                Handler().postDelayed({
-                    try {
-                        mClickListener.onClickDelete(mReminderList[adapterPosition])
-                    } catch (ignore: IndexOutOfBoundsException) {
-                    }
-                }, 400)
-            }
+            binding.btnDoneReminder.setOnClickListener { completeReminder() }
 
-            binding.btnDoneReminder.setOnClickListener {
-                vibrate()
-                binding.swipeLayout.close()
+            binding.btnPinReminder.setOnClickListener { pinReminder() }
+        }
 
-                Handler().postDelayed({
-                    try {
-                        mClickListener.onClickDone(
-                                mReminderList[adapterPosition].id,
-                                !mReminderList[adapterPosition].isCompleted
-                        )
-                    } catch (ignore: IndexOutOfBoundsException) {
-                    }
-                }, 400)
-            }
+        private fun deleteReminder() {
+            vibrate()
+            binding.swipeLayout.close()
+
+            Handler().postDelayed({
+                try {
+                    mClickListener.onClickDelete(mReminderList[adapterPosition])
+                } catch (ignore: IndexOutOfBoundsException) {
+                }
+            }, 400)
+        }
+
+        private fun pinReminder() {
+            vibrate()
+            binding.swipeLayout.close()
+
+            Handler().postDelayed({
+                try {
+                    mClickListener.onClickPin(
+                            mReminderList[adapterPosition].id,
+                            !mReminderList[adapterPosition].isPinned
+                    )
+                } catch (ignore: IndexOutOfBoundsException) {
+                }
+            }, 400)
+        }
+
+        private fun completeReminder() {
+            vibrate()
+            binding.swipeLayout.close()
+
+            Handler().postDelayed({
+                try {
+                    mClickListener.onClickComplete(
+                            mReminderList[adapterPosition].id,
+                            !mReminderList[adapterPosition].isCompleted
+                    )
+                } catch (ignore: IndexOutOfBoundsException) {
+                }
+            }, 400)
         }
 
         fun bind(reminder: Reminder) {

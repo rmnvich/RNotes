@@ -8,6 +8,8 @@
 
         <import type="rmnvich.apps.notes.presentation.utils.DateHelper" />
 
+        <import type="android.view.View" />
+
         <variable
             name="reminder"
             type="rmnvich.apps.notes.domain.entity.Reminder" />
@@ -44,6 +46,16 @@
                     android:src="@drawable/ic_action_trash_inverted" />
 
                 <ImageButton
+                    android:id="@+id/btn_pin_reminder"
+                    android:layout_width="@dimen/item_reminder_image_button_width"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@color/colorBlue"
+                    android:contentDescription="@string/delete"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:src="@{reminder.isPinned ? @drawable/ic_action_unpin_inverted : @drawable/ic_action_pin_inverted}" />
+
+                <ImageButton
                     android:id="@+id/btn_done_reminder"
                     android:layout_width="@dimen/item_reminder_image_button_width"
                     android:layout_height="match_parent"
@@ -51,7 +63,7 @@
                     android:background="@drawable/item_reminder_swipe_layout_background"
                     android:contentDescription="@string/delete"
                     android:foreground="?attr/selectableItemBackground"
-                    android:src="@{reminder.isCompleted ? @drawable/ic_action_close_inverted : @drawable/ic_action_check_inverted}" />
+                    android:src="@{reminder.isCompleted ? @drawable/ic_action_bookmark_outline_inverted : @drawable/ic_action_bookmark_inverted}" />
             </LinearLayout>
 
             <android.support.constraint.ConstraintLayout
@@ -66,15 +78,27 @@
                 <TextView
                     android:id="@+id/tv_reminder_text"
                     style="@style/Base.TextAppearance.AppCompat.Body1"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:alpha="0.8"
                     android:ellipsize="end"
                     android:maxLines="3"
                     android:text="@{reminder.text}"
                     android:textSize="15sp"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/iv_reminder_pinned"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/iv_reminder_pinned"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="5dp"
+                    android:contentDescription="@string/pin"
+                    android:src="@drawable/ic_action_pin"
+                    android:visibility="@{reminder.isPinned ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tv_reminder_text"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <LinearLayout

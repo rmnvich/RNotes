@@ -16,4 +16,5 @@ class Reminder {
     var repeatType: Int = REPEAT_TYPE_ONCE
 
     var isCompleted: Boolean = false
+    var isPinned: Boolean = false
 }
