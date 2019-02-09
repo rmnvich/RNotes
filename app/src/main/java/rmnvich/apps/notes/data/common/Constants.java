@@ -32,6 +32,7 @@ public class Constants {
     public static int REQUEST_CODE_IMAGE = 0;
     public static int REQUEST_CODE_SHARE = 1;
 
+    //TODO: Revert reminder item
     //TODO: Fix StatusBar color in BottomSheetDialog
     //TODO: Settings (vibrate, theme, pin, default color)
 }
