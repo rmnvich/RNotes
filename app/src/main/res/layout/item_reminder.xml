@@ -1,243 +1,244 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:swipe="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:swipe="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
-        <import type="rmnvich.apps.notes.presentation.utils.DateHelper" />
+        <import type="rmnvich.apps.notes.presentation.utils.DateHelper"/>
 
-        <import type="android.view.View" />
+        <import type="android.view.View"/>
 
         <variable
-            name="reminder"
-            type="rmnvich.apps.notes.domain.entity.Reminder" />
+                name="reminder"
+                type="rmnvich.apps.notes.domain.entity.Reminder"/>
     </data>
 
     <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/item_reminder_card_view_horizontal_margin"
-        android:layout_marginVertical="@dimen/item_reminder_card_view_vertical_margin"
-        app:cardCornerRadius="@dimen/item_reminder_card_view_corner_radius"
-        tools:targetApi="o">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/item_reminder_card_view_horizontal_margin"
+            android:layout_marginVertical="@dimen/item_reminder_card_view_vertical_margin"
+            app:cardCornerRadius="@dimen/item_reminder_card_view_corner_radius"
+            tools:targetApi="o">
 
         <com.daimajia.swipe.SwipeLayout
-            android:id="@+id/swipe_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            swipe:leftEdgeSwipeOffset="0dp"
-            swipe:rightEdgeSwipeOffset="0dp">
+                android:id="@+id/swipe_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                swipe:leftEdgeSwipeOffset="0dp"
+                swipe:rightEdgeSwipeOffset="0dp">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/btn_delete_reminder"
-                    android:layout_width="@dimen/item_reminder_image_button_width"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:background="@color/colorRed"
-                    android:contentDescription="@string/delete"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:src="@drawable/ic_action_trash_inverted" />
+                        android:id="@+id/btn_delete_reminder"
+                        android:layout_width="@dimen/item_reminder_image_button_width"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:background="@color/colorRed"
+                        android:contentDescription="@string/delete"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:src="@drawable/ic_action_trash_inverted"/>
 
                 <ImageButton
-                    android:id="@+id/btn_pin_reminder"
-                    android:layout_width="@dimen/item_reminder_image_button_width"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:background="@color/colorBlue"
-                    android:contentDescription="@string/delete"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:src="@{reminder.isPinned ? @drawable/ic_action_unpin_inverted : @drawable/ic_action_pin_inverted}" />
+                        android:id="@+id/btn_pin_reminder"
+                        android:layout_width="@dimen/item_reminder_image_button_width"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:background="@color/colorBlue"
+                        android:contentDescription="@string/delete"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:src="@{reminder.isPinned ? @drawable/ic_action_unpin_inverted : @drawable/ic_action_pin_inverted}"/>
 
                 <ImageButton
-                    android:id="@+id/btn_done_reminder"
-                    android:layout_width="@dimen/item_reminder_image_button_width"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:background="@drawable/item_reminder_swipe_layout_background"
-                    android:contentDescription="@string/delete"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:src="@{reminder.isCompleted ? @drawable/ic_action_bookmark_outline_inverted : @drawable/ic_action_bookmark_inverted}" />
+                        android:id="@+id/btn_done_reminder"
+                        android:layout_width="@dimen/item_reminder_image_button_width"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:background="@drawable/item_reminder_swipe_layout_background"
+                        android:contentDescription="@string/delete"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:src="@{reminder.isCompleted ? @drawable/ic_action_bookmark_outline_inverted : @drawable/ic_action_bookmark_inverted}"/>
             </LinearLayout>
 
             <android.support.constraint.ConstraintLayout
-                android:id="@+id/reminder_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="@drawable/item_reminder_foreground"
-                android:padding="@dimen/item_reminder_card_view_padding">
+                    android:id="@+id/reminder_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/item_reminder_foreground"
+                    android:padding="@dimen/item_reminder_card_view_padding">
 
                 <TextView
-                    android:id="@+id/tv_reminder_text"
-                    style="@style/Base.TextAppearance.AppCompat.Body1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:alpha="0.8"
-                    android:ellipsize="end"
-                    android:maxLines="3"
-                    android:text="@{reminder.text}"
-                    android:textSize="15sp"
-                    app:layout_constraintEnd_toStartOf="@id/iv_reminder_pinned"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                        android:id="@+id/tv_reminder_text"
+                        style="@style/Base.TextAppearance.AppCompat.Body1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.8"
+                        android:ellipsize="end"
+                        android:maxLines="3"
+                        android:text="@{reminder.text}"
+                        android:textSize="15sp"
+                        app:layout_constraintEnd_toStartOf="@id/iv_reminder_pinned"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
 
                 <ImageView
-                    android:id="@+id/iv_reminder_pinned"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginStart="5dp"
-                    android:contentDescription="@string/pin"
-                    android:src="@drawable/ic_action_pin"
-                    android:visibility="@{reminder.isPinned ? View.VISIBLE : View.GONE}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/tv_reminder_text"
-                    app:layout_constraintTop_toTopOf="parent" />
+                        android:id="@+id/iv_reminder_pinned"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="5dp"
+                        android:contentDescription="@string/pin"
+                        android:tint="@color/colorAccent"
+                        android:src="@drawable/ic_action_lock"
+                        android:visibility="@{reminder.isPinned ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tv_reminder_text"
+                        app:layout_constraintTop_toTopOf="parent"/>
 
                 <LinearLayout
-                    android:id="@+id/layout_clock"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/item_reminder_layout_margin_top"
-                    android:background="@drawable/item_tag_background"
-                    android:orientation="horizontal"
-                    android:paddingStart="@dimen/item_reminder_date_horizontal_padding"
-                    android:paddingTop="@dimen/item_reminder_date_vertical_padding"
-                    android:paddingEnd="@dimen/item_reminder_date_horizontal_padding"
-                    android:paddingBottom="@dimen/item_reminder_date_vertical_padding"
-                    app:layout_constraintEnd_toStartOf="@id/layout_date"
-                    app:layout_constraintHorizontal_chainStyle="spread_inside"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_reminder_text"
-                    tools:ignore="UseCompoundDrawables">
-
-                    <ImageView
-                        android:id="@+id/iv_reminder_clock"
-                        android:layout_width="@dimen/item_reminder_image_view_size"
-                        android:layout_height="@dimen/item_reminder_image_view_size"
-                        android:layout_gravity="center_vertical"
-                        android:contentDescription="@string/clock"
-                        android:src="@drawable/ic_action_alarm"
-                        android:tint="@color/colorClockTint" />
-
-                    <TextView
-                        android:id="@+id/tv_reminder_time"
+                        android:id="@+id/layout_clock"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="@dimen/item_reminder_tv_margin_start"
-                        android:text="@{DateHelper.convertLongToTime(reminder.timeRemind)}"
-                        android:textColor="@color/colorTagText"
-                        android:textSize="12sp"
-                        android:textStyle="italic" />
+                        android:layout_marginTop="@dimen/item_reminder_layout_margin_top"
+                        android:background="@drawable/item_tag_background"
+                        android:orientation="horizontal"
+                        android:paddingStart="@dimen/item_reminder_date_horizontal_padding"
+                        android:paddingTop="@dimen/item_reminder_date_vertical_padding"
+                        android:paddingEnd="@dimen/item_reminder_date_horizontal_padding"
+                        android:paddingBottom="@dimen/item_reminder_date_vertical_padding"
+                        app:layout_constraintEnd_toStartOf="@id/layout_date"
+                        app:layout_constraintHorizontal_chainStyle="spread_inside"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_reminder_text"
+                        tools:ignore="UseCompoundDrawables">
+
+                    <ImageView
+                            android:id="@+id/iv_reminder_clock"
+                            android:layout_width="@dimen/item_reminder_image_view_size"
+                            android:layout_height="@dimen/item_reminder_image_view_size"
+                            android:layout_gravity="center_vertical"
+                            android:contentDescription="@string/clock"
+                            android:src="@drawable/ic_action_alarm"
+                            android:tint="@color/colorClockTint"/>
+
+                    <TextView
+                            android:id="@+id/tv_reminder_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="@dimen/item_reminder_tv_margin_start"
+                            android:text="@{DateHelper.convertLongToTime(reminder.timeRemind)}"
+                            android:textColor="@color/colorTagText"
+                            android:textSize="12sp"
+                            android:textStyle="italic"/>
                 </LinearLayout>
 
                 <View
-                    android:id="@+id/reminder_divider_left"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/item_note_divider_height"
-                    android:layout_marginStart="@dimen/item_reminder_date_horizontal_padding"
-                    android:layout_marginTop="@dimen/item_reminder_layout_margin_top"
-                    android:layout_marginEnd="@dimen/item_reminder_date_horizontal_padding"
-                    android:background="@color/colorDivider"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/layout_date"
-                    app:layout_constraintHorizontal_weight="2"
-                    app:layout_constraintStart_toEndOf="@id/layout_clock"
-                    app:layout_constraintTop_toBottomOf="@id/tv_reminder_text" />
+                        android:id="@+id/reminder_divider_left"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/item_note_divider_height"
+                        android:layout_marginStart="@dimen/item_reminder_date_horizontal_padding"
+                        android:layout_marginTop="@dimen/item_reminder_layout_margin_top"
+                        android:layout_marginEnd="@dimen/item_reminder_date_horizontal_padding"
+                        android:background="@color/colorDivider"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/layout_date"
+                        app:layout_constraintHorizontal_weight="2"
+                        app:layout_constraintStart_toEndOf="@id/layout_clock"
+                        app:layout_constraintTop_toBottomOf="@id/tv_reminder_text"/>
 
                 <LinearLayout
-                    android:id="@+id/layout_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/item_reminder_layout_margin_top"
-                    android:background="@drawable/item_tag_background"
-                    android:orientation="horizontal"
-                    android:paddingStart="@dimen/item_reminder_date_horizontal_padding"
-                    android:paddingTop="@dimen/item_reminder_date_vertical_padding"
-                    android:paddingEnd="@dimen/item_reminder_date_horizontal_padding"
-                    android:paddingBottom="@dimen/item_reminder_date_vertical_padding"
-                    app:layout_constraintEnd_toStartOf="@id/layout_repeat"
-                    app:layout_constraintStart_toEndOf="@id/layout_clock"
-                    app:layout_constraintTop_toBottomOf="@id/tv_reminder_text"
-                    tools:ignore="UseCompoundDrawables">
-
-                    <ImageView
-                        android:id="@+id/iv_reminder_calendar"
-                        android:layout_width="@dimen/item_reminder_image_view_size"
-                        android:layout_height="@dimen/item_reminder_image_view_size"
-                        android:layout_gravity="center_vertical"
-                        android:contentDescription="@string/calendar"
-                        android:src="@drawable/ic_action_calendar"
-                        android:tint="@color/colorCalendarTint" />
-
-                    <TextView
-                        android:id="@+id/tv_reminder_date"
+                        android:id="@+id/layout_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="@dimen/item_reminder_tv_margin_start"
-                        android:text="@{DateHelper.convertLongToDate(reminder.timeRemind)}"
-                        android:textColor="@color/colorTagText"
-                        android:textSize="12sp"
-                        android:textStyle="italic" />
+                        android:layout_marginTop="@dimen/item_reminder_layout_margin_top"
+                        android:background="@drawable/item_tag_background"
+                        android:orientation="horizontal"
+                        android:paddingStart="@dimen/item_reminder_date_horizontal_padding"
+                        android:paddingTop="@dimen/item_reminder_date_vertical_padding"
+                        android:paddingEnd="@dimen/item_reminder_date_horizontal_padding"
+                        android:paddingBottom="@dimen/item_reminder_date_vertical_padding"
+                        app:layout_constraintEnd_toStartOf="@id/layout_repeat"
+                        app:layout_constraintStart_toEndOf="@id/layout_clock"
+                        app:layout_constraintTop_toBottomOf="@id/tv_reminder_text"
+                        tools:ignore="UseCompoundDrawables">
+
+                    <ImageView
+                            android:id="@+id/iv_reminder_calendar"
+                            android:layout_width="@dimen/item_reminder_image_view_size"
+                            android:layout_height="@dimen/item_reminder_image_view_size"
+                            android:layout_gravity="center_vertical"
+                            android:contentDescription="@string/calendar"
+                            android:src="@drawable/ic_action_calendar"
+                            android:tint="@color/colorCalendarTint"/>
+
+                    <TextView
+                            android:id="@+id/tv_reminder_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="@dimen/item_reminder_tv_margin_start"
+                            android:text="@{DateHelper.convertLongToDate(reminder.timeRemind)}"
+                            android:textColor="@color/colorTagText"
+                            android:textSize="12sp"
+                            android:textStyle="italic"/>
                 </LinearLayout>
 
                 <View
-                    android:id="@+id/reminder_divider_right"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/item_note_divider_height"
-                    android:layout_marginStart="@dimen/item_note_divider_horizontal_margin"
-                    android:layout_marginTop="@dimen/item_reminder_layout_margin_top"
-                    android:layout_marginEnd="@dimen/item_note_divider_horizontal_margin"
-                    android:background="@color/colorDivider"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/layout_repeat"
-                    app:layout_constraintHorizontal_weight="2"
-                    app:layout_constraintStart_toEndOf="@id/layout_date"
-                    app:layout_constraintTop_toBottomOf="@id/tv_reminder_text" />
+                        android:id="@+id/reminder_divider_right"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/item_note_divider_height"
+                        android:layout_marginStart="@dimen/item_note_divider_horizontal_margin"
+                        android:layout_marginTop="@dimen/item_reminder_layout_margin_top"
+                        android:layout_marginEnd="@dimen/item_note_divider_horizontal_margin"
+                        android:background="@color/colorDivider"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/layout_repeat"
+                        app:layout_constraintHorizontal_weight="2"
+                        app:layout_constraintStart_toEndOf="@id/layout_date"
+                        app:layout_constraintTop_toBottomOf="@id/tv_reminder_text"/>
 
                 <LinearLayout
-                    android:id="@+id/layout_repeat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/item_reminder_layout_margin_top"
-                    android:background="@drawable/item_tag_background"
-                    android:orientation="horizontal"
-                    android:paddingStart="@dimen/item_reminder_date_horizontal_padding"
-                    android:paddingTop="@dimen/item_reminder_date_vertical_padding"
-                    android:paddingEnd="@dimen/item_reminder_date_horizontal_padding"
-                    android:paddingBottom="@dimen/item_reminder_date_vertical_padding"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/layout_date"
-                    app:layout_constraintTop_toBottomOf="@id/tv_reminder_text"
-                    tools:ignore="UseCompoundDrawables">
-
-                    <ImageView
-                        android:id="@+id/iv_reminder_repeat"
-                        android:layout_width="@dimen/item_reminder_image_view_size"
-                        android:layout_height="@dimen/item_reminder_image_view_size"
-                        android:layout_gravity="center_vertical"
-                        android:contentDescription="@string/repeat"
-                        android:src="@drawable/ic_action_repeat"
-                        android:tint="@color/colorRepeatTint" />
-
-                    <TextView
-                        android:id="@+id/tv_reminder_repeat"
+                        android:id="@+id/layout_repeat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="@dimen/item_reminder_tv_margin_start"
-                        android:textColor="@color/colorTagText"
-                        android:textSize="12sp"
-                        android:textStyle="italic" />
+                        android:layout_marginTop="@dimen/item_reminder_layout_margin_top"
+                        android:background="@drawable/item_tag_background"
+                        android:orientation="horizontal"
+                        android:paddingStart="@dimen/item_reminder_date_horizontal_padding"
+                        android:paddingTop="@dimen/item_reminder_date_vertical_padding"
+                        android:paddingEnd="@dimen/item_reminder_date_horizontal_padding"
+                        android:paddingBottom="@dimen/item_reminder_date_vertical_padding"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/layout_date"
+                        app:layout_constraintTop_toBottomOf="@id/tv_reminder_text"
+                        tools:ignore="UseCompoundDrawables">
+
+                    <ImageView
+                            android:id="@+id/iv_reminder_repeat"
+                            android:layout_width="@dimen/item_reminder_image_view_size"
+                            android:layout_height="@dimen/item_reminder_image_view_size"
+                            android:layout_gravity="center_vertical"
+                            android:contentDescription="@string/repeat"
+                            android:src="@drawable/ic_action_repeat"
+                            android:tint="@color/colorRepeatTint"/>
+
+                    <TextView
+                            android:id="@+id/tv_reminder_repeat"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="@dimen/item_reminder_tv_margin_start"
+                            android:textColor="@color/colorTagText"
+                            android:textSize="12sp"
+                            android:textStyle="italic"/>
                 </LinearLayout>
             </android.support.constraint.ConstraintLayout>
 
