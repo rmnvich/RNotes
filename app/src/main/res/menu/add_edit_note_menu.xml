@@ -4,19 +4,19 @@
 
     <item
         android:id="@+id/menu_add_photo"
-        android:icon="@drawable/ic_action_add_photo"
+        android:icon="@drawable/ic_action_add_photo_inverted"
         android:title="@string/add_image"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/menu_tag"
-        android:icon="@drawable/ic_action_label_gray"
+        android:icon="@drawable/ic_action_label_inverted"
         android:title="@string/tag"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/menu_share_note"
-        android:icon="@drawable/ic_action_share_gray"
+        android:icon="@drawable/ic_action_share_inverted"
         android:title="@string/share"
         app:showAsAction="always" />
 </menu>

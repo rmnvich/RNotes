@@ -83,11 +83,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun showFragment(fragment: Fragment, fragmentPosition: Int) {
         if (mFragmentActive != fragment) {
-            var enterAnim = R.anim.slide_in_up
-            var exitAnim = R.anim.slide_out_up
-            if (fragmentPosition < mCurrentFragmentPosition) {
-                enterAnim = R.anim.slide_in_down
-                exitAnim = R.anim.slide_out_down
+            val (enterAnim, exitAnim) = when {
+                fragmentPosition < mCurrentFragmentPosition -> Pair(R.anim.slide_in_down, R.anim.slide_out_down)
+                fragmentPosition > mCurrentFragmentPosition -> Pair(R.anim.slide_in_up, R.anim.slide_out_up)
+                else -> Pair(R.anim.fade_in, R.anim.fade_out)
             }
 
             supportFragmentManager.beginTransaction()

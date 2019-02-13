@@ -86,7 +86,7 @@ class TrashAdapter : RecyclerView.Adapter<TrashAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: TrashAdapter.ViewHolder, position: Int) {
         holder.bind(mNoteList[position])
         (holder.itemView as CardView).setCardBackgroundColor(
-                holder.itemView.context.resources.getColor(R.color.colorWhite)
+                holder.itemView.context.resources.getColor(R.color.colorItemBackground)
         )
     }
 
@@ -114,10 +114,10 @@ class TrashAdapter : RecyclerView.Adapter<TrashAdapter.ViewHolder>() {
 
             val color = if (!mSelectedNotes.contains(note)) {
                 mSelectedNotes.add(note)
-                resources.getColor(R.color.colorRipple)
+                resources.getColor(R.color.colorAccent)
             } else {
                 mSelectedNotes.remove(note)
-                resources.getColor(R.color.colorWhite)
+                resources.getColor(R.color.colorItemBackground)
             }
 
             (binding.root as CardView).setCardBackgroundColor(color)

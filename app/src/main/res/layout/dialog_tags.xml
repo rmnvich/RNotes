@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWhite"
+    android:background="@color/colorBackground"
     android:focusableInTouchMode="true">
 
     <EditText
@@ -12,8 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_alignParentTop="true"
-        android:background="@color/colorWhite"
-        android:drawableStart="@drawable/ic_action_search"
+        android:background="@color/colorBackground"
+        android:drawableStart="@drawable/ic_action_search_inverted"
         android:drawablePadding="15dp"
         android:hint="@string/search_hint"
         android:importantForAutofill="no"
@@ -21,7 +21,7 @@
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
         android:textColor="@android:color/black"
-        android:textColorHint="@color/colorBlackHint"
+        android:textColorHint="@color/colorAddEditNoteHint"
         app:layout_constraintTop_toTopOf="parent"
         tools:targetApi="o" />
 
@@ -43,5 +43,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 </RelativeLayout>

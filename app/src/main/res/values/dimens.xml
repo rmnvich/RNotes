@@ -39,6 +39,7 @@
     <dimen name="reminder_edittext_horizontal_padding">10dp</dimen>
 
     <dimen name="navigation_view_full_screen">-64dp</dimen>
+    <dimen name="navigation_view_width">280dp</dimen>
     <dimen name="navigation_header_height">210dp</dimen>
     <dimen name="navigation_header_margin_top">30dp</dimen>
 
@@ -64,6 +65,7 @@
     <dimen name="item_checkable_color_vertical_padding">7dp</dimen>
     <dimen name="item_checkable_color_padding">15dp</dimen>
     <dimen name="item_checkable_color_size">30dp</dimen>
+
     <dimen name="filter_layout_tv_padding">10dp</dimen>
     <dimen name="filter_layout_dropdown_margin">5dp</dimen>
 

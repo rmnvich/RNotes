@@ -97,7 +97,7 @@ class TrashFragment : Fragment() {
 
     private fun initDefaultToolbar() {
         mTrashBinding.trashToolbar.title = getString(R.string.title_trash)
-        mTrashBinding.trashToolbar.setNavigationIcon(R.drawable.ic_action_menu)
+        mTrashBinding.trashToolbar.setNavigationIcon(R.drawable.ic_action_menu_inverted)
         mTrashBinding.trashToolbar.setNavigationOnClickListener {
             (activity as MainActivity).drawer_layout.openDrawer(Gravity.START)
         }
@@ -105,7 +105,7 @@ class TrashFragment : Fragment() {
 
     private fun initAlternativeToolbar(selectedNotesSize: Int) {
         mTrashBinding.trashToolbar.title = "$selectedNotesSize ${getString(R.string.notes_selected)}"
-        mTrashBinding.trashToolbar.setNavigationIcon(R.drawable.ic_action_close)
+        mTrashBinding.trashToolbar.setNavigationIcon(R.drawable.ic_action_close_inverted)
         mTrashBinding.trashToolbar.setNavigationOnClickListener { mAdapter.unselectAllNotes() }
     }
 

@@ -20,8 +20,7 @@
             android:id="@+id/appbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorWhite"
-            app:elevation="0dp">
+            android:background="@color/colorPrimary">
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
@@ -34,7 +33,7 @@
                     android:background="@null"
                     android:contentDescription="@string/back"
                     android:padding="@dimen/search_fragment_et_search_padding"
-                    android:src="@drawable/ic_action_arrow_back"
+                    android:src="@drawable/ic_action_arrow_back_inverted"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -47,12 +46,14 @@
                     android:layout_marginEnd="@dimen/search_fragment_et_search_padding"
                     android:hint="@string/search_hint"
                     android:singleLine="true"
+                    android:textColor="@color/colorItemText"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/btn_arrow_back"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_scrollFlags="scroll|snap"
-                    app:met_hideUnderline="true" />
+                    app:met_hideUnderline="true"
+                    app:met_textColorHint="@color/colorAddEditNoteHint" />
 
             </android.support.constraint.ConstraintLayout>
         </android.support.design.widget.AppBarLayout>
@@ -61,7 +62,7 @@
             android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorWhite"
+            android:background="@color/colorBackground"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:refreshing="@{viewmodel.bIsShowingProgressBar}">
 
@@ -104,6 +105,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/no_notes_found"
+                    android:textColor="@color/colorEmptyText"
                     android:textSize="16sp"
                     android:visibility="@{viewmodel.bSearchedNotesIsEmpty ? View.VISIBLE : View.INVISIBLE}"
                     app:layout_constraintEnd_toEndOf="parent"

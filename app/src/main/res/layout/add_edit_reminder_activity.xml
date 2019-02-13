@@ -15,7 +15,7 @@
         android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
+        android:background="@color/colorBackground"
         app:refreshing="@{viewmodel.bIsShowingProgressBar}">
 
         <android.support.design.widget.CoordinatorLayout
@@ -33,8 +33,8 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/colorWhite"
-                    app:navigationIcon="@drawable/ic_action_arrow_back"
+                    android:background="@color/colorBackground"
+                    app:navigationIcon="@drawable/ic_action_arrow_back_inverted"
                     app:title="@string/create_reminder"
                     app:titleTextColor="@color/colorToolbarTitle" />
             </android.support.design.widget.AppBarLayout>
@@ -55,7 +55,10 @@
                     android:paddingLeft="@dimen/reminder_edittext_horizontal_padding"
                     android:paddingRight="@dimen/reminder_edittext_horizontal_padding"
                     android:text="@={viewmodel.reminderText}"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:met_textColor="@color/colorAddEditNoteText"
+                    app:met_textColorHint="@color/colorAddEditNoteHint"
+                    app:met_underlineColor="@color/colorWhite" />
 
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/frame_layout_date"
@@ -89,6 +92,7 @@
                         android:layout_marginStart="@dimen/add_edit_reminder_activity_tv_margin_start"
                         android:alpha="0.8"
                         android:text="@string/date"
+                        android:textColor="@color/colorItemText"
                         android:textSize="17sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@id/iv_reminder_calendar"
@@ -102,6 +106,7 @@
                         android:layout_gravity="center_vertical|end"
                         android:alpha="0.8"
                         android:text="@{DateHelper.convertLongToDate(viewmodel.timeRemind)}"
+                        android:textColor="@color/colorItemText"
                         android:textSize="17sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -140,6 +145,7 @@
                         android:layout_marginStart="@dimen/add_edit_reminder_activity_tv_margin_start"
                         android:alpha="0.8"
                         android:text="@string/time"
+                        android:textColor="@color/colorItemText"
                         android:textSize="17sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@id/iv_reminder_clock"
@@ -153,6 +159,7 @@
                         android:layout_gravity="center_vertical|end"
                         android:alpha="0.8"
                         android:text="@{DateHelper.convertLongToTime(viewmodel.timeRemind)}"
+                        android:textColor="@color/colorItemText"
                         android:textSize="17sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -191,6 +198,7 @@
                         android:layout_marginStart="@dimen/add_edit_reminder_activity_tv_margin_start"
                         android:alpha="0.8"
                         android:text="@string/repeat"
+                        android:textColor="@color/colorItemText"
                         android:textSize="17sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@id/iv_reminder_repeat"
@@ -204,6 +212,7 @@
                         android:layout_gravity="center_vertical|end"
                         android:alpha="0.8"
                         android:text="@{viewmodel.repeatName}"
+                        android:textColor="@color/colorItemText"
                         android:textSize="17sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

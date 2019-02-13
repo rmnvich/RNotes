@@ -22,6 +22,7 @@
         android:clickable="true"
         android:focusable="true"
         android:foreground="@drawable/item_note_foreground"
+        app:cardBackgroundColor="@color/colorItemBackground"
         app:cardCornerRadius="@dimen/item_note_card_corner_radius"
         tools:targetApi="o">
 
@@ -36,8 +37,15 @@
                 android:layout_height="@dimen/item_note_image_height"
                 android:layout_margin="1dp"
                 android:visibility="@{TextUtils.isEmpty(note.imagePath) ? View.GONE : View.VISIBLE}"
+                app:cardBackgroundColor="@color/colorItemBackgroundDark"
                 app:cardCornerRadius="@dimen/item_note_card_corner_radius"
                 app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/image"
+                    android:src="@drawable/broken_image" />
 
                 <ImageView
                     android:id="@+id/iv_note_image"
@@ -60,6 +68,7 @@
                 android:paddingEnd="@dimen/item_note_card_padding"
                 android:paddingBottom="@dimen/item_note_card_padding"
                 android:text="@{note.text}"
+                android:textColor="@color/colorItemText"
                 android:textSize="15sp"
                 android:visibility="@{TextUtils.isEmpty(note.text) ? View.GONE : View.VISIBLE}"
                 app:layout_constraintStart_toStartOf="parent"

@@ -12,7 +12,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
+        android:background="@color/colorBackground"
         android:clickable="true"
         android:focusable="true"
         android:foreground="@drawable/item_note_foreground"
@@ -40,7 +40,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@{color.colorName}"
-            android:textColor="@android:color/black"
+            android:textColor="@color/colorItemText"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/chb_circle_color"
@@ -53,6 +53,7 @@
             android:layout_height="wrap_content"
             android:clickable="false"
             android:focusable="false"
+            android:buttonTint="@color/colorWhite"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

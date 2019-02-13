@@ -66,11 +66,11 @@ class FilterFragment : Fragment() {
             if (mFilterBinding.tagsExpandableLayout.isExpanded) {
                 mFilterBinding.tagsExpandableLayout.collapse()
                 mFilterBinding.ivTagsDropdown
-                        .setImageResource(R.drawable.ic_action_keyboard_arrow_down)
+                        .setImageResource(R.drawable.ic_action_keyboard_arrow_down_inverted)
             } else {
                 mFilterBinding.tagsExpandableLayout.expand()
                 mFilterBinding.ivTagsDropdown
-                        .setImageResource(R.drawable.ic_action_keyboard_arrow_up)
+                        .setImageResource(R.drawable.ic_action_keyboard_arrow_up_inverted)
             }
         }
 
@@ -78,11 +78,11 @@ class FilterFragment : Fragment() {
             if (mFilterBinding.colorsExpandableLayout.isExpanded) {
                 mFilterBinding.colorsExpandableLayout.collapse()
                 mFilterBinding.ivColorsDropdown
-                        .setImageResource(R.drawable.ic_action_keyboard_arrow_down)
+                        .setImageResource(R.drawable.ic_action_keyboard_arrow_down_inverted)
             } else {
                 mFilterBinding.colorsExpandableLayout.expand()
                 mFilterBinding.ivColorsDropdown
-                        .setImageResource(R.drawable.ic_action_keyboard_arrow_up)
+                        .setImageResource(R.drawable.ic_action_keyboard_arrow_up_inverted)
             }
         }
 

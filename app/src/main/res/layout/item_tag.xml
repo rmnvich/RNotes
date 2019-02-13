@@ -12,7 +12,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorWhite">
+        android:background="@color/colorBackground">
 
         <View
             android:id="@+id/top_divider"
@@ -37,7 +37,7 @@
             android:layout_marginStart="@dimen/item_tag_layout_padding"
             android:contentDescription="@string/delete"
             android:padding="@dimen/item_tag_image_padding"
-            android:src="@drawable/ic_action_label_gray"
+            android:src="@drawable/ic_action_label_inverted"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -61,7 +61,7 @@
             app:layout_constraintStart_toEndOf="@id/iv_delete_tag"
             app:layout_constraintTop_toTopOf="parent"
             app:met_hideUnderline="true"
-            app:met_textColor="@android:color/black" />
+            app:met_textColor="@color/colorItemText" />
 
         <ImageButton
             android:id="@+id/iv_edit_tag"
@@ -71,7 +71,7 @@
             android:background="@null"
             android:contentDescription="@string/edit"
             android:padding="@dimen/item_tag_image_padding"
-            android:src="@drawable/ic_action_create"
+            android:src="@drawable/ic_action_create_inverted"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

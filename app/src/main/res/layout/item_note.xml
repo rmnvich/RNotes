@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/item_note_vertical_margin"
         android:layout_marginVertical="@dimen/item_note_vertical_margin"
+        app:cardBackgroundColor="@color/colorItemBackground"
         app:cardCornerRadius="@dimen/item_note_card_corner_radius"
         tools:targetApi="o">
 
@@ -60,10 +61,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/item_note_image_height"
                     android:layout_margin="1dp"
+                    app:cardBackgroundColor="@color/colorItemBackgroundDark"
                     android:visibility="@{TextUtils.isEmpty(note.noteImagePath) ? View.GONE : View.VISIBLE}"
                     app:cardCornerRadius="@dimen/item_note_card_corner_radius"
                     app:cardElevation="0dp"
                     app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/broken_image"
+                        android:contentDescription="@string/image" />
 
                     <ImageView
                         android:id="@+id/iv_note_image"
@@ -86,6 +94,7 @@
                     android:paddingEnd="@dimen/item_note_card_padding"
                     android:text="@{note.noteText}"
                     android:textSize="15sp"
+                    android:textColor="@color/colorItemText"
                     android:visibility="@{TextUtils.isEmpty(note.noteText) ? View.GONE : View.VISIBLE}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/card_view_note_image" />
@@ -169,9 +178,9 @@
                     android:layout_marginEnd="@dimen/item_note_card_padding"
                     android:layout_marginBottom="@dimen/item_note_card_padding"
                     app:anim_scale_factor="2"
-                    app:circle_end_color="@color/colorAccent"
+                    app:circle_end_color="@color/colorRepeatTint"
                     app:circle_start_color="@color/colorPrimary"
-                    app:dots_primary_color="@color/colorAccent"
+                    app:dots_primary_color="@color/colorRepeatTint"
                     app:dots_secondary_color="@color/colorPrimary"
                     app:icon_size="@dimen/item_note_star_button_smart_size"
                     app:icon_type="Star"

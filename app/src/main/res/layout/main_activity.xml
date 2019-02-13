@@ -5,6 +5,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
@@ -15,14 +16,14 @@
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/navigation_view_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:layout_marginStart="@dimen/navigation_view_full_screen"
-        android:background="@color/colorWhite"
+        android:background="@color/colorBackground"
         android:fitsSystemWindows="true"
+        android:theme="@style/AppTheme.NavigationView"
         app:itemBackground="@drawable/navigation_item_background"
-        app:itemIconTint="@color/colorToolbarTitle"
-        app:itemTextColor="@color/colorToolbarTitle"
+        app:itemIconTint="@color/drawer_icon_color"
+        app:itemTextColor="@color/drawer_text_color"
         app:menu="@menu/drawer_menu" />
 </android.support.v4.widget.DrawerLayout>

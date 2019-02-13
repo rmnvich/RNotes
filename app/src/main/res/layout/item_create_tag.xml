@@ -12,12 +12,13 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorWhite">
+        android:background="@color/colorPrimary">
 
         <View
             android:id="@+id/top_divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:alpha="0.3"
             android:background="@drawable/divider"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,8 +31,8 @@
             android:contentDescription="@string/create"
             android:onClick="@{(view) -> viewmodel.insertTag()}"
             android:padding="@dimen/item_tag_image_padding"
-            android:src="@drawable/ic_action_add"
-            app:layout_constraintBottom_toTopOf="@id/bottom_divider"
+            android:src="@drawable/ic_action_add_inverted"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/top_divider" />
 
@@ -49,18 +50,12 @@
             android:singleLine="true"
             android:text="@={viewmodel.tagName}"
             android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@id/bottom_divider"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/iv_create_tag"
             app:layout_constraintTop_toBottomOf="@id/top_divider"
-            app:met_clearButton="true"
-            app:met_hideUnderline="true" />
-
-        <View
-            android:id="@+id/bottom_divider"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@drawable/divider"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:met_hideUnderline="true"
+            app:met_textColor="@color/colorAddEditNoteText"
+            app:met_textColorHint="@color/colorAddEditNoteHint" />
     </android.support.constraint.ConstraintLayout>
 </layout>

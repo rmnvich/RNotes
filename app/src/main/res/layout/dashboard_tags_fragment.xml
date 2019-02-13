@@ -15,23 +15,21 @@
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorWhite">
+        android:background="@color/colorBackground">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorWhite"
-            app:elevation="0dp"
+            android:background="@color/colorPrimary"
             tools:context=".presentation.ui.fragment.tags.DashboardTagsFragment">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/tags_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:elevation="0dp"
                 app:layout_scrollFlags="scroll|snap"
-                app:navigationIcon="@drawable/ic_action_menu"
+                app:navigationIcon="@drawable/ic_action_menu_inverted"
                 app:title="@string/title_tags"
                 app:titleTextColor="@color/colorToolbarTitle" />
 
