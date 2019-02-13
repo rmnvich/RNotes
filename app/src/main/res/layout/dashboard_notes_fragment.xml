@@ -26,7 +26,7 @@
                 android:id="@+id/notes_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_scrollFlags="scroll|snap"
+                app:layout_scrollFlags="scroll|snap|enterAlways"
                 app:navigationIcon="@drawable/ic_action_menu_inverted"
                 app:title="@string/title_notes"
                 app:titleTextColor="@color/colorToolbarTitle" />

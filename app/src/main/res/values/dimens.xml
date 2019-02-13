@@ -10,8 +10,9 @@
     <dimen name="item_note_card_corner_radius">10dp</dimen>
     <dimen name="item_note_card_padding">10dp</dimen>
     <dimen name="item_note_text_margin_top">3dp</dimen>
-    <dimen name="item_note_circle_color_size">16dp</dimen>
-    <dimen name="item_note_circle_margin_top">7dp</dimen>
+    <dimen name="item_note_circle_color_size">20dp</dimen>
+    <dimen name="item_note_text_padding_end">15dp</dimen>
+    <dimen name="item_note_circle_margin_top">5dp</dimen>
     <dimen name="item_note_star_button_smart_size">20dp</dimen>
     <dimen name="item_note_tag_horizontal_padding">10dp</dimen>
     <dimen name="item_note_tag_vertical_padding">4dp</dimen>
@@ -20,6 +21,11 @@
     <dimen name="item_note_divider_height">0.8dp</dimen>
     <dimen name="item_note_text_padding_top">5dp</dimen>
     <dimen name="item_note_image_height">200dp</dimen>
+    <dimen name="item_note_broke_image_size">60dp</dimen>
+    <dimen name="item_note_tag_margin">5dp</dimen>
+    <dimen name="item_note_tag_horizontal_margin">10dp</dimen>
+    <dimen name="item_note_star_button_margin">7dp</dimen>
+    <dimen name="item_note_color_drawable_radius">50dp</dimen>
 
     <dimen name="item_tag_corner_radius">20dp</dimen>
     <dimen name="item_tag_horizontal_padding">10dp</dimen>

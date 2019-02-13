@@ -38,6 +38,8 @@
     <color name="colorCalendarTint">#43a047</color>
     <color name="colorRepeatTint">#ffa000</color>
 
+    <color name="colorStar">#FFCA28</color>
+
     <color name="colorTabTitleSelectedTrue">#c8FFFFFF</color>
     <color name="colorTabTitleSelectedFalse">#64FFFFFF</color>
     <color name="colorTabIndicator">#37FFFFFF</color>

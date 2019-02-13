@@ -2,6 +2,8 @@ package rmnvich.apps.notes.presentation.ui.adapter.note
 
 import android.content.Context
 import android.databinding.DataBindingUtil
+import android.graphics.PorterDuff
+import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.Handler
 import android.os.VibrationEffect
@@ -116,12 +118,17 @@ class NotesAdapter : RecyclerSwipeAdapter<NotesAdapter.ViewHolder>() {
             })
         }
 
+        //TODO: databinding
         fun bind(note: NoteWithTag) {
             binding.note = note
 
             Glide.with(binding.root)
                     .load(File(note.noteImagePath))
                     .into(binding.ivNoteImage)
+
+            val drawable = binding.noteColorView.background as GradientDrawable
+            drawable.setColor(note.noteColor)
+            binding.noteColorView.background = drawable
 
             binding.executePendingBindings()
         }

@@ -88,15 +88,15 @@ class TagsAdapter : RecyclerView.Adapter<TagsAdapter.ViewHolder>() {
                         binding.topDivider.visibility = VISIBLE
                     binding.bottomDivider.visibility = VISIBLE
 
-                    binding.ivEditTag.setImageResource(R.drawable.ic_action_check)
-                    binding.ivDeleteTag.setImageResource(R.drawable.ic_action_label_empty)
+                    binding.ivEditTag.setImageResource(R.drawable.ic_action_check_inverted)
+                    binding.ivDeleteTag.setImageResource(R.drawable.ic_action_label_empty_inverted)
                 } else {
                     binding.etTagText.isEnabled = false
                     binding.topDivider.visibility = INVISIBLE
                     binding.bottomDivider.visibility = INVISIBLE
 
-                    binding.ivEditTag.setImageResource(R.drawable.ic_action_create)
-                    binding.ivDeleteTag.setImageResource(R.drawable.ic_action_label_gray)
+                    binding.ivEditTag.setImageResource(R.drawable.ic_action_create_inverted)
+                    binding.ivDeleteTag.setImageResource(R.drawable.ic_action_label_inverted)
 
                     mClickListener.onClickApply(mTagList[adapterPosition].id,
                             binding.etTagText.text.toString())
