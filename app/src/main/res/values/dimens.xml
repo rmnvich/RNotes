@@ -99,7 +99,7 @@
 
     <dimen name="add_edit_reminder_activity_padding">10dp</dimen>
     <dimen name="add_edit_reminder_activity_button_margin_top">5dp</dimen>
-    <dimen name="add_edit_reminder_activity_button_padding">15dp</dimen>
+    <dimen name="add_edit_reminder_activity_button_padding">10dp</dimen>
     <dimen name="add_edit_reminder_activity_iv_size">20dp</dimen>
     <dimen name="add_edit_reminder_activity_tv_margin_start">10dp</dimen>
 

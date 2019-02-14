@@ -46,13 +46,13 @@
                     android:layout_marginEnd="@dimen/search_fragment_et_search_padding"
                     android:hint="@string/search_hint"
                     android:singleLine="true"
-                    android:textColor="@color/colorItemText"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/btn_arrow_back"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_scrollFlags="scroll|snap"
                     app:met_hideUnderline="true"
+                    app:met_textColor="@color/colorItemText"
                     app:met_textColorHint="@color/colorAddEditNoteHint" />
 
             </android.support.constraint.ConstraintLayout>

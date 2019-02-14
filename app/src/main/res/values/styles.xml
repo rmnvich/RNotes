@@ -15,7 +15,7 @@
         <item name="android:listDivider">@android:color/transparent</item>
     </style>
 
-    <style name="AddEditNoteActivityTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AddEditActivityTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorBackground</item>
         <item name="colorPrimaryDark">@color/colorBackground</item>
         <item name="colorAccent">@color/colorAccent</item>

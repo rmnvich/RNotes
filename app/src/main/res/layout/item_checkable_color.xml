@@ -51,9 +51,9 @@
             android:id="@+id/chb_circle_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:buttonTint="@color/checkbox_color"
             android:clickable="false"
             android:focusable="false"
-            android:buttonTint="@color/colorWhite"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

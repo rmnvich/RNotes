@@ -44,12 +44,13 @@
         <activity
             android:name=".presentation.ui.activity.addeditreminder.AddEditReminderActivity"
             android:configChanges="orientation|screenSize"
+            android:theme="@style/AddEditActivityTheme"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".presentation.ui.activity.addeditnote.AddEditNoteActivity"
             android:configChanges="orientation|screenSize"
-            android:theme="@style/AddEditNoteActivityTheme"
+            android:theme="@style/AddEditActivityTheme"
             android:windowSoftInputMode="adjustResize" />
     </application>
 </manifest>
