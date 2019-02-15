@@ -85,9 +85,6 @@ class TrashAdapter : RecyclerView.Adapter<TrashAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: TrashAdapter.ViewHolder, position: Int) {
         holder.bind(mNoteList[position])
-        (holder.itemView as CardView).setCardBackgroundColor(
-                holder.itemView.context.resources.getColor(R.color.colorItemBackground)
-        )
     }
 
     inner class ViewHolder(private val binding: ItemSimpleNoteBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -124,8 +121,15 @@ class TrashAdapter : RecyclerView.Adapter<TrashAdapter.ViewHolder>() {
             mSelectListener.onNoteSelected(mSelectedNotes.size)
         }
 
+        //TODO: databinding
         fun bind(note: Note) {
             binding.note = note
+
+            if (!mSelectedNotes.contains(note))
+                binding.cardViewNoteImage.setCardBackgroundColor(binding.root.context
+                        .resources.getColor(R.color.colorItemBackground))
+            else binding.cardViewNoteImage.setCardBackgroundColor(binding.root.context
+                    .resources.getColor(R.color.colorAccent))
 
             Glide.with(binding.root)
                     .load(File(note.imagePath))

@@ -146,6 +146,7 @@ class RemindersAdapter : RecyclerSwipeAdapter<RemindersAdapter.ViewHolder>() {
             }, 400)
         }
 
+        //TODO: databinding
         fun bind(reminder: Reminder) {
             binding.reminder = reminder
 

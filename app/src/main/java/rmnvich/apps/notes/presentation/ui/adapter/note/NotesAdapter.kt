@@ -2,7 +2,6 @@ package rmnvich.apps.notes.presentation.ui.adapter.note
 
 import android.content.Context
 import android.databinding.DataBindingUtil
-import android.graphics.PorterDuff
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.Handler
@@ -21,6 +20,7 @@ import rmnvich.apps.notes.databinding.ItemNoteBinding
 import rmnvich.apps.notes.domain.entity.NoteWithTag
 import java.io.File
 import java.util.*
+
 
 class NotesAdapter : RecyclerSwipeAdapter<NotesAdapter.ViewHolder>() {
 
