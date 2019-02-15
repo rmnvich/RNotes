@@ -125,6 +125,7 @@ class TrashAdapter : RecyclerView.Adapter<TrashAdapter.ViewHolder>() {
         fun bind(note: Note) {
             binding.note = note
 
+            //TODO: fix this
             if (!mSelectedNotes.contains(note))
                 binding.cardViewNoteImage.setCardBackgroundColor(binding.root.context
                         .resources.getColor(R.color.colorItemBackground))
