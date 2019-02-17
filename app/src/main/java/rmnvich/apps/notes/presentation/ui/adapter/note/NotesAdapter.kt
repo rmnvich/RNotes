@@ -2,7 +2,6 @@ package rmnvich.apps.notes.presentation.ui.adapter.note
 
 import android.content.Context
 import android.databinding.DataBindingUtil
-import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.Handler
 import android.os.VibrationEffect
@@ -11,14 +10,12 @@ import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.bumptech.glide.Glide
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter
 import com.like.LikeButton
 import com.like.OnLikeListener
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.databinding.ItemNoteBinding
 import rmnvich.apps.notes.domain.entity.NoteWithTag
-import java.io.File
 import java.util.*
 
 
@@ -118,18 +115,8 @@ class NotesAdapter : RecyclerSwipeAdapter<NotesAdapter.ViewHolder>() {
             })
         }
 
-        //TODO: databinding
         fun bind(note: NoteWithTag) {
             binding.note = note
-
-            Glide.with(binding.root)
-                    .load(File(note.noteImagePath))
-                    .into(binding.ivNoteImage)
-
-            val drawable = binding.noteColorView.background as GradientDrawable
-            drawable.setColor(note.noteColor)
-            binding.noteColorView.background = drawable
-
             binding.executePendingBindings()
         }
 

@@ -121,7 +121,6 @@ class TrashAdapter : RecyclerView.Adapter<TrashAdapter.ViewHolder>() {
             mSelectListener.onNoteSelected(mSelectedNotes.size)
         }
 
-        //TODO: databinding
         fun bind(note: Note) {
             binding.note = note
 
@@ -131,10 +130,6 @@ class TrashAdapter : RecyclerView.Adapter<TrashAdapter.ViewHolder>() {
                         .resources.getColor(R.color.colorItemBackground))
             else binding.cardViewSimpleNote.setCardBackgroundColor(binding.root.context
                     .resources.getColor(R.color.colorAccent))
-
-            Glide.with(binding.root)
-                    .load(File(note.imagePath))
-                    .into(binding.ivNoteImage)
 
             binding.executePendingBindings()
         }

@@ -238,6 +238,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/item_reminder_tv_margin_start"
+                        app:repeatType="@{reminder.repeatType}"
                         android:textColor="@color/colorItemText"
                         android:textSize="12sp"
                         android:textStyle="italic" />

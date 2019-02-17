@@ -146,13 +146,8 @@ class RemindersAdapter : RecyclerSwipeAdapter<RemindersAdapter.ViewHolder>() {
             }, 400)
         }
 
-        //TODO: databinding
         fun bind(reminder: Reminder) {
             binding.reminder = reminder
-
-            binding.tvReminderRepeat.text = binding.root.context.resources
-                    .getStringArray(R.array.repeat_types)[reminder.repeatType]
-
             binding.executePendingBindings()
         }
 

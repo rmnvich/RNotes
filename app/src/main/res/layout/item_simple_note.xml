@@ -51,6 +51,7 @@
                 android:layout_height="@dimen/item_note_image_height"
                 android:contentDescription="@string/image"
                 android:scaleType="centerCrop"
+                app:imageUrl="@{note.imagePath}"
                 android:visibility="@{TextUtils.isEmpty(note.imagePath) ? View.GONE : View.VISIBLE}"
                 app:layout_constraintTop_toTopOf="parent" />
 

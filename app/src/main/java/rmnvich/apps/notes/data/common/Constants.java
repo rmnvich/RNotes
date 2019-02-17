@@ -32,8 +32,8 @@ public class Constants {
     public static int REQUEST_CODE_IMAGE = 0;
     public static int REQUEST_CODE_SHARE = 1;
 
-    //TODO: Fix StatusBar color in BottomSheetDialog
     //TODO: Fix dialogs theme (need dark)
+    //TODO: Fix StatusBar color in BottomSheetDialog
     //TODO: Protect notes with PIN, a few photos in note
     //TODO: Settings (vibrate, theme, pin, default color, lang)
 }

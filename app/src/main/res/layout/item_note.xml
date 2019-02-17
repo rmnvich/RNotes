@@ -65,6 +65,7 @@
                     android:layout_width="@dimen/item_note_color_view_size"
                     android:layout_height="@dimen/item_note_color_view_size"
                     android:background="@drawable/item_note_color_drawable"
+                    app:color="@{note.noteColor}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/iv_note_image" />
 
@@ -85,6 +86,7 @@
                     android:contentDescription="@string/image"
                     android:scaleType="centerCrop"
                     android:visibility="@{TextUtils.isEmpty(note.noteImagePath) ? View.GONE : View.VISIBLE}"
+                    app:imageUrl="@{note.noteImagePath}"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
