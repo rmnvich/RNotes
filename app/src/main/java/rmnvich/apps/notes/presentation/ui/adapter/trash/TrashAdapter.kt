@@ -127,9 +127,9 @@ class TrashAdapter : RecyclerView.Adapter<TrashAdapter.ViewHolder>() {
 
             //TODO: fix this
             if (!mSelectedNotes.contains(note))
-                binding.cardViewNoteImage.setCardBackgroundColor(binding.root.context
+                binding.cardViewSimpleNote.setCardBackgroundColor(binding.root.context
                         .resources.getColor(R.color.colorItemBackground))
-            else binding.cardViewNoteImage.setCardBackgroundColor(binding.root.context
+            else binding.cardViewSimpleNote.setCardBackgroundColor(binding.root.context
                     .resources.getColor(R.color.colorAccent))
 
             Glide.with(binding.root)

@@ -12,15 +12,16 @@
     <dimen name="item_note_card_padding_bottom">5dp</dimen>
     <dimen name="item_note_text_padding_top">5dp</dimen>
     <dimen name="item_note_text_margin_top">5dp</dimen>
+    <dimen name="item_note_text_margin_bottom">5dp</dimen>
     <dimen name="item_note_text_margin_end">15dp</dimen>
     <dimen name="item_note_text_margin_start">10dp</dimen>
     <dimen name="item_note_tag_horizontal_padding">8dp</dimen>
     <dimen name="item_note_tag_vertical_padding">3dp</dimen>
     <dimen name="item_note_tag_margin_start">5dp</dimen>
-    <dimen name="item_note_tag_margin_end">5dp</dimen>
+    <dimen name="item_note_tag_margin_end">10dp</dimen>
     <dimen name="item_note_tag_margin_bottom">5dp</dimen>
-    <dimen name="item_note_tag_margin_top">2dp</dimen>
-    <dimen name="item_note_items_margin_top">7dp</dimen>
+    <dimen name="item_note_tag_margin_top">7dp</dimen>
+    <dimen name="item_note_items_margin_top">2dp</dimen>
     <dimen name="item_note_items_margin_bottom">5dp</dimen>
     <dimen name="item_note_items_horizontal_margin">10dp</dimen>
     <dimen name="item_note_star_button_smart_size">16dp</dimen>
@@ -29,8 +30,11 @@
     <dimen name="item_note_star_margin_bottom_second">5dp</dimen>
     <dimen name="item_note_divider_height">0.8dp</dimen>
     <dimen name="item_note_background_width">0.8dp</dimen>
+    <dimen name="item_note_iv_tag_size">15dp</dimen>
     <dimen name="item_note_image_height">200dp</dimen>
-    <dimen name="item_note_broke_image_size">60dp</dimen>
+    <dimen name="item_note_broken_image_size">60dp</dimen>
+    <dimen name="item_note_broken_image_padding">60dp</dimen>
+    <dimen name="item_note_color_view_size">15dp</dimen>
     <dimen name="item_note_color_drawable_radius">50dp</dimen>
 
     <dimen name="item_tag_corner_radius">20dp</dimen>
@@ -108,6 +112,7 @@
     <dimen name="add_edit_reminder_activity_button_padding">10dp</dimen>
     <dimen name="add_edit_reminder_activity_iv_size">20dp</dimen>
     <dimen name="add_edit_reminder_activity_tv_margin_start">10dp</dimen>
+
 
     <integer name="animation_duration">400</integer>
 </resources>

@@ -69,6 +69,8 @@
     <string name="delete_image">Delete image</string>
     <string name="add_image">Add image</string>
     <string name="image">Image</string>
+    <string name="text_is_empty">Write something</string>
+    <string name="exit">Exit</string>
     <string name="share_blank_note">You can not share a blank note</string>
 
     <!-- AddEditReminderActivity -->

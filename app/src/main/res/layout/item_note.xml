@@ -62,36 +62,30 @@
 
                 <View
                     android:id="@+id/note_color_view"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="@dimen/item_note_color_view_size"
+                    android:layout_height="@dimen/item_note_color_view_size"
                     android:background="@drawable/item_note_color_drawable"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/card_view_note_image" />
+                    app:layout_constraintTop_toBottomOf="@id/iv_note_image" />
 
-                <android.support.v7.widget.CardView
-                    android:id="@+id/card_view_note_image"
+                <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/item_note_image_height"
+                    android:background="@color/colorItemBackgroundDark"
+                    android:contentDescription="@string/image"
+                    android:padding="@dimen/item_note_broken_image_padding"
+                    android:src="@drawable/broken_image"
                     android:visibility="@{TextUtils.isEmpty(note.noteImagePath) ? View.GONE : View.VISIBLE}"
-                    app:cardBackgroundColor="@color/colorItemBackgroundDark"
-                    app:cardCornerRadius="0dp"
-                    app:cardElevation="0dp"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <ImageView
-                        android:layout_width="@dimen/item_note_broke_image_size"
-                        android:layout_height="@dimen/item_note_broke_image_size"
-                        android:layout_gravity="center"
-                        android:contentDescription="@string/image"
-                        android:src="@drawable/broken_image" />
-
-                    <ImageView
-                        android:id="@+id/iv_note_image"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:contentDescription="@string/image"
-                        android:scaleType="centerCrop" />
-                </android.support.v7.widget.CardView>
+                <ImageView
+                    android:id="@+id/iv_note_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/item_note_image_height"
+                    android:contentDescription="@string/image"
+                    android:scaleType="centerCrop"
+                    android:visibility="@{TextUtils.isEmpty(note.noteImagePath) ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/note_text"
@@ -100,64 +94,90 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/item_note_text_margin_start"
                     android:layout_marginTop="@dimen/item_note_text_margin_top"
-                    android:layout_marginEnd="@dimen/item_note_text_margin_end"
                     android:alpha="0.9"
                     android:ellipsize="end"
                     android:maxLines="5"
+                    android:paddingBottom="@dimen/item_note_text_margin_bottom"
                     android:text="@{note.noteText}"
                     android:textColor="@color/colorItemText"
                     android:textSize="15sp"
-                    android:visibility="@{TextUtils.isEmpty(note.noteText) ? View.GONE : View.VISIBLE}"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:visibility="@{TextUtils.isEmpty(note.noteText) ? View.INVISIBLE : View.VISIBLE}"
+                    app:layout_constraintEnd_toStartOf="@id/note_color_view"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/card_view_note_image" />
+                    app:layout_constraintTop_toBottomOf="@id/iv_note_image" />
 
-                <TextView
-                    android:id="@+id/note_timestamp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/item_note_divider_height"
+                    android:layout_marginEnd="@dimen/item_note_items_horizontal_margin"
+                    android:background="@color/colorDivider"
+                    android:visibility="@{TextUtils.isEmpty(note.noteText) ? View.VISIBLE : View.INVISIBLE}"
+                    app:layout_constraintBottom_toBottomOf="@id/note_text"
+                    app:layout_constraintEnd_toEndOf="@id/note_text"
+                    app:layout_constraintStart_toStartOf="@id/note_text"
+                    app:layout_constraintTop_toTopOf="@id/note_text" />
+
+                <ImageView
+                    android:id="@+id/iv_note_tag"
+                    android:layout_width="@dimen/item_note_iv_tag_size"
+                    android:layout_height="@dimen/item_note_iv_tag_size"
                     android:layout_marginStart="@dimen/item_note_items_horizontal_margin"
-                    android:layout_marginTop="@dimen/item_note_items_margin_top"
-                    android:alpha="0.9"
-                    android:maxLines="1"
-                    android:text="@{DateHelper.convertLongTimeToString(note.noteTimestamp)}"
-                    android:textColor="@color/colorTagText"
-                    android:textSize="12sp"
-                    android:textStyle="italic|bold"
+                    android:contentDescription="@string/tag"
+                    android:src="@drawable/ic_action_label_empty_inverted"
+                    android:visibility="@{TextUtils.isEmpty(note.tagName) ? View.GONE : View.VISIBLE}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/note_text" />
 
                 <TextView
                     android:id="@+id/note_tag"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/item_note_tag_margin_start"
-                    android:layout_marginTop="@dimen/item_note_tag_margin_top"
                     android:layout_marginEnd="@dimen/item_note_tag_margin_end"
-                    android:background="@drawable/item_tag_background"
                     android:ellipsize="end"
-                    android:gravity="center"
                     android:maxLines="1"
-                    android:paddingStart="@dimen/item_note_tag_horizontal_padding"
-                    android:paddingTop="@dimen/item_note_tag_vertical_padding"
-                    android:paddingEnd="@dimen/item_note_tag_horizontal_padding"
-                    android:paddingBottom="@dimen/item_note_tag_vertical_padding"
                     android:text="@{note.tagName}"
                     android:textColor="@color/colorTagText"
                     android:textSize="12sp"
-                    android:textStyle="italic"
+                    android:textStyle="bold"
                     android:visibility="@{TextUtils.isEmpty(note.tagName) ? View.GONE : View.VISIBLE}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/note_button_star"
-                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_note_tag"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iv_note_tag"
+                    app:layout_constraintTop_toTopOf="@id/iv_note_tag" />
+
+                <ImageView
+                    android:id="@+id/iv_note_timestamp"
+                    android:layout_width="@dimen/item_note_iv_tag_size"
+                    android:layout_height="@dimen/item_note_iv_tag_size"
+                    android:layout_marginStart="@dimen/item_note_items_horizontal_margin"
+                    android:contentDescription="@string/tag"
+                    android:src="@drawable/ic_action_calendar_inverted"
+                    app:layout_constraintBottom_toBottomOf="@id/note_button_star"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/note_timestamp" />
+                    app:layout_constraintTop_toTopOf="@id/note_button_star" />
+
+                <TextView
+                    android:id="@+id/note_timestamp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/item_note_tag_margin_start"
+                    android:layout_marginEnd="@dimen/item_note_tag_margin_end"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@{DateHelper.convertLongTimeToString(note.noteTimestamp)}"
+                    android:textColor="@color/colorTagText"
+                    android:textSize="12sp"
+                    android:textStyle="italic|bold"
+                    app:layout_constraintBottom_toBottomOf="@id/note_button_star"
+                    app:layout_constraintEnd_toStartOf="@id/note_button_star"
+                    app:layout_constraintStart_toEndOf="@id/iv_note_timestamp"
+                    app:layout_constraintTop_toTopOf="@id/note_button_star" />
 
                 <com.like.LikeButton
                     android:id="@+id/note_button_star"
                     android:layout_width="@dimen/item_note_star_button_smart_size"
                     android:layout_height="@dimen/item_note_star_button_smart_size"
-                    android:layout_marginTop="@dimen/item_note_items_margin_top"
                     android:layout_marginEnd="@dimen/item_note_star_margin_end"
                     app:anim_scale_factor="2"
                     app:circle_end_color="@color/colorStar"
@@ -168,6 +188,7 @@
                     app:icon_type="Star"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/note_tag"
                     app:liked="@{note.noteIsFavorite}" />
             </android.support.constraint.ConstraintLayout>
         </com.daimajia.swipe.SwipeLayout>
