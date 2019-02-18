@@ -127,10 +127,8 @@ class SearchFragment : Fragment() {
 
         mSharedViewModel.getSearchedNotes()?.observe(this,
                 Observer { handleNotesResponse(it!!) })
-        mSharedViewModel.getAddNoteEvent().observe(this,
-                Observer { handleAddEditNoteEvent(-1) })
         mSharedViewModel.getEditNoteEvent().observe(this,
-                Observer { handleAddEditNoteEvent(it!!) })
+                Observer { handleEditNoteEvent(it?.noteId!!, it.isLocked) })
         mSharedViewModel.getDeleteNoteEvent().observe(this,
                 Observer { handleDeleteNoteEvent(it!!) })
         observeSnackbar()
@@ -145,11 +143,11 @@ class SearchFragment : Fragment() {
         }
     }
 
-    private fun handleAddEditNoteEvent(noteId: Int) {
+    private fun handleEditNoteEvent(noteId: Int, isLocked: Boolean) {
         val intent = Intent(activity, AddEditNoteActivity::class.java)
         intent.putExtra(Constants.EXTRA_FAVORITE_NOTES, isFavoriteNotes)
-        if (noteId != -1)
-            intent.putExtra(Constants.EXTRA_NOTE_ID, noteId)
+        intent.putExtra(Constants.EXTRA_NOTE_ID, noteId)
+        intent.putExtra(Constants.EXTRA_LOCKED_NOTE, isLocked)
 
         dismissKeyboard()
         activity?.startActivity(intent)

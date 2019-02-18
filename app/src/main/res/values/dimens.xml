@@ -36,6 +36,8 @@
     <dimen name="item_note_broken_image_padding">60dp</dimen>
     <dimen name="item_note_color_view_size">15dp</dimen>
     <dimen name="item_note_color_drawable_radius">50dp</dimen>
+    <dimen name="item_note_lock_layout_height">150dp</dimen>
+    <dimen name="item_note_iv_lock_size">60dp</dimen>
 
     <dimen name="item_tag_corner_radius">20dp</dimen>
     <dimen name="item_tag_horizontal_padding">10dp</dimen>
@@ -112,7 +114,6 @@
     <dimen name="add_edit_reminder_activity_button_padding">10dp</dimen>
     <dimen name="add_edit_reminder_activity_iv_size">20dp</dimen>
     <dimen name="add_edit_reminder_activity_tv_margin_start">10dp</dimen>
-
 
     <integer name="animation_duration">400</integer>
 </resources>

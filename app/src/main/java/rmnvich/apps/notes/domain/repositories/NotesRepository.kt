@@ -11,7 +11,8 @@ interface NotesRepository {
     fun getAllNotes(isFavorite: Boolean): Flowable<List<NoteWithTag>>
 
     fun getAllFilteredNotes(colors: List<Int>, tags: List<Int>, isFavorite: Boolean,
-                            isUnionConditions: Boolean, isOnlyWithPicture: Boolean): Flowable<List<NoteWithTag>>
+                            isUnionConditions: Boolean, isOnlyWithPicture: Boolean,
+                            isOnlyLockedNotes: Boolean): Flowable<List<NoteWithTag>>
 
     fun getSearchedNotes(query: String, isFavorite: Boolean): Flowable<List<NoteWithTag>>
 

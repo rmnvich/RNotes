@@ -24,8 +24,6 @@ class TrashDiffUtil(private val oldList: List<Note>,
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         val oldNote = oldList[oldItemPosition]
         val newNote = newList[newItemPosition]
-        return oldNote.text == newNote.text &&
-                oldNote.timestamp == newNote.timestamp &&
-                oldNote.isDeleted == newNote.isDeleted
+        return oldNote.isDeleted == newNote.isDeleted
     }
 }

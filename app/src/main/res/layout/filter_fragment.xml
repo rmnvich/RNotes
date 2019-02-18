@@ -187,6 +187,22 @@
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
+                <Switch
+                    android:id="@+id/switch_only_locked_notes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/filter_layout_button_margin"
+                    android:layout_marginTop="@dimen/filter_layout_button_margin"
+                    android:layout_marginEnd="@dimen/filter_layout_button_margin"
+                    android:background="@drawable/item_note_background"
+                    android:foreground="@drawable/item_note_foreground"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/filter_fragment_switch_padding"
+                    android:text="@string/only_locked_notes"
+                    android:textColor="@color/colorItemText"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
                 <Button
                     android:id="@+id/btn_apply_filter"
                     android:layout_width="match_parent"

@@ -12,6 +12,7 @@ public class Constants {
     public static String EXTRA_NOTE_ID = "note_id";
     public static String EXTRA_IMAGE_PATH = "image_path";
     public static String EXTRA_FAVORITE_NOTES = "is_favorite_notes";
+    public static String EXTRA_LOCKED_NOTE = "is_locked_note";
 
     public static String EXTRA_REMINDER_ID = "reminder_id";
     public static String EXTRA_COMPLETED_REMINDERS = "is_completed_reminders";
@@ -32,8 +33,8 @@ public class Constants {
     public static int REQUEST_CODE_IMAGE = 0;
     public static int REQUEST_CODE_SHARE = 1;
 
-    //TODO: Fix lock b in the note
     //TODO: Fix dialogs theme (need dark)
+    //TODO: Bottom menu in AddEditNoteActivity
     //TODO: Fix StatusBar color in BottomSheetDialog
     //TODO: Protect notes with PIN, a few photos in note
     //TODO: Settings (vibrate, theme, pin, default color, lang)

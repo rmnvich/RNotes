@@ -85,7 +85,8 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
 
         mAddEditNoteViewModel.noteIsFavorite =
                 intent.getBooleanExtra(EXTRA_FAVORITE_NOTES, false)
-
+        mAddEditNoteViewModel.noteIsLocked =
+                intent.getBooleanExtra(EXTRA_LOCKED_NOTE, false)
 
         observeDeleteTagEvent()
         observeImagePathEvent()
@@ -100,6 +101,7 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.add_edit_note_menu, menu)
+        menu?.findItem(R.id.menu_lock_note)?.setIcon(getLockNoteIcon())
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -117,8 +119,20 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
                 handleShareNote()
                 true
             }
+            R.id.menu_lock_note -> {
+                mAddEditNoteViewModel.noteIsLocked =
+                        !mAddEditNoteViewModel.noteIsLocked
+                item.setIcon(getLockNoteIcon())
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun getLockNoteIcon(): Int {
+        return if (mAddEditNoteViewModel.noteIsLocked)
+            R.drawable.ic_action_pin_inverted
+        else R.drawable.ic_action_unpin_inverted
     }
 
     private fun handleClickImageEvent(imagePath: String) {

@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/menu_lock_note"
+        android:icon="@drawable/ic_action_unpin_inverted"
+        android:title="@string/lock"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/menu_add_photo"
         android:icon="@drawable/ic_action_add_photo_inverted"
         android:title="@string/add_image"

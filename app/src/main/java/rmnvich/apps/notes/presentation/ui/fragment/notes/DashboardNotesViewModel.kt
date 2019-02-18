@@ -8,6 +8,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.domain.entity.Filter
+import rmnvich.apps.notes.domain.entity.NoteBundle
 import rmnvich.apps.notes.domain.entity.NoteWithTag
 import rmnvich.apps.notes.domain.entity.Tag
 import rmnvich.apps.notes.domain.interactors.dashboardnotes.DashboardNotesInteractor
@@ -38,7 +39,7 @@ class DashboardNotesViewModel(
 
     private var mSearchedNotesDisposable: Disposable? = null
 
-    private val mEditNoteEvent = SingleLiveEvent<Int>()
+    private val mEditNoteEvent = SingleLiveEvent<NoteBundle>()
 
     private val mAddNoteEvent = SingleLiveEvent<Void>()
 
@@ -60,7 +61,7 @@ class DashboardNotesViewModel(
 
     fun getSnackbar(): SingleLiveEvent<Int> = mSnackbarMessage
 
-    fun getEditNoteEvent(): SingleLiveEvent<Int> = mEditNoteEvent
+    fun getEditNoteEvent(): SingleLiveEvent<NoteBundle> = mEditNoteEvent
 
     fun getAddNoteEvent(): SingleLiveEvent<Void> = mAddNoteEvent
 
@@ -105,8 +106,8 @@ class DashboardNotesViewModel(
     }
 
     fun applyFilterToNotes(
-        colors: List<Int>, tags: List<Int>,
-        isUnionConditions: Boolean, isOnlyWithPicture: Boolean
+        colors: List<Int>, tags: List<Int>, isUnionConditions: Boolean,
+        isOnlyWithPicture: Boolean, isOnlyLockedNotes: Boolean
     ) {
         if (mNotesDisposable != null && !mNotesDisposable!!.isDisposed)
             mNotesDisposable!!.dispose()
@@ -118,8 +119,8 @@ class DashboardNotesViewModel(
         if (colors.isEmpty() && tags.isEmpty()) {
             loadNotes()
         } else loadFilteredNotes(
-            colors, tags,
-            isUnionConditions, isOnlyWithPicture
+            colors, tags, isUnionConditions,
+                isOnlyWithPicture, isOnlyLockedNotes
         )
 
     }
@@ -133,8 +134,8 @@ class DashboardNotesViewModel(
         bIsRecyclerNeedToScroll = true
     }
 
-    fun editNote(noteId: Int?) {
-        mEditNoteEvent.value = noteId
+    fun editNote(noteBundle: NoteBundle?) {
+        mEditNoteEvent.value = noteBundle
     }
 
     fun deleteNote(noteId: Int, position: Int) {
@@ -197,13 +198,13 @@ class DashboardNotesViewModel(
     }
 
     private fun loadFilteredNotes(
-        colors: List<Int>, tags: List<Int>,
-        isUnionConditions: Boolean, isOnlyWithPicture: Boolean
+        colors: List<Int>, tags: List<Int>, isUnionConditions: Boolean,
+        isOnlyWithPicture: Boolean, isOnlyLockedNotes: Boolean
     ) {
         mFilteredNotesDisposable = dashboardNotesInteractor
             .getAllFilteredNotes(
-                colors, tags, isFavoriteNotes,
-                isUnionConditions, isOnlyWithPicture
+                colors, tags, isFavoriteNotes, isUnionConditions,
+                    isOnlyWithPicture, isOnlyLockedNotes
             )
             .doOnSubscribe { bIsShowingProgressBar.set(true) }
             .subscribe({

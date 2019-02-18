@@ -27,6 +27,7 @@ class Note {
     var color: Int = 0
     var timestamp: Long = 0L
 
-    var isFavorite: Boolean = false
+    var isLocked: Boolean = false
     var isDeleted: Boolean = false
+    var isFavorite: Boolean = false
 }

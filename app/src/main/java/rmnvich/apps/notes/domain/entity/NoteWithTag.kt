@@ -25,6 +25,9 @@ class NoteWithTag {
     @ColumnInfo(name = "note_is_deleted")
     var noteIsDeleted: Boolean = false
 
+    @ColumnInfo(name = "note_is_locked")
+    var noteIsLocked: Boolean = false
+
     @ColumnInfo(name = "note_tag_name")
     var tagName: String? = null
 

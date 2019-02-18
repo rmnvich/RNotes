@@ -4,5 +4,6 @@ data class Filter(
         var colors: List<Int>,
         var tags: List<Int>,
         var isUnionConditions: Boolean,
-        var isOnlyWithPicture: Boolean
+        var isOnlyWithPicture: Boolean,
+        var isOnlyLockedNotes: Boolean
 )

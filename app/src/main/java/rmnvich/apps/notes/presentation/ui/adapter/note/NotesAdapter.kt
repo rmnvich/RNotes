@@ -14,15 +14,17 @@ import com.daimajia.swipe.adapters.RecyclerSwipeAdapter
 import com.like.LikeButton
 import com.like.OnLikeListener
 import rmnvich.apps.notes.R
+import rmnvich.apps.notes.databinding.ItemLockedNoteBinding
 import rmnvich.apps.notes.databinding.ItemNoteBinding
+import rmnvich.apps.notes.domain.entity.NoteBundle
 import rmnvich.apps.notes.domain.entity.NoteWithTag
 import java.util.*
 
 
-class NotesAdapter : RecyclerSwipeAdapter<NotesAdapter.ViewHolder>() {
+class NotesAdapter : RecyclerSwipeAdapter<RecyclerView.ViewHolder>() {
 
     interface OnClickNoteListener {
-        fun onClickNote(noteId: Int)
+        fun onClickNote(noteBundle: NoteBundle)
 
         fun onClickFavorite(noteId: Int, isFavorite: Boolean)
 
@@ -34,7 +36,7 @@ class NotesAdapter : RecyclerSwipeAdapter<NotesAdapter.ViewHolder>() {
     }
 
     inline fun setOnItemClickListener(
-            crossinline onClickNote: (Int) -> Unit,
+            crossinline onClickNote: (NoteBundle) -> Unit,
             crossinline onClickDelete: (Int, Int) -> Unit,
             crossinline onClickFavorite: (Int, Boolean) -> Unit
     ) {
@@ -43,8 +45,8 @@ class NotesAdapter : RecyclerSwipeAdapter<NotesAdapter.ViewHolder>() {
                 onClickDelete(noteId, position)
             }
 
-            override fun onClickNote(noteId: Int) {
-                onClickNote(noteId)
+            override fun onClickNote(noteBundle: NoteBundle) {
+                onClickNote(noteBundle)
             }
 
             override fun onClickFavorite(noteId: Int, isFavorite: Boolean) {
@@ -64,31 +66,94 @@ class NotesAdapter : RecyclerSwipeAdapter<NotesAdapter.ViewHolder>() {
         diffResult.dispatchUpdatesTo(this)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: ItemNoteBinding = DataBindingUtil.inflate(
-                LayoutInflater.from(parent.context),
-                R.layout.item_note, parent, false
-        )
-        return ViewHolder(binding)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return if (viewType == 0) {
+            val binding: ItemNoteBinding = DataBindingUtil.inflate(
+                    LayoutInflater.from(parent.context),
+                    R.layout.item_note, parent, false
+            )
+            UnlockedNoteViewHolder(binding)
+        } else {
+            val binding: ItemLockedNoteBinding = DataBindingUtil.inflate(
+                    LayoutInflater.from(parent.context),
+                    R.layout.item_locked_note, parent, false
+            )
+            LockedNoteViewHolder(binding)
+        }
     }
 
     override fun getItemCount(): Int {
         return mNoteList.size
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(mNoteList[position])
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (holder) {
+            is UnlockedNoteViewHolder -> holder.bind(mNoteList[position])
+            is LockedNoteViewHolder -> holder.bind(mNoteList[position])
+        }
     }
 
     override fun getSwipeLayoutResourceId(position: Int): Int {
         return R.id.swipe_layout
     }
 
-    inner class ViewHolder(private val binding: ItemNoteBinding) : RecyclerView.ViewHolder(binding.root) {
+    override fun getItemViewType(position: Int): Int {
+        return if (!mNoteList[position].noteIsLocked) 0 else 1
+    }
+
+    //TODO: fix view holders
+
+    inner class UnlockedNoteViewHolder(private val binding: ItemNoteBinding) : RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.noteLayout.setOnClickListener {
-                mClickListener.onClickNote(mNoteList[adapterPosition].noteId)
+                mClickListener.onClickNote(NoteBundle(mNoteList[adapterPosition].noteId,
+                        mNoteList[adapterPosition].noteIsLocked))
+            }
+
+            binding.noteDeleteButton.setOnClickListener {
+                vibrate()
+                binding.swipeLayout.close()
+
+                Handler().postDelayed({
+                    try {
+                        mClickListener.onClickDelete(
+                                mNoteList[adapterPosition].noteId,
+                                adapterPosition
+                        )
+                    } catch (ignore: IndexOutOfBoundsException) {
+                    }
+                }, 400)
+            }
+
+            binding.noteButtonStar.setOnLikeListener(object : OnLikeListener {
+                override fun liked(p0: LikeButton?) =
+                        mClickListener.onClickFavorite(mNoteList[adapterPosition].noteId, true)
+
+                override fun unLiked(p0: LikeButton?) =
+                        mClickListener.onClickFavorite(mNoteList[adapterPosition].noteId, false)
+            })
+        }
+
+        fun bind(note: NoteWithTag) {
+            binding.note = note
+            binding.executePendingBindings()
+        }
+
+        private fun vibrate() {
+            val vibrator = binding.root.context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
+            } else vibrator.vibrate(50)
+        }
+    }
+
+    inner class LockedNoteViewHolder(private val binding: ItemLockedNoteBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.noteLayout.setOnClickListener {
+                mClickListener.onClickNote(NoteBundle(mNoteList[adapterPosition].noteId,
+                        mNoteList[adapterPosition].noteIsLocked))
             }
 
             binding.noteDeleteButton.setOnClickListener {

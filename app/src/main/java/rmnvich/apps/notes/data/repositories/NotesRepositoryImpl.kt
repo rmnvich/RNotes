@@ -21,10 +21,11 @@ class NotesRepositoryImpl(database: Database) : NotesRepository {
             tags: List<Int>,
             isFavorite: Boolean,
             isUnionConditions: Boolean,
-            isOnlyWithPicture: Boolean
+            isOnlyWithPicture: Boolean,
+            isOnlyLockedNotes: Boolean
     ): Flowable<List<NoteWithTag>> {
         return noteDao.getFilteredNotes(colors, tags, isFavorite,
-                isUnionConditions, isOnlyWithPicture)
+                isUnionConditions, isOnlyWithPicture, isOnlyLockedNotes)
     }
 
     //TODO: fix this
@@ -52,6 +53,7 @@ class NotesRepositoryImpl(database: Database) : NotesRepository {
                         it.imagePath = note.imagePath
                         it.timestamp = note.timestamp
                         it.tagId = note.tagId
+                        it.isLocked = note.isLocked
                         noteDao.updateNote(it)
                     }
                 }

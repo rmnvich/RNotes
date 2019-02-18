@@ -30,6 +30,7 @@ class NotesDiffUtil(
                 oldNote.noteColor == newNote.noteColor &&
                 oldNote.noteImagePath == newNote.noteImagePath &&
                 oldNote.tagName == newNote.tagName &&
-                oldNote.noteIsDeleted == newNote.noteIsDeleted
+                oldNote.noteIsDeleted == newNote.noteIsDeleted &&
+                oldNote.noteIsLocked == newNote.noteIsLocked
     }
 }

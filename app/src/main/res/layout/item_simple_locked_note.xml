@@ -35,44 +35,20 @@
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/item_note_card_padding_bottom">
 
-            <ImageView
+            <FrameLayout
+                android:id="@+id/note_lock_layout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/item_note_image_height"
-                android:background="@color/colorItemBackgroundDark"
-                android:contentDescription="@string/image"
-                android:padding="@dimen/item_note_broken_image_padding"
-                android:src="@drawable/broken_image"
-                android:visibility="@{TextUtils.isEmpty(note.imagePath) ? View.GONE : View.VISIBLE}"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_height="@dimen/item_note_lock_layout_height"
+                android:background="@color/colorItemBackground"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/iv_note_image"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/item_note_image_height"
-                android:contentDescription="@string/image"
-                android:scaleType="centerCrop"
-                android:visibility="@{TextUtils.isEmpty(note.imagePath) ? View.GONE : View.VISIBLE}"
-                app:imageUrl="@{note.imagePath}"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/note_simple_text"
-                style="@style/Base.TextAppearance.AppCompat.Body1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/item_note_card_padding"
-                android:layout_marginTop="@dimen/item_note_text_padding_top"
-                android:layout_marginEnd="@dimen/item_note_card_padding"
-                android:alpha="0.9"
-                android:ellipsize="end"
-                android:maxLines="5"
-                android:text="@{note.text}"
-                android:textColor="@color/colorItemText"
-                android:textSize="15sp"
-                android:visibility="@{TextUtils.isEmpty(note.text) ? View.GONE : View.VISIBLE}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_note_image" />
+                <ImageView
+                    android:layout_width="@dimen/item_note_iv_lock_size"
+                    android:layout_height="@dimen/item_note_iv_lock_size"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/lock"
+                    android:src="@drawable/locked_note" />
+            </FrameLayout>
 
             <ImageView
                 android:id="@+id/iv_simple_note_timestamp"
@@ -84,7 +60,7 @@
                 android:src="@drawable/ic_action_calendar_inverted"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/note_simple_text" />
+                app:layout_constraintTop_toBottomOf="@id/note_lock_layout" />
 
             <TextView
                 android:id="@+id/note_simple_timestamp"

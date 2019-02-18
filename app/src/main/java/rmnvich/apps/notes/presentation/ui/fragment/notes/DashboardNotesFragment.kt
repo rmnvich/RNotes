@@ -173,13 +173,13 @@ class DashboardNotesFragment : Fragment() {
                 Observer { handleNotesResponse(it!!) })
         mDashboardNotesViewModel.getSharedFilter().observe(this,
                 Observer { filter ->
-                    mDashboardNotesViewModel.applyFilterToNotes(filter?.colors!!,
-                            filter.tags, filter.isUnionConditions, filter.isOnlyWithPicture)
+                    mDashboardNotesViewModel.applyFilterToNotes(filter?.colors!!, filter.tags,
+                            filter.isUnionConditions, filter.isOnlyWithPicture, filter.isOnlyLockedNotes)
                 })
         mDashboardNotesViewModel.getAddNoteEvent().observe(this,
-                Observer { handleAddEditNoteEvent(-1) })
+                Observer { handleAddEditNoteEvent(-1, false) })
         mDashboardNotesViewModel.getEditNoteEvent().observe(this,
-                Observer { handleAddEditNoteEvent(it!!) })
+                Observer { handleAddEditNoteEvent(it?.noteId!!, it.isLocked) })
         mDashboardNotesViewModel.getDeleteNoteEvent().observe(this,
                 Observer { handleDeleteNoteEvent(it!!) })
         observeSnackbar()
@@ -194,11 +194,13 @@ class DashboardNotesFragment : Fragment() {
         }
     }
 
-    private fun handleAddEditNoteEvent(noteId: Int) {
+    private fun handleAddEditNoteEvent(noteId: Int, isLocked: Boolean) {
         val intent = Intent(activity, AddEditNoteActivity::class.java)
         intent.putExtra(EXTRA_FAVORITE_NOTES, isFavoriteNotes)
-        if (noteId != -1)
+        if (noteId != -1) {
             intent.putExtra(EXTRA_NOTE_ID, noteId)
+            intent.putExtra(EXTRA_LOCKED_NOTE, isLocked)
+        }
 
         activity?.startActivity(intent)
         activity?.overridePendingTransition(R.anim.fade_in, R.anim.fade_out)

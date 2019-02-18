@@ -40,6 +40,7 @@
     <string name="reset_filter">Reset filter</string>
     <string name="union_conditions">Combined conditions</string>
     <string name="only_with_picture">Only with picture</string>
+    <string name="only_locked_notes">Only locked notes</string>
 
     <!-- DashboardTagsFragment -->
     <string name="you_have_no_tags">You have no labels</string>

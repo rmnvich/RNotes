@@ -40,6 +40,8 @@ class AddEditNoteViewModel(
 
     var noteIsFavorite: Boolean = false
 
+    var noteIsLocked: Boolean = false
+
     var noteTagId: Int? = null
 
     var noteId: Int = 0
@@ -144,6 +146,7 @@ class AddEditNoteViewModel(
             note.text = noteText.get()?.trim()!!
             note.timestamp = noteTimestamp.get()!!
             note.color = noteColor.get()!!
+            note.isLocked = noteIsLocked
             note.tagId = noteTagId
 
             if (onImagePathEvent.value != null)
