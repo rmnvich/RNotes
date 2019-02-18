@@ -191,6 +191,27 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/note_tag"
                     app:liked="@{note.noteIsFavorite}" />
+
+                <FrameLayout
+                    android:id="@+id/note_lock_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:visibility="gone"
+                    android:background="@color/colorItemBackground"
+                    app:layout_constraintBottom_toTopOf="@id/note_tag"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:visibility="gone"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/lock"
+                        android:src="@drawable/locked_note" />
+                </FrameLayout>
+
             </android.support.constraint.ConstraintLayout>
         </com.daimajia.swipe.SwipeLayout>
     </android.support.v7.widget.CardView>

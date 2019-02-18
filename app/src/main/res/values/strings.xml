@@ -99,6 +99,7 @@
     <string name="back">Back</string>
     <string name="title_todo_lists">To-Do lists</string>
     <string name="clock">Clock</string>
+    <string name="lock">Lock</string>
     <string name="repeat">Repeat</string>
     <string name="time">Time</string>
     <string name="date">Date</string>
