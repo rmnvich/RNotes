@@ -43,6 +43,7 @@
             android:alpha="0.9"
             android:ellipsize="end"
             android:hint="@string/create_new_tag"
+            android:inputType="textCapSentences"
             android:maxLength="30"
             android:padding="@dimen/item_tag_layout_padding"
             android:paddingLeft="@dimen/item_tag_edittext_padding"

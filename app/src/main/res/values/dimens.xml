@@ -12,7 +12,7 @@
     <dimen name="item_note_card_padding_bottom">5dp</dimen>
     <dimen name="item_note_text_padding_top">5dp</dimen>
     <dimen name="item_note_text_margin_top">5dp</dimen>
-    <dimen name="item_note_text_margin_bottom">5dp</dimen>
+    <dimen name="item_note_text_margin_bottom">10dp</dimen>
     <dimen name="item_note_text_margin_end">15dp</dimen>
     <dimen name="item_note_text_margin_start">10dp</dimen>
     <dimen name="item_note_tag_horizontal_padding">8dp</dimen>

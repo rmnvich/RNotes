@@ -111,7 +111,6 @@
                 <View
                     android:layout_width="0dp"
                     android:layout_height="@dimen/item_note_divider_height"
-                    android:layout_marginEnd="@dimen/item_note_items_horizontal_margin"
                     android:background="@color/colorDivider"
                     android:visibility="@{TextUtils.isEmpty(note.noteText) ? View.VISIBLE : View.INVISIBLE}"
                     app:layout_constraintBottom_toBottomOf="@id/note_text"
