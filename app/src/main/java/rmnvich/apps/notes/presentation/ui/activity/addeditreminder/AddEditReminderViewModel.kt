@@ -13,7 +13,6 @@ import rmnvich.apps.notes.domain.interactors.addeditreminder.AddEditReminderInte
 import rmnvich.apps.notes.domain.utils.SingleLiveEvent
 import rmnvich.apps.notes.presentation.utils.DateHelper
 import rmnvich.apps.notes.presentation.utils.DateHelper.getDefaultTimeRemindInMills
-import java.util.concurrent.ThreadLocalRandom
 
 class AddEditReminderViewModel(
         private val applicationContext: Application,

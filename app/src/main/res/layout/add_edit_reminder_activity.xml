@@ -4,6 +4,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <import type="rmnvich.apps.notes.presentation.utils.DateHelper" />
 
         <variable
@@ -212,5 +214,12 @@
                     app:layout_constraintTop_toTopOf="parent" />
             </android.support.constraint.ConstraintLayout>
         </android.support.constraint.ConstraintLayout>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/colorWhite"
+            android:visibility="@{viewmodel.bIsShowingProgressBar ? View.VISIBLE : View.INVISIBLE}" />
     </android.support.design.widget.CoordinatorLayout>
 </layout>
