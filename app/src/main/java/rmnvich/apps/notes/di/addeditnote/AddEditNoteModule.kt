@@ -18,6 +18,7 @@ import rmnvich.apps.notes.domain.repositories.NotesRepository
 import rmnvich.apps.notes.domain.repositories.TagsRepository
 import rmnvich.apps.notes.domain.utils.ViewModelFactory
 import rmnvich.apps.notes.presentation.ui.custom.ColorPickerDialog
+import rmnvich.apps.notes.presentation.ui.dialog.DialogMoreActions
 import rmnvich.apps.notes.presentation.ui.dialog.DialogTags
 
 @Module
@@ -82,5 +83,10 @@ class AddEditNoteModule(private val application: Application,
     @Provides
     fun provideTagsDialog(dialogTagsInteractor: DialogTagsInteractor): DialogTags {
         return DialogTags(dialogTagsInteractor, context)
+    }
+
+    @Provides
+    fun provideActionsMoreDialog(): DialogMoreActions {
+        return DialogMoreActions(context)
     }
 }

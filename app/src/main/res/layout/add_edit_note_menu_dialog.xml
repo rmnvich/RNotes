@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorBackgroundDark"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/layout_select_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:orientation="horizontal"
+        android:padding="@dimen/add_edit_note_menu_dialog_item_padding"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:layout_width="@dimen/add_edit_note_menu_dialog_item_iv_size"
+            android:layout_height="@dimen/add_edit_note_menu_dialog_item_iv_size"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/image"
+            android:src="@drawable/ic_action_image_inverted" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/add_edit_note_menu_dialog_text_margin_start"
+            android:text="@string/select_image"
+            android:textColor="@color/colorItemText"
+            android:textSize="@dimen/add_edit_note_menu_dialog_item_text_size" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_select_color"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:orientation="horizontal"
+        android:padding="@dimen/add_edit_note_menu_dialog_item_padding"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:layout_width="@dimen/add_edit_note_menu_dialog_item_iv_size"
+            android:layout_height="@dimen/add_edit_note_menu_dialog_item_iv_size"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/color"
+            android:src="@drawable/ic_action_color_inverted" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/add_edit_note_menu_dialog_text_margin_start"
+            android:text="@string/select_color"
+            android:textColor="@color/colorItemText"
+            android:textSize="@dimen/add_edit_note_menu_dialog_item_text_size" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_select_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:orientation="horizontal"
+        android:padding="@dimen/add_edit_note_menu_dialog_item_padding"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:layout_width="@dimen/add_edit_note_menu_dialog_item_iv_size"
+            android:layout_height="@dimen/add_edit_note_menu_dialog_item_iv_size"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/date"
+            android:src="@drawable/ic_action_calendar_inverted" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/add_edit_note_menu_dialog_text_margin_start"
+            android:text="@string/select_date"
+            android:textColor="@color/colorItemText"
+            android:textSize="@dimen/add_edit_note_menu_dialog_item_text_size" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_select_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:orientation="horizontal"
+        android:padding="@dimen/add_edit_note_menu_dialog_item_padding"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:layout_width="@dimen/add_edit_note_menu_dialog_item_iv_size"
+            android:layout_height="@dimen/add_edit_note_menu_dialog_item_iv_size"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/tag"
+            android:src="@drawable/ic_action_label_inverted" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/add_edit_note_menu_dialog_text_margin_start"
+            android:text="@string/select_label"
+            android:textColor="@color/colorItemText"
+            android:textSize="@dimen/add_edit_note_menu_dialog_item_text_size" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/reminder_divider_left"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_note_divider_height"
+        android:layout_marginStart="@dimen/add_edit_note_menu_dialog_divider_margin"
+        android:layout_marginEnd="@dimen/add_edit_note_menu_dialog_divider_margin"
+        android:background="@color/colorDivider" />
+
+    <LinearLayout
+        android:id="@+id/layout_share_note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:orientation="horizontal"
+        android:padding="@dimen/add_edit_note_menu_dialog_item_padding"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:layout_width="@dimen/add_edit_note_menu_dialog_item_iv_size"
+            android:layout_height="@dimen/add_edit_note_menu_dialog_item_iv_size"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/share"
+            android:src="@drawable/ic_action_share_inverted" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/add_edit_note_menu_dialog_text_margin_start"
+            android:text="@string/share_note"
+            android:textColor="@color/colorItemText"
+            android:textSize="@dimen/add_edit_note_menu_dialog_item_text_size" />
+    </LinearLayout>
+</LinearLayout>

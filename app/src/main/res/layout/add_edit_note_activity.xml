@@ -124,7 +124,6 @@
                     android:id="@+id/circle_view_color"
                     android:layout_width="@dimen/card_view_tools_circle_view_size"
                     android:layout_height="@dimen/card_view_tools_circle_view_size"
-                    android:onClick="@{(view) -> viewmodel.pickColor()}"
                     app:circleColor="@{viewmodel.noteColor}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -157,7 +156,8 @@
                     android:id="@+id/tag_delete_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/item_tag_delete_button_horizontal_margin"
+                    android:layout_marginStart="@dimen/item_tag_delete_button_margin_start"
+                    android:layout_marginEnd="@dimen/item_tag_delete_button_margin_end"
                     android:background="@drawable/item_tag_background"
                     android:contentDescription="@string/delete"
                     android:onClick="@{(view) -> viewmodel.deleteTag()}"
@@ -165,7 +165,7 @@
                     android:src="@drawable/ic_action_close_inverted"
                     android:visibility="@{TextUtils.isEmpty(viewmodel.noteTag.get()) ? View.GONE : View.VISIBLE}"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/btn_more"
                     app:layout_constraintStart_toEndOf="@id/tv_tag_name"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -177,7 +177,6 @@
                     android:background="@drawable/item_tag_background"
                     android:clickable="true"
                     android:focusable="true"
-                    android:onClick="@{(view) -> viewmodel.showDatePickerDialog()}"
                     android:paddingStart="@dimen/item_tag_horizontal_padding"
                     android:paddingTop="@dimen/item_tag_vertical_padding"
                     android:paddingEnd="@dimen/item_tag_horizontal_padding"
@@ -188,6 +187,19 @@
                     android:textStyle="italic"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/circle_view_color"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/btn_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/more"
+                    android:onClick="@{(view) -> viewmodel.onClickActionMore()}"
+                    android:padding="@dimen/item_tag_delete_button_padding"
+                    android:src="@drawable/ic_action_more_inverted"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </android.support.constraint.ConstraintLayout>
         </android.support.v7.widget.CardView>

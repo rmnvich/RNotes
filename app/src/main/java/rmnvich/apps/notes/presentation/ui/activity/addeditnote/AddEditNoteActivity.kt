@@ -17,6 +17,7 @@ import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
 import com.tbruyelle.rxpermissions2.RxPermissions
+import dagger.Lazy
 import io.reactivex.disposables.CompositeDisposable
 import rmnvich.apps.notes.App
 import rmnvich.apps.notes.R
@@ -27,6 +28,7 @@ import rmnvich.apps.notes.domain.entity.Tag
 import rmnvich.apps.notes.domain.utils.ViewModelFactory
 import rmnvich.apps.notes.presentation.ui.activity.viewimage.ViewImageActivity
 import rmnvich.apps.notes.presentation.ui.custom.ColorPickerDialog
+import rmnvich.apps.notes.presentation.ui.dialog.DialogMoreActions
 import rmnvich.apps.notes.presentation.ui.dialog.DialogTags
 import java.util.*
 import javax.inject.Inject
@@ -43,6 +45,9 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
 
     @Inject
     lateinit var mDialogTags: Provider<DialogTags>
+
+    @Inject
+    lateinit var mDialogMore: Lazy<DialogMoreActions>
 
     private val mPermissionDisposable: CompositeDisposable = CompositeDisposable()
     private val mRxPermissions = RxPermissions(this)
@@ -83,14 +88,29 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
         mAddEditNoteViewModel.noteIsLocked =
                 intent.getBooleanExtra(EXTRA_LOCKED_NOTE, false)
 
+        observeClickActionMoreEvent()
         observeDeleteTagEvent()
-        observeClickDateEvent()
         observeShareNoteEvent()
         observeClickImageEvent()
         observeOnPickImageEvent()
-        observeOnPickColorEvent()
         observeOnBackPressedEvent()
         observeSnackbar()
+    }
+
+    private fun observeClickActionMoreEvent() {
+        mAddEditNoteViewModel.getActionMoreEvent().observe(this, Observer {
+            mDialogMore.get().show(object : DialogMoreActions.DialogMoreCallback {
+                override fun onClickPickImage() = requestImagePermissions()
+
+                override fun onClickColor() = showColorPickerDialog()
+
+                override fun onClickDate() = showDatePickerDialog()
+
+                override fun onClickLabel() = showTagsDialog()
+
+                override fun onClickShare() = handleShareNote()
+            })
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -101,18 +121,6 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when (item?.itemId) {
-            R.id.menu_tag -> {
-                showTagsDialog()
-                true
-            }
-            R.id.menu_add_photo -> {
-                requestImagePermissions()
-                true
-            }
-            R.id.menu_share_note -> {
-                handleShareNote()
-                true
-            }
             R.id.menu_lock_note -> {
                 mAddEditNoteViewModel.noteIsLocked =
                         !mAddEditNoteViewModel.noteIsLocked
@@ -156,11 +164,6 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
                 })
     }
 
-    private fun observeClickDateEvent() {
-        mAddEditNoteViewModel.getClickDateEvent().observe(this,
-                Observer { showDatePickerDialog() })
-    }
-
     private fun observeShareNoteEvent() {
         mAddEditNoteViewModel.getShareNoteEvent().observe(this,
                 Observer {
@@ -179,14 +182,6 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
     private fun observeOnPickImageEvent() {
         mAddEditNoteViewModel.getPickImageEvent().observe(this,
                 Observer { showImageDialog() })
-    }
-
-    private fun observeOnPickColorEvent() {
-        mAddEditNoteViewModel.getPickColorEvent().observe(this,
-                Observer {
-                    dismissKeyboard()
-                    mColorPickerDialog.get().show(this)
-                })
     }
 
     private fun observeOnBackPressedEvent() {
@@ -216,6 +211,11 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
                             }
                         }!!
         )
+    }
+
+    private fun showColorPickerDialog() {
+        dismissKeyboard()
+        mColorPickerDialog.get().show(this)
     }
 
     private fun showDatePickerDialog() {

@@ -72,6 +72,13 @@
     <string name="image">Image</string>
     <string name="text_is_empty">Write something</string>
     <string name="exit">Exit</string>
+    <string name="select_image">Add image</string>
+    <string name="select_color">Change color</string>
+    <string name="select_date">Select date</string>
+    <string name="select_label">Attach label</string>
+    <string name="share_note">Share note</string>
+    <string name="lock_note">Lock note</string>
+    <string name="unlock_note">Unlock note</string>
     <string name="share_blank_note">You can not share a blank note</string>
 
     <!-- AddEditReminderActivity -->
@@ -109,6 +116,7 @@
     <string name="cancel">Cancel</string>
     <string name="select">Select</string>
     <string name="pin">Pin</string>
+    <string name="more">More</string>
 
     <string-array name="repeat_types">
         <item>Once</item>

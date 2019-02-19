@@ -45,7 +45,8 @@
     <dimen name="item_tag_edittext_padding">25dp</dimen>
     <dimen name="item_tag_image_padding">10dp</dimen>
     <dimen name="item_tag_layout_padding">10dp</dimen>
-    <dimen name="item_tag_delete_button_horizontal_margin">10dp</dimen>
+    <dimen name="item_tag_delete_button_margin_start">5dp</dimen>
+    <dimen name="item_tag_delete_button_margin_end">10dp</dimen>
     <dimen name="item_tag_delete_button_padding">2dp</dimen>
 
     <dimen name="card_view_tools_padding">10dp</dimen>
@@ -90,6 +91,12 @@
     <dimen name="add_edit_note_activity_card_view_radius">10dp</dimen>
     <dimen name="add_edit_note_activity_card_view_margin">10dp</dimen>
     <dimen name="add_edit_note_activity_card_view_height">400dp</dimen>
+
+    <dimen name="add_edit_note_menu_dialog_text_margin_start">30dp</dimen>
+    <dimen name="add_edit_note_menu_dialog_item_padding">15dp</dimen>
+    <dimen name="add_edit_note_menu_dialog_item_text_size">15sp</dimen>
+    <dimen name="add_edit_note_menu_dialog_item_iv_size">22dp</dimen>
+    <dimen name="add_edit_note_menu_dialog_divider_margin">15dp</dimen>
 
     <dimen name="delete_image_button_size">30dp</dimen>
 

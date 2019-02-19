@@ -33,7 +33,6 @@ public class Constants {
     public static int REQUEST_CODE_IMAGE = 0;
     public static int REQUEST_CODE_SHARE = 1;
 
-    //TODO: Bottom menu in AddEditNoteActivity
     //TODO: Protect notes with PIN, a few photos in note
     //TODO: Settings (vibrate, theme, pin, default color, lang)
     //TODO: Optimize setting data to adapters

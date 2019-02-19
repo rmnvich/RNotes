@@ -52,17 +52,15 @@ class AddEditNoteViewModel(
 
     private val onBackPressedEvent = SingleLiveEvent<Void>()
 
-    private val onDeleteTagEvent = SingleLiveEvent<Void>()
+    private val onActionMoreEvent = SingleLiveEvent<Void>()
 
-    private val onPickColorEvent = SingleLiveEvent<Void>()
+    private val onDeleteTagEvent = SingleLiveEvent<Void>()
 
     private val onPickImageEvent = SingleLiveEvent<Void>()
 
     private val onShareNoteEvent = SingleLiveEvent<Intent>()
 
     private val onClickImageEvent = SingleLiveEvent<String>()
-
-    private val onClickDateEvent = SingleLiveEvent<Void>()
 
     private val mSnackbarMessage = SingleLiveEvent<Int>()
 
@@ -74,9 +72,9 @@ class AddEditNoteViewModel(
 
     fun getBackPressedEvent(): SingleLiveEvent<Void> = onBackPressedEvent
 
-    fun getDeleteTagEvent(): SingleLiveEvent<Void> = onDeleteTagEvent
+    fun getActionMoreEvent(): SingleLiveEvent<Void> = onActionMoreEvent
 
-    fun getPickColorEvent(): SingleLiveEvent<Void> = onPickColorEvent
+    fun getDeleteTagEvent(): SingleLiveEvent<Void> = onDeleteTagEvent
 
     fun getPickImageEvent(): SingleLiveEvent<Void> = onPickImageEvent
 
@@ -84,15 +82,11 @@ class AddEditNoteViewModel(
 
     fun getClickImageEvent(): SingleLiveEvent<String> = onClickImageEvent
 
-    fun getClickDateEvent(): SingleLiveEvent<Void> = onClickDateEvent
+    fun onClickActionMore() = onActionMoreEvent.call()
 
     fun showImagePickerDialog() = onPickImageEvent.call()
 
-    fun showDatePickerDialog() = onClickDateEvent.call()
-
     fun deleteTag() = onDeleteTagEvent.call()
-
-    fun pickColor() = onPickColorEvent.call()
 
     fun onClickImage() {
         onClickImageEvent.value = noteImagePath.get()
