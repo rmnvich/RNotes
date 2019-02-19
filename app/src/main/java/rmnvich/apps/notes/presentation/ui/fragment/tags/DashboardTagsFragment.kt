@@ -55,10 +55,6 @@ class DashboardTagsFragment : Fragment() {
         mDashboardTagsBinding = DataBindingUtil.inflate(inflater,
                 R.layout.dashboard_tags_fragment, container, false)
 
-        mDashboardTagsBinding.swipeRefreshLayout
-                .setColorSchemeResources(R.color.colorAccent)
-        mDashboardTagsBinding.swipeRefreshLayout.isEnabled = false
-
         initRecyclerView()
         initToolbar()
 

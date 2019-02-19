@@ -73,9 +73,6 @@ class DashboardNotesFragment : Fragment() {
                 inflater,
                 R.layout.dashboard_notes_fragment, container, false
         )
-        mDashboardNotesBinding.swipeRefreshLayout
-                .setColorSchemeResources(R.color.colorAccent)
-        mDashboardNotesBinding.swipeRefreshLayout.isEnabled = false
 
         if (isFavoriteNotes) {
             mDashboardNotesBinding.ivEmpty.setImageResource(R.drawable.empty_favotites)

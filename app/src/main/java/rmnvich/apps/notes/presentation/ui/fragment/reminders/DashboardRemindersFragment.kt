@@ -60,9 +60,6 @@ class DashboardRemindersFragment : Fragment() {
                 inflater,
                 R.layout.dashboard_reminders_fragment, container, false
         )
-        mDashboardRemindersBinding.swipeRefreshLayout
-                .setColorSchemeResources(R.color.colorAccent)
-        mDashboardRemindersBinding.swipeRefreshLayout.isEnabled = false
 
         if (isCompletedReminders) {
             mDashboardRemindersBinding.tvEmpty.text = getString(R.string.you_have_no_completed_reminders)

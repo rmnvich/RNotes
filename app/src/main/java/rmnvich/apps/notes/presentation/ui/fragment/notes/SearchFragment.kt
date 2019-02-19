@@ -70,9 +70,6 @@ class SearchFragment : Fragment() {
                 inflater,
                 R.layout.search_fragment, container, false
         )
-        mSearchNotesBinding.swipeRefreshLayout
-                .setColorSchemeResources(R.color.colorAccent)
-        mSearchNotesBinding.swipeRefreshLayout.isEnabled = false
 
         mSearchNotesBinding.btnArrowBack.setOnClickListener { popBackStack() }
 

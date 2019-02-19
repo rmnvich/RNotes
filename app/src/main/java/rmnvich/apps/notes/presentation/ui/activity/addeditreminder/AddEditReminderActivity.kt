@@ -48,9 +48,6 @@ class AddEditReminderActivity : AppCompatActivity() {
             .get(AddEditReminderViewModel::class.java)
         mAddEditReminderBinding.viewmodel = mAddEditReminderViewModel
 
-        mAddEditReminderBinding.swipeRefreshLayout.isEnabled = false
-        mAddEditReminderBinding.swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent)
-
         setSupportActionBar(mAddEditReminderBinding.toolbar)
         mAddEditReminderBinding.toolbar.setNavigationOnClickListener { onBackPressed() }
 

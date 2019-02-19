@@ -67,9 +67,6 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
                 .get(AddEditNoteViewModel::class.java)
         mAddEditNoteBinding.viewmodel = mAddEditNoteViewModel
 
-        mAddEditNoteBinding.swipeRefreshLayout.isEnabled = false
-        mAddEditNoteBinding.swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent)
-
         setSupportActionBar(mAddEditNoteBinding.toolbar)
         mAddEditNoteBinding.toolbar.setNavigationOnClickListener {
             mAddEditNoteViewModel.insertOrUpdateNote()

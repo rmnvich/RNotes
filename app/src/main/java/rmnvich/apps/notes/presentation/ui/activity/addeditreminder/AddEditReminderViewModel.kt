@@ -20,26 +20,26 @@ class AddEditReminderViewModel(
         private val addEditReminderInteractor: AddEditReminderInteractor
 ) : AndroidViewModel(applicationContext) {
 
-    private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
+    private val mCompositeDisposable = CompositeDisposable()
 
     private var mReminderResponse: MutableLiveData<Reminder>? = null
 
-    val bIsShowingProgressBar: ObservableBoolean = ObservableBoolean(false)
+    val bIsShowingProgressBar = ObservableBoolean(false)
 
-    val reminderText: ObservableField<String> = ObservableField("")
+    val reminderText = ObservableField("")
 
-    val repeatType: ObservableField<Int> = ObservableField(0)
+    val repeatType = ObservableField(0)
 
-    val repeatName: ObservableField<String> = ObservableField(
+    val repeatName = ObservableField(
             applicationContext.resources
                     .getStringArray(R.array.repeat_types)[0]
     )
 
-    val timeRemind: ObservableField<Long> = ObservableField(
+    val timeRemind = ObservableField(
             getDefaultTimeRemindInMills()
     )
 
-    var reminderId: Int = 0
+    var reminderId = 0
 
     private val onCreateClickEvent = SingleLiveEvent<Void>()
 
@@ -49,7 +49,7 @@ class AddEditReminderViewModel(
 
     private val onClickRepeatEvent = SingleLiveEvent<Int>()
 
-    private val mSnackbarMessage: SingleLiveEvent<Int> = SingleLiveEvent()
+    private val mSnackbarMessage = SingleLiveEvent<Int>()
 
     fun getSnackbar(): SingleLiveEvent<Int> = mSnackbarMessage
 

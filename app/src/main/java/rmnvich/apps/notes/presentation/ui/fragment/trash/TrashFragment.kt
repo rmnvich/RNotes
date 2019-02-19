@@ -52,9 +52,6 @@ class TrashFragment : Fragment() {
                 inflater,
                 R.layout.trash_fragment, container, false
         )
-        mTrashBinding.swipeRefreshLayout
-                .setColorSchemeResources(R.color.colorAccent)
-        mTrashBinding.swipeRefreshLayout.isEnabled = false
         (activity as MainActivity).setSupportActionBar(mTrashBinding.trashToolbar)
 
         initRecyclerView()

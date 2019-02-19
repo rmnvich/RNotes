@@ -2,20 +2,13 @@ package rmnvich.apps.notes.presentation.ui.dialog
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.LayerDrawable
-import android.os.Build
-import android.support.annotation.RequiresApi
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.widget.EditText
-import android.widget.LinearLayout
+import android.widget.ProgressBar
 import com.jakewharton.rxbinding2.widget.RxTextView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -47,7 +40,7 @@ class DialogTags(
     private val mAdapter = DialogTagsAdapter()
 
     private var etSearch: EditText
-    private var progressLayout: LinearLayout
+    private var progressLayout: ProgressBar
 
     init {
         val inflater = (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater)
@@ -70,36 +63,12 @@ class DialogTags(
         )
         recyclerView.adapter = mAdapter
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            setWhiteNavigationBar()
-        }
-
         this.setContentView(view)
         Objects.requireNonNull(this.window)
             .setSoftInputMode(
                 WindowManager
                     .LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
             )
-    }
-
-    @RequiresApi(Build.VERSION_CODES.M)
-    private fun setWhiteNavigationBar() {
-        if (window != null) {
-            val metrics = DisplayMetrics()
-            window!!.windowManager.defaultDisplay.getMetrics(metrics)
-
-            val dimDrawable = GradientDrawable()
-            val navigationBarDrawable = GradientDrawable()
-            navigationBarDrawable.shape = GradientDrawable.RECTANGLE
-            navigationBarDrawable.setColor(Color.WHITE)
-
-            val layers = arrayOf<Drawable>(dimDrawable, navigationBarDrawable)
-
-            val windowBackground = LayerDrawable(layers)
-            windowBackground.setLayerInsetTop(1, metrics.heightPixels)
-
-            window!!.setBackgroundDrawable(windowBackground)
-        }
     }
 
     private fun getSearchDisposable(): Disposable {

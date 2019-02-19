@@ -32,60 +32,61 @@
                 app:titleTextColor="@color/colorToolbarTitle" />
         </android.support.design.widget.AppBarLayout>
 
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swipe_refresh_layout"
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/trash"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorBackground"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:refreshing="@{viewmodel.bIsShowingProgressBar}">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/trash"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_trash_notes"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingTop="@dimen/item_note_vertical_margin"
+                android:paddingBottom="@dimen/item_note_vertical_margin"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:listitem="@layout/item_simple_note" />
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycler_trash_notes"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clipToPadding="false"
-                    android:paddingTop="@dimen/item_note_vertical_margin"
-                    android:paddingBottom="@dimen/item_note_vertical_margin"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:listitem="@layout/item_simple_note" />
+            <ImageView
+                android:id="@+id/iv_empty"
+                android:layout_width="@dimen/dashboard_iv_empty_size"
+                android:layout_height="@dimen/dashboard_iv_empty_size"
+                android:layout_marginBottom="?attr/actionBarSize"
+                android:alpha="0.6"
+                android:contentDescription="@string/empty"
+                android:src="@drawable/empty_trash"
+                android:visibility="@{viewmodel.bDataIsEmpty ? View.VISIBLE : View.INVISIBLE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/iv_empty"
-                    android:layout_width="@dimen/dashboard_iv_empty_size"
-                    android:layout_height="@dimen/dashboard_iv_empty_size"
-                    android:layout_marginBottom="?attr/actionBarSize"
-                    android:contentDescription="@string/empty"
-                    android:src="@drawable/empty_trash"
-                    android:alpha="0.6"
-                    android:visibility="@{viewmodel.bDataIsEmpty ? View.VISIBLE : View.INVISIBLE}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/tv_empty"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/trash_is_empty"
+                android:textColor="@color/colorEmptyText"
+                android:textSize="16sp"
+                android:visibility="@{viewmodel.bDataIsEmpty ? View.VISIBLE : View.INVISIBLE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_empty" />
+        </android.support.constraint.ConstraintLayout>
 
-                <TextView
-                    android:id="@+id/tv_empty"
-                    style="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/trash_is_empty"
-                    android:textSize="16sp"
-                    android:textColor="@color/colorEmptyText"
-                    android:visibility="@{viewmodel.bDataIsEmpty ? View.VISIBLE : View.INVISIBLE}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/iv_empty" />
-            </android.support.constraint.ConstraintLayout>
-        </android.support.v4.widget.SwipeRefreshLayout>
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/colorWhite"
+            android:visibility="@{viewmodel.bIsShowingProgressBar ? View.VISIBLE : View.INVISIBLE}" />
+
     </android.support.design.widget.CoordinatorLayout>
 </layout>
