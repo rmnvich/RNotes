@@ -1,6 +1,8 @@
 package rmnvich.apps.notes.presentation.ui.adapter.trash
 
 import android.databinding.DataBindingUtil
+import android.databinding.ViewDataBinding
+import android.support.v4.content.ContextCompat
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
@@ -12,7 +14,7 @@ import rmnvich.apps.notes.databinding.ItemSimpleNoteBinding
 import rmnvich.apps.notes.domain.entity.Note
 import java.util.*
 
-class TrashAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class TrashAdapter : RecyclerView.Adapter<TrashAdapter.ViewHolder>() {
 
     interface OnClickTrashNoteListener {
         fun onClickNote(note: Note)
@@ -70,19 +72,19 @@ class TrashAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         mSelectListener.onNoteSelected(0)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrashAdapter.ViewHolder {
         return if (viewType == 0) {
             val binding: ItemSimpleNoteBinding = DataBindingUtil.inflate(
                     LayoutInflater.from(parent.context),
                     R.layout.item_simple_note, parent, false
             )
-            UnlockedNoteViewHolder(binding)
+            ViewHolder(binding)
         } else {
             val binding: ItemSimpleLockedNoteBinding = DataBindingUtil.inflate(
                     LayoutInflater.from(parent.context),
                     R.layout.item_simple_locked_note, parent, false
             )
-            LockedNoteViewHolder(binding)
+            ViewHolder(binding)
         }
     }
 
@@ -90,20 +92,15 @@ class TrashAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return mNoteList.size
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (holder) {
-            is UnlockedNoteViewHolder -> holder.bind(mNoteList[position])
-            is LockedNoteViewHolder -> holder.bind(mNoteList[position])
-        }
+    override fun onBindViewHolder(holder: TrashAdapter.ViewHolder, position: Int) {
+        holder.bind(mNoteList[position])
     }
 
     override fun getItemViewType(position: Int): Int {
         return if (!mNoteList[position].isLocked) 0 else 1
     }
 
-    //TODO: fix viewHolders!
-
-    inner class LockedNoteViewHolder(private val binding: ItemSimpleLockedNoteBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.root.setOnClickListener {
@@ -123,14 +120,12 @@ class TrashAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
 
         private fun selectNote(note: Note) {
-            val resources = binding.root.context.resources
-
             val color = if (!mSelectedNotes.contains(note)) {
                 mSelectedNotes.add(note)
-                resources.getColor(R.color.colorAccent)
+                ContextCompat.getColor(binding.root.context, R.color.colorAccent)
             } else {
                 mSelectedNotes.remove(note)
-                resources.getColor(R.color.colorItemBackground)
+                ContextCompat.getColor(binding.root.context, R.color.colorItemBackground)
             }
 
             (binding.root as CardView).setCardBackgroundColor(color)
@@ -138,64 +133,19 @@ class TrashAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
 
         fun bind(note: Note) {
-            binding.note = note
-
-            //TODO: fix this
-            if (!mSelectedNotes.contains(note))
-                binding.cardViewSimpleNote.setCardBackgroundColor(binding.root.context
-                        .resources.getColor(R.color.colorItemBackground))
-            else binding.cardViewSimpleNote.setCardBackgroundColor(binding.root.context
-                    .resources.getColor(R.color.colorAccent))
-
-            binding.executePendingBindings()
-        }
-    }
-
-    inner class UnlockedNoteViewHolder(private val binding: ItemSimpleNoteBinding) : RecyclerView.ViewHolder(binding.root) {
-
-        init {
-            binding.root.setOnClickListener {
-                val note = mNoteList[adapterPosition]
-
-                if (mSelectedNotes.size == 0)
-                    mClickListener.onClickNote(note)
-                else selectNote(note)
-            }
-
-            binding.root.setOnLongClickListener {
-                val note = mNoteList[adapterPosition]
-
-                selectNote(note)
-                true
-            }
-        }
-
-        private fun selectNote(note: Note) {
-            val resources = binding.root.context.resources
-
             val color = if (!mSelectedNotes.contains(note)) {
-                mSelectedNotes.add(note)
-                resources.getColor(R.color.colorAccent)
-            } else {
-                mSelectedNotes.remove(note)
-                resources.getColor(R.color.colorItemBackground)
+                ContextCompat.getColor(binding.root.context, R.color.colorItemBackground)
+            } else ContextCompat.getColor(binding.root.context, R.color.colorAccent)
+
+            try {
+                (binding as ItemSimpleNoteBinding).note = note
+                binding.cardViewSimpleNote.setCardBackgroundColor(color)
+            } catch (e: ClassCastException) {
+                (binding as ItemSimpleLockedNoteBinding).note = note
+                binding.cardViewSimpleNote.setCardBackgroundColor(color)
+            } finally {
+                binding.executePendingBindings()
             }
-
-            (binding.root as CardView).setCardBackgroundColor(color)
-            mSelectListener.onNoteSelected(mSelectedNotes.size)
-        }
-
-        fun bind(note: Note) {
-            binding.note = note
-
-            //TODO: fix this
-            if (!mSelectedNotes.contains(note))
-                binding.cardViewSimpleNote.setCardBackgroundColor(binding.root.context
-                        .resources.getColor(R.color.colorItemBackground))
-            else binding.cardViewSimpleNote.setCardBackgroundColor(binding.root.context
-                    .resources.getColor(R.color.colorAccent))
-
-            binding.executePendingBindings()
         }
     }
 }

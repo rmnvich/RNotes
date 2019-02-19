@@ -17,23 +17,22 @@ class NotesRepositoryImpl(database: Database) : NotesRepository {
     }
 
     override fun getAllFilteredNotes(
-            colors: List<Int>,
-            tags: List<Int>,
-            isFavorite: Boolean,
-            isUnionConditions: Boolean,
-            isOnlyWithPicture: Boolean,
-            isOnlyLockedNotes: Boolean
+        colors: List<Int>,
+        tags: List<Int>,
+        isFavorite: Boolean,
+        isUnionConditions: Boolean,
+        isOnlyWithPicture: Boolean,
+        isOnlyLockedNotes: Boolean
     ): Flowable<List<NoteWithTag>> {
-        return noteDao.getFilteredNotes(colors, tags, isFavorite,
-                isUnionConditions, isOnlyWithPicture, isOnlyLockedNotes)
+        return noteDao.getFilteredNotes(
+            colors, tags, isFavorite,
+            isUnionConditions, isOnlyWithPicture, isOnlyLockedNotes
+        )
     }
 
-    //TODO: fix this
     override fun getSearchedNotes(query: String, isFavorite: Boolean): Flowable<List<NoteWithTag>> {
-        val searchQuery = if (query.isEmpty())
-            "F11CD6F0EC98691BBD0F778205A10476E1EF7DA3B06994F54F"
-        else query
-        return noteDao.getSearchedNotes(searchQuery, isFavorite)
+        return if (query.isEmpty()) Flowable.just(emptyList())
+        else noteDao.getSearchedNotes(query, isFavorite)
     }
 
     override fun getNoteById(noteId: Int): Single<NoteWithTag> {
@@ -46,17 +45,17 @@ class NotesRepositoryImpl(database: Database) : NotesRepository {
 
     override fun updateNote(note: Note, noteId: Int): Completable {
         return noteDao.getNoteById(noteId)
-                .flatMapCompletable {
-                    Completable.fromAction {
-                        it.text = note.text
-                        it.color = note.color
-                        it.imagePath = note.imagePath
-                        it.timestamp = note.timestamp
-                        it.tagId = note.tagId
-                        it.isLocked = note.isLocked
-                        noteDao.updateNote(it)
-                    }
+            .flatMapCompletable {
+                Completable.fromAction {
+                    it.text = note.text
+                    it.color = note.color
+                    it.imagePath = note.imagePath
+                    it.timestamp = note.timestamp
+                    it.tagId = note.tagId
+                    it.isLocked = note.isLocked
+                    noteDao.updateNote(it)
                 }
+            }
     }
 
     override fun favoriteOrUnfavoriteNote(noteId: Int, isFavorite: Boolean): Completable {

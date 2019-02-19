@@ -2,6 +2,7 @@ package rmnvich.apps.notes.presentation.ui.adapter.note
 
 import android.content.Context
 import android.databinding.DataBindingUtil
+import android.databinding.ViewDataBinding
 import android.os.Build
 import android.os.Handler
 import android.os.VibrationEffect
@@ -18,10 +19,11 @@ import rmnvich.apps.notes.databinding.ItemLockedNoteBinding
 import rmnvich.apps.notes.databinding.ItemNoteBinding
 import rmnvich.apps.notes.domain.entity.NoteBundle
 import rmnvich.apps.notes.domain.entity.NoteWithTag
+import java.lang.ClassCastException
 import java.util.*
 
 
-class NotesAdapter : RecyclerSwipeAdapter<RecyclerView.ViewHolder>() {
+class NotesAdapter : RecyclerSwipeAdapter<NotesAdapter.ViewHolder>() {
 
     interface OnClickNoteListener {
         fun onClickNote(noteBundle: NoteBundle)
@@ -66,19 +68,19 @@ class NotesAdapter : RecyclerSwipeAdapter<RecyclerView.ViewHolder>() {
         diffResult.dispatchUpdatesTo(this)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotesAdapter.ViewHolder {
         return if (viewType == 0) {
             val binding: ItemNoteBinding = DataBindingUtil.inflate(
                     LayoutInflater.from(parent.context),
                     R.layout.item_note, parent, false
             )
-            UnlockedNoteViewHolder(binding)
+            ViewHolder(binding)
         } else {
             val binding: ItemLockedNoteBinding = DataBindingUtil.inflate(
                     LayoutInflater.from(parent.context),
                     R.layout.item_locked_note, parent, false
             )
-            LockedNoteViewHolder(binding)
+            ViewHolder(binding)
         }
     }
 
@@ -86,11 +88,8 @@ class NotesAdapter : RecyclerSwipeAdapter<RecyclerView.ViewHolder>() {
         return mNoteList.size
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (holder) {
-            is UnlockedNoteViewHolder -> holder.bind(mNoteList[position])
-            is LockedNoteViewHolder -> holder.bind(mNoteList[position])
-        }
+    override fun onBindViewHolder(holder: NotesAdapter.ViewHolder, position: Int) {
+        holder.bind(mNoteList[position])
     }
 
     override fun getSwipeLayoutResourceId(position: Int): Int {
@@ -101,90 +100,64 @@ class NotesAdapter : RecyclerSwipeAdapter<RecyclerView.ViewHolder>() {
         return if (!mNoteList[position].noteIsLocked) 0 else 1
     }
 
-    //TODO: fix view holders
-
-    inner class UnlockedNoteViewHolder(private val binding: ItemNoteBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: ViewDataBinding)
+        : RecyclerView.ViewHolder(binding.root), OnLikeListener {
 
         init {
-            binding.noteLayout.setOnClickListener {
-                mClickListener.onClickNote(NoteBundle(mNoteList[adapterPosition].noteId,
-                        mNoteList[adapterPosition].noteIsLocked))
+            try {
+                (binding as ItemNoteBinding).noteLayout.setOnClickListener { onClickNote() }
+                binding.noteDeleteButton.setOnClickListener { onClickDeleteButton() }
+                binding.noteButtonStar.setOnLikeListener(this)
+            } catch (e: ClassCastException) {
+                (binding as ItemLockedNoteBinding).noteLayout.setOnClickListener { onClickNote() }
+                binding.noteDeleteButton.setOnClickListener { onClickDeleteButton() }
+                binding.noteButtonStar.setOnLikeListener(this)
             }
+        }
 
-            binding.noteDeleteButton.setOnClickListener {
-                vibrate()
-                binding.swipeLayout.close()
+        override fun liked(p0: LikeButton?) {
+            mClickListener.onClickFavorite(mNoteList[adapterPosition].noteId, true)
+        }
 
-                Handler().postDelayed({
-                    try {
-                        mClickListener.onClickDelete(
-                                mNoteList[adapterPosition].noteId,
-                                adapterPosition
-                        )
-                    } catch (ignore: IndexOutOfBoundsException) {
-                    }
-                }, 400)
-            }
-
-            binding.noteButtonStar.setOnLikeListener(object : OnLikeListener {
-                override fun liked(p0: LikeButton?) =
-                        mClickListener.onClickFavorite(mNoteList[adapterPosition].noteId, true)
-
-                override fun unLiked(p0: LikeButton?) =
-                        mClickListener.onClickFavorite(mNoteList[adapterPosition].noteId, false)
-            })
+        override fun unLiked(p0: LikeButton?) {
+            mClickListener.onClickFavorite(mNoteList[adapterPosition].noteId, false)
         }
 
         fun bind(note: NoteWithTag) {
-            binding.note = note
-            binding.executePendingBindings()
+            try {
+                (binding as ItemNoteBinding).note = note
+            } catch (e: ClassCastException) {
+                (binding as ItemLockedNoteBinding).note = note
+            } finally {
+                binding.executePendingBindings()
+            }
         }
 
-        private fun vibrate() {
-            val vibrator = binding.root.context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
-            } else vibrator.vibrate(50)
+        private fun onClickNote() {
+            mClickListener.onClickNote(NoteBundle(mNoteList[adapterPosition].noteId,
+                    mNoteList[adapterPosition].noteIsLocked))
         }
-    }
 
-    inner class LockedNoteViewHolder(private val binding: ItemLockedNoteBinding) : RecyclerView.ViewHolder(binding.root) {
-
-        init {
-            binding.noteLayout.setOnClickListener {
-                mClickListener.onClickNote(NoteBundle(mNoteList[adapterPosition].noteId,
-                        mNoteList[adapterPosition].noteIsLocked))
+        private fun onClickDeleteButton() {
+            vibrate()
+            try {
+                (binding as ItemNoteBinding).swipeLayout.close()
+            } catch (e: ClassCastException) {
+                (binding as ItemLockedNoteBinding).swipeLayout.close()
             }
 
-            binding.noteDeleteButton.setOnClickListener {
-                vibrate()
-                binding.swipeLayout.close()
-
-                Handler().postDelayed({
-                    try {
-                        mClickListener.onClickDelete(
-                                mNoteList[adapterPosition].noteId,
-                                adapterPosition
-                        )
-                    } catch (ignore: IndexOutOfBoundsException) {
-                    }
-                }, 400)
-            }
-
-            binding.noteButtonStar.setOnLikeListener(object : OnLikeListener {
-                override fun liked(p0: LikeButton?) =
-                        mClickListener.onClickFavorite(mNoteList[adapterPosition].noteId, true)
-
-                override fun unLiked(p0: LikeButton?) =
-                        mClickListener.onClickFavorite(mNoteList[adapterPosition].noteId, false)
-            })
+            Handler().postDelayed({
+                try {
+                    mClickListener.onClickDelete(
+                            mNoteList[adapterPosition].noteId,
+                            adapterPosition
+                    )
+                } catch (ignore: IndexOutOfBoundsException) {
+                }
+            }, 400)
         }
 
-        fun bind(note: NoteWithTag) {
-            binding.note = note
-            binding.executePendingBindings()
-        }
-
+        @Suppress("DEPRECATION")
         private fun vibrate() {
             val vibrator = binding.root.context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

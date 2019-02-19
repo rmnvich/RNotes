@@ -91,18 +91,12 @@
                             android:layout_height="match_parent">
 
                             <ImageView
-                                android:layout_width="@dimen/item_note_broken_image_size"
-                                android:layout_height="@dimen/item_note_broken_image_size"
-                                android:layout_gravity="center"
-                                android:contentDescription="@string/image"
-                                android:src="@drawable/broken_image" />
-
-                            <ImageView
                                 android:id="@+id/iv_note_image"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:contentDescription="@string/image"
-                                android:scaleType="centerCrop" />
+                                android:scaleType="centerCrop"
+                                app:imageUrl="@{viewmodel.noteImagePath}" />
 
                             <ImageButton
                                 android:layout_width="@dimen/delete_image_button_size"
