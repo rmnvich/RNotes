@@ -38,6 +38,7 @@
     <dimen name="item_note_color_drawable_radius">50dp</dimen>
     <dimen name="item_note_lock_layout_height">150dp</dimen>
     <dimen name="item_note_iv_lock_size">60dp</dimen>
+    <dimen name="item_note_swipe_layout_width">50dp</dimen>
 
     <dimen name="item_tag_corner_radius">20dp</dimen>
     <dimen name="item_tag_horizontal_padding">10dp</dimen>
@@ -73,7 +74,6 @@
     <dimen name="item_dialog_tag_vertical_padding">7dp</dimen>
     <dimen name="item_dialog_tag_padding">15dp</dimen>
     <dimen name="item_dialog_tag_name_margin_start">15dp</dimen>
-    <dimen name="item_note_swipe_layout_width">40dp</dimen>
 
     <dimen name="filter_drawer_width">285dp</dimen>
     <dimen name="filter_layout_button_margin">10dp</dimen>
