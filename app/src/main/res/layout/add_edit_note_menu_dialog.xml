@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorBackgroundDark"
+    android:background="@drawable/rounded_dialog"
     android:orientation="vertical">
 
     <LinearLayout
@@ -119,12 +119,72 @@
     </LinearLayout>
 
     <View
-        android:id="@+id/reminder_divider_left"
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_note_divider_height"
         android:layout_marginStart="@dimen/add_edit_note_menu_dialog_divider_margin"
         android:layout_marginEnd="@dimen/add_edit_note_menu_dialog_divider_margin"
+        android:alpha="0.5"
         android:background="@color/colorDivider" />
+
+    <LinearLayout
+        android:id="@+id/layout_favorite_note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:orientation="horizontal"
+        android:padding="@dimen/add_edit_note_menu_dialog_item_padding"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:id="@+id/iv_dialog_favorite"
+            android:layout_width="@dimen/add_edit_note_menu_dialog_item_iv_size"
+            android:layout_height="@dimen/add_edit_note_menu_dialog_item_iv_size"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/favorite"
+            android:src="@drawable/ic_action_star_inverted" />
+
+        <TextView
+            android:id="@+id/tv_dialog_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/add_edit_note_menu_dialog_text_margin_start"
+            android:text="@string/favorite_note"
+            android:textColor="@color/colorItemText"
+            android:textSize="@dimen/add_edit_note_menu_dialog_item_text_size" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_lock_note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:orientation="horizontal"
+        android:padding="@dimen/add_edit_note_menu_dialog_item_padding"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:id="@+id/iv_dialog_lock"
+            android:layout_width="@dimen/add_edit_note_menu_dialog_item_iv_size"
+            android:layout_height="@dimen/add_edit_note_menu_dialog_item_iv_size"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/lock"
+            android:src="@drawable/ic_action_pin_inverted" />
+
+        <TextView
+            android:id="@+id/tv_dialog_lock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/add_edit_note_menu_dialog_text_margin_start"
+            android:text="@string/lock_note"
+            android:textColor="@color/colorItemText"
+            android:textSize="@dimen/add_edit_note_menu_dialog_item_text_size" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layout_share_note"

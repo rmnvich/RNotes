@@ -94,9 +94,10 @@
 
     <dimen name="add_edit_note_menu_dialog_text_margin_start">30dp</dimen>
     <dimen name="add_edit_note_menu_dialog_item_padding">15dp</dimen>
-    <dimen name="add_edit_note_menu_dialog_item_text_size">15sp</dimen>
+    <dimen name="add_edit_note_menu_dialog_item_text_size">16sp</dimen>
     <dimen name="add_edit_note_menu_dialog_item_iv_size">22dp</dimen>
     <dimen name="add_edit_note_menu_dialog_divider_margin">15dp</dimen>
+    <dimen name="add_edit_note_menu_dialog_corner_radius">15dp</dimen>
 
     <dimen name="delete_image_button_size">30dp</dimen>
 

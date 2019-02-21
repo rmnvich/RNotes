@@ -52,6 +52,7 @@ class NotesRepositoryImpl(database: Database) : NotesRepository {
                     it.imagePath = note.imagePath
                     it.timestamp = note.timestamp
                     it.tagId = note.tagId
+                    it.isFavorite = note.isFavorite
                     it.isLocked = note.isLocked
                     noteDao.updateNote(it)
                 }

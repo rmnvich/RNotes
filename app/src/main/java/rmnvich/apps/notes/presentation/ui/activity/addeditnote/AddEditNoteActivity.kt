@@ -12,8 +12,6 @@ import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
 import com.tbruyelle.rxpermissions2.RxPermissions
@@ -35,7 +33,8 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 
-class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
+class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener,
+        DialogMoreActions.DialogMoreCallback {
 
     @Inject
     lateinit var mViewModelFactory: ViewModelFactory
@@ -99,43 +98,23 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
 
     private fun observeClickActionMoreEvent() {
         mAddEditNoteViewModel.getActionMoreEvent().observe(this, Observer {
-            mDialogMore.get().show(object : DialogMoreActions.DialogMoreCallback {
-                override fun onClickPickImage() = requestImagePermissions()
-
-                override fun onClickColor() = showColorPickerDialog()
-
-                override fun onClickDate() = showDatePickerDialog()
-
-                override fun onClickLabel() = showTagsDialog()
-
-                override fun onClickShare() = handleShareNote()
-            })
+            dismissKeyboard()
+            mDialogMore.get().show(
+                    mAddEditNoteViewModel.noteIsFavorite,
+                    mAddEditNoteViewModel.noteIsLocked,
+                    this)
         })
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.add_edit_note_menu, menu)
-        menu?.findItem(R.id.menu_lock_note)?.setIcon(getLockNoteIcon())
-        return super.onCreateOptionsMenu(menu)
-    }
+    override fun onClickPickImage() = requestImagePermissions()
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return when (item?.itemId) {
-            R.id.menu_lock_note -> {
-                mAddEditNoteViewModel.noteIsLocked =
-                        !mAddEditNoteViewModel.noteIsLocked
-                item.setIcon(getLockNoteIcon())
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
+    override fun onClickColor() = showColorPickerDialog()
 
-    private fun getLockNoteIcon(): Int {
-        return if (mAddEditNoteViewModel.noteIsLocked)
-            R.drawable.ic_action_pin_inverted
-        else R.drawable.ic_action_unpin_inverted
-    }
+    override fun onClickDate() = showDatePickerDialog()
+
+    override fun onClickLabel() = showTagsDialog()
+
+    override fun onClickShare() = handleShareNote()
 
     private fun handleClickImageEvent(imagePath: String) {
         startActivity(
@@ -267,6 +246,16 @@ class AddEditNoteActivity : AppCompatActivity(), ColorPickerDialogListener {
         } else if (requestCode == REQUEST_CODE_SHARE) {
             mAddEditNoteViewModel.onActivityResult(null, requestCode)
         }
+    }
+
+    override fun onClickFavorite() {
+        mAddEditNoteViewModel.noteIsFavorite =
+                !mAddEditNoteViewModel.noteIsFavorite
+    }
+
+    override fun onClickLock() {
+        mAddEditNoteViewModel.noteIsLocked =
+                !mAddEditNoteViewModel.noteIsLocked
     }
 
     override fun onColorSelected(dialogId: Int, color: Int) =

@@ -15,6 +15,14 @@
         <item name="android:listDivider">@android:color/transparent</item>
     </style>
 
+    <style name="BottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/bottomSheetStyleWrapper</item>
+    </style>
+
+    <style name="bottomSheetStyleWrapper" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/rounded_dialog</item>
+    </style>
+
     <style name="AddEditActivityTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorBackground</item>
         <item name="colorPrimaryDark">@color/colorBackground</item>

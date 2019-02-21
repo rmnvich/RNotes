@@ -119,8 +119,8 @@ class AddEditNoteViewModel(
                     this.noteTagId = it.tagId
 
                     setObservableFields(
-                            it.noteText, it.noteColor, it.tagName,
-                            it.noteTimestamp, it.noteImagePath
+                            it.noteText, it.noteColor, it.tagName, it.noteTimestamp,
+                            it.noteImagePath, it.noteIsFavorite, it.noteIsLocked
                     )
                 }, {
                     bIsShowingProgressBar.set(false)
@@ -139,11 +139,12 @@ class AddEditNoteViewModel(
             note.timestamp = noteTimestamp.get()!!
             note.imagePath = noteImagePath.get()!!
             note.color = noteColor.get()!!
+
+            note.isFavorite = noteIsFavorite
             note.isLocked = noteIsLocked
             note.tagId = noteTagId
 
             if (noteId == 0) {
-                note.isFavorite = noteIsFavorite
                 insertNote(note)
             } else updateNote(note, noteId)
         } else onBackPressedEvent.call()
@@ -245,8 +246,8 @@ class AddEditNoteViewModel(
     }
 
     private fun setObservableFields(
-            noteText: String, noteColor: Int, noteTag: String?,
-            noteTimestamp: Long, noteImagePath: String
+            noteText: String, noteColor: Int, noteTag: String?, noteTimestamp: Long,
+            noteImagePath: String, noteIsFavorite: Boolean, noteIsLocked: Boolean
     ) {
         this.noteText.set(noteText)
         this.noteColor.set(noteColor)
@@ -255,6 +256,9 @@ class AddEditNoteViewModel(
         if (noteTag != null)
             this.noteTag.set(noteTag)
         else this.noteTag.set("")
+
+        this.noteIsFavorite = noteIsFavorite
+        this.noteIsLocked = noteIsLocked
 
         this.noteImagePath.set(noteImagePath)
         if (!noteImagePath.isEmpty())
