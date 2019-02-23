@@ -4,10 +4,10 @@ public class Constants {
 
     public static String LOG_TAG = "qwe";
 
-    public static String DATABASE_NAME = "test_database" + 57;
+    public static String DATABASE_NAME = "test_database" + 58;
 
-    public static long DEFAULT_DELAY = 1000;
-    public static int DEFAULT_COLOR = -16777216;
+    public static long DEFAULT_DELAY = 500;
+    public static int DEFAULT_COLOR = -13223103;
 
     public static String EXTRA_NOTE_ID = "note_id";
     public static String EXTRA_IMAGE_PATH = "image_path";
@@ -37,7 +37,6 @@ public class Constants {
     public static int REQUEST_CODE_PIN = 2;
     public static int REQUEST_CODE_UNLOCK_NOTE = 3;
 
-    //TODO: Protect notes with PIN, a few photos in note
-    //TODO: Settings (vibrate, theme, pin, default color, lang)
-    //TODO: Optimize setting data to adapters
+    //TODO: Settings (vibrate on/off, theme, lang, pin, default color)
+    //TODO: Optimize set data to adapters
 }

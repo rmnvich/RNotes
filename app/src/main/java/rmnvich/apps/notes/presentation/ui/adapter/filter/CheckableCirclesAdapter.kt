@@ -14,6 +14,7 @@ class CheckableCirclesAdapter : RecyclerView.Adapter<CheckableCirclesAdapter.Vie
 
     private var mColors: List<Color> = listOf(
             Color(-16777216, "Black"),
+            Color(-13223103, "Gray"),
             Color(-0xbbcca, "Red"),
             Color(-0xd36d, "Light pink"),
             Color(-0x98c549, "Deep purple"),
@@ -21,8 +22,7 @@ class CheckableCirclesAdapter : RecyclerView.Adapter<CheckableCirclesAdapter.Vie
             Color(-0xff432c, "Cyan"),
             Color(-0xb350b0, "Green"),
             Color(-0x3223c7, "Lime"),
-            Color(-0x3ef9, "Amber"),
-            Color(-0x616162, "Gray"))
+            Color(-0x3ef9, "Amber"))
 
     var mCheckedColors: MutableList<Int> = LinkedList()
 

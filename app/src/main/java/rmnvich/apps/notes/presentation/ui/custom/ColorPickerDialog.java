@@ -27,7 +27,9 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
+
 import com.jaredrummler.android.colorpicker.*;
+
 import rmnvich.apps.notes.R;
 
 import java.util.Arrays;
@@ -70,6 +72,7 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
      * Material design colors used as the default color presets
      */
     public static final int[] MATERIAL_COLORS = {
+            -13223103, // GREY 500
             0xFFF44336, // RED 500
             0xFFFF2C93, // LIGHT PINK 500
             0xFF673AB7, // DEEP PURPLE 500
@@ -77,8 +80,7 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
             0xFF00BCD4, // CYAN 500
             0xFF4CAF50, // GREEN 500
             0xFFCDDC39, // LIME 500
-            0xFFFFC107, // AMBER 500
-            0xFF9E9E9E, // GREY 500
+            0xFFFFC107 // AMBER 500
     };
 
     public static ColorPickerDialog.Builder newBuilder() {
@@ -88,7 +90,8 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
     ColorPickerDialogListener colorPickerDialogListener;
     FrameLayout rootView;
     int[] presets;
-    @ColorInt int color;
+    @ColorInt
+    int color;
     int dialogType;
     int dialogId;
     boolean showColorShades;
@@ -109,14 +112,16 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
     private boolean fromEditText;
     private int customButtonStringRes;
 
-    @Override public void onAttach(Activity activity) {
+    @Override
+    public void onAttach(Activity activity) {
         super.onAttach(activity);
         if (colorPickerDialogListener == null && activity instanceof ColorPickerDialogListener) {
             colorPickerDialogListener = (ColorPickerDialogListener) activity;
         }
     }
 
-    @Override public Dialog onCreateDialog(Bundle savedInstanceState) {
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
         dialogId = getArguments().getInt(ARG_ID);
         showAlphaSlider = getArguments().getBoolean(ARG_ALPHA);
         showColorShades = getArguments().getBoolean(ARG_SHOW_COLOR_SHADES);
@@ -144,7 +149,8 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setView(rootView)
                 .setPositiveButton(selectedButtonStringRes, new DialogInterface.OnClickListener() {
-                    @Override public void onClick(DialogInterface dialog, int which) {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
                         colorPickerDialogListener.onColorSelected(dialogId, color);
                     }
                 });
@@ -175,7 +181,8 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
         return builder.create();
     }
 
-    @Override public void onStart() {
+    @Override
+    public void onStart() {
         super.onStart();
         AlertDialog dialog = (AlertDialog) getDialog();
 
@@ -189,7 +196,8 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
         Button neutralButton = dialog.getButton(AlertDialog.BUTTON_NEUTRAL);
         if (neutralButton != null) {
             neutralButton.setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View v) {
+                @Override
+                public void onClick(View v) {
                     rootView.removeAllViews();
                     switch (dialogType) {
                         case TYPE_CUSTOM:
@@ -209,12 +217,14 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
         }
     }
 
-    @Override public void onDismiss(DialogInterface dialog) {
+    @Override
+    public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
         colorPickerDialogListener.onDialogDismissed(dialogId);
     }
 
-    @Override public void onSaveInstanceState(Bundle outState) {
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
         outState.putInt(ARG_COLOR, color);
         outState.putInt(ARG_TYPE, dialogType);
         super.onSaveInstanceState(outState);
@@ -223,8 +233,7 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
     /**
      * Set the callback
      *
-     * @param colorPickerDialogListener
-     *     The callback invoked when a color is selected or the dialog is dismissed.
+     * @param colorPickerDialogListener The callback invoked when a color is selected or the dialog is dismissed.
      */
     public void setColorPickerDialogListener(ColorPickerDialogListener colorPickerDialogListener) {
         this.colorPickerDialogListener = colorPickerDialogListener;
@@ -261,7 +270,8 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
         }
 
         newColorPanel.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 if (newColorPanel.getColor() == color) {
                     colorPickerDialogListener.onColorSelected(dialogId, color);
                     dismiss();
@@ -286,7 +296,8 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
         return contentView;
     }
 
-    @Override public boolean onTouch(View v, MotionEvent event) {
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
         if (v != hexEditText && hexEditText.hasFocus()) {
             hexEditText.clearFocus();
             InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -297,7 +308,8 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
         return false;
     }
 
-    @Override public void onColorChanged(int newColor) {
+    @Override
+    public void onColorChanged(int newColor) {
         color = newColor;
         newColorPanel.setColor(newColor);
         if (!fromEditText) {
@@ -311,15 +323,18 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
         fromEditText = false;
     }
 
-    @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
     }
 
-    @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
 
     }
 
-    @Override public void afterTextChanged(Editable s) {
+    @Override
+    public void afterTextChanged(Editable s) {
         if (hexEditText.isFocused()) {
             int color = parseColorString(s.toString());
             if (color != colorPicker.getColor()) {
@@ -493,14 +508,16 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
             shadesLayout.addView(view);
 
             colorPanelView.post(new Runnable() {
-                @Override public void run() {
+                @Override
+                public void run() {
                     // The color is black when rotating the dialog. This is a dirty fix. WTF!?
                     colorPanelView.setColor(colorShade);
                 }
             });
 
             colorPanelView.setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View v) {
+                @Override
+                public void onClick(View v) {
                     if (v.getTag() instanceof Boolean && (Boolean) v.getTag()) {
                         colorPickerDialogListener.onColorSelected(dialogId, ColorPickerDialog.this.color);
                         dismiss();
@@ -524,7 +541,8 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
                 }
             });
             colorPanelView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override public boolean onLongClick(View v) {
+                @Override
+                public boolean onLongClick(View v) {
                     colorPanelView.showHint();
                     return true;
                 }
@@ -571,7 +589,8 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
         int percentage = (int) ((double) progress * 100 / 255);
         transparencyPercText.setText(String.format(Locale.ENGLISH, "%d%%", percentage));
         transparencySeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 int percentage = (int) ((double) progress * 100 / 255);
                 transparencyPercText.setText(String.format(Locale.ENGLISH, "%d%%", percentage));
                 int alpha = 255 - progress;
@@ -621,11 +640,13 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
                 color = Color.argb(alpha, red, green, blue);
             }
 
-            @Override public void onStartTrackingTouch(SeekBar seekBar) {
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
 
             }
 
-            @Override public void onStopTrackingTouch(SeekBar seekBar) {
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
 
             }
         });
@@ -680,20 +701,26 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
 
     public static final class Builder {
 
-        @StringRes int dialogTitle = R.string.cpv_default_title;
-        @StringRes int presetsButtonText = R.string.cpv_presets;
-        @StringRes int customButtonText = R.string.cpv_custom;
-        @StringRes int selectedButtonText = R.string.cpv_select;
+        @StringRes
+        int dialogTitle = R.string.cpv_default_title;
+        @StringRes
+        int presetsButtonText = R.string.cpv_presets;
+        @StringRes
+        int customButtonText = R.string.cpv_custom;
+        @StringRes
+        int selectedButtonText = R.string.cpv_select;
         @ColorPickerDialog.DialogType
         int dialogType = TYPE_PRESETS;
         int[] presets = MATERIAL_COLORS;
-        @ColorInt int color = Color.BLACK;
+        @ColorInt
+        int color = Color.BLACK;
         int dialogId = 0;
         boolean showAlphaSlider = false;
         boolean allowPresets = true;
         boolean allowCustom = true;
         boolean showColorShades = true;
-        @ColorShape int colorShape = ColorShape.CIRCLE;
+        @ColorShape
+        int colorShape = ColorShape.CIRCLE;
 
         /*package*/ Builder() {
 
@@ -702,8 +729,7 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
         /**
          * Set the dialog title string resource id
          *
-         * @param dialogTitle
-         *     The string resource used for the dialog title
+         * @param dialogTitle The string resource used for the dialog title
          * @return This builder object for chaining method calls
          */
         public ColorPickerDialog.Builder setDialogTitle(@StringRes int dialogTitle) {
@@ -714,8 +740,7 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
         /**
          * Set the selected button text string resource id
          *
-         * @param selectedButtonText
-         *     The string resource used for the selected button text
+         * @param selectedButtonText The string resource used for the selected button text
          * @return This builder object for chaining method calls
          */
         public ColorPickerDialog.Builder setSelectedButtonText(@StringRes int selectedButtonText) {
@@ -726,8 +751,7 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
         /**
          * Set the presets button text string resource id
          *
-         * @param presetsButtonText
-         *     The string resource used for the presets button text
+         * @param presetsButtonText The string resource used for the presets button text
          * @return This builder object for chaining method calls
          */
         public ColorPickerDialog.Builder setPresetsButtonText(@StringRes int presetsButtonText) {
@@ -738,8 +762,7 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
         /**
          * Set the custom button text string resource id
          *
-         * @param customButtonText
-         *     The string resource used for the custom button text
+         * @param customButtonText The string resource used for the custom button text
          * @return This builder object for chaining method calls
          */
         public ColorPickerDialog.Builder setCustomButtonText(@StringRes int customButtonText) {
@@ -750,8 +773,7 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
         /**
          * Set which dialog view to show.
          *
-         * @param dialogType
-         *     Either {@link ColorPickerDialog.Builder#TYPE_CUSTOM} or {@link ColorPickerDialog.Builder#TYPE_PRESETS}.
+         * @param dialogType Either {@link ColorPickerDialog.Builder#TYPE_CUSTOM} or {@link ColorPickerDialog.Builder#TYPE_PRESETS}.
          * @return This builder object for chaining method calls
          */
         public ColorPickerDialog.Builder setDialogType(@com.jaredrummler.android.colorpicker.ColorPickerDialog.DialogType int dialogType) {
@@ -762,8 +784,7 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
         /**
          * Set the colors used for the presets
          *
-         * @param presets
-         *     An array of color ints.
+         * @param presets An array of color ints.
          * @return This builder object for chaining method calls
          */
         public ColorPickerDialog.Builder setPresets(@NonNull int[] presets) {
@@ -774,8 +795,7 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
         /**
          * Set the original color
          *
-         * @param color
-         *     The default color for the color picker
+         * @param color The default color for the color picker
          * @return This builder object for chaining method calls
          */
         public ColorPickerDialog.Builder setColor(int color) {
@@ -786,8 +806,7 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
         /**
          * Set the dialog id used for callbacks
          *
-         * @param dialogId
-         *     The id that is sent back to the {@link ColorPickerDialogListener}.
+         * @param dialogId The id that is sent back to the {@link ColorPickerDialogListener}.
          * @return This builder object for chaining method calls
          */
         public ColorPickerDialog.Builder setDialogId(int dialogId) {
@@ -798,8 +817,7 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
         /**
          * Show the alpha slider
          *
-         * @param showAlphaSlider
-         *     {@code true} to show the alpha slider. Currently only supported with the {@link ColorPickerView}.
+         * @param showAlphaSlider {@code true} to show the alpha slider. Currently only supported with the {@link ColorPickerView}.
          * @return This builder object for chaining method calls
          */
         public ColorPickerDialog.Builder setShowAlphaSlider(boolean showAlphaSlider) {
@@ -810,8 +828,7 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
         /**
          * Show/Hide a neutral button to select preset colors.
          *
-         * @param allowPresets
-         *     {@code false} to disable showing the presets button.
+         * @param allowPresets {@code false} to disable showing the presets button.
          * @return This builder object for chaining method calls
          */
         public ColorPickerDialog.Builder setAllowPresets(boolean allowPresets) {
@@ -822,8 +839,7 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
         /**
          * Show/Hide the neutral button to select a custom color.
          *
-         * @param allowCustom
-         *     {@code false} to disable showing the custom button.
+         * @param allowCustom {@code false} to disable showing the custom button.
          * @return This builder object for chaining method calls
          */
         public ColorPickerDialog.Builder setAllowCustom(boolean allowCustom) {
@@ -834,8 +850,7 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
         /**
          * Show/Hide the color shades in the presets picker
          *
-         * @param showColorShades
-         *     {@code false} to hide the color shades.
+         * @param showColorShades {@code false} to hide the color shades.
          * @return This builder object for chaining method calls
          */
         public ColorPickerDialog.Builder setShowColorShades(boolean showColorShades) {
@@ -846,8 +861,7 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
         /**
          * Set the shape of the color panel view.
          *
-         * @param colorShape
-         *     Either {@link ColorShape#CIRCLE} or {@link ColorShape#SQUARE}.
+         * @param colorShape Either {@link ColorShape#CIRCLE} or {@link ColorShape#SQUARE}.
          * @return This builder object for chaining method calls
          */
         public ColorPickerDialog.Builder setColorShape(int colorShape) {
@@ -884,8 +898,7 @@ public class ColorPickerDialog extends DialogFragment implements OnTouchListener
         /**
          * Create and show the {@link ColorPickerDialog} created with this builder.
          *
-         * @param activity
-         *     The current activity.
+         * @param activity The current activity.
          */
         public void show(Activity activity) {
             create().show(activity.getFragmentManager(), "color-picker-dialog");
