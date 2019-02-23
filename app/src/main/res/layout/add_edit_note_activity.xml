@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -59,11 +60,61 @@
                     android:paddingLeft="@dimen/note_edittext_horizontal_padding"
                     android:paddingRight="@dimen/note_edittext_horizontal_padding"
                     android:text="@={viewmodel.noteText}"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/tag_delete_button"
                     app:layout_constraintTop_toBottomOf="@id/card_view_image"
                     app:met_hideUnderline="true"
                     app:met_textColor="@color/colorAddEditNoteText"
                     app:met_textColorHint="@color/colorAddEditNoteHint" />
+
+                <ImageView
+                    android:id="@+id/iv_tag_image"
+                    android:layout_width="@dimen/add_edit_note_activity_tag_image_size"
+                    android:layout_height="@dimen/add_edit_note_activity_tag_image_size"
+                    android:layout_marginStart="@dimen/card_view_tools_tag_margin_start"
+                    android:contentDescription="@string/tag"
+                    android:src="@drawable/ic_action_label_empty_inverted"
+                    android:visibility="@{TextUtils.isEmpty(viewmodel.noteTag.get()) ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintBottom_toBottomOf="@id/tag_delete_button"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tag_delete_button" />
+
+                <TextView
+                    android:id="@+id/tv_tag_name"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/card_view_tools_tag_margin_start"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/item_tag_horizontal_padding"
+                    android:paddingTop="@dimen/item_tag_vertical_padding"
+                    android:paddingEnd="@dimen/item_tag_horizontal_padding"
+                    android:paddingBottom="@dimen/item_tag_vertical_padding"
+                    android:text="@{viewmodel.noteTag}"
+                    android:textColor="@color/colorTagText"
+                    android:textSize="16sp"
+                    android:textStyle="italic"
+                    android:visibility="@{TextUtils.isEmpty(viewmodel.noteTag.get()) ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintBottom_toBottomOf="@id/tag_delete_button"
+                    app:layout_constraintEnd_toStartOf="@id/tag_delete_button"
+                    app:layout_constraintStart_toEndOf="@id/iv_tag_image"
+                    app:layout_constraintTop_toTopOf="@id/tag_delete_button" />
+
+                <ImageButton
+                    android:id="@+id/tag_delete_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/add_edit_note_activity_tag_margin_top"
+                    android:layout_marginBottom="@dimen/add_edit_note_activity_tag_margin_top"
+                    android:layout_marginEnd="@dimen/item_tag_delete_button_margin_end"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/delete"
+                    android:onClick="@{(view) -> viewmodel.deleteTag()}"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_action_close_inverted"
+                    android:visibility="@{TextUtils.isEmpty(viewmodel.noteTag.get()) ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/et_text" />
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_view_image"
@@ -78,7 +129,9 @@
                     app:cardBackgroundColor="@color/colorBackgroundDark"
                     app:cardCornerRadius="@dimen/add_edit_note_activity_card_view_radius"
                     app:layout_constraintBottom_toTopOf="@id/et_text"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="spread_inside"
+                    tools:layout_editor_absoluteX="10dp">
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -113,7 +166,6 @@
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/colorBackgroundDark"
             app:cardElevation="@dimen/card_view_tools_elevation"
-            app:contentPadding="@dimen/card_view_tools_padding"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <android.support.constraint.ConstraintLayout
@@ -124,49 +176,12 @@
                     android:id="@+id/circle_view_color"
                     android:layout_width="@dimen/card_view_tools_circle_view_size"
                     android:layout_height="@dimen/card_view_tools_circle_view_size"
+                    android:layout_marginStart="@dimen/card_view_tools_padding"
+                    android:layout_marginTop="@dimen/card_view_tools_padding"
+                    android:layout_marginBottom="@dimen/card_view_tools_padding"
                     app:circleColor="@{viewmodel.noteColor}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tv_tag_name"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/card_view_tools_tag_margin_start"
-                    android:background="@drawable/item_tag_background"
-                    android:ellipsize="end"
-                    android:gravity="center"
-                    android:maxLines="1"
-                    android:paddingStart="@dimen/item_tag_horizontal_padding"
-                    android:paddingTop="@dimen/item_tag_vertical_padding"
-                    android:paddingEnd="@dimen/item_tag_horizontal_padding"
-                    android:paddingBottom="@dimen/item_tag_vertical_padding"
-                    android:text="@{viewmodel.noteTag}"
-                    android:textColor="@color/colorTagText"
-                    android:textSize="14sp"
-                    android:textStyle="italic"
-                    android:visibility="@{TextUtils.isEmpty(viewmodel.noteTag.get()) ? View.GONE : View.VISIBLE}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/tag_delete_button"
-                    app:layout_constraintStart_toEndOf="@id/tools_timestamp"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageButton
-                    android:id="@+id/tag_delete_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/item_tag_delete_button_margin_start"
-                    android:layout_marginEnd="@dimen/item_tag_delete_button_margin_end"
-                    android:background="@drawable/item_tag_background"
-                    android:contentDescription="@string/delete"
-                    android:onClick="@{(view) -> viewmodel.deleteTag()}"
-                    android:padding="@dimen/item_tag_delete_button_padding"
-                    android:src="@drawable/ic_action_close_inverted"
-                    android:visibility="@{TextUtils.isEmpty(viewmodel.noteTag.get()) ? View.GONE : View.VISIBLE}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/btn_more"
-                    app:layout_constraintStart_toEndOf="@id/tv_tag_name"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
@@ -196,7 +211,7 @@
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:contentDescription="@string/more"
                     android:onClick="@{(view) -> viewmodel.onClickActionMore()}"
-                    android:padding="@dimen/item_tag_delete_button_padding"
+                    android:padding="10dp"
                     android:src="@drawable/ic_action_more_inverted"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

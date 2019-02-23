@@ -91,6 +91,9 @@
     <dimen name="add_edit_note_activity_card_view_radius">10dp</dimen>
     <dimen name="add_edit_note_activity_card_view_margin">10dp</dimen>
     <dimen name="add_edit_note_activity_card_view_height">400dp</dimen>
+    <dimen name="add_edit_note_activity_item_margin_top">10dp</dimen>
+    <dimen name="add_edit_note_activity_tag_margin_top">15dp</dimen>
+    <dimen name="add_edit_note_activity_tag_image_size">22dp</dimen>
 
     <dimen name="add_edit_note_menu_dialog_text_margin_start">30dp</dimen>
     <dimen name="add_edit_note_menu_dialog_item_padding">15dp</dimen>
