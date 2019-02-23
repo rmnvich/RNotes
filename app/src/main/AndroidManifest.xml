@@ -27,6 +27,10 @@
         </provider>
 
         <activity
+            android:name="com.amirarcane.lockscreen.activity.EnterPinActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+
+        <activity
             android:name=".presentation.ui.activity.main.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:windowSoftInputMode="adjustResize">

@@ -17,6 +17,8 @@ public class Constants {
     public static String EXTRA_REMINDER_ID = "reminder_id";
     public static String EXTRA_COMPLETED_REMINDERS = "is_completed_reminders";
 
+    public static String KEY_PIN_EXISTS = "is_pin_exists";
+
     public static String KEY_ALL_NOTES = "all_notes";
     public static String KEY_IS_FAVORITE_NOTES = "favorite_notes";
 
@@ -32,6 +34,8 @@ public class Constants {
 
     public static int REQUEST_CODE_IMAGE = 0;
     public static int REQUEST_CODE_SHARE = 1;
+    public static int REQUEST_CODE_PIN = 2;
+    public static int REQUEST_CODE_UNLOCK_NOTE = 3;
 
     //TODO: Protect notes with PIN, a few photos in note
     //TODO: Settings (vibrate, theme, pin, default color, lang)

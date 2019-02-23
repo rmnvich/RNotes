@@ -12,12 +12,14 @@ import rmnvich.apps.notes.domain.entity.Note
 import rmnvich.apps.notes.domain.entity.NoteWithTag
 import rmnvich.apps.notes.domain.repositories.FileRepository
 import rmnvich.apps.notes.domain.repositories.NotesRepository
+import rmnvich.apps.notes.domain.repositories.PreferencesRepository
 import java.io.File
 import java.util.concurrent.Callable
 
 class AddEditNoteInteractor(
     private val notesRepository: NotesRepository,
     private val fileRepository: FileRepository,
+    private val preferencesRepository: PreferencesRepository,
     private val schedulersProvider: SchedulersProvider
 ) {
 
@@ -59,5 +61,15 @@ class AddEditNoteInteractor(
         override fun call(): File {
             return fileRepository.saveTempImage(bitmap)
         }
+    }
+
+    fun savePinCodeForNotes(): Completable {
+        return Completable.fromAction {
+            preferencesRepository.savePinCode()
+        }
+    }
+
+    fun isPinCodeExists(): Boolean {
+        return preferencesRepository.isPinCodeExists()
     }
 }

@@ -2,22 +2,23 @@ package rmnvich.apps.notes.di.app;
 
 import android.arch.persistence.room.Room;
 import android.content.Context;
-
 import dagger.Module;
 import dagger.Provides;
 import dagger.multibindings.ClassKey;
 import dagger.multibindings.IntoMap;
+import rmnvich.apps.notes.data.repositories.PreferencesRepositoryImpl;
 import rmnvich.apps.notes.data.repositories.datasource.Database;
 import rmnvich.apps.notes.di.addeditnote.AddEditNoteComponent;
 import rmnvich.apps.notes.di.addeditreminder.AddEditReminderComponent;
+import rmnvich.apps.notes.di.global.base.BaseComponentBuilder;
+import rmnvich.apps.notes.di.global.scope.PerApplication;
 import rmnvich.apps.notes.di.notes.DashboardNotesComponent;
 import rmnvich.apps.notes.di.notes.filter.FilterComponent;
 import rmnvich.apps.notes.di.notes.search.SearchComponent;
 import rmnvich.apps.notes.di.reminders.DashboardRemindersComponent;
 import rmnvich.apps.notes.di.tags.DashboardTagsComponent;
-import rmnvich.apps.notes.di.global.base.BaseComponentBuilder;
-import rmnvich.apps.notes.di.global.scope.PerApplication;
 import rmnvich.apps.notes.di.trash.TrashComponent;
+import rmnvich.apps.notes.domain.repositories.PreferencesRepository;
 import rmnvich.apps.notes.presentation.ui.activity.addeditnote.AddEditNoteActivity;
 import rmnvich.apps.notes.presentation.ui.activity.addeditreminder.AddEditReminderActivity;
 import rmnvich.apps.notes.presentation.ui.fragment.notes.DashboardNotesFragment;
@@ -52,6 +53,12 @@ public class AppModule {
         return Room.databaseBuilder(mContext, Database.class, DATABASE_NAME)
                 .fallbackToDestructiveMigration()
                 .build();
+    }
+
+    @PerApplication
+    @Provides
+    PreferencesRepository providePreferencesRepository() {
+        return new PreferencesRepositoryImpl(mContext);
     }
 
     @Provides

@@ -71,6 +71,7 @@
     <string name="add_image">Add image</string>
     <string name="image">Image</string>
     <string name="favorite">Favorite</string>
+    <string name="pin_code_saved">PIN code successfully saved</string>
     <string name="text_is_empty">Write something</string>
     <string name="exit">Exit</string>
     <string name="select_image">Add image</string>

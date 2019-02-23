@@ -22,8 +22,8 @@ import java.io.File
 import java.io.IOException
 
 class AddEditNoteViewModel(
-        private val applicationContext: Application,
-        private val addEditNoteNotesInteractor: AddEditNoteInteractor
+    private val applicationContext: Application,
+    private val addEditNoteNotesInteractor: AddEditNoteInteractor
 ) : AndroidViewModel(applicationContext) {
 
     val bIsShowingProgressBar = ObservableBoolean(false)
@@ -58,6 +58,8 @@ class AddEditNoteViewModel(
 
     private val onPickImageEvent = SingleLiveEvent<Void>()
 
+    private val onSetPinCodeEvent = SingleLiveEvent<Void>()
+
     private val onShareNoteEvent = SingleLiveEvent<Intent>()
 
     private val onClickImageEvent = SingleLiveEvent<String>()
@@ -77,6 +79,8 @@ class AddEditNoteViewModel(
     fun getDeleteTagEvent(): SingleLiveEvent<Void> = onDeleteTagEvent
 
     fun getPickImageEvent(): SingleLiveEvent<Void> = onPickImageEvent
+
+    fun getSetPinCodeEvent(): SingleLiveEvent<Void> = onSetPinCodeEvent
 
     fun getShareNoteEvent(): SingleLiveEvent<Intent> = onShareNoteEvent
 
@@ -110,22 +114,22 @@ class AddEditNoteViewModel(
 
     private fun loadNote(noteId: Int) {
         mCompositeDisposable.add(addEditNoteNotesInteractor.getNoteById(noteId)
-                .doOnSubscribe { bIsShowingProgressBar.set(true) }
-                .subscribe({
-                    bIsShowingProgressBar.set(false)
-                    mNoteResponse?.value = it
+            .doOnSubscribe { bIsShowingProgressBar.set(true) }
+            .subscribe({
+                bIsShowingProgressBar.set(false)
+                mNoteResponse?.value = it
 
-                    this.noteId = it.noteId
-                    this.noteTagId = it.tagId
+                this.noteId = it.noteId
+                this.noteTagId = it.tagId
 
-                    setObservableFields(
-                            it.noteText, it.noteColor, it.tagName, it.noteTimestamp,
-                            it.noteImagePath, it.noteIsFavorite, it.noteIsLocked
-                    )
-                }, {
-                    bIsShowingProgressBar.set(false)
-                    showSnackbarMessage(R.string.error_message)
-                })
+                setObservableFields(
+                    it.noteText, it.noteColor, it.tagName, it.noteTimestamp,
+                    it.noteImagePath, it.noteIsFavorite, it.noteIsLocked
+                )
+            }, {
+                bIsShowingProgressBar.set(false)
+                showSnackbarMessage(R.string.error_message)
+            })
         )
     }
 
@@ -160,12 +164,12 @@ class AddEditNoteViewModel(
             try {
                 bIsShowingProgressBar.set(true)
                 val disposable = addEditNoteNotesInteractor.getFilePathFromUri(data?.data!!)
-                        .subscribe {
-                            noteImagePath.set(it)
+                    .subscribe {
+                        noteImagePath.set(it)
 
-                            bIsShowingImage.set(true)
-                            bIsShowingProgressBar.set(false)
-                        }
+                        bIsShowingImage.set(true)
+                        bIsShowingProgressBar.set(false)
+                    }
                 mCompositeDisposable.add(disposable)
             } catch (e: IOException) {
                 noteImagePath.set("")
@@ -179,6 +183,26 @@ class AddEditNoteViewModel(
                 file.delete()
             }
         }
+    }
+
+    fun onLockClicked() {
+        if (noteIsLocked) {
+            noteIsLocked = false
+            return
+        }
+
+        if (addEditNoteNotesInteractor.isPinCodeExists()) {
+            noteIsLocked = true
+        } else onSetPinCodeEvent.call()
+    }
+
+    fun savePinCode() {
+        mCompositeDisposable.add(addEditNoteNotesInteractor.savePinCodeForNotes()
+            .subscribe {
+                noteIsLocked = true
+                showSnackbarMessage(R.string.pin_code_saved)
+            }
+        )
     }
 
     fun onShareClicked(bitmap: Bitmap?) {
@@ -196,21 +220,21 @@ class AddEditNoteViewModel(
             if (!emptyImage) {
                 bIsShowingProgressBar.set(true)
                 mCompositeDisposable.add(addEditNoteNotesInteractor
-                        .getImageFileFromBitmap(bitmap!!)
-                        .subscribe {
-                            bIsShowingProgressBar.set(false)
+                    .getImageFileFromBitmap(bitmap!!)
+                    .subscribe {
+                        bIsShowingProgressBar.set(false)
 
-                            val photoURI = FileProvider.getUriForFile(
-                                    applicationContext, "rmnvich.apps.notes.fileprovider", it
-                            )
-                            files.add(it)
+                        val photoURI = FileProvider.getUriForFile(
+                            applicationContext, "rmnvich.apps.notes.fileprovider", it
+                        )
+                        files.add(it)
 
-                            intent.type = "image/jpeg"
-                            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                            intent.putExtra(Intent.EXTRA_STREAM, photoURI)
+                        intent.type = "image/jpeg"
+                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                        intent.putExtra(Intent.EXTRA_STREAM, photoURI)
 
-                            onShareNoteEvent.value = intent
-                        })
+                        onShareNoteEvent.value = intent
+                    })
             } else onShareNoteEvent.value = intent
         } else showSnackbarMessage(R.string.share_blank_note)
     }
@@ -218,36 +242,36 @@ class AddEditNoteViewModel(
     private fun insertNote(note: Note) {
         bIsShowingProgressBar.set(true)
         mCompositeDisposable.add(
-                addEditNoteNotesInteractor
-                        .insertNote(note)
-                        .subscribe({
-                            bIsShowingProgressBar.set(false)
-                            onBackPressedEvent.call()
-                        }, {
-                            bIsShowingProgressBar.set(false)
-                            showSnackbarMessage(R.string.error_message)
-                        })
+            addEditNoteNotesInteractor
+                .insertNote(note)
+                .subscribe({
+                    bIsShowingProgressBar.set(false)
+                    onBackPressedEvent.call()
+                }, {
+                    bIsShowingProgressBar.set(false)
+                    showSnackbarMessage(R.string.error_message)
+                })
         )
     }
 
     private fun updateNote(note: Note, noteId: Int) {
         bIsShowingProgressBar.set(true)
         mCompositeDisposable.add(
-                addEditNoteNotesInteractor
-                        .updateNote(note, noteId)
-                        .subscribe({
-                            bIsShowingProgressBar.set(false)
-                            onBackPressedEvent.call()
-                        }, {
-                            bIsShowingProgressBar.set(false)
-                            showSnackbarMessage(R.string.error_message)
-                        })
+            addEditNoteNotesInteractor
+                .updateNote(note, noteId)
+                .subscribe({
+                    bIsShowingProgressBar.set(false)
+                    onBackPressedEvent.call()
+                }, {
+                    bIsShowingProgressBar.set(false)
+                    showSnackbarMessage(R.string.error_message)
+                })
         )
     }
 
     private fun setObservableFields(
-            noteText: String, noteColor: Int, noteTag: String?, noteTimestamp: Long,
-            noteImagePath: String, noteIsFavorite: Boolean, noteIsLocked: Boolean
+        noteText: String, noteColor: Int, noteTag: String?, noteTimestamp: Long,
+        noteImagePath: String, noteIsFavorite: Boolean, noteIsLocked: Boolean
     ) {
         this.noteText.set(noteText)
         this.noteColor.set(noteColor)

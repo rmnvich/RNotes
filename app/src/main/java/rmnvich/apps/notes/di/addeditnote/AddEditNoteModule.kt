@@ -15,6 +15,7 @@ import rmnvich.apps.notes.domain.interactors.addeditnote.AddEditNoteInteractor
 import rmnvich.apps.notes.domain.interactors.dialogtags.DialogTagsInteractor
 import rmnvich.apps.notes.domain.repositories.FileRepository
 import rmnvich.apps.notes.domain.repositories.NotesRepository
+import rmnvich.apps.notes.domain.repositories.PreferencesRepository
 import rmnvich.apps.notes.domain.repositories.TagsRepository
 import rmnvich.apps.notes.domain.utils.ViewModelFactory
 import rmnvich.apps.notes.presentation.ui.custom.ColorPickerDialog
@@ -36,8 +37,9 @@ class AddEditNoteModule(private val application: Application,
     @Provides
     fun provideAddEditNoteInteractor(notesRepository: NotesRepository,
                                      fileRepository: FileRepository,
+                                     preferencesRepository: PreferencesRepository,
                                      schedulersProvider: SchedulersProvider): AddEditNoteInteractor {
-        return AddEditNoteInteractor(notesRepository, fileRepository, schedulersProvider)
+        return AddEditNoteInteractor(notesRepository, fileRepository, preferencesRepository, schedulersProvider)
     }
 
     @PerFragment
