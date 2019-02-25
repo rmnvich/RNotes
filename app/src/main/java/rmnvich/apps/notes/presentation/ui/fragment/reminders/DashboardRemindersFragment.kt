@@ -10,13 +10,13 @@ import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
-import com.daimajia.swipe.util.Attributes
 import org.jetbrains.anko.noButton
 import org.jetbrains.anko.support.v4.alert
 import org.jetbrains.anko.yesButton
 import rmnvich.apps.notes.App
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.data.common.Constants
+import rmnvich.apps.notes.data.common.Constants.REQUEST_CODE_SHARE
 import rmnvich.apps.notes.databinding.DashboardRemindersFragmentBinding
 import rmnvich.apps.notes.di.reminders.DashboardRemindersModule
 import rmnvich.apps.notes.domain.entity.Reminder
@@ -48,7 +48,10 @@ class DashboardRemindersFragment : Fragment() {
 
         componentHolder.getComponent(
                 javaClass,
-                DashboardRemindersModule(isCompletedReminders)
+                DashboardRemindersModule(
+                        activity?.application!!,
+                        isCompletedReminders
+                )
         )?.inject(this)
     }
 
@@ -81,10 +84,10 @@ class DashboardRemindersFragment : Fragment() {
                 LinearLayoutManager.VERTICAL, false
         )
 
-        mRemindersAdapter.mode = Attributes.Mode.Multiple
         mRemindersAdapter.setOnItemClickListener(
                 onClickReminder = { mDashboardRemindersViewModel.editReminder(it) },
-                onClickDelete = { mDashboardRemindersViewModel.deleteReminder(it) },
+                onClickDelete = { handleDeleteReminder(it) },
+                onClickShare = { mDashboardRemindersViewModel.shareReminder(it) },
                 onClickComplete = { reminderId, isCompleted ->
                     mDashboardRemindersViewModel.doneOrUndoneReminder(reminderId, isCompleted)
                 },
@@ -127,7 +130,16 @@ class DashboardRemindersFragment : Fragment() {
                 Observer { handleRemindersResponse(it!!) })
         mDashboardRemindersViewModel.getEditReminderEvent().observe(this,
                 Observer { handleEditReminderEvent(it!!) })
+        mDashboardRemindersViewModel.getShareReminderEvent().observe(this,
+                Observer { handleShareReminder(it!!) })
         observeSnackbar()
+    }
+
+    private fun handleDeleteReminder(reminder: Reminder) {
+        alert(getString(R.string.restore_reminder_impossible), getString(R.string.are_you_sure)) {
+            yesButton { mDashboardRemindersViewModel.deleteReminder(reminder) }
+            noButton {}
+        }.show()
     }
 
     private fun handleRemindersResponse(response: List<Reminder>) {
@@ -140,6 +152,10 @@ class DashboardRemindersFragment : Fragment() {
 
         activity?.startActivity(intent)
         activity?.overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+    }
+
+    private fun handleShareReminder(intent: Intent) {
+        startActivityForResult(Intent.createChooser(intent, getString(R.string.send_via)), REQUEST_CODE_SHARE)
     }
 
     private fun observeSnackbar() {

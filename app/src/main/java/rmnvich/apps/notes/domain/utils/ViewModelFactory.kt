@@ -45,9 +45,11 @@ class ViewModelFactory : ViewModelProvider.NewInstanceFactory {
         this.mDashboardTagsInteractor = dashboardTagsInteractor
     }
 
-    constructor(dashboardRemindersInteractor: DashboardRemindersInteractor, isCompleted: Boolean) : super() {
+    constructor(dashboardRemindersInteractor: DashboardRemindersInteractor, isCompleted: Boolean,
+                applicationContext: Application) : super() {
         this.mDashboardRemindersInteractor = dashboardRemindersInteractor
         this.isCompletedReminders = isCompleted
+        this.mApplicationContext = applicationContext
     }
 
     constructor(trashInteractor: TrashInteractor) : super() {
@@ -59,7 +61,7 @@ class ViewModelFactory : ViewModelProvider.NewInstanceFactory {
         this.mApplicationContext = applicationContext
     }
 
-    constructor(addEditReminderInteractor: AddEditReminderInteractor, applicationContext: Application): super() {
+    constructor(addEditReminderInteractor: AddEditReminderInteractor, applicationContext: Application) : super() {
         this.mAddEditReminderInteractor = addEditReminderInteractor
         this.mApplicationContext = applicationContext
     }
@@ -76,7 +78,8 @@ class ViewModelFactory : ViewModelProvider.NewInstanceFactory {
             modelClass.isAssignableFrom(TrashViewModel::class.java) ->
                 TrashViewModel(mTrashInteractor) as VM
             modelClass.isAssignableFrom(DashboardRemindersViewModel::class.java) ->
-                DashboardRemindersViewModel(mDashboardRemindersInteractor, isCompletedReminders) as VM
+                DashboardRemindersViewModel(mApplicationContext,
+                        mDashboardRemindersInteractor, isCompletedReminders) as VM
             modelClass.isAssignableFrom(AddEditReminderViewModel::class.java) ->
                 AddEditReminderViewModel(mApplicationContext, mAddEditReminderInteractor) as VM
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)

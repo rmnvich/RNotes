@@ -1,20 +1,23 @@
 package rmnvich.apps.notes.presentation.ui.fragment.reminders
 
+import android.app.Application
+import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import android.content.Intent
 import android.databinding.ObservableBoolean
 import io.reactivex.disposables.CompositeDisposable
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.domain.entity.Reminder
 import rmnvich.apps.notes.domain.interactors.dashboardreminders.DashboardRemindersInteractor
 import rmnvich.apps.notes.domain.utils.SingleLiveEvent
-import rmnvich.apps.notes.presentation.utils.DebugLogger
+import rmnvich.apps.notes.presentation.utils.DateHelper
 
 class DashboardRemindersViewModel(
+        private val applicationContext: Application,
         private val mDashboardRemindersInteractor: DashboardRemindersInteractor,
         private val isCompletedReminders: Boolean
-) : ViewModel() {
+) : AndroidViewModel(applicationContext) {
 
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
 
@@ -24,11 +27,15 @@ class DashboardRemindersViewModel(
 
     private val mEditReminderEvent = SingleLiveEvent<Int>()
 
+    private val mShareReminderEvent = SingleLiveEvent<Intent>()
+
     private val mSnackbarMessage = SingleLiveEvent<Int>()
 
     private var mRemindersResponse: MutableLiveData<List<Reminder>>? = null
 
     fun getSnackbar(): SingleLiveEvent<Int> = mSnackbarMessage
+
+    fun getShareReminderEvent(): SingleLiveEvent<Intent> = mShareReminderEvent
 
     fun getEditReminderEvent(): SingleLiveEvent<Int> = mEditReminderEvent
 
@@ -73,6 +80,24 @@ class DashboardRemindersViewModel(
                 mDashboardRemindersInteractor
                         .doneOrUndoneReminder(reminderId, isCompleted)
                         .subscribe()
+        )
+    }
+
+    fun shareReminder(reminderId: Int) {
+        mCompositeDisposable.add(
+                mDashboardRemindersInteractor
+                        .getReminder(reminderId)
+                        .subscribe({
+                            val intent = Intent(Intent.ACTION_SEND)
+
+                            intent.type = "text/plain"
+                            intent.putExtra(Intent.EXTRA_TEXT, "${it.text} \n\n" +
+                                    "${applicationContext.getString(R.string.remind_me_at)} " +
+                                    "${DateHelper.convertLongToTime(it.timeRemind)}, " +
+                                    DateHelper.convertLongToDate(it.timeRemind))
+
+                            mShareReminderEvent.value = intent
+                        }, {})
         )
     }
 

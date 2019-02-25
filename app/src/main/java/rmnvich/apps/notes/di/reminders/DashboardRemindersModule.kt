@@ -1,5 +1,6 @@
 package rmnvich.apps.notes.di.reminders
 
+import android.app.Application
 import dagger.Module
 import dagger.Provides
 import rmnvich.apps.notes.data.common.SchedulersProvider
@@ -13,18 +14,20 @@ import rmnvich.apps.notes.domain.utils.ViewModelFactory
 import rmnvich.apps.notes.presentation.ui.adapter.reminder.RemindersAdapter
 
 @Module
-class DashboardRemindersModule(private val isCompletedReminders: Boolean) : BaseModule {
+class DashboardRemindersModule(
+        private val applicationContext: Application,
+        private val isCompletedReminders: Boolean) : BaseModule {
 
     @Provides
     fun provideViewModelFactory(interactor: DashboardRemindersInteractor): ViewModelFactory {
-        return ViewModelFactory(interactor, isCompletedReminders)
+        return ViewModelFactory(interactor, isCompletedReminders, applicationContext)
     }
 
     @PerFragment
     @Provides
     fun provideInteractor(
-        remindersRepository: RemindersRepository,
-        schedulersProvider: SchedulersProvider
+            remindersRepository: RemindersRepository,
+            schedulersProvider: SchedulersProvider
     ): DashboardRemindersInteractor {
         return DashboardRemindersInteractor(remindersRepository, schedulersProvider)
     }
