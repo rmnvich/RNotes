@@ -31,7 +31,9 @@
     <string name="you_have_no_completed_reminders">You have no completed reminders</string>
     <string name="empty_completed_reminders">Empty completed reminders</string>
     <string name="restore_reminders_impossible">It will not be possible to recover these reminders.</string>
+    <string name="restore_reminder_impossible">It will not be possible to recover this reminder.</string>
     <string name="active_reminders">Active</string>
+    <string name="remind_me_at">Remind me at</string>
     <string name="completed_reminders">Completed</string>
 
     <!-- FilterFragment -->
@@ -121,6 +123,10 @@
     <string name="select">Select</string>
     <string name="pin">Pin</string>
     <string name="more">More</string>
+    <string name="complete">Complete</string>
+    <string name="done">Done</string>
+    <string name="undone">Undone</string>
+    <string name="unpin">Unpin</string>
 
     <string-array name="repeat_types">
         <item>Once</item>

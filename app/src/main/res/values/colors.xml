@@ -42,7 +42,7 @@
 
     <color name="colorTabTitleSelectedTrue">#c8FFFFFF</color>
     <color name="colorTabTitleSelectedFalse">#64FFFFFF</color>
-    <color name="colorTabIndicator">#37FFFFFF</color>
+    <color name="colorTabIndicator">#CCFFFFFF</color>
 
     <color name="colorToolbarTitle">#ffffff</color>
     <color name="colorTransperentToolbar">#33000000</color>

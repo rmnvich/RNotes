@@ -3,20 +3,20 @@ package rmnvich.apps.notes.presentation.ui.adapter.reminder
 import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Build
-import android.os.Handler
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.support.v7.util.DiffUtil
+import android.support.v7.widget.PopupMenu
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.daimajia.swipe.adapters.RecyclerSwipeAdapter
+import org.jetbrains.anko.sdk27.coroutines.onClick
 import rmnvich.apps.notes.R
 import rmnvich.apps.notes.databinding.ItemReminderBinding
 import rmnvich.apps.notes.domain.entity.Reminder
 import java.util.*
 
-class RemindersAdapter : RecyclerSwipeAdapter<RemindersAdapter.ViewHolder>() {
+class RemindersAdapter : RecyclerView.Adapter<RemindersAdapter.ViewHolder>() {
 
     interface OnClickReminderListener {
         fun onClickReminder(reminderId: Int)
@@ -24,6 +24,8 @@ class RemindersAdapter : RecyclerSwipeAdapter<RemindersAdapter.ViewHolder>() {
         fun onClickComplete(reminderId: Int, isCompleted: Boolean)
 
         fun onClickPin(reminderId: Int, isPinned: Boolean)
+
+        fun onClickShare(reminderId: Int)
 
         fun onClickDelete(reminder: Reminder)
     }
@@ -36,6 +38,7 @@ class RemindersAdapter : RecyclerSwipeAdapter<RemindersAdapter.ViewHolder>() {
             crossinline onClickReminder: (Int) -> Unit,
             crossinline onClickComplete: (Int, Boolean) -> Unit,
             crossinline onClickPin: (Int, Boolean) -> Unit,
+            crossinline onClickShare: (Int) -> Unit,
             crossinline onClickDelete: (Reminder) -> Unit
     ) {
         setClickListener(object : OnClickReminderListener {
@@ -49,6 +52,10 @@ class RemindersAdapter : RecyclerSwipeAdapter<RemindersAdapter.ViewHolder>() {
 
             override fun onClickPin(reminderId: Int, isPinned: Boolean) {
                 onClickPin(reminderId, isPinned)
+            }
+
+            override fun onClickShare(reminderId: Int) {
+                onClickShare(reminderId)
             }
 
             override fun onClickDelete(reminder: Reminder) {
@@ -85,65 +92,68 @@ class RemindersAdapter : RecyclerSwipeAdapter<RemindersAdapter.ViewHolder>() {
         return mReminderList.size
     }
 
-    override fun getSwipeLayoutResourceId(position: Int): Int {
-        return R.id.swipe_layout
-    }
-
     inner class ViewHolder(private val binding: ItemReminderBinding) :
             RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.reminderLayout.setOnClickListener {
+            binding.reminderLayout.onClick {
                 mClickListener.onClickReminder(mReminderList[adapterPosition].id)
             }
 
-            binding.btnDeleteReminder.setOnClickListener { deleteReminder() }
+            binding.btnActionMore.onClick {
+                val popupMenu = PopupMenu(binding.root.context, binding.btnActionMore)
+                popupMenu.inflate(R.menu.reminder_menu)
 
-            binding.btnDoneReminder.setOnClickListener { completeReminder() }
+                val itemDone = popupMenu.menu.findItem(R.id.menu_complete_reminder)
+                val itemPin = popupMenu.menu.findItem(R.id.menu_pin_reminder)
 
-            binding.btnPinReminder.setOnClickListener { pinReminder() }
+                itemDone.setTitle(getTitleForMenuItemDone())
+                itemPin.setTitle(getTitleForMenuItemPin())
+
+                popupMenu.setOnMenuItemClickListener { item ->
+                    when (item.itemId) {
+                        R.id.menu_complete_reminder -> {
+                            vibrate()
+                            mClickListener.onClickComplete(
+                                    mReminderList[adapterPosition].id,
+                                    !mReminderList[adapterPosition].isCompleted
+                            )
+                            true
+                        }
+                        R.id.menu_pin_reminder -> {
+                            vibrate()
+                            mClickListener.onClickPin(
+                                    mReminderList[adapterPosition].id,
+                                    !mReminderList[adapterPosition].isPinned
+                            )
+                            true
+                        }
+                        R.id.menu_delete_reminder -> {
+                            vibrate()
+                            mClickListener.onClickDelete(mReminderList[adapterPosition])
+                            true
+                        }
+                        R.id.menu_share_reminder -> {
+                            mClickListener.onClickShare(mReminderList[adapterPosition].id)
+                            true
+                        }
+                        else -> false
+                    }
+                }
+                popupMenu.show()
+            }
         }
 
-        private fun deleteReminder() {
-            vibrate()
-            binding.swipeLayout.close()
-
-            Handler().postDelayed({
-                try {
-                    mClickListener.onClickDelete(mReminderList[adapterPosition])
-                } catch (ignore: IndexOutOfBoundsException) {
-                }
-            }, 400)
+        private fun getTitleForMenuItemDone(): Int {
+            return if (mReminderList[adapterPosition].isCompleted)
+                R.string.undone
+            else R.string.done
         }
 
-        private fun pinReminder() {
-            vibrate()
-            binding.swipeLayout.close()
-
-            Handler().postDelayed({
-                try {
-                    mClickListener.onClickPin(
-                            mReminderList[adapterPosition].id,
-                            !mReminderList[adapterPosition].isPinned
-                    )
-                } catch (ignore: IndexOutOfBoundsException) {
-                }
-            }, 400)
-        }
-
-        private fun completeReminder() {
-            vibrate()
-            binding.swipeLayout.close()
-
-            Handler().postDelayed({
-                try {
-                    mClickListener.onClickComplete(
-                            mReminderList[adapterPosition].id,
-                            !mReminderList[adapterPosition].isCompleted
-                    )
-                } catch (ignore: IndexOutOfBoundsException) {
-                }
-            }, 400)
+        private fun getTitleForMenuItemPin(): Int {
+            return if (mReminderList[adapterPosition].isPinned)
+                R.string.unpin
+            else R.string.pin
         }
 
         fun bind(reminder: Reminder) {
