@@ -92,7 +92,8 @@
     <dimen name="add_edit_note_activity_card_view_margin">10dp</dimen>
     <dimen name="add_edit_note_activity_card_view_height">400dp</dimen>
     <dimen name="add_edit_note_activity_item_margin_top">10dp</dimen>
-    <dimen name="add_edit_note_activity_tag_margin_top">15dp</dimen>
+    <dimen name="add_edit_note_activity_tag_margin_top">10dp</dimen>
+    <dimen name="add_edit_note_activity_divider_margin_top">15dp</dimen>
     <dimen name="add_edit_note_activity_tag_image_size">22dp</dimen>
 
     <dimen name="add_edit_note_menu_dialog_text_margin_start">30dp</dimen>
@@ -117,8 +118,11 @@
     <dimen name="item_reminder_image_view_size">15dp</dimen>
     <dimen name="item_reminder_date_horizontal_padding">10dp</dimen>
     <dimen name="item_reminder_date_vertical_padding">5dp</dimen>
-    <dimen name="item_reminder_tv_margin_start">5dp</dimen>
+    <dimen name="item_reminder_tv_margin_start">3dp</dimen>
+    <dimen name="item_reminder_iv_margin_start">10dp</dimen>
     <dimen name="item_reminder_image_button_width">80dp</dimen>
+    <dimen name="item_reminder_button_action_more_margin_end">5dp</dimen>
+    <dimen name="item_reminder_iv_pin_margin_end">10dp</dimen>
 
     <dimen name="add_edit_reminder_activity_padding">10dp</dimen>
     <dimen name="add_edit_reminder_activity_button_margin_top">5dp</dimen>

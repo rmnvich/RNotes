@@ -60,11 +60,23 @@
                     android:paddingLeft="@dimen/note_edittext_horizontal_padding"
                     android:paddingRight="@dimen/note_edittext_horizontal_padding"
                     android:text="@={viewmodel.noteText}"
-                    app:layout_constraintBottom_toTopOf="@id/tag_delete_button"
+                    app:layout_constraintBottom_toTopOf="@id/divider"
                     app:layout_constraintTop_toBottomOf="@id/card_view_image"
                     app:met_hideUnderline="true"
                     app:met_textColor="@color/colorAddEditNoteText"
                     app:met_textColorHint="@color/colorAddEditNoteHint" />
+
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/item_note_divider_height"
+                    android:layout_marginTop="@dimen/add_edit_note_activity_divider_margin_top"
+                    android:background="@color/colorDivider"
+                    android:visibility="@{TextUtils.isEmpty(viewmodel.noteTag.get()) ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintBottom_toTopOf="@id/tag_delete_button"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/et_text" />
 
                 <ImageView
                     android:id="@+id/iv_tag_image"
@@ -104,8 +116,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/add_edit_note_activity_tag_margin_top"
-                    android:layout_marginBottom="@dimen/add_edit_note_activity_tag_margin_top"
                     android:layout_marginEnd="@dimen/item_tag_delete_button_margin_end"
+                    android:layout_marginBottom="@dimen/add_edit_note_activity_tag_margin_top"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:contentDescription="@string/delete"
                     android:onClick="@{(view) -> viewmodel.deleteTag()}"
@@ -114,7 +126,7 @@
                     android:visibility="@{TextUtils.isEmpty(viewmodel.noteTag.get()) ? View.GONE : View.VISIBLE}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/et_text" />
+                    app:layout_constraintTop_toBottomOf="@id/divider" />
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_view_image"
