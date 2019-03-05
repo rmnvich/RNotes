@@ -9,8 +9,6 @@
 
         <import type="android.view.View" />
 
-        <import type="rmnvich.apps.notes.presentation.utils.DateHelper" />
-
         <variable
             name="note"
             type="rmnvich.apps.notes.domain.entity.Note" />
@@ -94,10 +92,10 @@
                 android:layout_marginEnd="@dimen/item_note_tag_margin_end"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="@{DateHelper.convertLongTimeToString(note.timestamp)}"
                 android:textColor="@color/colorTagText"
                 android:textSize="12sp"
                 android:textStyle="italic|bold"
+                app:date="@{note.timestamp}"
                 app:layout_constraintBottom_toBottomOf="@id/iv_simple_note_timestamp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/iv_simple_note_timestamp"

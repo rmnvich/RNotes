@@ -9,8 +9,6 @@
 
         <import type="android.text.TextUtils" />
 
-        <import type="rmnvich.apps.notes.presentation.utils.DateHelper" />
-
         <variable
             name="viewmodel"
             type="rmnvich.apps.notes.presentation.ui.activity.addeditnote.AddEditNoteViewModel" />
@@ -51,9 +49,27 @@
                 android:layout_height="match_parent">
 
                 <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/et_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top"
+                    android:hint="@string/title"
+                    android:inputType="textCapSentences"
+                    android:paddingLeft="@dimen/note_edittext_horizontal_padding"
+                    android:paddingRight="@dimen/note_edittext_horizontal_padding"
+                    android:text="@={viewmodel.noteText}"
+                    android:textSize="22sp"
+                    app:layout_constraintBottom_toTopOf="@id/divider"
+                    app:layout_constraintTop_toBottomOf="@id/card_view_image"
+                    app:met_hideUnderline="true"
+                    app:met_textColor="@color/colorAddEditNoteText"
+                    app:met_textColorHint="@color/colorAddEditNoteHint" />
+
+                <com.rengwuxian.materialedittext.MaterialEditText
                     android:id="@+id/et_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/add_edit_note_activity_text_margin_top"
                     android:gravity="top"
                     android:hint="@string/start_writing"
                     android:inputType="textCapSentences|textMultiLine"
@@ -61,7 +77,7 @@
                     android:paddingRight="@dimen/note_edittext_horizontal_padding"
                     android:text="@={viewmodel.noteText}"
                     app:layout_constraintBottom_toTopOf="@id/divider"
-                    app:layout_constraintTop_toBottomOf="@id/card_view_image"
+                    app:layout_constraintTop_toBottomOf="@id/et_title"
                     app:met_hideUnderline="true"
                     app:met_textColor="@color/colorAddEditNoteText"
                     app:met_textColorHint="@color/colorAddEditNoteHint" />
@@ -140,7 +156,7 @@
                     android:visibility="@{viewmodel.bIsShowingImage.get() ? View.VISIBLE : View.GONE}"
                     app:cardBackgroundColor="@color/colorBackgroundDark"
                     app:cardCornerRadius="@dimen/add_edit_note_activity_card_view_radius"
-                    app:layout_constraintBottom_toTopOf="@id/et_text"
+                    app:layout_constraintBottom_toTopOf="@id/et_title"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_chainStyle="spread_inside"
                     tools:layout_editor_absoluteX="10dp">
@@ -208,10 +224,10 @@
                     android:paddingTop="@dimen/item_tag_vertical_padding"
                     android:paddingEnd="@dimen/item_tag_horizontal_padding"
                     android:paddingBottom="@dimen/item_tag_vertical_padding"
-                    android:text="@{DateHelper.convertLongTimeToString(viewmodel.noteTimestamp)}"
                     android:textColor="@color/colorTagText"
                     android:textSize="14sp"
                     android:textStyle="italic"
+                    app:date="@{viewmodel.noteTimestamp}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/circle_view_color"
                     app:layout_constraintTop_toTopOf="parent" />

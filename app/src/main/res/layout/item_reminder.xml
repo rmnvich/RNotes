@@ -106,10 +106,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/item_reminder_tv_margin_start"
                 android:layout_marginTop="@dimen/item_reminder_layout_margin_top"
-                android:text="@{DateHelper.convertLongToDate(reminder.timeRemind)}"
                 android:textColor="@color/colorItemText"
                 android:textSize="12sp"
                 android:textStyle="bold|italic"
+                app:date="@{reminder.timeRemind}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/iv_reminder_calendar"
                 app:layout_constraintTop_toBottomOf="@id/tv_reminder_text" />

@@ -24,7 +24,7 @@
 
     <color name="colorEmptyText">#ffffff</color>
     <color name="colorAddEditNoteText">#ffffff</color>
-    <color name="colorAddEditNoteHint">#CCFFFFFF</color>
+    <color name="colorAddEditNoteHint">#99FFFFFF</color>
 
     <color name="colorTagBackground">#50868686</color>
     <color name="colorTagText">#E6FFFFFF</color>

@@ -102,7 +102,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|end"
                     android:alpha="0.8"
-                    android:text="@{DateHelper.convertLongToDate(viewmodel.timeRemind)}"
+                    app:date="@{viewmodel.timeRemind}"
                     android:textColor="@color/colorItemText"
                     android:textSize="17sp"
                     app:layout_constraintBottom_toBottomOf="parent"

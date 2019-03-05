@@ -47,15 +47,15 @@
     <dimen name="item_tag_image_padding">10dp</dimen>
     <dimen name="item_tag_layout_padding">10dp</dimen>
     <dimen name="item_tag_delete_button_margin_start">5dp</dimen>
-    <dimen name="item_tag_delete_button_margin_end">10dp</dimen>
+    <dimen name="item_tag_delete_button_margin_end">15dp</dimen>
     <dimen name="item_tag_delete_button_padding">2dp</dimen>
 
     <dimen name="card_view_tools_padding">10dp</dimen>
     <dimen name="card_view_tools_elevation">10dp</dimen>
     <dimen name="card_view_tools_circle_view_size">25dp</dimen>
-    <dimen name="card_view_tools_tag_margin_start">10dp</dimen>
+    <dimen name="card_view_tools_tag_margin_start">15dp</dimen>
 
-    <dimen name="note_edittext_horizontal_padding">10dp</dimen>
+    <dimen name="note_edittext_horizontal_padding">15dp</dimen>
     <dimen name="reminder_edittext_horizontal_padding">5dp</dimen>
 
     <dimen name="navigation_view_full_screen">-64dp</dimen>
@@ -92,6 +92,7 @@
     <dimen name="add_edit_note_activity_card_view_margin">10dp</dimen>
     <dimen name="add_edit_note_activity_card_view_height">400dp</dimen>
     <dimen name="add_edit_note_activity_item_margin_top">10dp</dimen>
+    <dimen name="add_edit_note_activity_text_margin_top">5dp</dimen>
     <dimen name="add_edit_note_activity_tag_margin_top">10dp</dimen>
     <dimen name="add_edit_note_activity_divider_margin_top">15dp</dimen>
     <dimen name="add_edit_note_activity_tag_image_size">22dp</dimen>

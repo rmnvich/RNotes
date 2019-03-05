@@ -127,6 +127,10 @@
     <string name="done">Done</string>
     <string name="undone">Undone</string>
     <string name="unpin">Unpin</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="title">Title</string>
 
     <string-array name="repeat_types">
         <item>Once</item>

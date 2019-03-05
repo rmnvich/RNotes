@@ -37,6 +37,8 @@ public class Constants {
     public static int REQUEST_CODE_PIN = 2;
     public static int REQUEST_CODE_UNLOCK_NOTE = 3;
 
+    //TODO: Fix pin activity
+    //TODO: Sections in RemindersFragment
     //TODO: Settings (vibrate on/off, theme, lang, pin, default color)
     //TODO: Optimize set data to adapters
 }

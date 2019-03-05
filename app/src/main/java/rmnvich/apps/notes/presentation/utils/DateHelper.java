@@ -17,11 +17,6 @@ public class DateHelper {
         return calendar.getTimeInMillis();
     }
 
-    public static String convertLongTimeToString(long time) {
-        return new SimpleDateFormat("dd MMMM yyyy",
-                Locale.getDefault()).format(time);
-    }
-
     public static long getDate(int year, int month, int day) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day);
