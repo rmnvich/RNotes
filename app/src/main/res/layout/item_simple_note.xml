@@ -54,12 +54,32 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/note_simple_text"
+                android:id="@+id/note_simple_title"
                 style="@style/Base.TextAppearance.AppCompat.Body1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/item_note_card_padding"
                 android:layout_marginTop="@dimen/item_note_text_padding_top"
+                android:layout_marginEnd="@dimen/item_note_card_padding"
+                android:alpha="0.9"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="@{note.title}"
+                android:textColor="@color/colorItemText"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="@{TextUtils.isEmpty(note.title) ? View.GONE : View.VISIBLE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_note_image" />
+
+            <TextView
+                android:id="@+id/note_simple_text"
+                style="@style/Base.TextAppearance.AppCompat.Body1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/item_note_card_padding"
+                android:layout_marginTop="@{TextUtils.isEmpty(note.title) ? @dimen/item_note_text_padding_top : @dimen/item_note_title_padding_bottom}"
                 android:layout_marginEnd="@dimen/item_note_card_padding"
                 android:alpha="0.9"
                 android:ellipsize="end"
@@ -70,7 +90,7 @@
                 android:visibility="@{TextUtils.isEmpty(note.text) ? View.GONE : View.VISIBLE}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_note_image" />
+                app:layout_constraintTop_toBottomOf="@id/note_simple_title" />
 
             <ImageView
                 android:id="@+id/iv_simple_note_timestamp"

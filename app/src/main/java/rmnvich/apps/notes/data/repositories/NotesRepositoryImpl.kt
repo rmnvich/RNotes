@@ -47,6 +47,7 @@ class NotesRepositoryImpl(database: Database) : NotesRepository {
         return noteDao.getNoteById(noteId)
             .flatMapCompletable {
                 Completable.fromAction {
+                    it.title = note.title
                     it.text = note.text
                     it.color = note.color
                     it.imagePath = note.imagePath

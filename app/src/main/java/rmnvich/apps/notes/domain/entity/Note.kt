@@ -21,6 +21,7 @@ class Note {
     @ColumnInfo(name = "tag_id")
     var tagId: Int? = null
 
+    var title: String = ""
     var text: String = ""
     var imagePath: String = ""
 

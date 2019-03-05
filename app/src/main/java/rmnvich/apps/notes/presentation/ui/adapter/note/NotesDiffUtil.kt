@@ -26,6 +26,7 @@ class NotesDiffUtil(
         val oldNote = oldList[oldItemPosition]
         val newNote = newList[newItemPosition]
         return oldNote.noteText == newNote.noteText &&
+                oldNote.noteTitle == newNote.noteTitle &&
                 oldNote.noteTimestamp == newNote.noteTimestamp &&
                 oldNote.noteColor == newNote.noteColor &&
                 oldNote.noteImagePath == newNote.noteImagePath &&

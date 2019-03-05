@@ -4,7 +4,7 @@ public class Constants {
 
     public static String LOG_TAG = "qwe";
 
-    public static String DATABASE_NAME = "test_database" + 58;
+    public static String DATABASE_NAME = "test_database" + 59;
 
     public static long DEFAULT_DELAY = 500;
     public static int DEFAULT_COLOR = -13223103;

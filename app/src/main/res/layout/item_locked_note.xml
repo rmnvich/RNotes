@@ -149,8 +149,8 @@
 
                 <View
                     android:id="@+id/note_color_view"
-                    android:layout_width="@dimen/item_note_color_view_size"
-                    android:layout_height="@dimen/item_note_color_view_size"
+                    android:layout_width="@dimen/item_note_color_view_size_min"
+                    android:layout_height="@dimen/item_note_color_view_size_min"
                     android:background="@drawable/item_note_color_drawable"
                     app:color="@{note.noteColor}"
                     app:layout_constraintEnd_toEndOf="parent"

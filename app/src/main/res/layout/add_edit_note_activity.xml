@@ -57,9 +57,9 @@
                     android:inputType="textCapSentences"
                     android:paddingLeft="@dimen/note_edittext_horizontal_padding"
                     android:paddingRight="@dimen/note_edittext_horizontal_padding"
-                    android:text="@={viewmodel.noteText}"
+                    android:text="@={viewmodel.noteTitle}"
                     android:textSize="22sp"
-                    app:layout_constraintBottom_toTopOf="@id/divider"
+                    app:layout_constraintBottom_toTopOf="@id/et_text"
                     app:layout_constraintTop_toBottomOf="@id/card_view_image"
                     app:met_hideUnderline="true"
                     app:met_textColor="@color/colorAddEditNoteText"
@@ -158,8 +158,7 @@
                     app:cardCornerRadius="@dimen/add_edit_note_activity_card_view_radius"
                     app:layout_constraintBottom_toTopOf="@id/et_title"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_chainStyle="spread_inside"
-                    tools:layout_editor_absoluteX="10dp">
+                    app:layout_constraintVertical_chainStyle="spread_inside">
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -204,7 +203,7 @@
                     android:id="@+id/circle_view_color"
                     android:layout_width="@dimen/card_view_tools_circle_view_size"
                     android:layout_height="@dimen/card_view_tools_circle_view_size"
-                    android:layout_marginStart="@dimen/card_view_tools_padding"
+                    android:layout_marginStart="@dimen/card_view_tools_horizontal_padding"
                     android:layout_marginTop="@dimen/card_view_tools_padding"
                     android:layout_marginBottom="@dimen/card_view_tools_padding"
                     app:circleColor="@{viewmodel.noteColor}"
@@ -239,7 +238,10 @@
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:contentDescription="@string/more"
                     android:onClick="@{(view) -> viewmodel.onClickActionMore()}"
-                    android:padding="10dp"
+                    android:paddingStart="@dimen/card_view_tools_horizontal_padding"
+                    android:paddingTop="@dimen/card_view_tools_padding"
+                    android:paddingEnd="@dimen/card_view_tools_horizontal_padding"
+                    android:paddingBottom="@dimen/card_view_tools_padding"
                     android:src="@drawable/ic_action_more_inverted"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

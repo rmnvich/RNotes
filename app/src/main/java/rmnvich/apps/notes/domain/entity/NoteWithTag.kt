@@ -7,6 +7,9 @@ class NoteWithTag {
     @ColumnInfo(name = "note_id")
     var noteId: Int = 0
 
+    @ColumnInfo(name = "note_title")
+    var noteTitle: String = ""
+
     @ColumnInfo(name = "note_text")
     var noteText: String = ""
 

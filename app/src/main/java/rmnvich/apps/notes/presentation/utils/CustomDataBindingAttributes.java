@@ -4,6 +4,7 @@ import android.databinding.BindingAdapter;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,6 +18,14 @@ import java.util.Locale;
 import rmnvich.apps.notes.R;
 
 public class CustomDataBindingAttributes {
+
+    @BindingAdapter("android:layout_marginTop")
+    public static void setTopMargin(View view, float topMargin) {
+        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+        layoutParams.setMargins(layoutParams.leftMargin, Math.round(topMargin),
+                layoutParams.rightMargin, layoutParams.bottomMargin);
+        view.setLayoutParams(layoutParams);
+    }
 
     @BindingAdapter({"app:imageUrl"})
     public static void loadImage(ImageView view, String url) {

@@ -4,12 +4,14 @@
     <dimen name="fab_margin">16dp</dimen>
 
     <dimen name="dashboard_iv_empty_size">120dp</dimen>
+    <dimen name="padding_null">0dp</dimen>
 
     <dimen name="item_note_horizontal_margin">10dp</dimen>
     <dimen name="item_note_vertical_margin">5dp</dimen>
     <dimen name="item_note_card_corner_radius">10dp</dimen>
     <dimen name="item_note_card_padding">10dp</dimen>
     <dimen name="item_note_card_padding_bottom">5dp</dimen>
+    <dimen name="item_note_title_padding_bottom">1dp</dimen>
     <dimen name="item_note_text_padding_top">5dp</dimen>
     <dimen name="item_note_text_margin_top">5dp</dimen>
     <dimen name="item_note_text_margin_bottom">10dp</dimen>
@@ -22,6 +24,7 @@
     <dimen name="item_note_tag_margin_bottom">5dp</dimen>
     <dimen name="item_note_tag_margin_top">7dp</dimen>
     <dimen name="item_note_items_margin_top">2dp</dimen>
+    <dimen name="item_note_items_padding_top">6dp</dimen>
     <dimen name="item_note_items_margin_bottom">5dp</dimen>
     <dimen name="item_note_items_horizontal_margin">10dp</dimen>
     <dimen name="item_note_star_button_smart_size">16dp</dimen>
@@ -34,7 +37,8 @@
     <dimen name="item_note_image_height">200dp</dimen>
     <dimen name="item_note_broken_image_size">60dp</dimen>
     <dimen name="item_note_broken_image_padding">60dp</dimen>
-    <dimen name="item_note_color_view_size">15dp</dimen>
+    <dimen name="item_note_color_view_size_min">12dp</dimen>
+    <dimen name="item_note_color_view_size_max">15dp</dimen>
     <dimen name="item_note_color_drawable_radius">50dp</dimen>
     <dimen name="item_note_lock_layout_height">150dp</dimen>
     <dimen name="item_note_iv_lock_size">60dp</dimen>
@@ -51,6 +55,7 @@
     <dimen name="item_tag_delete_button_padding">2dp</dimen>
 
     <dimen name="card_view_tools_padding">10dp</dimen>
+    <dimen name="card_view_tools_horizontal_padding">15dp</dimen>
     <dimen name="card_view_tools_elevation">10dp</dimen>
     <dimen name="card_view_tools_circle_view_size">25dp</dimen>
     <dimen name="card_view_tools_tag_margin_start">15dp</dimen>
@@ -92,7 +97,7 @@
     <dimen name="add_edit_note_activity_card_view_margin">10dp</dimen>
     <dimen name="add_edit_note_activity_card_view_height">400dp</dimen>
     <dimen name="add_edit_note_activity_item_margin_top">10dp</dimen>
-    <dimen name="add_edit_note_activity_text_margin_top">5dp</dimen>
+    <dimen name="add_edit_note_activity_text_margin_top">0dp</dimen>
     <dimen name="add_edit_note_activity_tag_margin_top">10dp</dimen>
     <dimen name="add_edit_note_activity_divider_margin_top">15dp</dimen>
     <dimen name="add_edit_note_activity_tag_image_size">22dp</dimen>

@@ -60,8 +60,8 @@
 
                 <View
                     android:id="@+id/note_color_view"
-                    android:layout_width="@dimen/item_note_color_view_size"
-                    android:layout_height="@dimen/item_note_color_view_size"
+                    android:layout_width="@dimen/item_note_color_view_size_min"
+                    android:layout_height="@dimen/item_note_color_view_size_min"
                     android:background="@drawable/item_note_color_drawable"
                     app:color="@{note.noteColor}"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -88,7 +88,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/note_text"
+                    android:id="@+id/note_title"
                     style="@style/Base.TextAppearance.AppCompat.Body1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -96,31 +96,40 @@
                     android:layout_marginTop="@dimen/item_note_text_margin_top"
                     android:alpha="0.9"
                     android:ellipsize="end"
-                    android:maxLines="8"
-                    android:paddingBottom="@dimen/item_note_text_margin_bottom"
-                    android:text="@{note.noteText}"
+                    android:maxLines="2"
+                    android:text="@{note.noteTitle}"
                     android:textColor="@color/colorItemText"
-                    android:textSize="15sp"
-                    android:visibility="@{TextUtils.isEmpty(note.noteText) ? View.INVISIBLE : View.VISIBLE}"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="@{TextUtils.isEmpty(note.noteTitle) ? View.GONE : View.VISIBLE}"
                     app:layout_constraintEnd_toStartOf="@id/note_color_view"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/iv_note_image" />
 
-                <View
+                <TextView
+                    android:id="@+id/note_text"
+                    style="@style/Base.TextAppearance.AppCompat.Body1"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/item_note_divider_height"
-                    android:background="@color/colorDivider"
-                    android:visibility="@{TextUtils.isEmpty(note.noteText) ? View.VISIBLE : View.INVISIBLE}"
-                    app:layout_constraintBottom_toBottomOf="@id/note_text"
-                    app:layout_constraintEnd_toEndOf="@id/note_text"
-                    app:layout_constraintStart_toStartOf="@id/note_text"
-                    app:layout_constraintTop_toTopOf="@id/note_text" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/item_note_text_margin_start"
+                    android:alpha="0.9"
+                    android:ellipsize="end"
+                    android:maxLines="8"
+                    android:paddingTop="@{TextUtils.isEmpty(note.noteTitle) ? @dimen/item_note_text_margin_top : @dimen/item_note_title_padding_bottom}"
+                    android:text="@{note.noteText}"
+                    android:textColor="@color/colorItemText"
+                    android:textSize="15sp"
+                    android:visibility="@{TextUtils.isEmpty(note.noteText) ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintEnd_toStartOf="@id/note_color_view"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/note_title" />
 
                 <ImageView
                     android:id="@+id/iv_note_tag"
                     android:layout_width="@dimen/item_note_iv_tag_size"
                     android:layout_height="@dimen/item_note_iv_tag_size"
                     android:layout_marginStart="@dimen/item_note_items_horizontal_margin"
+                    android:layout_marginTop="@dimen/item_note_items_padding_top"
                     android:contentDescription="@string/tag"
                     android:src="@drawable/ic_action_label_empty_inverted"
                     android:visibility="@{TextUtils.isEmpty(note.tagName) ? View.GONE : View.VISIBLE}"
@@ -177,6 +186,7 @@
                     android:id="@+id/note_button_star"
                     android:layout_width="@dimen/item_note_star_button_smart_size"
                     android:layout_height="@dimen/item_note_star_button_smart_size"
+                    android:layout_marginTop="@{TextUtils.isEmpty(note.tagName) ? @dimen/item_note_items_padding_top : @dimen/padding_null}"
                     android:layout_marginEnd="@dimen/item_note_star_margin_end"
                     app:anim_scale_factor="2"
                     app:circle_end_color="@color/colorStar"

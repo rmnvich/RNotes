@@ -10,11 +10,11 @@ import rmnvich.apps.notes.domain.entity.NoteWithTag
 interface NoteDao {
 
     @Transaction
-    @Query("SELECT note.id AS note_id, note.text AS note_text, note.imagePath AS note_image_path, note.timestamp AS note_timestamp, note.color AS note_color, note.isFavorite AS note_is_favorite, note.isDeleted AS note_is_deleted, note.isLocked AS note_is_locked, tag.name AS note_tag_name, tag.id AS note_tag_id FROM note LEFT JOIN tag ON note.tag_id = tag.id WHERE note.isDeleted = 0 AND CASE WHEN :isFavorite == 1 THEN note.isFavorite = 1 ELSE note.isFavorite = 0 OR note.isFavorite = 1 END ORDER BY timestamp DESC")
+    @Query("SELECT note.id AS note_id, note.title AS note_title, note.text AS note_text, note.imagePath AS note_image_path, note.timestamp AS note_timestamp, note.color AS note_color, note.isFavorite AS note_is_favorite, note.isDeleted AS note_is_deleted, note.isLocked AS note_is_locked, tag.name AS note_tag_name, tag.id AS note_tag_id FROM note LEFT JOIN tag ON note.tag_id = tag.id WHERE note.isDeleted = 0 AND CASE WHEN :isFavorite == 1 THEN note.isFavorite = 1 ELSE note.isFavorite = 0 OR note.isFavorite = 1 END ORDER BY timestamp DESC")
     fun getAllNotes(isFavorite: Boolean): Flowable<List<NoteWithTag>>
 
     @Transaction
-    @Query("SELECT note.id AS note_id, note.text AS note_text, note.imagePath AS note_image_path, note.timestamp AS note_timestamp, note.color AS note_color, note.isFavorite AS note_is_favorite, note.isDeleted AS note_is_deleted, note.isLocked AS note_is_locked, tag.name AS note_tag_name, tag.id AS note_tag_id FROM note LEFT JOIN tag ON note.tag_id = tag.id WHERE note.isDeleted = 0 AND CASE WHEN :isFavorite == 1 THEN note.isFavorite = 1 ELSE note.isFavorite = 0 OR note.isFavorite = 1 END AND CASE WHEN :isUnionConditions == 1 THEN (note.color IN (:colors) AND tag_id IN (:tags)) ELSE (note.color IN (:colors) OR tag_id IN (:tags)) END AND CASE WHEN :isOnlyWithPicture == 1 THEN note.imagePath != '' ELSE note.imagePath = '' OR note.imagePath != '' END AND CASE WHEN :isOnlyLockedNotes == 1 THEN note.isLocked = 1 ELSE note.isLocked = 1 OR note.isLocked = 0 END ORDER BY timestamp DESC")
+    @Query("SELECT note.id AS note_id, note.title AS note_title, note.text AS note_text, note.imagePath AS note_image_path, note.timestamp AS note_timestamp, note.color AS note_color, note.isFavorite AS note_is_favorite, note.isDeleted AS note_is_deleted, note.isLocked AS note_is_locked, tag.name AS note_tag_name, tag.id AS note_tag_id FROM note LEFT JOIN tag ON note.tag_id = tag.id WHERE note.isDeleted = 0 AND CASE WHEN :isFavorite == 1 THEN note.isFavorite = 1 ELSE note.isFavorite = 0 OR note.isFavorite = 1 END AND CASE WHEN :isUnionConditions == 1 THEN (note.color IN (:colors) AND tag_id IN (:tags)) ELSE (note.color IN (:colors) OR tag_id IN (:tags)) END AND CASE WHEN :isOnlyWithPicture == 1 THEN note.imagePath != '' ELSE note.imagePath = '' OR note.imagePath != '' END AND CASE WHEN :isOnlyLockedNotes == 1 THEN note.isLocked = 1 ELSE note.isLocked = 1 OR note.isLocked = 0 END ORDER BY timestamp DESC")
     fun getFilteredNotes(
             colors: List<Int>,
             tags: List<Int>,
@@ -25,11 +25,11 @@ interface NoteDao {
     ): Flowable<List<NoteWithTag>>
 
     @Transaction
-    @Query("SELECT note.id AS note_id, note.text AS note_text, note.imagePath AS note_image_path, note.timestamp AS note_timestamp, note.color AS note_color, note.isFavorite AS note_is_favorite, note.isDeleted AS note_is_deleted, note.isLocked AS note_is_locked, tag.name AS note_tag_name, tag.id AS note_tag_id FROM note LEFT JOIN tag ON note.tag_id = tag.id WHERE note.isDeleted = 0 AND CASE WHEN :isFavorite == 1 THEN note.isFavorite = 1 ELSE note.isFavorite = 0 OR note.isFavorite = 1 END AND note.text LIKE '%' || :query || '%' AND note.isLocked = 0 ORDER BY timestamp DESC")
+    @Query("SELECT note.id AS note_id, note.title AS note_title, note.text AS note_text, note.imagePath AS note_image_path, note.timestamp AS note_timestamp, note.color AS note_color, note.isFavorite AS note_is_favorite, note.isDeleted AS note_is_deleted, note.isLocked AS note_is_locked, tag.name AS note_tag_name, tag.id AS note_tag_id FROM note LEFT JOIN tag ON note.tag_id = tag.id WHERE note.isDeleted = 0 AND CASE WHEN :isFavorite == 1 THEN note.isFavorite = 1 ELSE note.isFavorite = 0 OR note.isFavorite = 1 END AND note.text LIKE '%' || :query || '%' AND note.isLocked = 0 ORDER BY timestamp DESC")
     fun getSearchedNotes(query: String, isFavorite: Boolean): Flowable<List<NoteWithTag>>
 
     @Transaction
-    @Query("SELECT note.id AS note_id, note.text AS note_text, note.imagePath AS note_image_path, note.timestamp AS note_timestamp, note.color AS note_color, note.isFavorite AS note_is_favorite, note.isDeleted AS note_is_deleted, note.isLocked AS note_is_locked, tag.name AS note_tag_name, tag.id AS note_tag_id FROM note LEFT JOIN tag ON tag_id = tag.id WHERE note.id = :noteId")
+    @Query("SELECT note.id AS note_id, note.title AS note_title, note.text AS note_text, note.imagePath AS note_image_path, note.timestamp AS note_timestamp, note.color AS note_color, note.isFavorite AS note_is_favorite, note.isDeleted AS note_is_deleted, note.isLocked AS note_is_locked, tag.name AS note_tag_name, tag.id AS note_tag_id FROM note LEFT JOIN tag ON tag_id = tag.id WHERE note.id = :noteId")
     fun getNoteWithTagByNoteId(noteId: Int): Single<NoteWithTag>
 
     @Query("SELECT * FROM note WHERE id = :noteId")
