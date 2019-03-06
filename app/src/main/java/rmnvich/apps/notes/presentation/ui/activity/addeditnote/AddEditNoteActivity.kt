@@ -13,8 +13,6 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.inputmethod.InputMethodManager
-import com.amirarcane.lockscreen.activity.EnterPinActivity
-import com.amirarcane.lockscreen.activity.EnterPinActivity.RESULT_BACK_PRESSED
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
 import com.tbruyelle.rxpermissions2.RxPermissions
 import dagger.Lazy
@@ -28,6 +26,8 @@ import rmnvich.apps.notes.domain.entity.Tag
 import rmnvich.apps.notes.domain.utils.ViewModelFactory
 import rmnvich.apps.notes.presentation.ui.activity.viewimage.ViewImageActivity
 import rmnvich.apps.notes.presentation.ui.custom.ColorPickerDialog
+import rmnvich.apps.notes.presentation.ui.custom.EnterPinActivity
+import rmnvich.apps.notes.presentation.ui.custom.EnterPinActivity.RESULT_BACK_PRESSED
 import rmnvich.apps.notes.presentation.ui.dialog.DialogMoreActions
 import rmnvich.apps.notes.presentation.ui.dialog.DialogTags
 import java.util.*

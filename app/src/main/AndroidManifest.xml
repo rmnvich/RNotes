@@ -27,7 +27,7 @@
         </provider>
 
         <activity
-            android:name="com.amirarcane.lockscreen.activity.EnterPinActivity"
+            android:name=".presentation.ui.custom.EnterPinActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
 
         <activity
