@@ -31,7 +31,7 @@
                 android:layout_height="match_parent"
                 android:background="@color/colorBackground"
                 app:navigationIcon="@drawable/ic_action_arrow_back_inverted"
-                app:title="@string/create_reminder"
+                app:title=" "
                 app:titleTextColor="@color/colorToolbarTitle" />
         </android.support.design.widget.AppBarLayout>
 
