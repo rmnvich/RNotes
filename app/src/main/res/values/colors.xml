@@ -40,7 +40,7 @@
 
     <color name="colorStar">#FFCA28</color>
 
-    <color name="colorTabTitleSelectedTrue">#c8FFFFFF</color>
+    <color name="colorTabTitleSelectedTrue">#FFFFFF</color>
     <color name="colorTabTitleSelectedFalse">#64FFFFFF</color>
     <color name="colorTabIndicator">#CCFFFFFF</color>
 

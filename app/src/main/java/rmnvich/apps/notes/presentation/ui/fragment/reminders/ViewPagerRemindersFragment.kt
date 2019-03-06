@@ -4,11 +4,12 @@ import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentPagerAdapter
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems
 import kotlinx.android.synthetic.main.main_activity.*
@@ -17,6 +18,7 @@ import rmnvich.apps.notes.data.common.Constants
 import rmnvich.apps.notes.databinding.ViewPagerRemindersFragmentBinding
 import rmnvich.apps.notes.presentation.ui.activity.addeditreminder.AddEditReminderActivity
 import rmnvich.apps.notes.presentation.ui.activity.main.MainActivity
+import rmnvich.apps.notes.presentation.ui.custom.TintableImageView
 
 class ViewPagerRemindersFragment : Fragment() {
 
@@ -64,6 +66,27 @@ class ViewPagerRemindersFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.viewpagertab.setCustomTabView { container, position, _ ->
+            val tabView = LayoutInflater.from(context).inflate(R.layout.reminder_viewpager_tab,
+                    container, false)
+            val tabIcon: TintableImageView = tabView.findViewById(R.id.iv_tab_icon)
+            val tabName: TextView = tabView.findViewById(R.id.tv_tab_name)
+            when (position) {
+                0 -> {
+                    Glide.with(context!!)
+                            .load(R.drawable.ic_action_reminder)
+                            .into(tabIcon)
+                    tabName.text = getString(R.string.active_reminders)
+                }
+                1 -> {
+                    Glide.with(context!!)
+                            .load(R.drawable.ic_action_completed_reminders)
+                            .into(tabIcon)
+                    tabName.text = getString(R.string.completed_reminders)
+                }
+            }
+            tabView
+        }
         binding.remindersViewpager.adapter = mAdapter
         binding.viewpagertab.setViewPager(binding.remindersViewpager)
     }

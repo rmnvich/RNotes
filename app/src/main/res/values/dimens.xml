@@ -136,5 +136,8 @@
     <dimen name="add_edit_reminder_activity_iv_size">20dp</dimen>
     <dimen name="add_edit_reminder_activity_tv_margin_start">10dp</dimen>
 
+    <dimen name="reminder_viewpager_tab_icon_size">21dp</dimen>
+    <dimen name="reminder_viewpager_tab_text_margin">10dp</dimen>
+
     <integer name="animation_duration">400</integer>
 </resources>
